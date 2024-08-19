@@ -25,7 +25,7 @@ export default function NavBar() {
     <>
       {menuLinks.map((item) => (
         <Typography
-          key={item.id}
+          key={item.link}
           href={item.link}
           component={Link}
           sx={{
@@ -76,6 +76,24 @@ export default function NavBar() {
             display={{ xs: "none", md: "flex" }}
           >
             {navItems}
+            <Typography
+              href={"register/login"}
+              component={Link}
+              sx={{
+                fontSize: "18px",
+                color: "text.primary",
+                textDecoration: "none",
+                fontWeight: "bold",
+                transition: "all 0.4s ease-in-out",
+                "&:hover": {
+                  color: "primary.main",
+                  textShadow: "0px 4px 10px rgba(0, 123, 255, 0.3)",
+                  transform: "scale(1.1)",
+                },
+              }}
+            >
+              Login
+            </Typography>
           </Stack>
 
           <Button
