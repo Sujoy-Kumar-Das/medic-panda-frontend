@@ -18,3 +18,18 @@ export const createUser = async (userInfo: FieldValues) => {
 
   return userData;
 };
+
+export const loginUser = async (loginInfo) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_base_url_local}/auth/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginInfo),
+      cache: "no-store",
+    }
+  );
+  return await res.json();
+};

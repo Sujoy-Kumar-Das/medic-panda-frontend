@@ -1,11 +1,14 @@
 "use client";
-
 import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { imageUploader } from "@/services/actions/imageUploader";
-import { createUser } from "@/services/actions/user.action";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import createAccountSchema from "@/schemas/create-account.schema";
+import { storeUserInfo } from "@/services/actions/auth.service";
+import { createUser, loginUser } from "@/services/actions/user.action";
+import { imageUploader } from "@/utils/imageUploader";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
@@ -13,17 +16,40 @@ import { toast } from "sonner";
 
 export default function CreateAccountPage() {
   const [errors, setErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (data: FieldValues) => {
     setErrors("");
-    const photoUrl = await imageUploader(data.photo);
-    data.photo = photoUrl;
+    setIsLoading(true);
 
-    const res = await createUser(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      setErrors(res.message);
+    try {
+      const photoUrl = await imageUploader(data.photo);
+      data.photo = photoUrl;
+      const res = await createUser(data);
+
+      if (res.success) {
+        const userData = {
+          email: data.email,
+          password: data.password,
+        };
+        const loginInfo = await loginUser(userData);
+
+        if (loginInfo.success) {
+          toast.success(res.message);
+          storeUserInfo({ accessToken: loginInfo?.data?.accessToken });
+          setIsLoading(false);
+        } else {
+          setErrors(loginInfo.message);
+          setIsLoading(false);
+        }
+      } else {
+        setErrors(res.message);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setErrors("Something went wrong!");
+      setIsLoading(false);
+      console.log("login page error", error);
     }
   };
 
@@ -62,7 +88,10 @@ export default function CreateAccountPage() {
           </Box>
         )}
 
-        <PandaForm onSubmit={handleLogin}>
+        <PandaForm
+          onSubmit={handleLogin}
+          resolver={zodResolver(createAccountSchema)}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <PandaInputField
@@ -92,9 +121,16 @@ export default function CreateAccountPage() {
               <PandaFileUploader name="photo" label="Your Image" />
             </Grid>
             <Grid item xs={12}>
-              <Button fullWidth type="submit" variant="contained">
-                Create Account
-              </Button>
+              <LoadingButton
+                loading={isLoading}
+                disabled={isLoading}
+                loadingIndicator="Creating..."
+                variant="outlined"
+                type="submit"
+                fullWidth
+              >
+                Create
+              </LoadingButton>
             </Grid>
           </Grid>
         </PandaForm>

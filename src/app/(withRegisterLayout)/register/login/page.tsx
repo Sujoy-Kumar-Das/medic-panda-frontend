@@ -2,13 +2,38 @@
 "use client";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import loginSchema from "@/schemas/login.schema";
+import { storeUserInfo } from "@/services/actions/auth.service";
+import { loginUser } from "@/services/actions/user.action";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
-
+import { toast } from "sonner";
 export default function LoginPage() {
+  const [errors, setErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLogin = async (data: FieldValues) => {
-    console.log(data);
+    setIsLoading(true);
+    try {
+      const loginInfo = await loginUser(data);
+
+      if (loginInfo.success) {
+        toast.success(loginInfo.message);
+        storeUserInfo({ accessToken: loginInfo?.data?.accessToken });
+        setIsLoading(false);
+      } else {
+        setErrors(loginInfo.message);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setErrors("Something went wrong!");
+      setIsLoading(false);
+      console.log("login page error", error);
+    }
   };
   return (
     <Container
@@ -31,7 +56,23 @@ export default function LoginPage() {
         <Typography component={"h1"} variant="h4" textAlign={"center"} mb={5}>
           Login
         </Typography>
-        <PandaForm onSubmit={handleLogin}>
+        {errors && (
+          <Box sx={{ bgcolor: "red", p: 0.5, borderRadius: "8px", mb: 3 }}>
+            <Typography
+              component={"h6"}
+              color={"text.disabled"}
+              textAlign={"center"}
+              fontWeight={"bold"}
+            >
+              {errors}
+            </Typography>
+          </Box>
+        )}
+        <PandaForm
+          onSubmit={handleLogin}
+          resolver={zodResolver(loginSchema)}
+          defaultValues={{ email: "", password: "" }}
+        >
           <Stack direction={"column"} spacing={2}>
             <PandaInputField
               name="email"
@@ -61,9 +102,15 @@ export default function LoginPage() {
                 Reset Now
               </Typography>
             </Typography>
-            <Button fullWidth type="submit">
+            <LoadingButton
+              loading={isLoading}
+              disabled={isLoading}
+              loadingIndicator="Logging…"
+              variant="outlined"
+              type="submit"
+            >
               Login
-            </Button>
+            </LoadingButton>
           </Stack>
         </PandaForm>
         <Typography component={"p"} textAlign={"center"} mt={3}>

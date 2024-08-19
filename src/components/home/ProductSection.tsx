@@ -9,7 +9,7 @@ import Link from "next/link";
 import ProductCard from "../ui/card/ProductCard";
 
 export default async function ProductSection() {
-  const res = await fetch(`${process.env.base_url_local}/product`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_base_url_local}/product`, {
     cache: "no-store",
   });
   const { data: products } = await res.json();
