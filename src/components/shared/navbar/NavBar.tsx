@@ -1,18 +1,13 @@
 "use client";
 import { menuLinks } from "@/routes/nav.path";
+import { getUserInfo } from "@/services/actions/auth.service";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
+import NavBarCart from "./NavBarCart";
+import NavUserMenu from "./NavUserMenu";
 
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -20,6 +15,8 @@ export default function NavBar() {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const user = getUserInfo() ? true : false;
 
   const navItems = (
     <>
@@ -44,6 +41,26 @@ export default function NavBar() {
           {item.text}
         </Typography>
       ))}
+      {!user && (
+        <Typography
+          href={"register/login"}
+          component={Link}
+          sx={{
+            fontSize: "18px",
+            color: "text.primary",
+            textDecoration: "none",
+            fontWeight: "bold",
+            transition: "all 0.4s ease-in-out",
+            "&:hover": {
+              color: "primary.main",
+              textShadow: "0px 4px 10px rgba(0, 123, 255, 0.3)",
+              transform: "scale(1.1)",
+            },
+          }}
+        >
+          Login
+        </Typography>
+      )}
     </>
   );
 
@@ -76,40 +93,15 @@ export default function NavBar() {
             display={{ xs: "none", md: "flex" }}
           >
             {navItems}
-            <Typography
-              href={"register/login"}
-              component={Link}
-              sx={{
-                fontSize: "18px",
-                color: "text.primary",
-                textDecoration: "none",
-                fontWeight: "bold",
-                transition: "all 0.4s ease-in-out",
-                "&:hover": {
-                  color: "primary.main",
-                  textShadow: "0px 4px 10px rgba(0, 123, 255, 0.3)",
-                  transform: "scale(1.1)",
-                },
-              }}
-            >
-              Login
-            </Typography>
           </Stack>
 
-          <Button
-            variant="contained"
-            endIcon={<ShoppingCartIcon />}
-            sx={{
-              boxShadow: "none",
-              display: { xs: "none", md: "flex" },
-              transition: "transform 0.3s ease",
-              "&:hover": {
-                transform: "scale(1.05)",
-              },
-            }}
+          <Stack
+            direction={"row"}
+            spacing={2}
+            display={{ xs: "none", md: "flex" }}
           >
-            My Cart
-          </Button>
+            <NavBarCart user={user} />
+          </Stack>
 
           <IconButton
             sx={{
@@ -166,11 +158,21 @@ export default function NavBar() {
             </IconButton>
           </Stack>
           <Stack
+            direction={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
             spacing={3}
-            sx={{ p: 3, textAlign: "center", mt: 4 }}
-            onClick={handleDrawerToggle}
+            mt={10}
           >
-            {navItems}
+            <NavUserMenu />
+            <Stack
+              spacing={1}
+              sx={{ textAlign: "center" }}
+              onClick={handleDrawerToggle}
+            >
+              {navItems}
+            </Stack>
+            <NavBarCart user={user} />
           </Stack>
         </Box>
       </Container>

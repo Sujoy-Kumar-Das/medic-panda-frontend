@@ -1,8 +1,9 @@
-import { IRoutePath } from "@/types";
+import { IDashboardRoute } from "@/types";
+import { IUserRoles } from "@/types/user.role.type";
 
-const routeGenerator = (routesPaths: IRoutePath[], role: string) => {
-  return routesPaths.reduce((acc: IRoutePath[], item: IRoutePath) => {
-    if (item.access === role || item.access === "all") {
+const routeGenerator = (routesPaths: IDashboardRoute[], role: IUserRoles) => {
+  return routesPaths.reduce((acc: IDashboardRoute[], item: IDashboardRoute) => {
+    if (item.access?.includes(role)) {
       acc.push({ text: item.text, link: item.link, icon: item.icon });
     }
     return acc;
