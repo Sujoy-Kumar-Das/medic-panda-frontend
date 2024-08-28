@@ -10,11 +10,9 @@ type TInputProps = {
   sx?: SxProps;
   placeholder?: string;
   required?: boolean;
-  multiline?: boolean;
-  rows?: number;
 };
 
-const PandaInputField = ({
+const PandaText = ({
   name,
   label,
   type = "text",
@@ -23,8 +21,6 @@ const PandaInputField = ({
   sx,
   required,
   placeholder,
-  multiline = false,
-  rows = 1,
 }: TInputProps) => {
   const { control } = useFormContext();
   return (
@@ -44,12 +40,10 @@ const PandaInputField = ({
           required={required}
           error={!!error?.message}
           helperText={error?.message}
-          multiline={multiline && multiline}
-          rows={rows && rows}
         />
       )}
     />
   );
 };
 
-export default PandaInputField;
+export default PandaText;

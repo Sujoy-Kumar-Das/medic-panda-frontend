@@ -5,11 +5,14 @@ import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import BorderAllOutlinedIcon from "@mui/icons-material/BorderAllOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import CategoryIcon from "@mui/icons-material/Category";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import FactoryIcon from "@mui/icons-material/Factory";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import MergeTypeIcon from "@mui/icons-material/MergeType";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PaidIcon from "@mui/icons-material/Paid";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
@@ -82,11 +85,30 @@ const dashboardRoutes: IDashboardRoute[] = [
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
   },
   {
+    text: "Categories",
+    link: "/dashboard/admin/all-categories",
+    icon: <CategoryIcon />,
+    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
+  },
+  {
+    text: "Variants",
+    link: "/dashboard/admin/all-variants",
+    icon: <MergeTypeIcon />,
+    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
+  },
+  {
+    text: "Companies",
+    link: "/dashboard/admin/all-companies",
+    icon: <FactoryIcon />,
+    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
+  },
+  {
     text: "Create Product",
     link: "/dashboard/admin/create-product",
     icon: <AddIcon />,
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
   },
+
   {
     text: "Orders",
     link: "/dashboard/admin/all-orders",

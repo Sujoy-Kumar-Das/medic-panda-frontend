@@ -1,3 +1,4 @@
+import { getAllProductService } from "@/services/actions/product.service";
 import { IProduct } from "@/types/product.type";
 import { ArrowRight } from "@mui/icons-material";
 import Box from "@mui/material/Box";
@@ -9,11 +10,7 @@ import Link from "next/link";
 import ProductCard from "../ui/card/ProductCard";
 
 export default async function ProductSection() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_base_url_local}/product`, {
-    cache: "no-store",
-  });
-  const { data: products } = await res.json();
-
+  const { data: products } = await getAllProductService(6);
   return (
     <Container sx={{ py: 10 }}>
       <Box

@@ -1,3 +1,4 @@
+import { getAllProductService } from "@/services/actions/product.service";
 import { IProduct } from "@/types/product.type";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
@@ -5,10 +6,7 @@ import Link from "next/link";
 import DisCountProductCard from "../ui/card/DisCountProductCard";
 
 export default async function DiscountProductSection() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_base_url_local}/product`, {
-    cache: "no-store",
-  });
-  const { data: products } = await res.json();
+  const { data: products } = await getAllProductService(6);
 
   return (
     <Box sx={{ py: 5, backgroundColor: "background.paper" }}>

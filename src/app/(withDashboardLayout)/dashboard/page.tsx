@@ -1,3 +1,5 @@
+"use client";
+import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   CallOutlined as CallOutlinedIcon,
@@ -16,7 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 
-export default function Page() {
+export default function MyProfilePage() {
+  const { data: user } = useGetMeQuery(undefined);
   return (
     <Container>
       <Stack
@@ -57,7 +60,7 @@ export default function Page() {
                     sx={{ color: "text.secondary", fontSize: "30px" }}
                   />
                   <Typography color="text.secondary" fontSize="16px">
-                    Sujoy Kumar Das
+                    {user?.name}
                   </Typography>
                 </Stack>
                 <IconButton color="info" sx={{ height: "20px", width: "20px" }}>
@@ -87,7 +90,7 @@ export default function Page() {
                     sx={{ color: "text.secondary", fontSize: "30px" }}
                   />
                   <Typography color="text.secondary" fontSize="16px">
-                    sujoykumardas75@gmail.com
+                    {user?.userId?.email}
                   </Typography>
                 </Stack>
                 <IconButton color="info" sx={{ height: "20px", width: "20px" }}>

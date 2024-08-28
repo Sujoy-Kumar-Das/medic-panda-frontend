@@ -2,10 +2,9 @@
 import { ICategory } from "@/types";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import image from "@/assets/banner.jpg";
-import Link from "next/link";
 
 export default function CategorySlider({
   categories,
@@ -43,6 +42,7 @@ export default function CategorySlider({
               position: "relative",
               overflow: "hidden",
               borderRadius: "16px",
+              bgcolor: "background.default",
             }}
           >
             <Box
@@ -55,10 +55,10 @@ export default function CategorySlider({
             >
               <Image
                 alt="Category image"
-                src={image}
+                src={category.thumbnail}
                 height={300}
                 width={300}
-                style={{ borderRadius: "16px" }}
+                style={{ borderRadius: "16px", objectFit: "cover" }}
               />
             </Box>
             <Box
@@ -73,8 +73,7 @@ export default function CategorySlider({
                 backdropFilter: "blur(10px)",
                 border: "1px solid rgba(255, 255, 255, 0.18)",
                 borderRadius: 2,
-                maxWidth: "280px",
-                width: "70%",
+                width: "80%",
               }}
             >
               <Typography
