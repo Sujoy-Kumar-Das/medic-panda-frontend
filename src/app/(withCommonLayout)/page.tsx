@@ -5,6 +5,7 @@ import CategorySection from "@/components/home/CategorySection";
 import DiscountProductSection from "@/components/home/DiscountProductSection";
 import ProductSection from "@/components/home/ProductSection";
 import SummerCollectionSection from "@/components/home/SummerCollectionSection";
+import TestimonialSection from "@/components/home/TestimonialSection";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <AboutSection />
       <BestSellSection /> */}
       <SummerCollectionSection />
+      <TestimonialSection />
     </>
   );
 }

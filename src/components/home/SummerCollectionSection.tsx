@@ -1,7 +1,7 @@
 import { getAllProductService } from "@/services/actions/product.service";
+import { IProduct } from "@/types";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import SummerCard from "../ui/card/SummerCard";
-import { IProduct } from "@/types";
 
 export default async function SummerCollectionSection() {
   const { data: products } = await getAllProductService(6);
@@ -29,7 +29,13 @@ export default async function SummerCollectionSection() {
             Summer Skin Products
           </Typography>
         </Box>
-        <Stack sx={{ marginTop: 5 }}>
+        <Stack
+          sx={{ marginTop: 5 }}
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"flex-start"}
+          spacing={3}
+        >
           <Box
             height={"100vh"}
             width={{ xs: "100%", md: "40%" }}
@@ -107,8 +113,8 @@ export default async function SummerCollectionSection() {
               </Stack>
             </Box>
           </Box>
-          <Box>
-            <Grid container spacing={4}>
+          <Box sx={{ width: { xs: "100%", md: "60%" } }}>
+            <Grid container spacing={1}>
               {products.map((product: IProduct) => (
                 <Grid item xs={12} md={4} key={product._id}>
                   <SummerCard product={product} />
