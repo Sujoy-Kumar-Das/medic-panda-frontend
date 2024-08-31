@@ -1,8 +1,6 @@
-import { IRoutePath } from "@/types";
-
-export const menuLinks: IRoutePath[] = [
+export const menuLinks = [
   { text: "Home", link: "/" },
-  { text: "Shop", link: "/shop" },
+  { text: "Shop", link: "/product" },
   { text: "categories", link: "/categories" },
   { text: "Blog", link: "/blog" },
   { text: "About Us", link: "/about-us" },

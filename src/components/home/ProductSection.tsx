@@ -1,10 +1,10 @@
+import ProductSlider from "@/lib/sliders/ProductSlider";
 import { getAllProductService } from "@/services/actions/product.service";
-import { IProduct } from "@/types/product.type";
+import { IProduct } from "@/types";
 import { ArrowRight } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import ProductCard from "../ui/card/ProductCard";
@@ -41,13 +41,11 @@ export default async function ProductSection() {
         </Button>
       </Box>
 
-      <Grid container spacing={2}>
+      <ProductSlider>
         {products.map((product: IProduct) => (
-          <Grid item xs={12} md={3} key={product._id}>
-            <ProductCard product={product} />
-          </Grid>
+          <ProductCard key={product._id} product={product} />
         ))}
-      </Grid>
+      </ProductSlider>
     </Container>
   );
 }

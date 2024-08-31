@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { thumbnail, name, discountPercentage, price, discountPrice } = product;
@@ -23,7 +24,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        height: "100%",
+        height: 400, // Set a fixed height for uniform size
         boxShadow: 3,
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
         overflow: "hidden",
@@ -41,7 +42,15 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       }}
     >
       <Box
-        sx={{ flexGrow: 1, overflow: "hidden", borderRadius: "8px 8px 0 0" }}
+        sx={{
+          flexGrow: 1,
+          overflow: "hidden",
+          borderRadius: "8px 8px 0 0",
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Image
           src={thumbnail}
@@ -59,10 +68,6 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           textAlign: "center",
           p: 2,
           flexGrow: 0,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          opacity: 1,
           transition: "opacity 0.3s ease",
         }}
         className="hoverText"
@@ -137,7 +142,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         >
           Add to cart
         </Button>
-        <IconButton color="primary">
+        <IconButton
+          color="primary"
+          component={Link}
+          href={`/product/${product._id}`}
+        >
           <Visibility />
         </IconButton>
       </Stack>

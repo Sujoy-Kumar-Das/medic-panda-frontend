@@ -1,9 +1,10 @@
 import { getAllProductService } from "@/services/actions/product.service";
 import { IProduct } from "@/types/product.type";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import DisCountProductCard from "../ui/card/DisCountProductCard";
+import ProductSlider from "@/lib/sliders/ProductSlider";
 
 export default async function DiscountProductSection() {
   const { data: products } = await getAllProductService(6);
@@ -36,13 +37,12 @@ export default async function DiscountProductSection() {
             View Products
           </Button>
         </Stack>
-        <Grid container spacing={4}>
+
+        <ProductSlider>
           {products.map((product: IProduct) => (
-            <Grid item xs={12} md={3} key={product._id}>
-              <DisCountProductCard product={product} />
-            </Grid>
+            <DisCountProductCard key={product._id} product={product} />
           ))}
-        </Grid>
+        </ProductSlider>
       </Container>
     </Box>
   );

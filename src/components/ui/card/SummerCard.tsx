@@ -22,6 +22,7 @@ export default function SummerCard({ product }: { product: IProduct }) {
       display={"flex"}
       flexDirection={"column"}
       height={"100%"}
+      justifyContent={"space-between"}
       overflow={"hidden"}
       sx={{
         "&:hover .button": {
@@ -43,29 +44,32 @@ export default function SummerCard({ product }: { product: IProduct }) {
         direction={"row"}
         alignItems={"center"}
         spacing={1}
-        mb={2}
         overflow={"hidden"}
       >
         <Chip label="Sale" size="small" color="info" />
         <Chip label="Popular" size="small" color="success" />
       </Stack>
+
       <Box
-        sx={{ flex: 1, display: "flex", justifyContent: "center" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexGrow: 1,
+        }}
         overflow={"hidden"}
       >
         <Image
           alt="summer collection image"
           src={product.thumbnail}
-          height={200}
-          width={200}
+          height={140}
+          width={140}
+          objectFit="cover"
+          objectPosition="center"
         />
       </Box>
-      <Stack
-        direction={"column"}
-        spacing={1}
-        sx={{ flex: 1 }}
-        overflow={"hidden"}
-      >
+
+      <Stack direction={"column"} spacing={1} overflow={"hidden"}>
         <Typography component={"h3"} variant="h6" color={"text.primary"}>
           {product.name}
         </Typography>
@@ -98,7 +102,6 @@ export default function SummerCard({ product }: { product: IProduct }) {
             {product?.discount?.discountPrice}
           </Typography>
         </Box>
-
         <Rating readOnly value={4} />
       </Stack>
 
