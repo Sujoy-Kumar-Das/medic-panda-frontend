@@ -3,19 +3,60 @@ import ProductCard from "@/components/ui/card/ProductCard";
 import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
 import CategoryIcon from "@mui/icons-material/Category";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import CategoryModal from "./CategoryModal";
 
-export default function ProductDrawer({ products }) {
+export default function ProductDrawer({ products, meta }) {
   const [openCategoryModal, setOpenCategoryModal] = useState(false);
+  const [skip, setSkip] = useState<number>(0);
   const { data } = useGetAllCategoriesQuery(undefined);
+
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathName = usePathname();
+
+  console.log(meta);
 
   const handleCategoryModal = () => {
     setOpenCategoryModal((prev) => !prev);
+  };
+
+  const handleQueryParams = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchTerm = formData.get("searchTerm");
+    const params = new URLSearchParams(searchParams);
+
+    if (searchParams) {
+      params.set("searchTerm", searchTerm as string);
+    } else {
+      params.delete("searchTerm");
+    }
+
+    replace(`${pathName}?${params.toString()}`);
+  };
+
+  const handlePagination = (event, page) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (page) {
+      params.set("page", page);
+    } else {
+      params.delete("page");
+    }
+    replace(`${pathName}?${params.toString()}`);
   };
 
   return (
@@ -55,10 +96,13 @@ export default function ProductDrawer({ products }) {
                   boxShadow: { xs: 1, md: "none" },
                   padding: "4px 8px",
                 }}
+                onSubmit={handleQueryParams}
               >
                 <IconButton
                   sx={{ p: "10px", display: { xs: "block", md: "none" } }}
                   onClick={handleCategoryModal}
+                  type="button"
+                  aria-label="toggle category modal"
                 >
                   <CategoryIcon />
                 </IconButton>
@@ -66,9 +110,11 @@ export default function ProductDrawer({ products }) {
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Search products"
                   inputProps={{ "aria-label": "search products" }}
+                  name="searchTerm"
+                  defaultValue={searchParams.get("searchTerm")?.toString()}
                 />
                 <IconButton
-                  type="button"
+                  type="submit"
                   sx={{ p: "10px" }}
                   aria-label="search"
                 >
@@ -91,7 +137,7 @@ export default function ProductDrawer({ products }) {
                   <Typography
                     key={item._id}
                     component={Link}
-                    href={"/"}
+                    href={`/product?category=${item._id}`}
                     sx={{
                       textDecoration: "none",
                       color: "text.secondary",
@@ -113,20 +159,37 @@ export default function ProductDrawer({ products }) {
         </Grid>
 
         <Grid item xs={12} md={9}>
-          <Grid container spacing={2}>
-            {products.map((product) => (
-              <Grid item xs={12} sm={6} md={4} key={product._id}>
-                <ProductCard product={product} />
+          {products?.length ? (
+            <>
+              <Grid container spacing={2}>
+                {products.map((product) => (
+                  <Grid item xs={12} sm={6} md={4} key={product._id}>
+                    <ProductCard product={product} />
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
+              <Stack direction={"row"} justifyContent={"center"} mt={5}>
+                <Pagination
+                  count={meta.totalPage}
+                  onChange={handlePagination}
+                />
+              </Stack>
+            </>
+          ) : (
+            <Typography variant="h6" textAlign="center" color="text.secondary">
+              No products available
+            </Typography>
+          )}
         </Grid>
       </Grid>
-      <CategoryModal
-        open={openCategoryModal}
-        setOpen={setOpenCategoryModal}
-        data={data}
-      />
+
+      {data && (
+        <CategoryModal
+          open={openCategoryModal}
+          setOpen={setOpenCategoryModal}
+          data={data}
+        />
+      )}
     </>
   );
 }

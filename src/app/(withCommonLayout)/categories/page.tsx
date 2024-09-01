@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function CategoriesPage() {
   const { data: categories } = await getAllCategoriesService(6);
@@ -56,6 +57,8 @@ export default async function CategoriesPage() {
                     color="primary"
                     size="small"
                     sx={{ fontSize: 12 }}
+                    component={Link}
+                    href={`/product?category=${category.name}`}
                   >
                     Show Products
                   </Button>
