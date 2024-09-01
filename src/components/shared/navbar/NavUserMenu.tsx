@@ -1,4 +1,3 @@
-import { getUserInfo } from "@/services/actions/auth.service";
 import Person2Icon from "@mui/icons-material/Person2";
 import { Divider, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -9,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavUserMenu() {
@@ -16,7 +16,7 @@ function NavUserMenu() {
     null
   );
 
-  const isUserLoggedIn = getUserInfo();
+  const isUserLoggedIn = true;
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -29,17 +29,39 @@ function NavUserMenu() {
   return (
     <Box>
       <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+        <IconButton
+          onClick={handleOpenUserMenu}
+          sx={{
+            p: 0,
+            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.1)",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        >
           {isUserLoggedIn ? (
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <Avatar
+              alt="User Avatar"
+              src="/static/images/avatar/2.jpg"
+              sx={{ width: 40, height: 40 }}
+            />
           ) : (
-            <Person2Icon />
+            <Person2Icon sx={{ fontSize: 40 }} />
           )}
         </IconButton>
       </Tooltip>
 
       <Menu
-        sx={{ mt: "45px" }}
+        sx={{
+          mt: "45px",
+          "& .MuiMenu-paper": {
+            width: 300,
+            borderRadius: 2,
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            p: 2,
+          },
+        }}
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: "top",
@@ -53,20 +75,18 @@ function NavUserMenu() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <Box sx={{ padding: 2 }}>
-          <Stack direction={"row"} alignItems={"center"} spacing={1}>
-            <IconButton sx={{ p: 0 }}>
-              {isUserLoggedIn ? (
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              ) : (
-                <Person2Icon />
-              )}
-            </IconButton>
+        <Box>
+          <Stack direction="row" alignItems="center" spacing={2} mb={2}>
+            <Avatar
+              alt="User Avatar"
+              src="/static/images/avatar/2.jpg"
+              sx={{ width: 48, height: 48 }}
+            />
             <Box>
-              <Typography component={"h6"} variant="h6">
+              <Typography component="h6" variant="subtitle1" fontWeight={600}>
                 Sujoy Kumar Das
               </Typography>
-              <Typography component={"p"} variant="body1">
+              <Typography component="p" variant="body2" color="text.secondary">
                 sujoykumardas75@gmail.com
               </Typography>
             </Box>
@@ -74,8 +94,21 @@ function NavUserMenu() {
           <Divider sx={{ my: 1 }} />
 
           {settings.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">{setting}</Typography>
+            <MenuItem
+              key={setting}
+              onClick={handleCloseUserMenu}
+              sx={{
+                borderRadius: 1,
+                transition: "background-color 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "primary.light",
+                  color: "primary.main",
+                },
+              }}
+            >
+              <Typography textAlign="center" sx={{ width: "100%" }}>
+                {setting}
+              </Typography>
             </MenuItem>
           ))}
         </Box>
@@ -83,4 +116,5 @@ function NavUserMenu() {
     </Box>
   );
 }
+
 export default NavUserMenu;

@@ -1,8 +1,7 @@
 import { IProduct } from "@/types/product.type";
-import { FavoriteBorder, ShoppingCart, Visibility } from "@mui/icons-material";
+import { FavoriteBorder, Visibility } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Chip,
   IconButton,
   Rating,
@@ -11,6 +10,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import ProductButton from "./ProductButton";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { thumbnail, name, discountPercentage, price, discountPrice } = product;
@@ -24,7 +24,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        height: 400, // Set a fixed height for uniform size
+        height: 400,
         boxShadow: 3,
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
         overflow: "hidden",
@@ -129,19 +129,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         <IconButton color="primary">
           <FavoriteBorder />
         </IconButton>
-        <Button
-          color="primary"
-          endIcon={<ShoppingCart />}
-          sx={{
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            borderRadius: 2,
-            p: 1,
-          }}
-          size={"small"}
-        >
-          Add to cart
-        </Button>
+        <ProductButton product={product} />
         <IconButton
           color="primary"
           component={Link}
