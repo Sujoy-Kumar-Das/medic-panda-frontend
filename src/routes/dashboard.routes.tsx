@@ -1,5 +1,6 @@
 import { USER_ROLE } from "@/constants/user.role";
 import { IDashboardRoute } from "@/types";
+import { ShoppingCartCheckout } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
@@ -40,6 +41,12 @@ const dashboardRoutes: IDashboardRoute[] = [
     text: "Payment & Instalment",
     link: "/dashboard/user/payments",
     icon: <PaidIcon />,
+    access: [USER_ROLE.user],
+  },
+  {
+    text: "My Cart",
+    link: "/dashboard/user/my-cart",
+    icon: <ShoppingCartCheckout />,
     access: [USER_ROLE.user],
   },
   {

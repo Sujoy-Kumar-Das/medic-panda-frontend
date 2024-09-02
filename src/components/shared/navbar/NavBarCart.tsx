@@ -12,6 +12,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 import * as React from "react";
 import NavUserMenu from "./NavUserMenu";
 
@@ -19,7 +20,7 @@ export default function NavBarCart({ user }: { user: boolean }) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const carts = useAppSelector((state) => state.cart);
+  const { carts } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -198,6 +199,8 @@ export default function NavBarCart({ user }: { user: boolean }) {
                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
               },
             }}
+            component={Link}
+            href="/dashboard/user/my-cart"
           >
             Checkout
           </Button>

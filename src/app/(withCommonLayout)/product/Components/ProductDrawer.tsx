@@ -27,7 +27,6 @@ export default function ProductDrawer({ products, meta }) {
   const { replace } = useRouter();
   const pathName = usePathname();
 
-  console.log(meta);
 
   const handleCategoryModal = () => {
     setOpenCategoryModal((prev) => !prev);

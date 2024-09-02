@@ -1,4 +1,3 @@
-import WishListCard from "@/components/ui/card/WishListCard";
 import { Box, Container, Grid, Typography } from "@mui/material";
 
 export default async function WishListPage() {
@@ -23,7 +22,7 @@ export default async function WishListPage() {
       <Grid container spacing={5}>
         {data?.products.map((item) => (
           <Grid item xs={12} md={4} key={item.id}>
-            <WishListCard data={item} key={item.id} />
+            {/* <WishListCard data={item} key={item.id} /> */}
           </Grid>
         ))}
       </Grid>
