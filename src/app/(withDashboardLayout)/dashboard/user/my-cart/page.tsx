@@ -4,6 +4,7 @@ import {
   increaseQuantity,
 } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { keyframes } from "@emotion/react";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -20,12 +21,31 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+const fadeInUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const scaleUp = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+`;
+
 export default function MyCartPage() {
   const dispatch = useAppDispatch();
   const { carts } = useAppSelector((state) => state.cart);
 
   const handleIncrementQuantity = (id: string) => {
-    console.log(id);
     dispatch(increaseQuantity({ id }));
   };
 
@@ -35,37 +55,23 @@ export default function MyCartPage() {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Box mb={4} textAlign="center">
+      <Box mb={4}>
         <Typography
           component="h1"
           variant="h4"
           color="text.primary"
-          fontWeight={700}
-          sx={{
-            fontSize: { xs: "2rem", md: "2.5rem" },
-            textTransform: "uppercase",
-            letterSpacing: "0.1rem",
-          }}
+          gutterBottom
         >
           My Cart
         </Typography>
-        <Typography
-          component="h2"
-          variant="subtitle1"
-          color="text.secondary"
-          sx={{
-            fontSize: { xs: "1rem", md: "1.25rem" },
-            marginTop: "8px",
-            letterSpacing: "0.05rem",
-          }}
-        >
-          Track, return, or purchase items
+        <Typography component="p" variant="h6" color="text.secondary">
+          Review your cart before placing the order
         </Typography>
         <Divider sx={{ mt: 2, mb: 3 }} />
       </Box>
 
       <Stack direction={"column"} spacing={3}>
-        {carts.map((cart) => (
+        {carts.map((cart, index) => (
           <Box
             key={cart.id}
             sx={{
@@ -78,6 +84,7 @@ export default function MyCartPage() {
               borderRadius: 4,
               boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
               transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              animation: `${fadeInUp} 0.4s ease ${index * 0.1}s both`,
               "&:hover": {
                 transform: "translateY(-4px)",
                 boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
@@ -95,11 +102,15 @@ export default function MyCartPage() {
                 <Image
                   alt="thumbnail"
                   src={cart.thumbnail}
-                  height={100}
-                  width={100}
+                  height={120}
+                  width={120}
                   style={{
-                    borderRadius: "12px",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                    borderRadius: "16px",
+                    boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      animation: `${scaleUp} 0.3s ease forwards`,
+                    },
                   }}
                 />
               </Grid>
@@ -164,7 +175,9 @@ export default function MyCartPage() {
                       borderRadius: 1,
                       bgcolor: "primary.light",
                       color: "white",
+                      transition: "transform 0.2s ease",
                       "&:hover": {
+                        transform: "scale(1.1)",
                         bgcolor: "primary.dark",
                       },
                     }}
@@ -173,12 +186,14 @@ export default function MyCartPage() {
                     <AddIcon />
                   </IconButton>
                   <IconButton
-                    color="primary"
+                    color="secondary"
                     sx={{
                       borderRadius: 1,
                       bgcolor: "secondary.light",
                       color: "white",
+                      transition: "transform 0.2s ease",
                       "&:hover": {
+                        transform: "scale(1.1)",
                         bgcolor: "secondary.dark",
                       },
                     }}
@@ -193,12 +208,12 @@ export default function MyCartPage() {
             <Button
               variant="contained"
               component={Link}
-              href="/order-status"
+              href={`/dashboard/user/check-out/${cart.id}`}
               endIcon={<ArrowForwardIcon />}
               sx={{
                 mt: { xs: 2, md: 0 },
                 background: "primary.main",
-                color: "text.disabled",
+                color: "white",
                 paddingX: 4,
                 paddingY: 1.5,
                 fontWeight: 600,
@@ -206,14 +221,14 @@ export default function MyCartPage() {
                 boxShadow:
                   "0px 3px 5px -1px rgba(0,123,255,0.2), 0px 6px 10px 0px rgba(0,123,255,0.14), 0px 1px 18px 0px rgba(0,123,255,0.12)",
                 transition: "background 0.3s ease, transform 0.3s ease",
-                whiteSpace: "nowrap", // Ensures the text stays on one line
+                whiteSpace: "nowrap",
                 "&:hover": {
                   background: "primary.dark",
                   transform: "translateY(-2px)",
                   boxShadow:
                     "0px 5px 15px -3px rgba(0,123,255,0.2), 0px 8px 20px 2px rgba(0,123,255,0.14), 0px 3px 22px 4px rgba(0,123,255,0.12)",
                 },
-                alignSelf: "center", // Center align the button
+                alignSelf: "center",
               }}
             >
               Order Now

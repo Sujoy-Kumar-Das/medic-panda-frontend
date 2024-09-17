@@ -7,7 +7,7 @@ import { Box, Chip, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
 export default function CurrentOrdersTab() {
-  const { data, isLoading } = useGetAllOrderQuery({ isPaid: true });
+  const { data, isLoading } = useGetAllOrderQuery({ status: "shifted" });
 
   if (isLoading) {
     return <DashboardLoader />;
@@ -81,29 +81,6 @@ export default function CurrentOrdersTab() {
               </Typography>
             </Stack>
 
-            <Stack direction="column" spacing={1.5}>
-              <Typography variant="body1" fontWeight={600}>
-                Payment
-              </Typography>
-              {order.isPaid ? (
-                <Chip label="Paid" color="primary" size="small" disabled />
-              ) : (
-                <Typography
-                  color="primary"
-                  variant="body2"
-                  sx={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  Pay Now
-                </Typography>
-              )}
-            </Stack>
-
             <Stack
               direction="row"
               alignItems="center"
@@ -120,7 +97,7 @@ export default function CurrentOrdersTab() {
               }}
             >
               <Typography variant="body1" fontWeight={600}>
-                Order Status
+                Track Product
               </Typography>
               <ArrowForwardIosOutlinedIcon fontSize="small" />
             </Stack>

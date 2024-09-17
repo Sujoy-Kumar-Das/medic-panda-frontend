@@ -6,15 +6,15 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
-export default function CurrentOrdersTab() {
-  const { data, isLoading } = useGetAllOrderQuery({ isPaid: true });
+export default function UnpaidOrderTab() {
+  const { data, isLoading } = useGetAllOrderQuery({ isPaid: false });
 
   if (isLoading) {
     return <DashboardLoader />;
   }
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} p={3}>
       {data?.map((order) => (
         <Box
           key={order._id}
@@ -83,25 +83,9 @@ export default function CurrentOrdersTab() {
 
             <Stack direction="column" spacing={1.5}>
               <Typography variant="body1" fontWeight={600}>
-                Payment
+                Cancel
               </Typography>
-              {order.isPaid ? (
-                <Chip label="Paid" color="primary" size="small" disabled />
-              ) : (
-                <Typography
-                  color="primary"
-                  variant="body2"
-                  sx={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  Pay Now
-                </Typography>
-              )}
+              <Chip label="Cancel" color="error" size="small" />
             </Stack>
 
             <Stack
@@ -120,7 +104,7 @@ export default function CurrentOrdersTab() {
               }}
             >
               <Typography variant="body1" fontWeight={600}>
-                Order Status
+                Pay Now
               </Typography>
               <ArrowForwardIosOutlinedIcon fontSize="small" />
             </Stack>

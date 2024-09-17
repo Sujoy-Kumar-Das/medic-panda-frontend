@@ -2,12 +2,10 @@
 import DashboardLoader from "@/components/shared/loader/DashboardLoader";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
 import formatOrderDate from "@/utils/format.order.date";
-import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import { Box, Chip, Stack, Typography } from "@mui/material";
-import Link from "next/link";
+import { Box, Stack, Typography } from "@mui/material";
 
-export default function CurrentOrdersTab() {
-  const { data, isLoading } = useGetAllOrderQuery({ isPaid: true });
+export default function ReturnedOrdersTab() {
+  const { data, isLoading } = useGetAllOrderQuery({ status: "returned" });
 
   if (isLoading) {
     return <DashboardLoader />;
@@ -56,6 +54,15 @@ export default function CurrentOrdersTab() {
 
             <Stack direction="column" spacing={1.5} alignItems="center">
               <Typography variant="body1" fontWeight={600}>
+                Returned On
+              </Typography>
+              <Typography color="text.secondary" variant="body2">
+                {formatOrderDate(order.createdAt)}
+              </Typography>
+            </Stack>
+
+            <Stack direction="column" spacing={1.5} alignItems="center">
+              <Typography variant="body1" fontWeight={600}>
                 Price
               </Typography>
               <Typography color="text.secondary" variant="body2">
@@ -81,48 +88,13 @@ export default function CurrentOrdersTab() {
               </Typography>
             </Stack>
 
-            <Stack direction="column" spacing={1.5}>
+            <Stack direction="column" spacing={1.5} alignItems="center">
               <Typography variant="body1" fontWeight={600}>
-                Payment
+                Refund
               </Typography>
-              {order.isPaid ? (
-                <Chip label="Paid" color="primary" size="small" disabled />
-              ) : (
-                <Typography
-                  color="primary"
-                  variant="body2"
-                  sx={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  Pay Now
-                </Typography>
-              )}
-            </Stack>
-
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing={1.5}
-              component={Link}
-              href={`/order/${order._id}`}
-              sx={{
-                textDecoration: "none",
-                color: "primary.main",
-                "&:hover": {
-                  color: "secondary.main",
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              <Typography variant="body1" fontWeight={600}>
-                Order Status
+              <Typography color="text.secondary" variant="body2">
+                ${order.total.toFixed(2)}
               </Typography>
-              <ArrowForwardIosOutlinedIcon fontSize="small" />
             </Stack>
           </Stack>
         </Box>

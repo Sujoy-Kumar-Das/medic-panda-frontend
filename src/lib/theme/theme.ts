@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -21,6 +21,16 @@ const theme = createTheme({
     background: {
       default: "#F4F6F8",
       paper: "#FFFFFF",
+    },
+    gradients: {
+      totalPrice: "linear-gradient(45deg, #ff7e5f 30%, #feb47b 90%)",
+      totalOrders: "linear-gradient(45deg, #6a11cb 30%, #2575fc 90%)",
+      totalWishlist: "linear-gradient(45deg, #43cea2 30%, #185a9d 90%)",
+      cartItems: "linear-gradient(45deg, #ff4e50 30%, #f9d423 90%)",
+      pendingOrders: "linear-gradient(45deg, #24c6dc 30%, #514a9d 90%)",
+      shippedOrders: "linear-gradient(45deg, #f12711 30%, #f5af19 90%)",
+      deliveredOrders: "linear-gradient(45deg, #00c6ff 30%, #0072ff 90%)",
+      canceledOrders: "linear-gradient(45deg, #ee0979 30%, #ff6a00 90%)",
     },
   },
   components: {
@@ -54,6 +64,7 @@ const theme = createTheme({
           borderRadius: "12px",
           boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
           padding: "20px",
+          color: "#FFFFFF",
         },
       },
     },

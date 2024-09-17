@@ -1,7 +1,5 @@
-export default function LoadingPage() {
-  return (
-    <div>
-      <h1>This is loading</h1>
-    </div>
-  );
+import Loader from "@/components/shared/loader/Loader";
+
+export default function loading() {
+  return <Loader />;
 }

@@ -3,7 +3,7 @@ import PaymentTab from "./Components/PaymentTab";
 
 export default function page() {
   return (
-    <Container>
+    <Container sx={{ py: 3 }}>
       <Box mb={3}>
         <Typography component="h1" variant="h4" color="text.primary">
           Payment History And Installments

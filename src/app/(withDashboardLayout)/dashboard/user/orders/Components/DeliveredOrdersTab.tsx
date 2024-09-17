@@ -3,16 +3,15 @@ import DashboardLoader from "@/components/shared/loader/DashboardLoader";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
 import formatOrderDate from "@/utils/format.order.date";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import { Box, Chip, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
-export default function CurrentOrdersTab() {
-  const { data, isLoading } = useGetAllOrderQuery({ isPaid: true });
+export default function DeliveredOrdersTab() {
+  const { data, isLoading } = useGetAllOrderQuery({ status: "derived" });
 
   if (isLoading) {
     return <DashboardLoader />;
   }
-
   return (
     <Stack spacing={3}>
       {data?.map((order) => (
@@ -56,6 +55,15 @@ export default function CurrentOrdersTab() {
 
             <Stack direction="column" spacing={1.5} alignItems="center">
               <Typography variant="body1" fontWeight={600}>
+                Delivered On
+              </Typography>
+              <Typography color="text.secondary" variant="body2">
+                {formatOrderDate(order.createdAt)}
+              </Typography>
+            </Stack>
+
+            <Stack direction="column" spacing={1.5} alignItems="center">
+              <Typography variant="body1" fontWeight={600}>
                 Price
               </Typography>
               <Typography color="text.secondary" variant="body2">
@@ -81,29 +89,6 @@ export default function CurrentOrdersTab() {
               </Typography>
             </Stack>
 
-            <Stack direction="column" spacing={1.5}>
-              <Typography variant="body1" fontWeight={600}>
-                Payment
-              </Typography>
-              {order.isPaid ? (
-                <Chip label="Paid" color="primary" size="small" disabled />
-              ) : (
-                <Typography
-                  color="primary"
-                  variant="body2"
-                  sx={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  Pay Now
-                </Typography>
-              )}
-            </Stack>
-
             <Stack
               direction="row"
               alignItems="center"
@@ -120,7 +105,7 @@ export default function CurrentOrdersTab() {
               }}
             >
               <Typography variant="body1" fontWeight={600}>
-                Order Status
+                Review Now
               </Typography>
               <ArrowForwardIosOutlinedIcon fontSize="small" />
             </Stack>

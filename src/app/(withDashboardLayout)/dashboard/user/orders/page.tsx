@@ -3,13 +3,18 @@ import OrderPageTab from "./Components/OrderPageTab";
 
 export default function OrdersPage() {
   return (
-    <Container>
-      <Box mb={3}>
-        <Typography component="h1" variant="h4" color="text.primary">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
+      <Box mb={4}>
+        <Typography
+          component="h1"
+          variant="h4"
+          color="text.primary"
+          gutterBottom
+        >
           Order History
         </Typography>
-        <Typography component="h1" variant="h6" color="text.secondary">
-          Track, return or purchase items
+        <Typography component="p" variant="h6" color="text.secondary">
+          Track, return, or purchase items
         </Typography>
       </Box>
       <OrderPageTab />
