@@ -1,7 +1,10 @@
+"use client";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   CallOutlined as CallOutlinedIcon,
+  EmailOutlined as EmailOutlinedIcon,
   KeyOutlined as KeyOutlinedIcon,
+  VerifiedOutlined as VerifiedOutlinedIcon,
 } from "@mui/icons-material";
 import {
   Box,
@@ -11,69 +14,190 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
+import UpdatePasswordModal from "./Components/UpdatePasswordModal";
+
 export default function SecurityPage() {
+  const [openPasswordModal, setOpenPasswordModal] = useState(false);
+
+  const handelPasswordModal = () => {
+    setOpenPasswordModal((prev) => !prev);
+  };
   return (
-    <Container>
-      <Box mb={3}>
-        <Typography component="h1" variant="h4" color="text.primary">
-          Security Setting
+    <Container sx={{ py: 4 }}>
+      {/* Page Header */}
+      <Box mb={4} textAlign="center">
+        <Typography
+          component="h1"
+          variant="h4"
+          color="text.primary"
+          gutterBottom
+        >
+          Security Settings
         </Typography>
-        <Typography component="h1" variant="h6" color="text.secondary">
-          Change password and phone number
+        <Typography component="h2" variant="body1" color="text.secondary">
+          Manage your password, contact details, and account security
         </Typography>
       </Box>
-      <Grid container spacing={2}>
+
+      {/* Grid for Security Options */}
+      <Grid container spacing={3}>
+        {/* Email Section */}
         <Grid item xs={12} md={6}>
-          <Typography color="text.secondary" fontSize="16px" mb="2px">
-            Contact Number
+          <Typography color="text.secondary" fontWeight={500} mb={1}>
+            Email
           </Typography>
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            sx={{ bgcolor: "background.paper" }}
-            p={1}
-            borderRadius="6px"
+            sx={{
+              bgcolor: "background.paper",
+              p: 2,
+              borderRadius: "8px",
+              boxShadow: 1,
+            }}
           >
             <Stack direction="row" alignItems="center" spacing={1}>
-              <CallOutlinedIcon
-                sx={{ color: "text.secondary", fontSize: "30px" }}
+              <EmailOutlinedIcon
+                sx={{ color: "primary.main", fontSize: "30px" }}
               />
-              <Typography color="text.secondary" fontSize="16px">
-                01319263016
+              <Typography color="text.primary" fontSize="16px">
+                sujoy@example.com
               </Typography>
             </Stack>
-            <IconButton color="info" sx={{ height: "20px", width: "20px" }}>
+            <IconButton
+              color="primary"
+              sx={{
+                height: "36px",
+                width: "36px",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  bgcolor: "rgba(0,123,255,0.1)",
+                  boxShadow: 3,
+                },
+              }}
+            >
               <AppRegistrationOutlinedIcon />
             </IconButton>
           </Stack>
         </Grid>
+
+        {/* Password Section */}
         <Grid item xs={12} md={6}>
-          <Typography color="text.secondary" fontSize="16px" mb="2px">
+          <Typography color="text.secondary" fontWeight={500} mb={1}>
             Password
           </Typography>
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            sx={{ bgcolor: "background.paper" }}
-            p={1}
-            borderRadius="6px"
+            sx={{
+              bgcolor: "background.paper",
+              p: 2,
+              borderRadius: "8px",
+              boxShadow: 1,
+            }}
           >
             <Stack direction="row" alignItems="center" spacing={1}>
               <KeyOutlinedIcon
-                sx={{ color: "text.secondary", fontSize: "30px" }}
+                sx={{ color: "primary.main", fontSize: "30px" }}
               />
-              <Typography color="text.secondary" fontSize="16px">
+              <Typography color="text.primary" fontSize="16px">
                 ********
               </Typography>
             </Stack>
-            <IconButton color="info" sx={{ height: "20px", width: "20px" }}>
+            <IconButton
+              color="primary"
+              sx={{
+                height: "36px",
+                width: "36px",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  bgcolor: "rgba(0,123,255,0.1)",
+                  boxShadow: 3,
+                },
+              }}
+              onClick={handelPasswordModal}
+            >
               <AppRegistrationOutlinedIcon />
             </IconButton>
           </Stack>
         </Grid>
+
+        {/* Contact Number Section */}
+        <Grid item xs={12} md={6}>
+          <Typography color="text.secondary" fontWeight={500} mb={1}>
+            Contact Number
+          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{
+              bgcolor: "background.paper",
+              p: 2,
+              borderRadius: "8px",
+              boxShadow: 1,
+            }}
+          >
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <CallOutlinedIcon
+                sx={{ color: "primary.main", fontSize: "30px" }}
+              />
+              <Typography color="text.primary" fontSize="16px">
+                01319263016
+              </Typography>
+            </Stack>
+            <IconButton
+              color="primary"
+              sx={{
+                height: "36px",
+                width: "36px",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  bgcolor: "rgba(0,123,255,0.1)",
+                  boxShadow: 3,
+                },
+              }}
+            >
+              <AppRegistrationOutlinedIcon />
+            </IconButton>
+          </Stack>
+        </Grid>
+
+        {/* Verified Status Section */}
+        <Grid item xs={12} md={6}>
+          <Typography color="text.secondary" fontWeight={500} mb={1}>
+            Verified Status
+          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{
+              bgcolor: "background.paper",
+              p: 2,
+              borderRadius: "8px",
+              boxShadow: 1,
+            }}
+          >
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <VerifiedOutlinedIcon
+                sx={{ color: "primary.main", fontSize: "30px" }}
+              />
+              <Typography color="text.primary" fontSize="16px">
+                Verified
+              </Typography>
+            </Stack>
+          </Stack>
+        </Grid>
       </Grid>
+
+      <UpdatePasswordModal
+        open={openPasswordModal}
+        setOpen={setOpenPasswordModal}
+      />
     </Container>
   );
 }

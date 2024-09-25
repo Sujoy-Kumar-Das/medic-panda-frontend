@@ -1,5 +1,6 @@
 "use client";
-import DashboardLoader from "@/components/shared/loader/DashboardLoader";
+import Loader from "@/components/shared/loader/Loader";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
 import formatOrderDate from "@/utils/format.order.date";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -10,7 +11,17 @@ export default function CurrentOrdersTab() {
   const { data, isLoading } = useGetAllOrderQuery({ isPaid: true });
 
   if (isLoading) {
-    return <DashboardLoader />;
+    return <Loader />;
+  }
+
+  if (!data?.length) {
+    return (
+      <NoDataFound
+        link="/product"
+        text="Browse Products"
+        message="No returned orders found at the moment."
+      />
+    );
   }
 
   return (

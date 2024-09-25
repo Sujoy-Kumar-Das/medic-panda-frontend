@@ -1,5 +1,4 @@
 import { IProduct } from "@/types";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
@@ -11,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import WishListButton from "../buttons/WishListButton";
 
 export default function SummerCard({ product }: { product: IProduct }) {
   return (
@@ -113,19 +113,7 @@ export default function SummerCard({ product }: { product: IProduct }) {
         spacing={1}
         overflow={"hidden"}
       >
-        <IconButton
-          color="primary"
-          size="small"
-          className="button"
-          sx={{
-            transform: "translateY(500px)",
-            opacity: 0,
-            transition:
-              "transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s ease",
-          }}
-        >
-          <FavoriteBorderIcon />
-        </IconButton>
+        <WishListButton id={product._id} btnType="Summer" />
         <IconButton
           color="primary"
           size="small"

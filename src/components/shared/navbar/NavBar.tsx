@@ -16,7 +16,7 @@ export default function NavBar() {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const user = true;
+  const user = getUserInfo();
 
   const navItems = (
     <>

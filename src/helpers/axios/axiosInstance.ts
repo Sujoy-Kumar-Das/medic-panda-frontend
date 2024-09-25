@@ -1,7 +1,7 @@
 import { authKey } from "@/constants/auth.key";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import { getFromLocalStorage } from "@/utils/local-storage";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create();
 
@@ -12,7 +12,6 @@ axiosInstance.defaults.timeout = 60000;
 axiosInstance.interceptors.request.use(
   function (config) {
     const accessToken = getFromLocalStorage(authKey);
-
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
@@ -24,25 +23,32 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  //@ts-ignore
-  function (response) {
-    const responseObject: ResponseSuccessType = {
+  function (response: AxiosResponse) {
+    const transformedResponse: ResponseSuccessType = {
       success: response?.data?.success,
       data: response?.data?.data,
       meta: response?.data?.meta,
       message: response?.data?.message,
     };
-
-    return responseObject;
+    return response;
   },
   function (error) {
-    console.log({ error });
+    const errorResponseData = error?.response?.data || {};
+
     const responseObject: IGenericErrorResponse = {
-      statusCode: error?.response?.data?.statusCode || 500,
-      message: error?.response?.data?.message || "Something went wrong!!!",
-      errorMessages: error?.response?.data?.message,
+      success: false,
+      statusCode:
+        errorResponseData?.statusCode || error?.response?.status || 500,
+      message: errorResponseData?.message || "Something went wrong!!!",
+      errorMessages: errorResponseData?.errorMessages || [
+        {
+          path: "unknown",
+          message: errorResponseData?.message || "Unknown error occurred",
+        },
+      ],
     };
-    return responseObject;
+
+    return Promise.reject(responseObject);
   }
 );
 

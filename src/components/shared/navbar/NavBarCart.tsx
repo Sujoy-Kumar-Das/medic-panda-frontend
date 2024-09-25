@@ -1,3 +1,8 @@
+"use client";
+import {
+  useGetAllCartProductsQuery,
+  useRemoveCartProductMutation,
+} from "@/redux/api/addToCart.api";
 import { removeSingleProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,6 +19,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import * as React from "react";
+import { toast } from "sonner";
 import NavUserMenu from "./NavUserMenu";
 
 export default function NavBarCart({ user }: { user: boolean }) {
@@ -21,6 +27,8 @@ export default function NavBarCart({ user }: { user: boolean }) {
     null
   );
   const { carts } = useAppSelector((state) => state.cart);
+  const { data, isLoading } = useGetAllCartProductsQuery(undefined);
+  const [removeCartItemFromDB] = useRemoveCartProductMutation();
   const dispatch = useAppDispatch();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -31,8 +39,22 @@ export default function NavBarCart({ user }: { user: boolean }) {
     setAnchorElUser(null);
   };
 
-  const handleRemoveFromCart = (id: string) => {
-    dispatch(removeSingleProduct({ id }));
+  const handleRemoveFromCart = async (id: string) => {
+    // remove from local storage
+    if (!user) {
+      dispatch(removeSingleProduct({ id }));
+      return;
+    }
+
+    // remove from db
+    const res = await removeCartItemFromDB({
+      product: id,
+      quantity: 1,
+    }).unwrap();
+
+    if (res._id) {
+      toast.success("Product removed from cart.");
+    }
   };
 
   return (
@@ -55,12 +77,12 @@ export default function NavBarCart({ user }: { user: boolean }) {
               }}
             >
               <ShoppingCartIcon />
-              {carts.length >= 1 && (
+              {data?.length >= 1 && (
                 <Typography
                   color="success"
                   sx={{ position: "absolute", top: -3, right: 1 }}
                 >
-                  {carts.length}
+                  {data.length}
                 </Typography>
               )}
             </IconButton>
@@ -115,75 +137,146 @@ export default function NavBarCart({ user }: { user: boolean }) {
         onClose={handleCloseUserMenu}
       >
         <Box sx={{ padding: 2 }}>
-          {carts.length ? (
-            carts.map((cart) => (
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                key={cart.id}
-                sx={{
-                  mb: 2,
-                  "&:last-child": {
-                    mb: 0,
-                  },
-                }}
-              >
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Avatar
-                    alt={cart.name}
-                    src={cart.thumbnail || "/static/images/avatar/2.jpg"}
-                    sx={{ width: 56, height: 56 }}
-                  />
-                  <Box>
-                    <Typography
-                      component="h6"
-                      variant="subtitle1"
-                      fontWeight={500}
-                      sx={{ mb: 0.5 }}
-                    >
-                      {cart.name}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ mb: 0.5 }}
-                    >
-                      ${cart.totalPrice?.toFixed(2)}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      Quantity: {cart.quantity}
-                    </Typography>
-                  </Box>
-                </Stack>
-                <IconButton
-                  onClick={() => handleRemoveFromCart(cart.id)}
-                  color="error"
-                  sx={{
-                    transition: "background-color 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 0, 0, 0.1)",
-                    },
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Stack>
-            ))
-          ) : (
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign="center"
-              sx={{ p: 2 }}
-            >
-              Your cart is empty.
+          {isLoading ? (
+            <Typography variant="body2" textAlign="center">
+              Loading cart...
             </Typography>
+          ) : (
+            <>
+              {user && data?.length ? (
+                data.map((cart) => (
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    key={cart._id}
+                    sx={{
+                      mb: 2,
+                      "&:last-child": {
+                        mb: 0,
+                      },
+                    }}
+                  >
+                    <Stack direction="row" alignItems="center" spacing={2}>
+                      <Avatar
+                        alt={cart?.product?.name}
+                        src={
+                          cart?.product?.thumbnail ||
+                          "/static/images/avatar/2.jpg"
+                        }
+                        sx={{ width: 56, height: 56 }}
+                      />
+                      <Box>
+                        <Typography
+                          component="h6"
+                          variant="subtitle1"
+                          fontWeight={500}
+                          sx={{ mb: 0.5 }}
+                        >
+                          {cart?.product?.name}
+                        </Typography>
+                        <Typography
+                          component="p"
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ mb: 0.5 }}
+                        >
+                          ${cart.totalPrice?.toFixed(2)}
+                        </Typography>
+                        <Typography
+                          component="p"
+                          variant="body2"
+                          color="text.secondary"
+                        >
+                          Quantity: {cart.quantity}
+                        </Typography>
+                      </Box>
+                    </Stack>
+                    <IconButton
+                      onClick={() => handleRemoveFromCart(cart.product)}
+                      color="error"
+                      sx={{
+                        transition: "background-color 0.3s ease",
+                        "&:hover": {
+                          backgroundColor: "rgba(255, 0, 0, 0.1)",
+                        },
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Stack>
+                ))
+              ) : !user && carts.length ? (
+                carts.map((cart) => (
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    key={cart.id}
+                    sx={{
+                      mb: 2,
+                      "&:last-child": {
+                        mb: 0,
+                      },
+                    }}
+                  >
+                    <Stack direction="row" alignItems="center" spacing={2}>
+                      <Avatar
+                        alt={cart?.product?.name}
+                        src={cart.thumbnail || "/static/images/avatar/2.jpg"}
+                        sx={{ width: 56, height: 56 }}
+                      />
+                      <Box>
+                        <Typography
+                          component="h6"
+                          variant="subtitle1"
+                          fontWeight={500}
+                          sx={{ mb: 0.5 }}
+                        >
+                          {cart?.product?.name}
+                        </Typography>
+                        <Typography
+                          component="p"
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ mb: 0.5 }}
+                        >
+                          ${cart.totalPrice?.toFixed(2)}
+                        </Typography>
+                        <Typography
+                          component="p"
+                          variant="body2"
+                          color="text.secondary"
+                        >
+                          Quantity: {cart.quantity}
+                        </Typography>
+                      </Box>
+                    </Stack>
+                    <IconButton
+                      onClick={() => handleRemoveFromCart(cart.id)}
+                      color="error"
+                      sx={{
+                        transition: "background-color 0.3s ease",
+                        "&:hover": {
+                          backgroundColor: "rgba(255, 0, 0, 0.1)",
+                        },
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Stack>
+                ))
+              ) : (
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  textAlign="center"
+                  sx={{ p: 2 }}
+                >
+                  Your cart is empty.
+                </Typography>
+              )}
+            </>
           )}
           <Divider sx={{ my: 2 }} />
           <Button

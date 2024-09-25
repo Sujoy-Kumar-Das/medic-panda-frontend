@@ -1,5 +1,6 @@
 "use client";
 import DashboardLoader from "@/components/shared/loader/DashboardLoader";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
 import formatOrderDate from "@/utils/format.order.date";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -11,6 +12,16 @@ export default function UnpaidOrderTab() {
 
   if (isLoading) {
     return <DashboardLoader />;
+  }
+
+  if (!data?.length) {
+    return (
+      <NoDataFound
+        link="/product"
+        text="Browse Products"
+        message="No returned orders found at the moment."
+      />
+    );
   }
 
   return (

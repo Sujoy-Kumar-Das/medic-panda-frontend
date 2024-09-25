@@ -1,5 +1,5 @@
 import { IProduct } from "@/types/product.type";
-import { FavoriteBorder, Visibility } from "@mui/icons-material";
+import { Visibility } from "@mui/icons-material";
 import {
   Box,
   Chip,
@@ -10,10 +10,11 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import ProductButton from "./ProductButton";
+import WishListButton from "../../buttons/WishListButton";
+import AddToCartButton from "./AddToCartButton";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
-  const { thumbnail, name, discountPercentage, price, discountPrice } = product;
+  const { thumbnail, name, price, discount, _id } = product;
 
   return (
     <Box
@@ -57,9 +58,9 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           layout="responsive"
           objectFit="cover"
           objectPosition="center"
-          height={500}
-          width={500}
           alt={name}
+          width={500}
+          height={500}
         />
       </Box>
 
@@ -80,17 +81,19 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           {name}
         </Typography>
 
-        <Stack direction={"row"} gap={0.5} justifyContent={"center"}>
+        <Stack direction="row" gap={0.5} justifyContent="center">
           <Typography
             variant="body1"
             sx={{
-              color: discountPrice ? "text.secondary" : "text.primary",
-              textDecoration: discountPrice ? "line-through" : "none",
+              color: discount?.discountPrice
+                ? "text.secondary"
+                : "text.primary",
+              textDecoration: discount?.discountPrice ? "line-through" : "none",
             }}
           >
             ${price}
           </Typography>
-          {discountPrice && (
+          {discount?.discountPrice && (
             <Typography
               variant="body1"
               sx={{
@@ -99,11 +102,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                 textAlign: "center",
               }}
             >
-              ${discountPrice}
+              ${discount.discountPrice}
             </Typography>
           )}
         </Stack>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
           <Rating value={4} readOnly />
         </Box>
       </Box>
@@ -126,20 +129,19 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         }}
         className="cardHover"
       >
-        <IconButton color="primary">
-          <FavoriteBorder />
-        </IconButton>
-        <ProductButton product={product} />
+        <WishListButton id={_id} />
+        <AddToCartButton product={product} />
         <IconButton
           color="primary"
           component={Link}
           href={`/product/${product._id}`}
+          aria-label="view product"
         >
           <Visibility />
         </IconButton>
       </Stack>
 
-      {discountPercentage && (
+      {discount?.discountStatus && (
         <Stack
           direction="row"
           spacing={0.5}
@@ -152,7 +154,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             sx={{ fontWeight: "bold", borderRadius: 1 }}
           />
           <Chip
-            label={`${discountPercentage}% off`}
+            label={`${discount.percentage}% off`}
             color="secondary"
             size="small"
             sx={{ fontWeight: "bold", borderRadius: 1 }}

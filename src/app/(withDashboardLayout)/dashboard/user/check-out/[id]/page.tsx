@@ -2,10 +2,11 @@
 import image from "@/assets/checkout-image.png";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import { useGetSingleCartProductsQuery } from "@/redux/api/addToCart.api";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import { usePlaceOrderMutation } from "@/redux/api/order.api";
 import { removeSingleProduct } from "@/redux/features/cart.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { orderSchema } from "@/schemas/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -30,12 +31,11 @@ import { toast } from "sonner";
 export default function PlaceOrderPage({ params }: { params: { id: string } }) {
   const [placeOrder, { isLoading }] = usePlaceOrderMutation();
   const { data } = useGetMeQuery(undefined);
-  const { carts } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const router = useRouter();
 
-  const orderItem = carts.find((cart) => cart.id === params.id);
+  const { data: orderItem } = useGetSingleCartProductsQuery(params.id);
 
   const defaultValues = {
     name: data?.name || "",
@@ -48,8 +48,8 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
 
   const handleOrder = async (values: FieldValues) => {
     const orderData = {
-      product: params.id,
-      quantity: orderItem.quantity,
+      product: orderItem?.product?._id,
+      quantity: orderItem.quantity | 1,
     };
 
     const res = await placeOrder(orderData).unwrap();
@@ -69,15 +69,27 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
   return (
     <>
       {data && (
-        <Container maxWidth="lg" sx={{ mt: 8, mb: 6 }}>
-          <Typography
-            variant="h4"
-            align="center"
-            gutterBottom
-            sx={{ fontWeight: "bold" }}
-          >
-            Complete Your Order
-          </Typography>
+        <Container maxWidth="lg" sx={{ mb: 6 }}>
+          <Box py={3} textAlign="center">
+            <Typography
+              component="h1"
+              variant="h4"
+              color="primary"
+              fontWeight="bold"
+            >
+              Complete Your Order
+            </Typography>
+            <Typography component="h2" variant="h6" color="text.secondary">
+              Complete Your Order for Quick Delivery
+            </Typography>
+            <Divider
+              sx={{
+                margin: "20px auto",
+                backgroundColor: "primary.main",
+                height: "2px",
+              }}
+            />
+          </Box>
 
           <PandaForm
             resolver={zodResolver(orderSchema)}
@@ -112,7 +124,11 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                 <CardHeader
                   avatar={<LocalShippingIcon color="primary" />}
                   title="Shipping Address"
-                  titleTypographyProps={{ variant: "h6", fontWeight: "bold" }}
+                  titleTypographyProps={{
+                    variant: "h6",
+                    fontWeight: "bold",
+                    color: "primary.main",
+                  }}
                 />
                 <CardContent>
                   <Grid container spacing={2}>
@@ -187,17 +203,33 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                 <CardHeader
                   avatar={<ShoppingCartIcon color="secondary" />}
                   title={`Order Summary For ${orderItem?.name}`}
-                  titleTypographyProps={{ variant: "h6", fontWeight: "bold" }}
+                  titleTypographyProps={{
+                    variant: "h6",
+                    fontWeight: "bold",
+                    color: "secondary",
+                  }}
                 />
                 <CardContent>
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: 500 }}
+                    color={"secondary"}
+                  >
                     Quantity: {orderItem?.quantity}
                   </Typography>
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    Price: ${orderItem?.price}
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: 500 }}
+                    color={"secondary"}
+                  >
+                    Price: ${orderItem?.product?.price}
                   </Typography>
                   <Divider sx={{ my: 2 }} />
-                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold" }}
+                    color={"secondary"}
+                  >
                     Total: ${orderItem?.totalPrice}
                   </Typography>
                 </CardContent>

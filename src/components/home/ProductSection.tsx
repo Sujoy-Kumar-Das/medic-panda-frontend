@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import ProductCard from "../ui/card/ProductCard";
+import ProductCard from "../ui/card/productCard/ProductCard";
 
 export default async function ProductSection() {
   const { data: products } = await getAllProductService(6);

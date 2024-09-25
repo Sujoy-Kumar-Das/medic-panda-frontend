@@ -1,5 +1,4 @@
 import { IProduct } from "@/types/product.type";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StarIcon from "@mui/icons-material/Star";
@@ -15,13 +14,14 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import WishListButton from "../buttons/WishListButton";
 
 export default function DisCountProductCard({
   product,
 }: {
   product: IProduct;
 }) {
-  const { thumbnail, name, discountPercentage, price, discountPrice } = product;
+  const { thumbnail, name, price, _id, discount } = product;
 
   return (
     <Card
@@ -88,13 +88,17 @@ export default function DisCountProductCard({
             <Typography
               variant="body1"
               sx={{
-                color: discountPrice ? "text.secondary" : "text.primary",
-                textDecoration: discountPrice ? "line-through" : "none",
+                color: discount?.discountPrice
+                  ? "text.secondary"
+                  : "text.primary",
+                textDecoration: discount?.discountPrice
+                  ? "line-through"
+                  : "none",
               }}
             >
               ${price}
             </Typography>
-            {discountPrice && (
+            {discount?.discountStatus && (
               <Typography
                 variant="body1"
                 sx={{
@@ -103,7 +107,7 @@ export default function DisCountProductCard({
                   textAlign: "center",
                 }}
               >
-                ${discountPrice}
+                ${discount?.discountPrice}
               </Typography>
             )}
           </Stack>
@@ -135,26 +139,8 @@ export default function DisCountProductCard({
           mt: "auto",
         }}
       >
-        <IconButton
-          className="button"
-          sx={{
-            color: "primary.main",
-            border: "1px solid #cccccc",
-            height: "40px",
-            width: "40px",
-            padding: "10px",
-            transition: "transform 0.3s ease, opacity 0.3s ease",
-            transform: "translateX(100%)",
-            opacity: 0,
-            "&:hover": {
-              color: "text.disabled",
-              borderColor: "primary.main",
-              transform: "scale(1.1) translateX(0)",
-            },
-          }}
-        >
-          <FavoriteBorderIcon />
-        </IconButton>
+        <WishListButton btnType="Discount" id={_id} />
+
         <IconButton
           className="button"
           sx={{

@@ -1,10 +1,10 @@
+import ProductSlider from "@/lib/sliders/ProductSlider";
 import { getAllProductService } from "@/services/actions/product.service";
 import { IProduct } from "@/types/product.type";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import DisCountProductCard from "../ui/card/DisCountProductCard";
-import ProductSlider from "@/lib/sliders/ProductSlider";
 
 export default async function DiscountProductSection() {
   const { data: products } = await getAllProductService(6);

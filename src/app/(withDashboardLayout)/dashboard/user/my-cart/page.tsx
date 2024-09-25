@@ -1,9 +1,12 @@
 "use client";
+import Loader from "@/components/shared/loader/Loader";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
+import { useGetAllCartProductsQuery } from "@/redux/api/addToCart.api";
 import {
   decreaseQuantity,
   increaseQuantity,
 } from "@/redux/features/cart.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { keyframes } from "@emotion/react";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -43,7 +46,7 @@ const scaleUp = keyframes`
 
 export default function MyCartPage() {
   const dispatch = useAppDispatch();
-  const { carts } = useAppSelector((state) => state.cart);
+  const { data: carts, isLoading } = useGetAllCartProductsQuery(undefined);
 
   const handleIncrementQuantity = (id: string) => {
     dispatch(increaseQuantity({ id }));
@@ -52,6 +55,20 @@ export default function MyCartPage() {
   const handleDecrementQuantity = (id: string) => {
     dispatch(decreaseQuantity({ id }));
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!carts?.length) {
+    return (
+      <NoDataFound
+        link="/product"
+        message="Your cart is currently empty"
+        text="Continue Shopping"
+      />
+    );
+  }
 
   return (
     <Container sx={{ mt: 4 }}>
@@ -71,7 +88,7 @@ export default function MyCartPage() {
       </Box>
 
       <Stack direction={"column"} spacing={3}>
-        {carts.map((cart, index) => (
+        {carts?.map((cart, index) => (
           <Box
             key={cart.id}
             sx={{
@@ -101,16 +118,12 @@ export default function MyCartPage() {
               <Grid item xs={12} md={2}>
                 <Image
                   alt="thumbnail"
-                  src={cart.thumbnail}
+                  src={cart?.product?.thumbnail}
                   height={120}
                   width={120}
                   style={{
                     borderRadius: "16px",
                     boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
-                    transition: "transform 0.3s ease",
-                    "&:hover": {
-                      animation: `${scaleUp} 0.3s ease forwards`,
-                    },
                   }}
                 />
               </Grid>
@@ -137,7 +150,7 @@ export default function MyCartPage() {
                   Price
                 </Typography>
                 <Typography fontSize="0.9rem" color="text.secondary">
-                  ${cart.price}
+                  ${cart?.product?.price}
                 </Typography>
               </Grid>
 
@@ -208,7 +221,7 @@ export default function MyCartPage() {
             <Button
               variant="contained"
               component={Link}
-              href={`/dashboard/user/check-out/${cart.id}`}
+              href={`/dashboard/user/check-out/${cart._id}`}
               endIcon={<ArrowForwardIcon />}
               sx={{
                 mt: { xs: 2, md: 0 },

@@ -1,5 +1,5 @@
 "use client";
-import ProductCard from "@/components/ui/card/ProductCard";
+import ProductCard from "@/components/ui/card/productCard/ProductCard";
 import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
 import CategoryIcon from "@mui/icons-material/Category";
 import SearchIcon from "@mui/icons-material/Search";
@@ -26,7 +26,6 @@ export default function ProductDrawer({ products, meta }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathName = usePathname();
-
 
   const handleCategoryModal = () => {
     setOpenCategoryModal((prev) => !prev);
