@@ -2,6 +2,13 @@ import { baseApi } from "./base.api";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    updateUserEmail: builder.mutation({
+      query: (data) => ({
+        url: "/user/email/",
+        method: "PATCH",
+        data,
+      }),
+    }),
     getAllUsers: builder.query({
       query: () => ({
         url: "/user",
@@ -17,4 +24,8 @@ const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllUsersQuery, useGetAllBlockedUsersQuery } = userApi;
+export const {
+  useUpdateUserEmailMutation,
+  useGetAllUsersQuery,
+  useGetAllBlockedUsersQuery,
+} = userApi;

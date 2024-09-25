@@ -1,4 +1,5 @@
 "use client";
+import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   CallOutlined as CallOutlinedIcon,
@@ -15,13 +16,20 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import UpdateEmailModal from "./Components/UpdateEmailModal";
 import UpdatePasswordModal from "./Components/UpdatePasswordModal";
 
 export default function SecurityPage() {
+  const { data } = useGetMeQuery(undefined);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
+  const [openEmailModal, setOpenEmailModal] = useState(false);
 
   const handelPasswordModal = () => {
     setOpenPasswordModal((prev) => !prev);
+  };
+
+  const handelEmailModal = () => {
+    setOpenEmailModal((prev) => !prev);
   };
   return (
     <Container sx={{ py: 4 }}>
@@ -63,11 +71,12 @@ export default function SecurityPage() {
                 sx={{ color: "primary.main", fontSize: "30px" }}
               />
               <Typography color="text.primary" fontSize="16px">
-                sujoy@example.com
+                {data?.data?.user?.email}
               </Typography>
             </Stack>
             <IconButton
               color="primary"
+              onClick={handelEmailModal}
               sx={{
                 height: "36px",
                 width: "36px",
@@ -194,10 +203,16 @@ export default function SecurityPage() {
         </Grid>
       </Grid>
 
-      <UpdatePasswordModal
-        open={openPasswordModal}
-        setOpen={setOpenPasswordModal}
-      />
+      {openPasswordModal && (
+        <UpdatePasswordModal
+          open={openPasswordModal}
+          setOpen={setOpenPasswordModal}
+        />
+      )}
+
+      {openEmailModal && (
+        <UpdateEmailModal open={openEmailModal} setOpen={setOpenEmailModal} />
+      )}
     </Container>
   );
 }
