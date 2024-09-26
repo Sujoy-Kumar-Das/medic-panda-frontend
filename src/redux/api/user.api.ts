@@ -21,6 +21,12 @@ const userApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    verifyUser: builder.mutation({
+      query: () => ({
+        url: "/user/verify-email",
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -28,4 +34,5 @@ export const {
   useUpdateUserEmailMutation,
   useGetAllUsersQuery,
   useGetAllBlockedUsersQuery,
+  useVerifyUserMutation,
 } = userApi;

@@ -1,35 +1,39 @@
 import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { useUpdateUserEmailMutation } from "@/redux/api/user.api";
+import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import React, { SetStateAction } from "react";
 import { FieldValue } from "react-hook-form";
 import { toast } from "sonner";
 
-interface IUpdateEmailModalProps {
+interface IUpdateContactModalProps {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultValues = {
-  email: "",
+  contact: "",
 };
 
-export default function UpdateEmailModal({
+export default function UpdateContactNumberModal({
   open,
   setOpen,
-}: IUpdateEmailModalProps) {
-  const [updateEmail, { isLoading }] = useUpdateUserEmailMutation();
+}: IUpdateContactModalProps) {
+  const [updateCustomerInfo, { isLoading }] = useUpdateCustomerInfoMutation();
 
-  const handleUpdateEmail = async (value: FieldValue<{ email: string }>) => {
+  const handleUpdateContact = async (
+    value: FieldValue<{ contact: string }>
+  ) => {
     try {
-      const res = await updateEmail(value).unwrap();
+      const res = await updateCustomerInfo(value).unwrap();
+      console.log({ res });
       if (res.success) {
         toast.success(res.message);
         setOpen((prev) => !prev);
       }
     } catch (error: any) {
+      console.log(error);
       toast.error(error?.message);
     }
   };
@@ -43,27 +47,24 @@ export default function UpdateEmailModal({
           mb={2}
           sx={{ fontWeight: "bold", color: "text.primary" }}
         >
-          Update Your Email
+          Update Your Contact Number
         </Typography>
 
         <PandaForm
-          onSubmit={handleUpdateEmail}
+          onSubmit={handleUpdateContact}
           //   resolver={zodResolver(updatePasswordValidationSchema)}
           defaultValues={defaultValues}
         >
           <PandaInputField
-            type="email"
-            label="Email"
-            name={"email"}
+            type="tel"
+            label="Contact"
+            name={"contact"}
             fullWidth
             sx={{
               mb: 3,
               "& input": {
                 borderColor: "primary.main",
                 transition: "border-color 0.3s ease",
-                "&:hover": {
-                  borderColor: "primary.dark",
-                },
               },
             }}
           />
@@ -72,7 +73,7 @@ export default function UpdateEmailModal({
             {isLoading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Update Email  "
+              "Update"
             )}
           </Button>
         </PandaForm>

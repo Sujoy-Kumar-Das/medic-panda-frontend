@@ -1,12 +1,15 @@
 "use client";
+import Loader from "@/components/shared/loader/Loader";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import { useVerifyUserMutation } from "@/redux/api/user.api";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   CallOutlined as CallOutlinedIcon,
   EmailOutlined as EmailOutlinedIcon,
   KeyOutlined as KeyOutlinedIcon,
-  VerifiedOutlined as VerifiedOutlinedIcon,
 } from "@mui/icons-material";
+import DangerousIcon from "@mui/icons-material/Dangerous";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import {
   Box,
   Container,
@@ -15,15 +18,22 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+import UpdateContactNumberModal from "./Components/UpdateContactNumberModal";
 import UpdateEmailModal from "./Components/UpdateEmailModal";
 import UpdatePasswordModal from "./Components/UpdatePasswordModal";
 
 export default function SecurityPage() {
-  const { data } = useGetMeQuery(undefined);
+  const { data, isLoading } = useGetMeQuery(undefined);
+  const [verifyUser] = useVerifyUserMutation();
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [openEmailModal, setOpenEmailModal] = useState(false);
+  const [openContactModal, setOpenContactModal] = useState(false);
 
+  const router = useRouter();
+  // Handlers for opening/closing modals
   const handelPasswordModal = () => {
     setOpenPasswordModal((prev) => !prev);
   };
@@ -31,6 +41,27 @@ export default function SecurityPage() {
   const handelEmailModal = () => {
     setOpenEmailModal((prev) => !prev);
   };
+
+  const handelContactModal = () => {
+    setOpenContactModal((prev) => !prev);
+  };
+
+  const handelVerification = async () => {
+    try {
+      const res = await verifyUser(null).unwrap();
+      console.log({ res });
+      if (res.success) {
+        toast.message(res.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <Container sx={{ py: 4 }}>
       {/* Page Header */}
@@ -118,6 +149,7 @@ export default function SecurityPage() {
             </Stack>
             <IconButton
               color="primary"
+              onClick={handelPasswordModal}
               sx={{
                 height: "36px",
                 width: "36px",
@@ -127,7 +159,6 @@ export default function SecurityPage() {
                   boxShadow: 3,
                 },
               }}
-              onClick={handelPasswordModal}
             >
               <AppRegistrationOutlinedIcon />
             </IconButton>
@@ -155,10 +186,11 @@ export default function SecurityPage() {
                 sx={{ color: "primary.main", fontSize: "30px" }}
               />
               <Typography color="text.primary" fontSize="16px">
-                01319263016
+                {data?.data?.contact || "N/A"}
               </Typography>
             </Stack>
             <IconButton
+              onClick={handelContactModal}
               color="primary"
               sx={{
                 height: "36px",
@@ -175,10 +207,10 @@ export default function SecurityPage() {
           </Stack>
         </Grid>
 
-        {/* Verified Status Section */}
+        {/* Verification Section */}
         <Grid item xs={12} md={6}>
           <Typography color="text.secondary" fontWeight={500} mb={1}>
-            Verified Status
+            Verify
           </Typography>
           <Stack
             direction="row"
@@ -192,17 +224,39 @@ export default function SecurityPage() {
             }}
           >
             <Stack direction="row" alignItems="center" spacing={1}>
-              <VerifiedOutlinedIcon
-                sx={{ color: "primary.main", fontSize: "30px" }}
-              />
+              {data?.data?.user?.isVerified ? (
+                <VerifiedIcon
+                  sx={{ color: "primary.main", fontSize: "30px" }}
+                />
+              ) : (
+                <DangerousIcon sx={{ color: "red", fontSize: "30px" }} />
+              )}
               <Typography color="text.primary" fontSize="16px">
-                Verified
+                {data?.data?.user?.isVerified ? "Verified" : "Not Verified"}
               </Typography>
             </Stack>
+            {!data?.data?.user?.isVerified && (
+              <IconButton
+                color="primary"
+                sx={{
+                  height: "36px",
+                  width: "36px",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    bgcolor: "rgba(0,123,255,0.1)",
+                    boxShadow: 3,
+                  },
+                }}
+                onClick={handelVerification}
+              >
+                <AppRegistrationOutlinedIcon />
+              </IconButton>
+            )}
           </Stack>
         </Grid>
       </Grid>
 
+      {/* Modals for updating email and password */}
       {openPasswordModal && (
         <UpdatePasswordModal
           open={openPasswordModal}
@@ -212,6 +266,13 @@ export default function SecurityPage() {
 
       {openEmailModal && (
         <UpdateEmailModal open={openEmailModal} setOpen={setOpenEmailModal} />
+      )}
+
+      {openContactModal && (
+        <UpdateContactNumberModal
+          open={openContactModal}
+          setOpen={setOpenContactModal}
+        />
       )}
     </Container>
   );
