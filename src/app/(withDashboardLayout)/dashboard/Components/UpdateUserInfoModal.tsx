@@ -1,11 +1,38 @@
 import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
 import { Box, Button, Typography } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
+import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 
-export default function UpdateUserInfoModal({ open, setOpen, label, value }) {
-  const handleUpdateInfo = (value) => {
-    console.log(value);
+interface IUpdateUserInfo {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  label: string;
+  name: string;
+}
+
+export default function UpdateUserInfoModal({
+  open,
+  setOpen,
+  label,
+  name,
+}: IUpdateUserInfo) {
+  const [updateCustomerInfo, { isLoading }] = useUpdateCustomerInfoMutation();
+
+  const handleUpdateInfo = async (value: FieldValues) => {
+    try {
+      const res = await updateCustomerInfo(value).unwrap();
+      if (res.success) {
+        toast.success(res.message);
+        setOpen((prev) => !prev);
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.message);
+    }
   };
 
   return (
@@ -23,7 +50,7 @@ export default function UpdateUserInfoModal({ open, setOpen, label, value }) {
         <PandaForm onSubmit={handleUpdateInfo}>
           <PandaInputField
             type="text"
-            name={label}
+            name={name}
             fullWidth
             sx={{
               mb: 3,
