@@ -2,7 +2,7 @@ import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -82,8 +82,13 @@ export default function UpdateUserInfoModal({
                 boxShadow: "0px 8px 25px rgba(0, 123, 255, 0.3)",
               },
             }}
+            disabled={isLoading}
           >
-            Update
+            {isLoading ? (
+              <CircularProgress size={24} sx={{ color: "#fff" }} />
+            ) : (
+              "Update"
+            )}
           </Button>
         </PandaForm>
       </Box>

@@ -1,18 +1,21 @@
 "use client";
 
 import DashboardLoader from "@/components/shared/loader/DashboardLoader";
+import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import { imageUploader } from "@/utils/imageUploader";
 import {
   HomeOutlined as HomeOutlinedIcon,
   PersonOutlineOutlined as PersonOutlineOutlinedIcon,
   SignpostOutlined as SignpostOutlinedIcon,
+  CallOutlined as CallOutlinedIcon,
   Verified,
 } from "@mui/icons-material";
 import ApartmentIcon from "@mui/icons-material/Apartment";
-import DangerousIcon from "@mui/icons-material/Dangerous";
 import PublicIcon from "@mui/icons-material/Public";
 import {
   Box,
+  Button,
   Container,
   Grid,
   Paper,
@@ -22,6 +25,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
 import UpdateUserInfoModal from "./Components/UpdateUserInfoModal";
 import UserInfoCard from "./Components/UserInfoCard";
 
@@ -31,9 +35,15 @@ interface Field {
 }
 
 export default function MyProfilePage() {
+  // get user data
   const { data, isLoading } = useGetMeQuery(undefined);
+  // state for handle modal
   const [openModal, setOpenModal] = useState(false);
   const [currentField, setCurrentField] = useState<Field | null>(null);
+
+  // update user redux hook
+  const [updateCustomerImage, { isLoading: imageLoading }] =
+    useUpdateCustomerInfoMutation();
 
   const handleOpenModal = (field: Field) => {
     setCurrentField(field);
@@ -48,6 +58,12 @@ export default function MyProfilePage() {
       name: "name",
       icon: PersonOutlineOutlinedIcon,
       value: user?.name,
+    },
+    {
+      label: "Contact",
+      name: "contact",
+      icon: CallOutlinedIcon,
+      value: user?.contact,
     },
     {
       label: "City",
@@ -75,6 +91,39 @@ export default function MyProfilePage() {
     },
   ];
 
+  // Change image handler
+  const handleChangeImage = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    try {
+      const file = event.target.files?.[0];
+
+      if (!file) {
+        toast.error("No file selected. Please choose an image.");
+        return;
+      }
+
+      const imageURL = await imageUploader(file);
+
+      if (!imageURL) {
+        toast.error("Image upload failed. Please try again.");
+        return;
+      }
+
+      const res = await updateCustomerImage({ photo: imageURL }).unwrap();
+
+      if (res?.success) {
+        toast.success("Profile image uploaded successfully.");
+      } else {
+        toast.error("Failed to update profile image.");
+      }
+    } catch (error) {
+      toast.error(
+        "An error occurred while uploading the image. Please try again."
+      );
+    }
+  };
+
   if (isLoading) {
     return <DashboardLoader />;
   }
@@ -92,15 +141,22 @@ export default function MyProfilePage() {
               boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.2)",
               marginBottom: 4,
               width: "100%",
+              transition: "all 0.3s ease-in-out",
             }}
           >
-            <Stack
-              direction="row"
-              alignItems="center"
-              gap={3}
-              position="relative"
-            >
-              <Box sx={{ position: "relative", display: "inline-block" }}>
+            <Stack direction="row" alignItems="center" gap={3}>
+              {/* Image with upload hover */}
+              <Box
+                sx={{
+                  position: "relative",
+                  width: 100,
+                  height: 100,
+                  "&:hover .upload-btn": {
+                    opacity: 1,
+                    visibility: "visible",
+                  },
+                }}
+              >
                 <Image
                   alt="User image"
                   src={user?.photo}
@@ -115,45 +171,67 @@ export default function MyProfilePage() {
                     borderRadius: "50%",
                   }}
                 />
-                {user.user.isVerified ? (
-                  <Tooltip title="Verified">
-                    <Verified
-                      sx={{
-                        fontSize: 28,
-                        color: "#007bff",
-                        position: "absolute",
-                        top: -1,
-                        right: -5,
-                        background: "#fff",
-                        borderRadius: "50%",
-                        padding: "2px",
-                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-                      }}
+                <>
+                  <Box
+                    className="upload-btn"
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      opacity: 0,
+                      visibility: "hidden",
+                      transition: "opacity 0.3s ease-in-out",
+                    }}
+                  >
+                    <input
+                      accept="image/*"
+                      id="upload-image"
+                      type="file"
+                      name="photo"
+                      style={{ display: "none" }}
+                      onChange={handleChangeImage}
                     />
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="Verified">
-                    <DangerousIcon
-                      sx={{
-                        fontSize: 28,
-                        color: "red",
-                        position: "absolute",
-                        top: -1,
-                        right: -5,
-                        background: "#fff",
-                        borderRadius: "50%",
-                        padding: "2px",
-                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-                      }}
-                    />
-                  </Tooltip>
-                )}
+                    <label htmlFor="upload-image">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        component="span"
+                        sx={{
+                          padding: "6px 12px",
+                          borderRadius: "50px",
+                        }}
+                      >
+                        Change
+                      </Button>
+                    </label>
+                  </Box>
+                </>
               </Box>
+
+              {/* User Info */}
               <Box>
                 <Stack direction="row" alignItems="center" gap={1}>
-                  <Typography variant="h4" gutterBottom>
+                  <Typography
+                    variant="h4"
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
                     Welcome, {user?.name || "User"}!
                   </Typography>
+                  {user?.user?.isVerified && (
+                    <Tooltip title="Verified">
+                      <Verified
+                        sx={{
+                          fontSize: 28,
+                          color: "#007bff",
+                          background: "#fff",
+                          borderRadius: "50%",
+                          padding: "2px",
+                          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                        }}
+                      />
+                    </Tooltip>
+                  )}
                 </Stack>
                 <Typography variant="subtitle1" sx={{ textTransform: "none" }}>
                   {user?.user?.email || "No Email Provided"}
@@ -167,7 +245,8 @@ export default function MyProfilePage() {
               </Box>
             </Stack>
           </Paper>
-          <Grid container spacing={2}>
+
+          <Grid container spacing={3}>
             {userFields.map((field, index) => (
               <UserInfoCard
                 key={index}
@@ -185,6 +264,7 @@ export default function MyProfilePage() {
           </Grid>
         </Box>
       </Stack>
+
       {currentField && (
         <UpdateUserInfoModal
           open={openModal}

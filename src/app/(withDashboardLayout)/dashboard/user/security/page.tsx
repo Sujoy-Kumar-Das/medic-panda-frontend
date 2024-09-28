@@ -4,7 +4,6 @@ import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import { useVerifyUserMutation } from "@/redux/api/user.api";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
-  CallOutlined as CallOutlinedIcon,
   EmailOutlined as EmailOutlinedIcon,
   KeyOutlined as KeyOutlinedIcon,
 } from "@mui/icons-material";
@@ -21,7 +20,6 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import UpdateContactNumberModal from "./Components/UpdateContactNumberModal";
 import UpdateEmailModal from "./Components/UpdateEmailModal";
 import UpdatePasswordModal from "./Components/UpdatePasswordModal";
 
@@ -30,7 +28,6 @@ export default function SecurityPage() {
   const [verifyUser] = useVerifyUserMutation();
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [openEmailModal, setOpenEmailModal] = useState(false);
-  const [openContactModal, setOpenContactModal] = useState(false);
 
   const router = useRouter();
   // Handlers for opening/closing modals
@@ -40,10 +37,6 @@ export default function SecurityPage() {
 
   const handelEmailModal = () => {
     setOpenEmailModal((prev) => !prev);
-  };
-
-  const handelContactModal = () => {
-    setOpenContactModal((prev) => !prev);
   };
 
   const handelVerification = async () => {
@@ -165,48 +158,6 @@ export default function SecurityPage() {
           </Stack>
         </Grid>
 
-        {/* Contact Number Section */}
-        <Grid item xs={12} md={6}>
-          <Typography color="text.secondary" fontWeight={500} mb={1}>
-            Contact Number
-          </Typography>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{
-              bgcolor: "background.paper",
-              p: 2,
-              borderRadius: "8px",
-              boxShadow: 1,
-            }}
-          >
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <CallOutlinedIcon
-                sx={{ color: "primary.main", fontSize: "30px" }}
-              />
-              <Typography color="text.primary" fontSize="16px">
-                {data?.data?.contact || "N/A"}
-              </Typography>
-            </Stack>
-            <IconButton
-              onClick={handelContactModal}
-              color="primary"
-              sx={{
-                height: "36px",
-                width: "36px",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  bgcolor: "rgba(0,123,255,0.1)",
-                  boxShadow: 3,
-                },
-              }}
-            >
-              <AppRegistrationOutlinedIcon />
-            </IconButton>
-          </Stack>
-        </Grid>
-
         {/* Verification Section */}
         <Grid item xs={12} md={6}>
           <Typography color="text.secondary" fontWeight={500} mb={1}>
@@ -266,13 +217,6 @@ export default function SecurityPage() {
 
       {openEmailModal && (
         <UpdateEmailModal open={openEmailModal} setOpen={setOpenEmailModal} />
-      )}
-
-      {openContactModal && (
-        <UpdateContactNumberModal
-          open={openContactModal}
-          setOpen={setOpenContactModal}
-        />
       )}
     </Container>
   );
