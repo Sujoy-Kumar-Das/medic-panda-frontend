@@ -130,7 +130,7 @@ export default function MyProfilePage() {
 
   return (
     <Container maxWidth="xl" sx={{ width: "100%" }}>
-      <Stack direction="row" justifyContent="center" py={3}>
+      <Stack direction="row" justifyContent="center" mt={3} mb={4}>
         <Box sx={{ width: "100%" }}>
           <Paper
             sx={{

@@ -1,18 +1,33 @@
-import { Box, Container, Typography } from "@mui/material";
-import PaymentTab from "./Components/PaymentTab";
+"use client";
+import Header from "@/components/shared/header/Header";
+import Loader from "@/components/shared/loader/Loader";
+import { useGetPaymentHistoryQuery } from "@/redux/api/payment.api";
+import { Container, Stack } from "@mui/material";
+import PaymentCard from "./Components/PaymentCard";
 
-export default function page() {
+export default function PaymentHistoryPage() {
+  const { data, isLoading } = useGetPaymentHistoryQuery(undefined);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  const paymentHistories = data?.data;
+
   return (
-    <Container sx={{ py: 3 }}>
-      <Box mb={3}>
-        <Typography component="h1" variant="h4" color="text.primary">
-          Payment History And Installments
-        </Typography>
-        <Typography component="h1" variant="h6" color="text.secondary">
-          manage payment history and installments
-        </Typography>
-      </Box>
-      <PaymentTab />
+    <Container>
+      <Header
+        title="Payment History"
+        subtitle="View and track all your past transactions and payment details in one place."
+      />
+
+      <Stack>
+        {paymentHistories?.map((paymentHistory) => (
+          <PaymentCard
+            key={paymentHistory._id}
+            paymentHistory={paymentHistory}
+          />
+        ))}
+      </Stack>
     </Container>
   );
 }

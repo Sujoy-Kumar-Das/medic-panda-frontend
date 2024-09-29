@@ -12,7 +12,7 @@ export default function ReturnedOrdersTab() {
     return <Loader />;
   }
 
-  if (!data?.length) {
+  if (!data?.data?.length) {
     return (
       <NoDataFound
         link="/product"
@@ -24,7 +24,7 @@ export default function ReturnedOrdersTab() {
 
   return (
     <Stack spacing={3}>
-      {data?.map((order) => (
+      {data?.data?.map((order) => (
         <Box
           key={order._id}
           p={3}

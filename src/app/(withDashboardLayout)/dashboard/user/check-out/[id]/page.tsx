@@ -5,9 +5,7 @@ import PandaInputField from "@/components/form/PandaInputField";
 import { useGetSingleCartProductsQuery } from "@/redux/api/addToCart.api";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import { usePlaceOrderMutation } from "@/redux/api/order.api";
-import { removeSingleProduct } from "@/redux/features/cart.slice";
-import { useAppDispatch } from "@/redux/hooks";
-import { orderSchema } from "@/schemas/order.schema";
+import { orderShippingAddressSchema } from "@/schemas/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -30,26 +28,29 @@ import { toast } from "sonner";
 
 export default function PlaceOrderPage({ params }: { params: { id: string } }) {
   const [placeOrder, { isLoading }] = usePlaceOrderMutation();
-  const { data } = useGetMeQuery(undefined);
-  const dispatch = useAppDispatch();
+  const { data: user } = useGetMeQuery(undefined);
 
   const router = useRouter();
 
-  const { data: orderItem } = useGetSingleCartProductsQuery(params.id);
+  const { data } = useGetSingleCartProductsQuery(params.id);
+
+  const userInfo = user?.data;
+  const orderItem = data?.data;
 
   const defaultValues = {
-    name: data?.name || "",
-    email: data?.user?.email || "",
-    street: "",
-    city: "",
-    postalCode: "",
-    country: "",
+    name: userInfo?.name || "",
+    email: userInfo?.user?.email || "",
+    street: userInfo?.address?.street || "",
+    city: userInfo?.address?.city || "",
+    postalCode: userInfo?.address?.postalCode || "",
+    country: userInfo?.address?.country || "",
   };
 
   const handleOrder = async (values: FieldValues) => {
     const orderData = {
       product: orderItem?.product?._id,
-      quantity: orderItem.quantity | 1,
+      quantity: orderItem.quantity || 1,
+      shippingAddress: values,
     };
 
     const res = await placeOrder(orderData).unwrap();
@@ -59,16 +60,13 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
     }
 
     toast.success("Order Placed Successfully.");
-    dispatch(
-      removeSingleProduct({ id: params.id, quantity: orderItem.quantity })
-    );
 
-    router.replace(res.paymentUrl);
+    router.replace(res?.data?.paymentUrl);
   };
 
   return (
     <>
-      {data && (
+      {userInfo && (
         <Container maxWidth="lg" sx={{ mb: 6 }}>
           <Box py={3} textAlign="center">
             <Typography
@@ -92,7 +90,7 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
           </Box>
 
           <PandaForm
-            resolver={zodResolver(orderSchema)}
+            resolver={zodResolver(orderShippingAddressSchema)}
             defaultValues={defaultValues}
             onSubmit={handleOrder}
           >
@@ -138,7 +136,6 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                         name="name"
                         label="Name"
                         fullWidth
-                        required
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -147,7 +144,6 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                         name="email"
                         label="Email"
                         fullWidth
-                        required
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -156,7 +152,6 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                         name="street"
                         label="Street"
                         fullWidth
-                        required
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -165,7 +160,6 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                         name="city"
                         label="City"
                         fullWidth
-                        required
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -174,7 +168,6 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                         name="postalCode"
                         label="Postal Code"
                         fullWidth
-                        required
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -183,7 +176,6 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                         name="country"
                         label="Country"
                         fullWidth
-                        required
                       />
                     </Grid>
                   </Grid>
@@ -202,7 +194,7 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
               >
                 <CardHeader
                   avatar={<ShoppingCartIcon color="secondary" />}
-                  title={`Order Summary For ${orderItem?.name}`}
+                  title={`Order Summary For ${orderItem?.product?.name}`}
                   titleTypographyProps={{
                     variant: "h6",
                     fontWeight: "bold",

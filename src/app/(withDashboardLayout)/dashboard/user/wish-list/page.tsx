@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import {
@@ -11,7 +12,6 @@ import {
   Card,
   CardContent,
   Container,
-  Divider,
   Grid,
   Typography,
 } from "@mui/material";
@@ -36,7 +36,7 @@ export default function WishListPage() {
     return <Loader />;
   }
 
-  if (!data?.length) {
+  if (!data?.data?.length) {
     return (
       <NoDataFound
         link="/product"
@@ -48,29 +48,13 @@ export default function WishListPage() {
 
   return (
     <Container>
-      <Box py={3} textAlign="left">
-        <Typography
-          component="h1"
-          variant="h4"
-          color="primary"
-          fontWeight="bold"
-        >
-          Your Wishlist
-        </Typography>
-        <Typography component="h2" variant="h6" color="text.secondary">
-          Save your favorite items for later purchases
-        </Typography>
-        <Divider
-          sx={{
-            margin: "20px auto",
-            backgroundColor: "primary.main",
-            height: "2px",
-          }}
-        />
-      </Box>
+      <Header
+        title="Your Wishlist"
+        subtitle="Save your favorite products and easily access them for future purchases."
+      />
 
       <Grid container spacing={5}>
-        {data?.map(({ product }) => (
+        {data?.data?.map(({ product }) => (
           <Grid item xs={12} sm={6} md={4} key={product._id}>
             <Card
               sx={{

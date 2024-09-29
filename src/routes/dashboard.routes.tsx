@@ -38,12 +38,6 @@ const dashboardRoutes: IDashboardRoute[] = [
     access: [USER_ROLE.user, USER_ROLE.admin, USER_ROLE.superAdmin],
   },
   {
-    text: "Payment & Instalment",
-    link: "/dashboard/user/payments",
-    icon: <PaidIcon />,
-    access: [USER_ROLE.user],
-  },
-  {
     text: "My Cart",
     link: "/dashboard/user/my-cart",
     icon: <ShoppingCartCheckout />,
@@ -65,12 +59,6 @@ const dashboardRoutes: IDashboardRoute[] = [
     text: "Security & Access",
     link: "/dashboard/user/security",
     icon: <SecurityIcon />,
-    access: [USER_ROLE.user],
-  },
-  {
-    text: "Notification",
-    link: "/dashboard/user/notification",
-    icon: <NotificationsIcon />,
     access: [USER_ROLE.user],
   },
   {
@@ -133,6 +121,18 @@ const dashboardRoutes: IDashboardRoute[] = [
     link: "/dashboard/admin/cancel-orders",
     icon: <CancelOutlinedIcon />,
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
+  },
+  {
+    text: "Payment History",
+    link: "/dashboard/user/payments",
+    icon: <PaidIcon />,
+    access: [USER_ROLE.user],
+  },
+  {
+    text: "Notification",
+    link: "/dashboard/user/notification",
+    icon: <NotificationsIcon />,
+    access: [USER_ROLE.user],
   },
 ];
 

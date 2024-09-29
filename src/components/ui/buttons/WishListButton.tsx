@@ -16,14 +16,13 @@ export default function WishListButton({ id, btnType }: IWishListButtonProps) {
     try {
       const res = await addToWishList({ product: id }).unwrap();
 
-      if (!res.user) {
-        toast.error("Failed to add to your wish list.");
-        return;
+      if (!res.success) {
+        toast.error(res.message);
       }
 
       toast.success("Added to your wish list.");
-    } catch (error) {
-      toast.error("Failed to add to your wish list.");
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

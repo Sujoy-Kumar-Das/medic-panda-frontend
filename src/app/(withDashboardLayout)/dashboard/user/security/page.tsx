@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import { useVerifyUserMutation } from "@/redux/api/user.api";
@@ -9,14 +10,7 @@ import {
 } from "@mui/icons-material";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import {
-  Box,
-  Container,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Container, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -56,21 +50,12 @@ export default function SecurityPage() {
   }
 
   return (
-    <Container sx={{ py: 4 }}>
+    <Container>
       {/* Page Header */}
-      <Box mb={4} textAlign="center">
-        <Typography
-          component="h1"
-          variant="h4"
-          color="text.primary"
-          gutterBottom
-        >
-          Security Settings
-        </Typography>
-        <Typography component="h2" variant="body1" color="text.secondary">
-          Manage your password, contact details, and account security
-        </Typography>
-      </Box>
+      <Header
+        title="Account Security"
+        subtitle="Manage your security settings and protect your account with enhanced security measures."
+      />
 
       {/* Grid for Security Options */}
       <Grid container spacing={3}>

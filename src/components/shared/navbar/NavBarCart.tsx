@@ -77,12 +77,12 @@ export default function NavBarCart({ user }: { user: boolean }) {
               }}
             >
               <ShoppingCartIcon />
-              {data?.length >= 1 && (
+              {data?.data?.length >= 1 && (
                 <Typography
                   color="success"
                   sx={{ position: "absolute", top: -3, right: 1 }}
                 >
-                  {data.length}
+                  {data?.data?.length}
                 </Typography>
               )}
             </IconButton>
@@ -143,8 +143,8 @@ export default function NavBarCart({ user }: { user: boolean }) {
             </Typography>
           ) : (
             <>
-              {user && data?.length ? (
-                data.map((cart) => (
+              {user && data?.data?.length ? (
+                data?.data?.map((cart) => (
                   <Stack
                     direction="row"
                     alignItems="center"

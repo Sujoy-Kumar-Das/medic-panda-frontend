@@ -13,7 +13,7 @@ export default function PendingOrdersTab() {
     return <Loader />;
   }
 
-  if (!data?.length) {
+  if (!data?.data?.length) {
     return (
       <NoDataFound
         link="/product"
@@ -25,7 +25,7 @@ export default function PendingOrdersTab() {
 
   return (
     <Stack>
-      {data?.map((order) => (
+      {data?.data?.map((order) => (
         <Box
           key={order._id}
           p={3}
@@ -127,13 +127,12 @@ export default function PendingOrdersTab() {
                 variant="body2"
                 sx={{
                   cursor: "pointer",
-                  textDecoration: "underline",
                   "&:hover": {
                     color: "secondary.main",
                   },
                 }}
               >
-                Pay Now
+                Paid
               </Typography>
             </Stack>
 

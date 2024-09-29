@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/components/shared/header/Header";
 import DashboardLoader from "@/components/shared/loader/DashboardLoader";
 import { useGetUserMetaQuery } from "@/redux/api/meta.api";
 import {
@@ -7,7 +8,6 @@ import {
   CardContent,
   Container,
   Grid,
-  Paper,
   Typography,
 } from "@mui/material";
 import { keyframes } from "@mui/system";
@@ -94,25 +94,13 @@ export default function UserDashboard() {
   }
 
   return (
-    <Container sx={{ py: 4 }}>
-      <Paper
-        sx={{
-          padding: 3,
-          background: "linear-gradient(135deg, #007bff, #00c8ff)",
-          borderRadius: 2,
-          color: "#ffffff",
-          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
-          marginBottom: 3,
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          Welcome, {userName}!
-        </Typography>
-        <Typography variant="h6">
-          Here’s a quick overview of your current stats and metrics. Explore the
-          dashboard to get more insights about your account.
-        </Typography>
-      </Paper>
+    <Container>
+      <Header
+        title={`Welcome, ${userName}!`}
+        subtitle="Here’s a quick overview of your current stats and metrics. Explore the
+          dashboard to get more insights about your account."
+      />
+
       <Box sx={{ py: 2 }}>
         <Grid container spacing={3}>
           {userMetaData?.map((card, index) => (

@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetAllCartProductsQuery } from "@/redux/api/addToCart.api";
@@ -15,7 +16,6 @@ import {
   Box,
   Button,
   Container,
-  Divider,
   Grid,
   IconButton,
   Stack,
@@ -46,7 +46,7 @@ const scaleUp = keyframes`
 
 export default function MyCartPage() {
   const dispatch = useAppDispatch();
-  const { data: carts, isLoading } = useGetAllCartProductsQuery(undefined);
+  const { data, isLoading } = useGetAllCartProductsQuery(undefined);
 
   const handleIncrementQuantity = (id: string) => {
     dispatch(increaseQuantity({ id }));
@@ -55,6 +55,8 @@ export default function MyCartPage() {
   const handleDecrementQuantity = (id: string) => {
     dispatch(decreaseQuantity({ id }));
   };
+
+  const carts = data?.data;
 
   if (isLoading) {
     return <Loader />;
@@ -71,21 +73,11 @@ export default function MyCartPage() {
   }
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Box mb={4}>
-        <Typography
-          component="h1"
-          variant="h4"
-          color="text.primary"
-          gutterBottom
-        >
-          My Cart
-        </Typography>
-        <Typography component="p" variant="h6" color="text.secondary">
-          Review your cart before placing the order
-        </Typography>
-        <Divider sx={{ mt: 2, mb: 3 }} />
-      </Box>
+    <Container>
+      <Header
+        title="My Cart"
+        subtitle="Review your cart before placing the order"
+      />
 
       <Stack direction={"column"} spacing={3}>
         {carts?.map((cart, index) => (
