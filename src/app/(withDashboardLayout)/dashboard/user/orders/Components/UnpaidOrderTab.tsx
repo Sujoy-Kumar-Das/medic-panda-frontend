@@ -1,20 +1,26 @@
 "use client";
+import ErrorPage from "@/components/shared/error/Error";
 import DashboardLoader from "@/components/shared/loader/DashboardLoader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
+import { IGenericErrorResponse } from "@/types";
 import formatOrderDate from "@/utils/format.order.date";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
 export default function UnpaidOrderTab() {
-  const { data, isLoading } = useGetAllOrderQuery({ isPaid: false });
+  const { data, isLoading, error } = useGetAllOrderQuery({ isPaid: false });
 
   if (isLoading) {
     return <DashboardLoader />;
   }
 
-  if (!data?.data?.length) {
+  if (error) {
+    return <ErrorPage error={error as IGenericErrorResponse} />;
+  }
+
+  if (!data?.length) {
     return (
       <NoDataFound
         link="/product"
@@ -26,7 +32,7 @@ export default function UnpaidOrderTab() {
 
   return (
     <Stack spacing={3} p={3}>
-      {data?.data?.map((order) => (
+      {data?.map((order) => (
         <Box
           key={order._id}
           p={3}

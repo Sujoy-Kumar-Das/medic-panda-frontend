@@ -1,14 +1,16 @@
 "use client";
 import { DashboardDrawer } from "@/components/ui/dashboard/dashboardNavItems/dashboardDrawer/DashboardDrawer";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
+import Link from "next/link";
 import * as React from "react";
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 export default function ResponsiveDrawer({
   children,
@@ -40,22 +42,54 @@ export default function ResponsiveDrawer({
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor: "background.paper",
-          py: 1,
+          backgroundColor: "background.default",
           boxShadow: 0,
           display: { sm: "none" },
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, color: "black" }}
           >
             <MenuIcon />
           </IconButton>
+          <Box
+            component={Link}
+            href={"/"}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              textDecoration: "none",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", py: 2 }}>
+              <Typography
+                component={"h1"}
+                variant="h4"
+                fontWeight={"bold"}
+                color={"text.primary"}
+              >
+                medic
+              </Typography>
+              <Typography
+                component={"h1"}
+                variant="h4"
+                fontWeight={"bold"}
+                color={"primary"}
+              >
+                Panda
+              </Typography>
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
@@ -79,7 +113,7 @@ export default function ResponsiveDrawer({
             },
           }}
         >
-          {DashboardDrawer}
+          <DashboardDrawer />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -92,7 +126,7 @@ export default function ResponsiveDrawer({
           }}
           open
         >
-          {DashboardDrawer}
+          <DashboardDrawer />
         </Drawer>
       </Box>
       <Box
@@ -100,6 +134,7 @@ export default function ResponsiveDrawer({
         sx={{
           flexGrow: 1,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          pt: { xs: "64px", sm: 0 },
         }}
       >
         {children}

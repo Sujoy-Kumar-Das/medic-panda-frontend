@@ -1,8 +1,11 @@
 "use client";
+import ErrorPage from "@/components/shared/error/Error";
 import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import { useVerifyUserMutation } from "@/redux/api/user.api";
+import { IGenericErrorResponse } from "@/types";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   EmailOutlined as EmailOutlinedIcon,
@@ -11,19 +14,18 @@ import {
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Container, Grid, IconButton, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import UpdateEmailModal from "./Components/UpdateEmailModal";
 import UpdatePasswordModal from "./Components/UpdatePasswordModal";
 
 export default function SecurityPage() {
-  const { data, isLoading } = useGetMeQuery(undefined);
-  const [verifyUser] = useVerifyUserMutation();
+  const { data, isLoading, error } = useGetMeQuery(undefined);
+  const [verifyUser, { error: verificationError, isSuccess, isError }] =
+    useVerifyUserMutation();
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [openEmailModal, setOpenEmailModal] = useState(false);
 
-  const router = useRouter();
   // Handlers for opening/closing modals
   const handelPasswordModal = () => {
     setOpenPasswordModal((prev) => !prev);
@@ -34,19 +36,36 @@ export default function SecurityPage() {
   };
 
   const handelVerification = async () => {
-    try {
-      const res = await verifyUser(null).unwrap();
-      console.log({ res });
-      if (res.success) {
-        toast.message(res.message);
-      }
-    } catch (error: any) {
-      toast.error(error.message);
-    }
+    await verifyUser(undefined).unwrap();
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Please check your email and verify.");
+    } else if (isError) {
+      const errorMessage = verificationError as IGenericErrorResponse;
+      toast.error(errorMessage.message);
+    }
+  }, [isSuccess, isError, verificationError]);
+
+  // loader
   if (isLoading) {
     return <Loader />;
+  }
+
+  // error
+  if (error) {
+    return <ErrorPage error={error as IGenericErrorResponse} />;
+  }
+
+  if (!data) {
+    return (
+      <NoDataFound
+        message="You are not authorize."
+        link="/register/login"
+        text="Login "
+      />
+    );
   }
 
   return (
@@ -80,7 +99,7 @@ export default function SecurityPage() {
                 sx={{ color: "primary.main", fontSize: "30px" }}
               />
               <Typography color="text.primary" fontSize="16px">
-                {data?.data?.user?.email}
+                {data?.user?.email}
               </Typography>
             </Stack>
             <IconButton
@@ -160,7 +179,7 @@ export default function SecurityPage() {
             }}
           >
             <Stack direction="row" alignItems="center" spacing={1}>
-              {data?.data?.user?.isVerified ? (
+              {data?.user?.isVerified ? (
                 <VerifiedIcon
                   sx={{ color: "primary.main", fontSize: "30px" }}
                 />
@@ -168,10 +187,10 @@ export default function SecurityPage() {
                 <DangerousIcon sx={{ color: "red", fontSize: "30px" }} />
               )}
               <Typography color="text.primary" fontSize="16px">
-                {data?.data?.user?.isVerified ? "Verified" : "Not Verified"}
+                {data?.user?.isVerified ? "Verified" : "Not Verified"}
               </Typography>
             </Stack>
-            {!data?.data?.user?.isVerified && (
+            {!data?.user?.isVerified && (
               <IconButton
                 color="primary"
                 sx={{

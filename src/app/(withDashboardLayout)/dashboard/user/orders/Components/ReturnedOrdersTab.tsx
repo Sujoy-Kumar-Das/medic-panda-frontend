@@ -1,18 +1,24 @@
 "use client";
+import ErrorPage from "@/components/shared/error/Error";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
+import { IGenericErrorResponse } from "@/types";
 import formatOrderDate from "@/utils/format.order.date";
 import { Box, Stack, Typography } from "@mui/material";
 
 export default function ReturnedOrdersTab() {
-  const { data, isLoading } = useGetAllOrderQuery({ status: "returned" });
+  const { data, isLoading,error } = useGetAllOrderQuery({ status: "returned" });
 
   if (isLoading) {
     return <Loader />;
   }
 
-  if (!data?.data?.length) {
+  if (error) {
+    return <ErrorPage error={error as IGenericErrorResponse} />;
+  }
+
+  if (!data?.length) {
     return (
       <NoDataFound
         link="/product"
@@ -22,9 +28,11 @@ export default function ReturnedOrdersTab() {
     );
   }
 
+
+
   return (
     <Stack spacing={3}>
-      {data?.data?.map((order) => (
+      {data?.map((order) => (
         <Box
           key={order._id}
           p={3}

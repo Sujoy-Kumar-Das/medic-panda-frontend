@@ -1,3 +1,4 @@
+import { TTagTypes } from "../tag-types";
 import { baseApi } from "./base.api";
 
 const customerApi = baseApi.injectEndpoints({
@@ -8,6 +9,7 @@ const customerApi = baseApi.injectEndpoints({
         method: "PATCH",
         data,
       }),
+      invalidatesTags: [TTagTypes.user],
     }),
   }),
 });

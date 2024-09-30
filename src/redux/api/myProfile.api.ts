@@ -1,3 +1,4 @@
+import { TTagTypes } from "../tag-types";
 import { baseApi } from "./base.api";
 
 const myProfileApi = baseApi.injectEndpoints({
@@ -7,6 +8,7 @@ const myProfileApi = baseApi.injectEndpoints({
         url: "/user/get-me",
         method: "GET",
       }),
+      providesTags: [TTagTypes.user],
     }),
   }),
 });

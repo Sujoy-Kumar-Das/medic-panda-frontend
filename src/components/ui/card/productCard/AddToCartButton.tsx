@@ -2,13 +2,16 @@
 import { addProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
 import { getUserInfo } from "@/services/actions/auth.service";
+import { IGenericErrorResponse } from "@/types";
 import { ShoppingCart } from "@mui/icons-material";
 import { Button, CircularProgress } from "@mui/material";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { useAddToCartMutation } from "../../../../redux/api/addToCart.api";
 
 export default function AddToCartButton({ product }) {
-  const [addToCartInDB, { isLoading }] = useAddToCartMutation();
+  const [addToCartInDB, { isLoading, isSuccess, isError, error }] =
+    useAddToCartMutation();
   const user = getUserInfo();
   const dispatch = useAppDispatch();
 
@@ -30,19 +33,20 @@ export default function AddToCartButton({ product }) {
       return;
     }
 
-    try {
-      const res = await addToCartInDB({
-        product: productData._id,
-        quantity: 1,
-      }).unwrap();
-
-      if (res._id) {
-        toast.success("Product added to cart.");
-      }
-    } catch (error) {
-      toast.error("Failed to add product to cart.");
-    }
+    await addToCartInDB({
+      product: productData._id,
+      quantity: 1,
+    }).unwrap();
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Product added to cart.");
+    } else if (isError) {
+      const errorMessage = (error as IGenericErrorResponse).message;
+      toast.error(errorMessage);
+    }
+  }, [isSuccess, isError, error]);
 
   return (
     <Button

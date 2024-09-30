@@ -23,6 +23,7 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
+  //@ts-ignore
   function (response: AxiosResponse) {
     const transformedResponse: ResponseSuccessType = {
       success: response?.data?.success,
@@ -30,7 +31,7 @@ axiosInstance.interceptors.response.use(
       meta: response?.data?.meta,
       message: response?.data?.message,
     };
-    return response;
+    return transformedResponse;
   },
   function (error) {
     const errorResponseData = error?.response?.data || {};

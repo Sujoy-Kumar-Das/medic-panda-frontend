@@ -1,4 +1,5 @@
 "use client";
+import ErrorPage from "@/components/shared/error/Error";
 import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
@@ -8,6 +9,7 @@ import {
   increaseQuantity,
 } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
+import { IGenericErrorResponse } from "@/types";
 import { keyframes } from "@emotion/react";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -46,7 +48,11 @@ const scaleUp = keyframes`
 
 export default function MyCartPage() {
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetAllCartProductsQuery(undefined);
+  const {
+    data: carts,
+    isLoading,
+    error,
+  } = useGetAllCartProductsQuery(undefined);
 
   const handleIncrementQuantity = (id: string) => {
     dispatch(increaseQuantity({ id }));
@@ -56,17 +62,19 @@ export default function MyCartPage() {
     dispatch(decreaseQuantity({ id }));
   };
 
-  const carts = data?.data;
-
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (error) {
+    return <ErrorPage error={error as IGenericErrorResponse} />;
   }
 
   if (!carts?.length) {
     return (
       <NoDataFound
         link="/product"
-        message="Your cart is currently empty"
+        message={"You Don't have any cart items."}
         text="Continue Shopping"
       />
     );
@@ -126,10 +134,10 @@ export default function MyCartPage() {
                   fontSize="1rem"
                   color="text.primary"
                 >
-                  {cart.name}
+                  {cart.product.name}
                 </Typography>
                 <Typography fontSize="0.9rem" color="text.secondary">
-                  {cart.category}
+                  {cart.product.category || "category"}
                 </Typography>
               </Grid>
 

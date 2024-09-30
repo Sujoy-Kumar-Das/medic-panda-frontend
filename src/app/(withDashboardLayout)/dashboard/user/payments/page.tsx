@@ -1,17 +1,26 @@
 "use client";
+import ErrorPage from "@/components/shared/error/Error";
 import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import { useGetPaymentHistoryQuery } from "@/redux/api/payment.api";
+import { IGenericErrorResponse } from "@/types";
 import { Container, Stack } from "@mui/material";
 import PaymentCard from "./Components/PaymentCard";
 
 export default function PaymentHistoryPage() {
-  const { data, isLoading } = useGetPaymentHistoryQuery(undefined);
+  const {
+    data: paymentHistories,
+    isLoading,
+    error,
+  } = useGetPaymentHistoryQuery(undefined);
 
   if (isLoading) {
     return <Loader />;
   }
-  const paymentHistories = data?.data;
+
+  if (error) {
+    return <ErrorPage error={error as IGenericErrorResponse} />;
+  }
 
   return (
     <Container>

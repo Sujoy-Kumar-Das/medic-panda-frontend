@@ -1,3 +1,4 @@
+import { TTagTypes } from "../tag-types";
 import { baseApi } from "./base.api";
 
 const userApi = baseApi.injectEndpoints({
@@ -8,12 +9,14 @@ const userApi = baseApi.injectEndpoints({
         method: "PATCH",
         data,
       }),
+      invalidatesTags: [TTagTypes.user],
     }),
     getAllUsers: builder.query({
       query: () => ({
         url: "/user",
         method: "GET",
       }),
+      providesTags: [TTagTypes.user],
     }),
     getAllBlockedUsers: builder.query({
       query: () => ({
@@ -26,6 +29,7 @@ const userApi = baseApi.injectEndpoints({
         url: "/user/verify-email",
         method: "PATCH",
       }),
+      invalidatesTags: [TTagTypes.user],
     }),
   }),
 });

@@ -36,7 +36,7 @@ export default function WishListPage() {
     return <Loader />;
   }
 
-  if (!data?.data?.length) {
+  if (!data?.length) {
     return (
       <NoDataFound
         link="/product"
@@ -54,7 +54,7 @@ export default function WishListPage() {
       />
 
       <Grid container spacing={5}>
-        {data?.data?.map(({ product }) => (
+        {data?.map(({ product }) => (
           <Grid item xs={12} sm={6} md={4} key={product._id}>
             <Card
               sx={{

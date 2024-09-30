@@ -1,14 +1,17 @@
 "use client";
 
-import DashboardLoader from "@/components/shared/loader/DashboardLoader";
+import ErrorPage from "@/components/shared/error/Error";
+import Loader from "@/components/shared/loader/Loader";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import { IGenericErrorResponse } from "@/types";
 import { imageUploader } from "@/utils/imageUploader";
 import {
+  CallOutlined as CallOutlinedIcon,
   HomeOutlined as HomeOutlinedIcon,
   PersonOutlineOutlined as PersonOutlineOutlinedIcon,
   SignpostOutlined as SignpostOutlinedIcon,
-  CallOutlined as CallOutlinedIcon,
   Verified,
 } from "@mui/icons-material";
 import ApartmentIcon from "@mui/icons-material/Apartment";
@@ -36,13 +39,13 @@ interface Field {
 
 export default function MyProfilePage() {
   // get user data
-  const { data, isLoading } = useGetMeQuery(undefined);
+  const { data: user, isLoading, error } = useGetMeQuery(undefined);
   // state for handle modal
   const [openModal, setOpenModal] = useState(false);
   const [currentField, setCurrentField] = useState<Field | null>(null);
 
   // update user redux hook
-  const [updateCustomerImage, { isLoading: imageLoading }] =
+  const [updateCustomerImage, { error: imageError }] =
     useUpdateCustomerInfoMutation();
 
   const handleOpenModal = (field: Field) => {
@@ -50,8 +53,7 @@ export default function MyProfilePage() {
     setOpenModal(true);
   };
 
-  const user = data?.data;
-
+  // user fields array
   const userFields = [
     {
       label: "Full Name",
@@ -72,10 +74,10 @@ export default function MyProfilePage() {
       name: "address.city",
     },
     {
-      label: "State",
+      label: "Street",
       icon: HomeOutlinedIcon,
-      value: user?.address?.state,
-      name: "address.state",
+      value: user?.address?.street,
+      name: "address.street",
     },
     {
       label: "Postal Code",
@@ -95,37 +97,44 @@ export default function MyProfilePage() {
   const handleChangeImage = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    try {
-      const file = event.target.files?.[0];
+    const file = event.target.files?.[0];
 
-      if (!file) {
-        toast.error("No file selected. Please choose an image.");
-        return;
-      }
+    if (!file) {
+      toast.error("No file selected. Please choose an image.");
+      return;
+    }
 
-      const imageURL = await imageUploader(file);
+    const imageURL = await imageUploader(file);
 
-      if (!imageURL) {
-        toast.error("Image upload failed. Please try again.");
-        return;
-      }
+    if (!imageURL) {
+      toast.error("Image upload failed. Please try again.");
+      return;
+    }
 
-      const res = await updateCustomerImage({ photo: imageURL }).unwrap();
+    const res = await updateCustomerImage({ photo: imageURL }).unwrap();
 
-      if (res?.success) {
-        toast.success("Profile image uploaded successfully.");
-      } else {
-        toast.error("Failed to update profile image.");
-      }
-    } catch (error) {
-      toast.error(
-        "An error occurred while uploading the image. Please try again."
-      );
+    if (res?._id) {
+      toast.success("Profile image uploaded successfully.");
+    }
+
+    if (imageError) {
+      const errorMessage = (imageError as IGenericErrorResponse).message;
+      toast.error(errorMessage);
     }
   };
 
   if (isLoading) {
-    return <DashboardLoader />;
+    return <Loader />;
+  }
+
+  // Handle error
+  if (error) {
+    return <ErrorPage error={error as IGenericErrorResponse} />;
+  }
+
+
+  if(!user){
+    return <NoDataFound link="/register/login" message="You Are Not Authorize User." text="Login Now"/>
   }
 
   return (

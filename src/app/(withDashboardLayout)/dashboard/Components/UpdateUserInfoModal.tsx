@@ -2,6 +2,7 @@ import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
+import { IGenericErrorMessage } from "@/types";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { FieldValues } from "react-hook-form";
@@ -20,18 +21,20 @@ export default function UpdateUserInfoModal({
   label,
   name,
 }: IUpdateUserInfo) {
-  const [updateCustomerInfo, { isLoading }] = useUpdateCustomerInfoMutation();
+  const [updateCustomerInfo, { isLoading, error }] =
+    useUpdateCustomerInfoMutation();
 
   const handleUpdateInfo = async (value: FieldValues) => {
-    try {
-      const res = await updateCustomerInfo(value).unwrap();
-      if (res.success) {
-        toast.success(res.message);
-        setOpen((prev) => !prev);
-      }
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error?.message);
+    const res = await updateCustomerInfo(value).unwrap();
+
+    if (res._id) {
+      toast.success(`${res.name}'s information updated successfully.`);
+      setOpen((prev) => !prev);
+    }
+
+    if (error) {
+      const errorDetails = error as IGenericErrorMessage;
+      toast.error(errorDetails.message);
     }
   };
 

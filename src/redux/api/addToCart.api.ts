@@ -1,3 +1,4 @@
+import { TTagTypes } from "../tag-types";
 import { baseApi } from "./base.api";
 
 const addToCartApi = baseApi.injectEndpoints({
@@ -10,18 +11,21 @@ const addToCartApi = baseApi.injectEndpoints({
           data,
         };
       },
+      invalidatesTags: [TTagTypes.cart],
     }),
     getAllCartProducts: builder.query({
       query: () => ({
         url: "/cart",
         method: "GET",
       }),
+      providesTags: [TTagTypes.cart],
     }),
     getSingleCartProducts: builder.query({
       query: (id: string) => ({
         url: `/cart/${id}`,
         method: "GET",
       }),
+      providesTags: [TTagTypes.cart],
     }),
     removeCartProduct: builder.mutation({
       query: (data: any) => {
@@ -31,6 +35,7 @@ const addToCartApi = baseApi.injectEndpoints({
           data,
         };
       },
+      invalidatesTags: [TTagTypes.cart],
     }),
   }),
 });

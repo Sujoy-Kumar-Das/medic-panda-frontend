@@ -2,10 +2,13 @@
 import image from "@/assets/checkout-image.png";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import ErrorPage from "@/components/shared/error/Error";
+import Loader from "@/components/shared/loader/Loader";
 import { useGetSingleCartProductsQuery } from "@/redux/api/addToCart.api";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import { usePlaceOrderMutation } from "@/redux/api/order.api";
 import { orderShippingAddressSchema } from "@/schemas/order.schema";
+import { IGenericErrorResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -15,6 +18,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -23,19 +27,38 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function PlaceOrderPage({ params }: { params: { id: string } }) {
-  const [placeOrder, { isLoading }] = usePlaceOrderMutation();
-  const { data: user } = useGetMeQuery(undefined);
+  // place order redux hook
+  const [
+    placeOrder,
+    {
+      isLoading: placeOrderLoading,
+      error: placeOrderError,
+      isSuccess,
+      isError,
+      data: placeOrderData,
+    },
+  ] = usePlaceOrderMutation();
+
+  // get user info redux hook
+  const {
+    data: userInfo,
+    isLoading: userLoading,
+    error: userError,
+  } = useGetMeQuery(undefined);
+
+  // get order details redux hook
+  const {
+    data: orderItem,
+    isLoading: orderLoading,
+    error: orderError,
+  } = useGetSingleCartProductsQuery(params.id);
 
   const router = useRouter();
-
-  const { data } = useGetSingleCartProductsQuery(params.id);
-
-  const userInfo = user?.data;
-  const orderItem = data?.data;
 
   const defaultValues = {
     name: userInfo?.name || "",
@@ -47,22 +70,40 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
   };
 
   const handleOrder = async (values: FieldValues) => {
-    const orderData = {
-      product: orderItem?.product?._id,
-      quantity: orderItem.quantity || 1,
-      shippingAddress: values,
-    };
+    try {
+      const orderData = {
+        product: orderItem?.product?._id,
+        quantity: orderItem?.quantity || 1,
+        shippingAddress: values,
+      };
 
-    const res = await placeOrder(orderData).unwrap();
-
-    if (!res.paymentUrl) {
-      toast.error("Failed to place order.");
+      await placeOrder(orderData).unwrap();
+    } catch (err) {
+      toast.error("Failed to place order");
     }
-
-    toast.success("Order Placed Successfully.");
-
-    router.replace(res?.data?.paymentUrl);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Order Placed successfully.");
+      router.replace(placeOrderData.paymentUrl);
+    } else if (isError) {
+      const errorMessage = (placeOrderError as IGenericErrorResponse).message;
+      toast.error(errorMessage);
+    }
+  }, [isSuccess, isError, placeOrderError, router, placeOrderData]);
+
+  if (userLoading || orderLoading) {
+    return <Loader />;
+  }
+
+  if (userError || orderError) {
+    const errorResponse =
+      (userError as IGenericErrorResponse) ||
+      (orderError as IGenericErrorResponse);
+
+    return <ErrorPage error={errorResponse} />;
+  }
 
   return (
     <>
@@ -207,7 +248,10 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                     sx={{ fontWeight: 500 }}
                     color={"secondary"}
                   >
-                    Quantity: {orderItem?.quantity}
+                    Quantity:{" "}
+                    {`${orderItem?.quantity} pice${
+                      orderItem?.quantity > 1 ? "'s" : ""
+                    }`}
                   </Typography>
                   <Typography
                     variant="body1"
@@ -238,8 +282,13 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                     maxWidth: "300px",
                     borderRadius: "25px",
                   }}
+                  disabled={placeOrderLoading}
                 >
-                  Place Order
+                  {placeOrderLoading ? (
+                    <CircularProgress size={24} />
+                  ) : (
+                    "Place Order"
+                  )}
                 </Button>
               </Box>
             </Box>
