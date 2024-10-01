@@ -1,5 +1,8 @@
 import dashboardRoutes from "@/routes/dashboard.routes";
 import routeGenerator from "@/utils/route.generator";
+import HomeIcon from "@mui/icons-material/Home";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
+import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Box,
   Divider,
@@ -12,7 +15,6 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 export const DashboardDrawer = () => {
   // Generate items
   const items = routeGenerator(dashboardRoutes, "user");
@@ -23,10 +25,14 @@ export const DashboardDrawer = () => {
       sx={{
         width: "100%",
         maxWidth: 250,
-        bgcolor: "background.paper",
+        bgcolor: "background.default",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
+        overflow: "auto",
+        "&::-webkit-scrollbar": {
+          display: "none",
+        },
       }}
     >
       {/* Logo Section */}
@@ -46,7 +52,7 @@ export const DashboardDrawer = () => {
         <Typography
           variant="h4"
           fontWeight="bold"
-          color="text.primary"
+          color="text.secondary"
           sx={{ letterSpacing: 1 }}
         >
           medic
@@ -62,7 +68,7 @@ export const DashboardDrawer = () => {
       </Box>
 
       {/* Navigation Links */}
-      <List sx={{ px: { xs: 0, md: 1 } }}>
+      <List sx={{ px: { xs: 1, md: 1.5 } }}>
         {items.map((item) => (
           <ListItem
             component={Link}
@@ -85,11 +91,16 @@ export const DashboardDrawer = () => {
             }}
           >
             <ListItemButton
-              sx={{ justifyContent: "center", textAlign: "center" }}
+              sx={{
+                justifyContent: "flex-start",
+                textAlign: "left",
+                width: "100%",
+              }}
             >
               <ListItemIcon
                 sx={{
                   color: pathname === item.link ? "text.disabled" : "inherit",
+                  minWidth: 40,
                 }}
               >
                 {item.icon}
@@ -98,6 +109,9 @@ export const DashboardDrawer = () => {
                 primary={item.text}
                 primaryTypographyProps={{
                   fontWeight: pathname === item.link ? "bold" : "normal",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
                   textAlign: "left",
                 }}
               />
@@ -106,8 +120,146 @@ export const DashboardDrawer = () => {
         ))}
       </List>
 
-      {/* Bottom Divider */}
-      <Divider sx={{ borderColor: "divider", mt: "auto" }} />
+      <Divider sx={{ my: 1 }} />
+
+      <List sx={{ px: { xs: 1, md: 1.5 } }}>
+        <ListItem
+          component={Link}
+          href={"/"}
+          disablePadding
+          sx={{
+            justifyContent: "center",
+            borderRadius: "12px",
+            color: pathname === "/" ? "text.disabled" : "text.secondary",
+            backgroundColor: pathname === "/" ? "primary.light" : "transparent",
+            my: 0.5,
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "primary.light",
+              color: "text.disabled",
+            },
+          }}
+        >
+          <ListItemButton
+            sx={{
+              justifyContent: "flex-start",
+              textAlign: "left",
+              width: "100%",
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                color: pathname === "/" ? "text.disabled" : "inherit",
+                minWidth: 40,
+              }}
+            >
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Back To Home"}
+              primaryTypographyProps={{
+                fontWeight: pathname === "/" ? "bold" : "normal",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                textAlign: "left",
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem
+          component={Link}
+          href={"/product"}
+          disablePadding
+          sx={{
+            justifyContent: "center",
+            borderRadius: "12px",
+            color: pathname === "/product" ? "text.disabled" : "text.secondary",
+            backgroundColor:
+              pathname === "/product" ? "primary.light" : "transparent",
+            my: 0.5,
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "primary.light",
+              color: "text.disabled",
+            },
+          }}
+        >
+          <ListItemButton
+            sx={{
+              justifyContent: "flex-start",
+              textAlign: "left",
+              width: "100%",
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                color: pathname === "/product" ? "text.disabled" : "inherit",
+                minWidth: 40,
+              }}
+            >
+              <LocalMallIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Shop"}
+              primaryTypographyProps={{
+                fontWeight: pathname === "/product" ? "bold" : "normal",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                textAlign: "left",
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem
+          disablePadding
+          sx={{
+            justifyContent: "center",
+            borderRadius: "12px",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "primary.light",
+              "& .MuiListItemText-primary": {
+                color: "text.disabled",
+              },
+              "& .MuiListItemIcon-root": {
+                color: "text.disabled",
+              },
+            },
+          }}
+        >
+          <ListItemButton
+            sx={{
+              justifyContent: "flex-start",
+              textAlign: "left",
+              width: "100%",
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 40,
+                color: "text.secondary",
+                transition: "color 0.3s ease",
+              }}
+            >
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Logout"}
+              primaryTypographyProps={{
+                color: "text.secondary",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                textAlign: "left",
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+      </List>
     </Box>
   );
 };

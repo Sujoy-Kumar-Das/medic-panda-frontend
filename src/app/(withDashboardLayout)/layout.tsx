@@ -110,6 +110,8 @@ export default function ResponsiveDrawer({
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              boxShadow: "none", // Remove box shadow
+              borderRight: "none", // Remove border between drawer and content
             },
           }}
         >
@@ -122,6 +124,8 @@ export default function ResponsiveDrawer({
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              boxShadow: "none",
+              borderRight: "none",
             },
           }}
           open

@@ -2,12 +2,12 @@ import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import { useChangePasswordMutation } from "@/redux/api/auth.api";
+import updatePasswordValidationSchema from "@/schemas/updatePasswordValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import React, { SetStateAction } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-import updatePasswordValidationSchema from "../../../../../../schemas/updatePasswordValidationSchema";
 
 interface IUpdatePasswordModalProps {
   open: boolean;

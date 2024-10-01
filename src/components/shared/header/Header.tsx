@@ -10,7 +10,7 @@ const Header = ({ title, subtitle }: { title: string; subtitle: string }) => {
         color: "#ffffff",
         boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
         marginBottom: 3,
-        marginTop: 4,
+        marginTop: 2,
       }}
     >
       <Typography variant="h4" gutterBottom>

@@ -56,8 +56,8 @@ const dashboardRoutes: IDashboardRoute[] = [
     access: [USER_ROLE.user],
   },
   {
-    text: "Security & Access",
-    link: "/dashboard/user/security",
+    text: "Privacy & Security",
+    link: "/dashboard/security",
     icon: <SecurityIcon />,
     access: [USER_ROLE.user],
   },
@@ -126,12 +126,6 @@ const dashboardRoutes: IDashboardRoute[] = [
     text: "Payment History",
     link: "/dashboard/user/payments",
     icon: <PaidIcon />,
-    access: [USER_ROLE.user],
-  },
-  {
-    text: "Notification",
-    link: "/dashboard/user/notification",
-    icon: <NotificationsIcon />,
     access: [USER_ROLE.user],
   },
 ];

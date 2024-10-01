@@ -1,11 +1,4 @@
 "use client";
-import ErrorPage from "@/components/shared/error/Error";
-import Header from "@/components/shared/header/Header";
-import Loader from "@/components/shared/loader/Loader";
-import NoDataFound from "@/components/shared/notFound/NoDataFound";
-import { useGetMeQuery } from "@/redux/api/myProfile.api";
-import { useVerifyUserMutation } from "@/redux/api/user.api";
-import { IGenericErrorResponse } from "@/types";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   EmailOutlined as EmailOutlinedIcon,
@@ -18,6 +11,13 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import UpdateEmailModal from "./Components/UpdateEmailModal";
 import UpdatePasswordModal from "./Components/UpdatePasswordModal";
+import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import { useVerifyUserMutation } from "@/redux/api/user.api";
+import Loader from "@/components/shared/loader/Loader";
+import ErrorPage from "@/components/shared/error/Error";
+import { IGenericErrorResponse } from "@/types";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
+import Header from "@/components/shared/header/Header";
 
 export default function SecurityPage() {
   const { data, isLoading, error } = useGetMeQuery(undefined);
