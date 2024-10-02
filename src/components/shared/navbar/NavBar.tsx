@@ -1,6 +1,6 @@
 "use client";
+import useUserInfo from "@/hooks/useUserInfo";
 import { menuLinks } from "@/routes/nav.path";
-import { getUserInfo } from "@/services/actions/auth.service";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
@@ -16,7 +16,7 @@ export default function NavBar() {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const user = getUserInfo();
+  const user = useUserInfo();
 
   const navItems = (
     <>

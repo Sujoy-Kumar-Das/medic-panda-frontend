@@ -1,3 +1,4 @@
+import logoutUser from "@/services/actions/logoutUser";
 import Person2Icon from "@mui/icons-material/Person2";
 import { Divider, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -7,14 +8,17 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard"];
 
 function NavUserMenu() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
+  const router = useRouter();
 
   const isUserLoggedIn = true;
 
@@ -24,6 +28,11 @@ function NavUserMenu() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    logoutUser(router);
+    handleCloseUserMenu();
   };
 
   return (
@@ -102,7 +111,7 @@ function NavUserMenu() {
                 transition: "background-color 0.3s ease",
                 "&:hover": {
                   backgroundColor: "primary.light",
-                  color: "primary.main",
+                  color: "text.disabled",
                 },
               }}
             >
@@ -111,6 +120,22 @@ function NavUserMenu() {
               </Typography>
             </MenuItem>
           ))}
+
+          <MenuItem
+            onClick={handleLogout}
+            sx={{
+              borderRadius: 1,
+              transition: "background-color 0.3s ease",
+              "&:hover": {
+                backgroundColor: "primary.light",
+                color: "text.disabled",
+              },
+            }}
+          >
+            <Typography textAlign="center" sx={{ width: "100%" }}>
+              Logout
+            </Typography>
+          </MenuItem>
         </Box>
       </Menu>
     </Box>

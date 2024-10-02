@@ -2,8 +2,9 @@
 "use client";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import { authKey } from "@/constants/auth.key";
 import loginSchema from "@/schemas/login.schema";
-import { storeUserInfo } from "@/services/actions/auth.service";
+import setTokenToCookie from "@/services/actions/setTokenToCookie";
 import { loginUser } from "@/services/actions/user.action";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -23,7 +24,7 @@ export default function LoginPage() {
 
       if (loginInfo.success) {
         toast.success(loginInfo.message);
-        storeUserInfo({ accessToken: loginInfo?.data?.accessToken });
+        setTokenToCookie(authKey, loginInfo?.data?.accessToken);
         setIsLoading(false);
       } else {
         setErrors(loginInfo.message);

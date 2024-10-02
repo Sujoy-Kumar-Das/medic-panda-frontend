@@ -8,6 +8,7 @@ import { toast } from "sonner";
 export default function WishListBuyNowButton({ id }: { id: string }) {
   const [addToCart, { isLoading, isError, error, isSuccess, data: cartData }] =
     useAddToCartMutation();
+
   const router = useRouter();
 
   // handle buy now product
