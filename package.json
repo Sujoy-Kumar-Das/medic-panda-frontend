@@ -21,6 +21,7 @@
     "@mui/x-charts": "^7.16.0",
     "@mui/x-data-grid": "^7.13.0",
     "@mui/x-date-pickers": "^7.13.0",
+    "@react-pdf/renderer": "^4.0.0",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.4",
     "dayjs": "^1.11.13",

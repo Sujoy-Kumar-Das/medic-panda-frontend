@@ -15,7 +15,7 @@ export default function OrderCustomerInfo({
   status,
 }: IOrderCustomerInfoProps) {
   return (
-    <Card sx={{ flex: 1 }}>
+    <Card sx={{ flex: 1, flexGrow: 1 }}>
       {" "}
       {/* Ensure card takes available space */}
       <CardContent>

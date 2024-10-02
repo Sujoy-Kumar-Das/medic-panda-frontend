@@ -1,26 +1,44 @@
+// @ts-nocheck
+
+import { IOrderDetails } from "@/types";
 import { Button, Card, CardContent, Typography } from "@mui/material";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import OrderInvoicePdf from "./OrderInvoicePdf";
 
 interface IOrderPricingSummaryInfoProps {
-  totalAmount: number;
+  orderDetails: IOrderDetails;
 }
 
-export default function OrderPricingSummeryInfo({
-  totalAmount,
+export default function OrderPricingSummaryInfo({
+  orderDetails,
 }: IOrderPricingSummaryInfoProps) {
   return (
     <Card sx={{ flex: 1 }}>
-      {" "}
-      {/* Ensure card takes available space */}
       <CardContent>
         <Typography variant="h6" fontWeight="bold" color="text.primary">
           Pricing Summary
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Total Amount: ${totalAmount.toFixed(2)}
+          Total Amount: ${Number(orderDetails.totalAmount).toFixed(2)}
         </Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-          Print Invoice
-        </Button>
+
+        <PDFDownloadLink
+          document={<OrderInvoicePdf orderDetails={orderDetails} />}
+          fileName={`invoice_${orderDetails?.id}.pdf`}
+        >
+          {({ blob, url, loading, error }) => {
+            return (
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ marginTop: "16px" }}
+                disabled={loading}
+              >
+                {loading ? "Generating Invoice..." : "Download Invoice"}
+              </Button>
+            );
+          }}
+        </PDFDownloadLink>
       </CardContent>
     </Card>
   );
