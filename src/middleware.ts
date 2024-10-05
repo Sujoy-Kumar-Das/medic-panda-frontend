@@ -24,7 +24,9 @@ export function middleware(request: NextRequest) {
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/register/login", request.url));
+      const redirectUrl = new URL("/register/login", request.url);
+      redirectUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(redirectUrl);
     }
   }
 
@@ -42,7 +44,9 @@ export function middleware(request: NextRequest) {
     decodedData = jwtDecode(accessToken) as any;
   }
 
-  const role = decodedData?.role;
+  const role = decodedData?.role
+    ? (decodedData.role as string).toUpperCase()
+    : null;
 
   if (role && roleBasedPrivateRoutes[role as Role]) {
     const routes = roleBasedPrivateRoutes[role as Role];

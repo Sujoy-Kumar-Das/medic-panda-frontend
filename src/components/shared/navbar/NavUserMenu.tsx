@@ -9,11 +9,15 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { toast } from "sonner";
 
-const settings = ["Profile", "Account", "Dashboard"];
+const settings = [
+  { link: "/dashboard/user", text: "Profile" },
+  { link: "/dashboard/", text: "Dashboard" },
+];
 
 function NavUserMenu({ user }: { user: IUserInfo }) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -105,7 +109,9 @@ function NavUserMenu({ user }: { user: IUserInfo }) {
 
           {settings.map((setting) => (
             <MenuItem
-              key={setting}
+              key={setting.link}
+              component={Link}
+              href={setting.link}
               onClick={handleCloseUserMenu}
               sx={{
                 borderRadius: 1,
@@ -117,7 +123,7 @@ function NavUserMenu({ user }: { user: IUserInfo }) {
               }}
             >
               <Typography textAlign="center" sx={{ width: "100%" }}>
-                {setting}
+                {setting.text}
               </Typography>
             </MenuItem>
           ))}

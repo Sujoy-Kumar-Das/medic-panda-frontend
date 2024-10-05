@@ -9,12 +9,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 export default function LoginPage() {
   const [errors, setErrors] = useState("");
   const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+
   const handleLogin = async (data: FieldValues) => {
     await login(data);
   };
@@ -22,10 +28,15 @@ export default function LoginPage() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Login Successful");
+      if (redirect) {
+        router.push(redirect as string);
+      } else {
+        router.push("/");
+      }
     } else if (isError) {
       setErrors((error as IGenericErrorMessage).message);
     }
-  }, [isSuccess, isError, error]);
+  }, [isSuccess, isError, error, router, redirect]);
   return (
     <Container
       sx={{
