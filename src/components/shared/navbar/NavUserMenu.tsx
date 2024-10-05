@@ -1,4 +1,5 @@
 import logoutUser from "@/services/actions/logoutUser";
+import { IUserInfo } from "@/types/user.type";
 import Person2Icon from "@mui/icons-material/Person2";
 import { Divider, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -10,17 +11,16 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { toast } from "sonner";
 
 const settings = ["Profile", "Account", "Dashboard"];
 
-function NavUserMenu() {
+function NavUserMenu({ user }: { user: IUserInfo }) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 
   const router = useRouter();
-
-  const isUserLoggedIn = true;
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -33,6 +33,7 @@ function NavUserMenu() {
   const handleLogout = () => {
     logoutUser(router);
     handleCloseUserMenu();
+    toast.success("Logout successful");
   };
 
   return (
@@ -49,7 +50,7 @@ function NavUserMenu() {
             },
           }}
         >
-          {isUserLoggedIn ? (
+          {user ? (
             <Avatar
               alt="User Avatar"
               src="/static/images/avatar/2.jpg"

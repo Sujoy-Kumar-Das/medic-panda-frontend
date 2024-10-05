@@ -2,40 +2,30 @@
 "use client";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { authKey } from "@/constants/auth.key";
+import { useLoginMutation } from "@/redux/api/auth.api";
 import loginSchema from "@/schemas/login.schema";
-import setTokenToCookie from "@/services/actions/setTokenToCookie";
-import { loginUser } from "@/services/actions/user.action";
+import { IGenericErrorMessage } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 export default function LoginPage() {
   const [errors, setErrors] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
   const handleLogin = async (data: FieldValues) => {
-    setIsLoading(true);
-    try {
-      const loginInfo = await loginUser(data);
-
-      if (loginInfo.success) {
-        toast.success(loginInfo.message);
-        setTokenToCookie(authKey, loginInfo?.data?.accessToken);
-        setIsLoading(false);
-      } else {
-        setErrors(loginInfo.message);
-        setIsLoading(false);
-      }
-    } catch (error) {
-      setErrors("Something went wrong!");
-      setIsLoading(false);
-      console.log("login page error", error);
-    }
+    await login(data);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login Successful");
+    } else if (isError) {
+      setErrors((error as IGenericErrorMessage).message);
+    }
+  }, [isSuccess, isError, error]);
   return (
     <Container
       sx={{

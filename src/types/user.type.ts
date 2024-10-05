@@ -4,3 +4,8 @@ export interface IUser {
   name: string;
   photo: string;
 }
+
+export interface IUserInfo {
+  user: string;
+  role: string;
+}

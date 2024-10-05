@@ -1,9 +1,7 @@
-import { authKey } from "@/constants/auth.key";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
-import { getFromLocalStorage } from "@/utils/local-storage";
 import axios, { AxiosResponse } from "axios";
 
-const axiosInstance = axios.create();
+const axiosInstance = axios.create({ withCredentials: true });
 
 axiosInstance.defaults.headers.post["Content-Type"] = "application/json";
 axiosInstance.defaults.headers["Accept"] = "application/json";
@@ -11,10 +9,6 @@ axiosInstance.defaults.timeout = 60000;
 
 axiosInstance.interceptors.request.use(
   function (config) {
-    const accessToken = getFromLocalStorage(authKey);
-    if (accessToken) {
-      config.headers.Authorization = accessToken;
-    }
     return config;
   },
   function (error) {

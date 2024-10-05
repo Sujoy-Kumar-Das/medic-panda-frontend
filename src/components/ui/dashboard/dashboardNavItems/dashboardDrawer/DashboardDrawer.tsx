@@ -1,10 +1,12 @@
 import dashboardRoutes from "@/routes/dashboard.routes";
+import logoutUser from "@/services/actions/logoutUser";
 import routeGenerator from "@/utils/route.generator";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Box,
+  Button,
   Divider,
   List,
   ListItem,
@@ -14,11 +16,19 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 export const DashboardDrawer = () => {
   // Generate items
   const items = routeGenerator(dashboardRoutes, "user");
   const pathname = usePathname(); // Get current pathname
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logoutUser(router);
+    toast.success("User logout successfully");
+  };
 
   return (
     <Box
@@ -118,11 +128,8 @@ export const DashboardDrawer = () => {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
 
-      <Divider sx={{ my: 1 }} />
-
-      <List sx={{ px: { xs: 1, md: 1.5 } }}>
+        <Divider sx={{ my: 1 }} />
         <ListItem
           component={Link}
           href={"/"}
@@ -214,50 +221,10 @@ export const DashboardDrawer = () => {
           </ListItemButton>
         </ListItem>
 
-        <ListItem
-          disablePadding
-          sx={{
-            justifyContent: "center",
-            borderRadius: "12px",
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "primary.light",
-              "& .MuiListItemText-primary": {
-                color: "text.disabled",
-              },
-              "& .MuiListItemIcon-root": {
-                color: "text.disabled",
-              },
-            },
-          }}
-        >
-          <ListItemButton
-            sx={{
-              justifyContent: "flex-start",
-              textAlign: "left",
-              width: "100%",
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 40,
-                color: "text.secondary",
-                transition: "color 0.3s ease",
-              }}
-            >
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Logout"}
-              primaryTypographyProps={{
-                color: "text.secondary",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                textAlign: "left",
-              }}
-            />
-          </ListItemButton>
+        <ListItem disablePadding onClick={handleLogout}>
+          <Button fullWidth startIcon={<LogoutIcon />}>
+            Logout
+          </Button>
         </ListItem>
       </List>
     </Box>

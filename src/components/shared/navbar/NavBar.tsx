@@ -11,6 +11,7 @@ import NavUserMenu from "./NavUserMenu";
 
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -164,7 +165,7 @@ export default function NavBar() {
             spacing={3}
             mt={10}
           >
-            <NavUserMenu />
+            <NavUserMenu user={user} />
             <Stack
               spacing={1}
               sx={{ textAlign: "center" }}

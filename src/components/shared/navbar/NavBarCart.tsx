@@ -5,6 +5,7 @@ import {
 } from "@/redux/api/addToCart.api";
 import { removeSingleProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { IUserInfo } from "@/types/user.type";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
@@ -22,7 +23,7 @@ import * as React from "react";
 import { toast } from "sonner";
 import NavUserMenu from "./NavUserMenu";
 
-export default function NavBarCart({ user }: { user: boolean }) {
+export default function NavBarCart({ user }: { user: IUserInfo }) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );

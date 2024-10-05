@@ -73,17 +73,15 @@ export default function UserDashboard() {
     { value: data?.totalOrders || 0, ...cardColors[0] },
     { value: data?.wishListItem || 0, ...cardColors[1] },
     { value: data?.cartItem || 0, ...cardColors[2] },
-    { value: `$ ${data?.totalPurchasePrice || 0}`, ...cardColors[3] },
+    {
+      value: `$ ${Number(data?.totalPurchasePrice).toFixed(2) || 0}`,
+      ...cardColors[3],
+    },
     { value: data?.completedOrders || 0, ...cardColors[4] },
     { value: data?.pendingOrders || 0, ...cardColors[5] },
     { value: data?.returnedOrders || 0, ...cardColors[6] },
     { value: data?.unPaidOrders || 0, ...cardColors[7] },
   ];
-
-  const chartData = data?.monthlyOrderStats?.map((item: any) => ({
-    name: item.date,
-    total: Number(item.totalPurchasePrice).toFixed(2),
-  }));
 
   // If data is still loading, show the loader
   if (isLoading || userLoading) {
@@ -97,7 +95,7 @@ export default function UserDashboard() {
 
     return <ErrorPage error={allErrors} />;
   }
-
+  console.log(userMetaData);
   return (
     <Container>
       <Header
