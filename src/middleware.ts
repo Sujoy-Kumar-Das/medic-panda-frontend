@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { NextResponse, type NextRequest } from "next/server";
 import { authKey } from "./constants/auth.key";
-import getTokenFromCookie from "./services/actions/getTokenFromCookie";
+import getTokenFromCookie from "./utils/getTokenFromCookie";
 
 type Role = keyof typeof roleBasedPrivateRoutes;
 

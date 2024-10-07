@@ -1,6 +1,7 @@
 import ProductSlider from "@/lib/sliders/ProductSlider";
 import { getAllProductService } from "@/services/actions/product.service";
 import { IProduct } from "@/types";
+import { IUserInfo } from "@/types/user.type";
 import { ArrowRight } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import ProductCard from "../ui/card/productCard/ProductCard";
 
-export default async function ProductSection() {
+export default async function ProductSection({ user }: { user: IUserInfo }) {
   const { data: products } = await getAllProductService(6);
   return (
     <Container sx={{ py: 10 }}>
@@ -43,7 +44,7 @@ export default async function ProductSection() {
 
       <ProductSlider>
         {products.map((product: IProduct) => (
-          <ProductCard key={product._id} product={product} />
+          <ProductCard key={product._id} product={product} user={user} />
         ))}
       </ProductSlider>
     </Container>

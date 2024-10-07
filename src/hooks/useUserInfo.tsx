@@ -1,6 +1,6 @@
 "use client";
 import { authKey } from "@/constants/auth.key";
-import getTokenFromCookie from "@/services/actions/getTokenFromCookie";
+import getTokenFromCookie from "@/utils/getTokenFromCookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 
 import { useEffect, useState } from "react";

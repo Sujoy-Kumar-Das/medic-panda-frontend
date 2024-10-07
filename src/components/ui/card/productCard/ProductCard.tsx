@@ -1,4 +1,5 @@
 import { IProduct } from "@/types/product.type";
+import { IUserInfo } from "@/types/user.type";
 import { Visibility } from "@mui/icons-material";
 import {
   Box,
@@ -10,10 +11,15 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "../../buttons/AddToCartButton";
 import WishListButton from "../../buttons/WishListButton";
-import AddToCartButton from "./AddToCartButton";
 
-const ProductCard = ({ product }: { product: IProduct }) => {
+interface IProductCardProps {
+  product: IProduct;
+  user: IUserInfo;
+}
+
+const ProductCard = ({ product, user }: IProductCardProps) => {
   const { thumbnail, name, price, discount, _id } = product;
 
   return (
@@ -130,7 +136,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         className="cardHover"
       >
         <WishListButton id={_id} />
-        <AddToCartButton product={product} />
+        <AddToCartButton user={user} product={product} />
         <IconButton
           color="primary"
           component={Link}

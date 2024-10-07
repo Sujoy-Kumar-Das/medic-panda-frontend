@@ -1,134 +1,176 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
+import loginImage from "@/assets/lgoInBg.jpg";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { useLoginMutation } from "@/redux/api/auth.api";
+import { useLogin } from "@/hooks/useLogin";
 import loginSchema from "@/schemas/login.schema";
-import { IGenericErrorMessage } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, Container, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+
 export default function LoginPage() {
-  const [errors, setErrors] = useState("");
-  const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
+  const { handleLogin, isLoading, isSuccess, errorMessage } = useLogin();
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect");
-
-  const handleLogin = async (data: FieldValues) => {
-    await login(data);
-  };
+  const handleLoginUser = useCallback(
+    async (data: FieldValues) => {
+      await handleLogin(data);
+    },
+    [handleLogin]
+  );
 
   useEffect(() => {
     if (isSuccess) {
       toast.success("Login Successful");
-      if (redirect) {
-        router.push(redirect as string);
-      } else {
-        router.push("/");
-      }
-    } else if (isError) {
-      setErrors((error as IGenericErrorMessage).message);
+    } else if (errorMessage) {
+      toast.error(errorMessage);
     }
-  }, [isSuccess, isError, error, router, redirect]);
+  }, [isSuccess, errorMessage]);
+
   return (
     <Container
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "80vh",
+        py: { xs: 2, md: 6 },
       }}
     >
       <Box
         sx={{
-          bgcolor: "background.default",
-          p: 5,
-          boxShadow: 1,
-          width: { xs: "90%", md: "50%" },
-          borderRadius: 2,
+          bgcolor: "background.paper",
+          width: { xs: "100%", sm: "90%", md: "75%", lg: "60%" },
+          boxShadow: 3,
+          borderRadius: 3,
+          p: { xs: 3, md: 5 },
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
         }}
       >
-        <Typography component={"h1"} variant="h4" textAlign={"center"} mb={5}>
-          Login
-        </Typography>
-        {errors && (
-          <Box sx={{ bgcolor: "red", p: 0.5, borderRadius: "8px", mb: 3 }}>
-            <Typography
-              component={"h6"}
-              color={"text.disabled"}
-              textAlign={"center"}
-              fontWeight={"bold"}
-            >
-              {errors}
-            </Typography>
-          </Box>
-        )}
-        <PandaForm
-          onSubmit={handleLogin}
-          resolver={zodResolver(loginSchema)}
-          defaultValues={{ email: "", password: "" }}
+        <Typography
+          component="h1"
+          variant="h4"
+          textAlign="center"
+          fontWeight="bold"
+          color="text.primary"
         >
-          <Stack direction={"column"} spacing={2}>
-            <PandaInputField
-              name="email"
-              label="Email"
-              placeholder="example@gmail.com"
-              type="email"
-              fullWidth
+          Welcome Back!
+        </Typography>
+
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={4}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          {/* Image Section */}
+          <Box
+            sx={{
+              width: { xs: "100%", md: "45%" },
+              textAlign: "center",
+            }}
+          >
+            <Image
+              src={loginImage}
+              width={400}
+              height={400}
+              alt="Login image"
+              style={{ maxWidth: "100%", height: "auto", borderRadius: "8px" }}
             />
-            <PandaInputField
-              name="password"
-              label="Password"
-              placeholder="*******"
-              type="password"
-              fullWidth
-            />
-            <Typography component={"p"} textAlign={"right"}>
-              Forgot password ?{" "}
+          </Box>
+
+          {/* Form Section */}
+          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
+            <PandaForm
+              onSubmit={handleLoginUser}
+              resolver={zodResolver(loginSchema)}
+              defaultValues={{ email: "", password: "" }}
+            >
+              <Stack direction="column" spacing={3}>
+                <PandaInputField
+                  name="email"
+                  label="Email"
+                  placeholder="example@gmail.com"
+                  type="email"
+                  fullWidth
+                />
+                <PandaInputField
+                  name="password"
+                  label="Password"
+                  placeholder="*******"
+                  type="password"
+                  fullWidth
+                />
+
+                <Typography
+                  component="p"
+                  textAlign="right"
+                  sx={{ color: "text.secondary" }}
+                >
+                  Forgot password?{" "}
+                  <Typography
+                    component={Link}
+                    href="/reset-password"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                      "&:hover": { textDecoration: "underline" },
+                    }}
+                  >
+                    Reset Now
+                  </Typography>
+                </Typography>
+
+                <LoadingButton
+                  loading={isLoading}
+                  disabled={isLoading}
+                  loadingIndicator="Logging in…"
+                  variant="contained"
+                  fullWidth
+                  type="submit"
+                  sx={{
+                    bgcolor: "primary.main",
+                    "&:hover": {
+                      bgcolor: "primary.dark",
+                    },
+                    py: 1.5,
+                    fontWeight: "bold",
+                    borderRadius: 2,
+                    transition: "transform 0.3s",
+                    "&:active": {
+                      transform: "scale(0.98)",
+                    },
+                  }}
+                >
+                  Login
+                </LoadingButton>
+              </Stack>
+            </PandaForm>
+
+            <Typography component="p" textAlign="center" mt={3}>
+              Don't have an account?{" "}
               <Typography
                 component={Link}
-                href={"/"}
+                href="/register/create-account"
                 sx={{
-                  color: "text.primary",
+                  color: "primary.main",
+                  fontWeight: "bold",
                   textDecoration: "none",
                   "&:hover": { textDecoration: "underline" },
                 }}
               >
-                Reset Now
+                Create Now
               </Typography>
             </Typography>
-            <LoadingButton
-              loading={isLoading}
-              disabled={isLoading}
-              loadingIndicator="Logging…"
-              variant="outlined"
-              type="submit"
-            >
-              Login
-            </LoadingButton>
-          </Stack>
-        </PandaForm>
-        <Typography component={"p"} textAlign={"center"} mt={3}>
-          Don't have account ?{" "}
-          <Typography
-            component={Link}
-            href={"/register/create-account"}
-            sx={{
-              color: "text.primary",
-              textDecoration: "none",
-              "&:hover": { textDecoration: "underline" },
-            }}
-          >
-            Create Now
-          </Typography>
-        </Typography>{" "}
+          </Box>
+        </Stack>
       </Box>
     </Container>
   );

@@ -1,16 +1,17 @@
-import logoutUser from "@/services/actions/logoutUser";
-import { IUserInfo } from "@/types/user.type";
+import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import logoutUser from "@/utils/logoutUser";
 import Person2Icon from "@mui/icons-material/Person2";
 import { Divider, Stack } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { UserInfo } from "os";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -19,10 +20,12 @@ const settings = [
   { link: "/dashboard/", text: "Dashboard" },
 ];
 
-function NavUserMenu({ user }: { user: IUserInfo }) {
+function NavUserMenu() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
+  const { data: user } = useGetMeQuery(undefined);
 
   const router = useRouter();
 
@@ -41,111 +44,141 @@ function NavUserMenu({ user }: { user: IUserInfo }) {
   };
 
   return (
-    <Box>
-      <Tooltip title="Open settings">
-        <IconButton
-          onClick={handleOpenUserMenu}
-          sx={{
-            p: 0,
-            transition: "transform 0.3s ease, box-shadow 0.3s ease",
-            "&:hover": {
-              transform: "scale(1.1)",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            },
-          }}
-        >
-          {user ? (
-            <Avatar
-              alt="User Avatar"
-              src="/static/images/avatar/2.jpg"
-              sx={{ width: 40, height: 40 }}
-            />
-          ) : (
-            <Person2Icon sx={{ fontSize: 40 }} />
-          )}
-        </IconButton>
-      </Tooltip>
-
-      <Menu
-        sx={{
-          mt: "45px",
-          "& .MuiMenu-paper": {
-            width: 300,
-            borderRadius: 2,
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            p: 2,
-          },
-        }}
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
+    <>
+      {user && (
         <Box>
-          <Stack direction="row" alignItems="center" spacing={2} mb={2}>
-            <Avatar
-              alt="User Avatar"
-              src="/static/images/avatar/2.jpg"
-              sx={{ width: 48, height: 48 }}
-            />
-            <Box>
-              <Typography component="h6" variant="subtitle1" fontWeight={600}>
-                Sujoy Kumar Das
-              </Typography>
-              <Typography component="p" variant="body2" color="text.secondary">
-                sujoykumardas75@gmail.com
-              </Typography>
-            </Box>
-          </Stack>
-          <Divider sx={{ my: 1 }} />
-
-          {settings.map((setting) => (
-            <MenuItem
-              key={setting.link}
-              component={Link}
-              href={setting.link}
-              onClick={handleCloseUserMenu}
+          <>
+            <IconButton
+              onClick={handleOpenUserMenu}
               sx={{
-                borderRadius: 1,
-                transition: "background-color 0.3s ease",
+                p: 0,
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 "&:hover": {
-                  backgroundColor: "primary.light",
-                  color: "text.disabled",
+                  transform: "scale(1.1)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                 },
               }}
             >
-              <Typography textAlign="center" sx={{ width: "100%" }}>
-                {setting.text}
-              </Typography>
-            </MenuItem>
-          ))}
+              {user?.user?.email ? (
+                <Image
+                  alt="User Avatar"
+                  src={user?.photo}
+                  height={40}
+                  width={40}
+                  style={{
+                    borderRadius: "50%",
+                    border: `${
+                      user?.user?.isVerified
+                        ? "2px solid #339aff"
+                        : "2px solid black"
+                    }`,
+                  }}
+                />
+              ) : (
+                <Person2Icon sx={{ fontSize: 40 }} />
+              )}
+            </IconButton>
+          </>
 
-          <MenuItem
-            onClick={handleLogout}
+          <Menu
             sx={{
-              borderRadius: 1,
-              transition: "background-color 0.3s ease",
-              "&:hover": {
-                backgroundColor: "primary.light",
-                color: "text.disabled",
+              mt: "45px",
+              "& .MuiMenu-paper": {
+                width: 300,
+                borderRadius: 2,
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                p: 2,
               },
             }}
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
           >
-            <Typography textAlign="center" sx={{ width: "100%" }}>
-              Logout
-            </Typography>
-          </MenuItem>
+            <Box>
+              <Stack direction="row" alignItems="center" spacing={2} mb={2}>
+                <Image
+                  alt="User Avatar"
+                  src={user?.photo}
+                  height={48}
+                  width={48}
+                  style={{
+                    borderRadius: "50%",
+                    border: `${
+                      user?.user?.isVerified
+                        ? "2px solid #339aff"
+                        : "2px solid black"
+                    }`,
+                  }}
+                />
+                <Box>
+                  <Typography
+                    component="h6"
+                    variant="subtitle1"
+                    fontWeight={600}
+                  >
+                    {user?.name}
+                  </Typography>
+                  <Typography
+                    component="p"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    {user?.user?.email}
+                  </Typography>
+                </Box>
+              </Stack>
+              <Divider sx={{ my: 1 }} />
+
+              {settings.map((setting) => (
+                <MenuItem
+                  key={setting.link}
+                  component={Link}
+                  href={setting.link}
+                  onClick={handleCloseUserMenu}
+                  sx={{
+                    borderRadius: 1,
+                    transition: "background-color 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "primary.light",
+                      color: "text.disabled",
+                    },
+                  }}
+                >
+                  <Typography textAlign="center" sx={{ width: "100%" }}>
+                    {setting.text}
+                  </Typography>
+                </MenuItem>
+              ))}
+
+              <MenuItem
+                onClick={handleLogout}
+                sx={{
+                  borderRadius: 1,
+                  transition: "background-color 0.3s ease",
+                  "&:hover": {
+                    backgroundColor: "primary.light",
+                    color: "text.disabled",
+                  },
+                }}
+              >
+                <Typography textAlign="center" sx={{ width: "100%" }}>
+                  Logout
+                </Typography>
+              </MenuItem>
+            </Box>
+          </Menu>
         </Box>
-      </Menu>
-    </Box>
+      )}
+    </>
   );
 }
 

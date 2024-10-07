@@ -1,24 +1,32 @@
 "use client";
 import { addProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
-import { getUserInfo } from "@/services/actions/auth.service";
-import { IGenericErrorResponse } from "@/types";
+import { IGenericErrorResponse, IProduct } from "@/types";
+import { IUserInfo } from "@/types/user.type";
 import { ShoppingCart } from "@mui/icons-material";
 import { Button, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { useAddToCartMutation } from "../../../../redux/api/addToCart.api";
+import { useAddToCartMutation } from "../../../redux/api/addToCart.api";
 
-export default function AddToCartButton({ product }) {
+export default function AddToCartButton({
+  product,
+  user,
+}: {
+  product: IProduct;
+  user: IUserInfo;
+}) {
   const [addToCartInDB, { isLoading, isSuccess, isError, error }] =
     useAddToCartMutation();
-  const user = getUserInfo();
+
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = async (productData) => {
-    if (!user && !user?.userId) {
-      const { name, thumbnail, _id, price } = productData;
+  const handleAddToCart = async (productData: IProduct) => {
+    const { name, thumbnail, _id, price } = productData;
 
+    const userId = user.userId;
+
+    if (!user && !userId) {
       // Add product to the local cart store
       dispatch(
         addProduct({
@@ -34,7 +42,7 @@ export default function AddToCartButton({ product }) {
     }
 
     await addToCartInDB({
-      product: productData._id,
+      product: _id,
       quantity: 1,
     }).unwrap();
   };

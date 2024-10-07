@@ -41,8 +41,9 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
   };
 
   const handleRemoveFromCart = async (id: string) => {
+    const userId = user.userId;
     // remove from local storage
-    if (!user) {
+    if (!user && !userId) {
       dispatch(removeSingleProduct({ id }));
       return;
     }
@@ -90,7 +91,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
           </Box>
 
           <Box display={{ xs: "none", md: "flex" }}>
-            <NavUserMenu />
+            <NavUserMenu user={user} />
           </Box>
         </>
       ) : (
@@ -234,7 +235,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                           fontWeight={500}
                           sx={{ mb: 0.5 }}
                         >
-                          {cart?.product?.name}
+                          {cart?.name}
                         </Typography>
                         <Typography
                           component="p"

@@ -1,5 +1,5 @@
 import dashboardRoutes from "@/routes/dashboard.routes";
-import logoutUser from "@/services/actions/logoutUser";
+import logoutUser from "@/utils/logoutUser";
 import routeGenerator from "@/utils/route.generator";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalMallIcon from "@mui/icons-material/LocalMall";

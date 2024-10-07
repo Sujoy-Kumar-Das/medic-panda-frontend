@@ -6,6 +6,6 @@ export interface IUser {
 }
 
 export interface IUserInfo {
-  user: string;
+  userId: string;
   role: string;
 }

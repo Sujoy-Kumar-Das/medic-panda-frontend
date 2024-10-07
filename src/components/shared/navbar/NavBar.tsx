@@ -165,7 +165,7 @@ export default function NavBar() {
             spacing={3}
             mt={10}
           >
-            <NavUserMenu user={user} />
+            <NavUserMenu />
             <Stack
               spacing={1}
               sx={{ textAlign: "center" }}
