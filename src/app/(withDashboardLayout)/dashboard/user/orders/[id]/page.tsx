@@ -53,7 +53,7 @@ export default function OrderDetailsPage({
   if (!data) {
     return (
       <NoDataFound
-        link="/ship"
+        link="/shop"
         text="Shop"
         message="You don't have any order now."
       />
@@ -76,10 +76,6 @@ export default function OrderDetailsPage({
         return 3;
       case OrderStatus.DELIVERED:
         return 4;
-      case OrderStatus.CANCELED:
-        return 5;
-      case OrderStatus.RETURNED:
-        return 6;
       default:
         return -1;
     }

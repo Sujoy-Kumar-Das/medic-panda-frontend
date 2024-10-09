@@ -1,10 +1,8 @@
 import { OrderStatus } from "@/types";
-import CanceledIcon from "@mui/icons-material/Cancel";
 import DeliveredIcon from "@mui/icons-material/CheckCircle";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import ShippedIcon from "@mui/icons-material/LocalShipping";
 import PaidIcon from "@mui/icons-material/Payment";
-import ReturnIcon from "@mui/icons-material/Replay";
 import ProcessingIcon from "@mui/icons-material/Sync";
 import { Box, Card, Step, StepLabel, Stepper, Typography } from "@mui/material";
 
@@ -35,16 +33,6 @@ const steps = [
     icon: <DeliveredIcon style={{ color: "#28a745" }} />,
     status: OrderStatus.DELIVERED,
   },
-  {
-    label: "Canceled",
-    icon: <CanceledIcon style={{ color: "#dc3545" }} />,
-    status: OrderStatus.CANCELED,
-  },
-  {
-    label: "Returned",
-    icon: <ReturnIcon style={{ color: "#fd7e14" }} />,
-    status: OrderStatus.RETURNED,
-  },
 ];
 
 interface IOrderStepperProps {
@@ -53,6 +41,7 @@ interface IOrderStepperProps {
 }
 
 const OrderStepper = ({ currentStep, status }: IOrderStepperProps) => {
+  console.log(status);
   // Dynamic status message
   const getStatusMessage = (status: OrderStatus) => {
     switch (status) {
@@ -66,10 +55,6 @@ const OrderStepper = ({ currentStep, status }: IOrderStepperProps) => {
         return "Your order has been shipped!";
       case OrderStatus.DELIVERED:
         return "Your order has been delivered successfully.";
-      case OrderStatus.CANCELED:
-        return "Your order was canceled.";
-      case OrderStatus.RETURNED:
-        return "Your order has been returned.";
       default:
         return "Tracking your order status...";
     }

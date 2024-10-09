@@ -12,8 +12,6 @@ const StepIcon = ({ stepIndex }: { stepIndex: number }) => {
         return 2;
       case OrderStatus.DELIVERED:
         return 3;
-      case OrderStatus.CANCELED:
-      case OrderStatus.RETURNED:
       default:
         return -1;
     }

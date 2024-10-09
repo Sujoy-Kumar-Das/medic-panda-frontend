@@ -30,8 +30,8 @@ const addToCartApi = baseApi.injectEndpoints({
     removeCartProduct: builder.mutation({
       query: (data: any) => {
         return {
-          url: `/cart/`,
-          method: "PATCH",
+          url: `/cart/${data.product}`,
+          method: "DELETE",
           data,
         };
       },

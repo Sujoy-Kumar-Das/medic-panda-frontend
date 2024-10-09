@@ -5,6 +5,7 @@ import {
 } from "@/redux/api/addToCart.api";
 import { removeSingleProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { IGenericErrorResponse, IProduct } from "@/types";
 import { IUserInfo } from "@/types/user.type";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -12,6 +13,7 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   Divider,
   IconButton,
   Menu,
@@ -19,17 +21,19 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import NavUserMenu from "./NavUserMenu";
 
 export default function NavBarCart({ user }: { user: IUserInfo }) {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { carts } = useAppSelector((state) => state.cart);
   const { data, isLoading } = useGetAllCartProductsQuery(undefined);
-  const [removeCartItemFromDB] = useRemoveCartProductMutation();
+  const [
+    removeCartItemFromDB,
+    { isLoading: removeCartLoader, isSuccess, isError, error },
+  ] = useRemoveCartProductMutation();
+
   const dispatch = useAppDispatch();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -40,24 +44,29 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
     setAnchorElUser(null);
   };
 
-  const handleRemoveFromCart = async (id: string) => {
+  const handleRemoveFromCart = async (product: IProduct) => {
     const userId = user.userId;
     // remove from local storage
     if (!user && !userId) {
-      dispatch(removeSingleProduct({ id }));
+      dispatch(removeSingleProduct({ id: product._id }));
       return;
     }
 
     // remove from db
-    const res = await removeCartItemFromDB({
-      product: id,
-      quantity: 1,
+    await removeCartItemFromDB({
+      product: product._id,
     }).unwrap();
-
-    if (res._id) {
-      toast.success("Product removed from cart.");
-    }
   };
+
+  // manage remove product from db state;
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Cart removed successfully");
+      handleCloseUserMenu();
+    } else if (isError) {
+      toast.error((error as IGenericErrorResponse).message);
+    }
+  }, [isSuccess, isError, error]);
 
   return (
     <>
@@ -91,7 +100,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
           </Box>
 
           <Box display={{ xs: "none", md: "flex" }}>
-            <NavUserMenu user={user} />
+            <NavUserMenu />
           </Box>
         </>
       ) : (
@@ -196,6 +205,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                     </Stack>
                     <IconButton
                       onClick={() => handleRemoveFromCart(cart.product)}
+                      disabled={removeCartLoader}
                       color="error"
                       sx={{
                         transition: "background-color 0.3s ease",
@@ -204,7 +214,11 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                         },
                       }}
                     >
-                      <DeleteIcon />
+                      {removeCartLoader ? (
+                        <CircularProgress size={24} color="inherit" />
+                      ) : (
+                        <DeleteIcon />
+                      )}
                     </IconButton>
                   </Stack>
                 ))
@@ -256,6 +270,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                     </Stack>
                     <IconButton
                       onClick={() => handleRemoveFromCart(cart.id)}
+                      disabled={removeCartLoader}
                       color="error"
                       sx={{
                         transition: "background-color 0.3s ease",
@@ -264,7 +279,11 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                         },
                       }}
                     >
-                      <DeleteIcon />
+                      {removeCartLoader ? (
+                        <CircularProgress size={24} color="inherit" />
+                      ) : (
+                        <DeleteIcon />
+                      )}
                     </IconButton>
                   </Stack>
                 ))

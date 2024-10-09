@@ -5,27 +5,37 @@ import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
-import { IGenericErrorResponse } from "@/types";
+import { IGenericErrorResponse, OrderStatus } from "@/types";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import SearchIcon from "@mui/icons-material/Search";
 import {
-  Box,
+  Button,
   Container,
-  IconButton,
-  InputAdornment,
   Menu,
   MenuItem,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import OrderCard from "./Components/OrderCard";
 
+const filterItems = [
+  { title: "all", value: "" },
+  { title: OrderStatus.PENDING, value: OrderStatus.PENDING },
+  { title: OrderStatus.PAID, value: OrderStatus.PAID },
+  { title: OrderStatus.PROCESSING, value: OrderStatus.PROCESSING },
+  { title: OrderStatus.SHIPPED, value: OrderStatus.SHIPPED },
+  { title: OrderStatus.DELIVERED, value: OrderStatus.DELIVERED },
+  { title: OrderStatus.CANCELED, value: OrderStatus.CANCELED },
+  { title: OrderStatus.RETURNED, value: OrderStatus.RETURNED },
+];
+
 export default function OrdersPage() {
-  const { data, isLoading, error } = useGetAllOrderQuery(undefined);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("");
+  const { data, isLoading, error } = useGetAllOrderQuery({
+    searchTerm,
+    ...(statusFilter && { status: statusFilter }),
+  });
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,16 +63,6 @@ export default function OrdersPage() {
     return <ErrorPage error={error as IGenericErrorResponse} />;
   }
 
-  if (!data?.length) {
-    return (
-      <NoDataFound
-        link="/product"
-        text="Browse Products"
-        message="No returned orders found at the moment."
-      />
-    );
-  }
-
   return (
     <Container>
       <Header
@@ -82,54 +82,18 @@ export default function OrdersPage() {
           bgcolor: "transparent",
         }}
       >
-        {statusFilter === "all" ? (
-          <Typography variant="h4" color="text.secondary">
-            Viewing All Orders
-          </Typography>
-        ) : (
-          <Typography variant="h4" color="text.secondary">
-            Searching for {statusFilter} orders
-          </Typography>
-        )}
+        <Typography
+          variant="h4"
+          color="text.secondary"
+          textTransform={"capitalize"}
+        >
+          {statusFilter} Orders
+        </Typography>
 
-        {/* Enhanced Search Bar */}
-        <Box flex={1} width="100%">
-          <TextField
-            placeholder="Search Orders"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            fullWidth
-            variant="outlined"
-            sx={{
-              borderRadius: "12px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#ccc",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#999",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#666",
-                },
-              },
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon color="primary" />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleOpenFilterMenu}>
-                    <FilterListIcon color="primary" />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Box>
+        {/*  Search Bar */}
+        <Button onClick={handleOpenFilterMenu} endIcon={<FilterListIcon />}>
+          Filter
+        </Button>
       </Stack>
 
       {/* Filter Options */}
@@ -146,26 +110,32 @@ export default function OrdersPage() {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={() => handleFilterChange("all")}>
-          All Orders
-        </MenuItem>
-        <MenuItem onClick={() => handleFilterChange("pending")}>
-          Pending
-        </MenuItem>
-        <MenuItem onClick={() => handleFilterChange("completed")}>
-          Completed
-        </MenuItem>
-        <MenuItem onClick={() => handleFilterChange("cancelled")}>
-          Cancelled
-        </MenuItem>
+        {filterItems.map((item) => (
+          <MenuItem
+            key={item.value}
+            onClick={() => handleFilterChange(item.value)}
+            sx={{ textTransform: "capitalize" }}
+          >
+            {item.title}
+          </MenuItem>
+        ))}
       </Menu>
 
       {/* Orders List */}
-      <Stack spacing={2} sx={{ mt: 3 }}>
-        {data.map((orderItem) => (
-          <OrderCard key={orderItem._id} order={orderItem} />
-        ))}
-      </Stack>
+
+      {data?.length ? (
+        <Stack spacing={2} sx={{ mt: 3 }}>
+          {data.map((orderItem) => (
+            <OrderCard key={orderItem._id} order={orderItem} />
+          ))}
+        </Stack>
+      ) : (
+        <NoDataFound
+          link="/product"
+          text="Browse Products"
+          message={`You Don't have any ${statusFilter} order.`}
+        />
+      )}
     </Container>
   );
 }

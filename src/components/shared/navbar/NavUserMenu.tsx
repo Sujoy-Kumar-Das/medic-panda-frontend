@@ -16,8 +16,8 @@ import * as React from "react";
 import { toast } from "sonner";
 
 const settings = [
-  { link: "/dashboard/user", text: "Profile" },
-  { link: "/dashboard/", text: "Dashboard" },
+  { link: "/dashboard/", text: "Profile" },
+  { link: "/dashboard/user", text: "Dashboard" },
 ];
 
 function NavUserMenu() {

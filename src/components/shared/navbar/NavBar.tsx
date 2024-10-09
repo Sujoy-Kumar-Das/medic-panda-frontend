@@ -11,7 +11,6 @@ import NavUserMenu from "./NavUserMenu";
 
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
