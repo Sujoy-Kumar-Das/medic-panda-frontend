@@ -2,7 +2,7 @@ import { dateFormatter } from "@/utils/date.formatter";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
 const PaymentCard = ({ paymentHistory }) => {
-  console.log(paymentHistory);
+  const { order, transactionId, createdAt } = paymentHistory;
   return (
     <Card
       sx={{
@@ -27,9 +27,7 @@ const PaymentCard = ({ paymentHistory }) => {
           }}
         >
           Transaction ID:
-          <span style={{ fontWeight: "normal" }}>
-            {paymentHistory.transactionId}
-          </span>
+          <span style={{ fontWeight: "normal" }}>{transactionId}</span>
         </Typography>
         <Typography
           variant="subtitle1"
@@ -57,14 +55,14 @@ const PaymentCard = ({ paymentHistory }) => {
           <Typography variant="body2" sx={{ color: "#4A5568" }}>
             Order Date:
             <span style={{ fontWeight: "500" }}>
-              {dateFormatter(paymentHistory.order.createdAt)}
+              {dateFormatter(order.createdAt)}
             </span>
           </Typography>
-          {paymentHistory?.order?.completedDate && (
+          {order?.completedDate && (
             <Typography variant="body2" sx={{ color: "#4A5568" }}>
               Completed Order Date:
               <span style={{ fontWeight: "500" }}>
-                {dateFormatter(paymentHistory?.order?.completedDate)}
+                {dateFormatter(order?.completedDate)}
               </span>
             </Typography>
           )}
@@ -78,7 +76,7 @@ const PaymentCard = ({ paymentHistory }) => {
         >
           Status:
           <span style={{ color: "#28a745", fontWeight: "bold" }}>
-            {paymentHistory?.order?.status}
+            {order?.status}
           </span>
         </Typography>
         <Typography
@@ -89,9 +87,7 @@ const PaymentCard = ({ paymentHistory }) => {
           }}
         >
           Transaction Date:
-          <span style={{ fontWeight: "500" }}>
-            {dateFormatter(paymentHistory.createdAt)}
-          </span>
+          <span style={{ fontWeight: "500" }}>{dateFormatter(createdAt)}</span>
         </Typography>
       </CardContent>
     </Card>

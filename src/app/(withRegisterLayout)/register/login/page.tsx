@@ -15,13 +15,13 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function LoginPage() {
-  const { handleLogin, isLoading, isSuccess, errorMessage } = useLogin();
+  const { login, isLoading, isSuccess, errorMessage } = useLogin();
 
   const handleLoginUser = useCallback(
     async (data: FieldValues) => {
-      await handleLogin(data);
+      await login(data);
     },
-    [handleLogin]
+    [login]
   );
 
   useEffect(() => {

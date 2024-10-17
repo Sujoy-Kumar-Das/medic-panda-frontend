@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const useUserInfo = (): any | string => {
   const [userInfo, setUserInfo] = useState<{
-    user: string;
+    userId: string;
     role: string;
   } | null>(null);
 
@@ -19,7 +19,7 @@ const useUserInfo = (): any | string => {
         const userData: JwtPayload & { userId: string; role: string } =
           jwtDecode(authToken);
 
-        setUserInfo({ user: userData.userId, role: userData.role });
+        setUserInfo({ userId: userData.userId, role: userData.role });
       } else {
         setUserInfo(null);
       }

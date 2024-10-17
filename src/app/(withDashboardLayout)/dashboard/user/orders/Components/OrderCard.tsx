@@ -1,15 +1,65 @@
+import { useCancelOrderMutation } from "@/redux/api/order.api";
+import { usePaymentNowMutation } from "@/redux/api/payment.api";
+import { IGenericErrorResponse } from "@/types";
 import formatOrderDate from "@/utils/format.order.date";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { Box, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function OrderCard({ order }) {
+  const { isPaid, quantity, product, total, createdAt, status, _id } = order;
+
+  const [
+    paymentNow,
+    { isLoading: paymentLoader, isError, error, isSuccess, data: paymentData },
+  ] = usePaymentNowMutation();
+
+  const [
+    cancelOrder,
+    {
+      isError: isCancelOrderError,
+      isSuccess: isCancelOrderSuccess,
+      error: cancelOrderError,
+    },
+  ] = useCancelOrderMutation();
+
+  const router = useRouter();
+
+  // handle payment handler
+  const handlePaymentNow = async (id: string) => {
+    await paymentNow(id);
+  };
+
+  // handle cancel order
+  const handleCancelOrder = async (id: string) => {};
+
+  // manage payment handler state;
+  useEffect(() => {
+    if (isCancelOrderSuccess) {
+      toast.success("Order canceled successfully.");
+    } else if (isCancelOrderError) {
+      toast.error((cancelOrderError as IGenericErrorResponse).message);
+    }
+  }, [isCancelOrderSuccess, isCancelOrderError, cancelOrderError]);
+
+  // manage payment handler state;
+  useEffect(() => {
+    if (isSuccess) {
+      router.replace(paymentData.paymentUrl);
+    } else if (isError) {
+      toast.error((error as IGenericErrorResponse).message);
+    }
+  }, [paymentData, isSuccess, isError, error, router]);
   return (
     <Box
       py={5}
       px={3}
       borderRadius={2}
       boxShadow={2}
+      textTransform={"capitalize"}
       sx={{
         width: "100%",
         backgroundColor: "background.default",
@@ -34,10 +84,10 @@ export default function OrderCard({ order }) {
           spacing={1}
         >
           <Typography variant="body2" fontWeight={600} textAlign="center">
-            Product Name:
+            Product Name
           </Typography>
           <Typography color="text.secondary" variant="body2" textAlign="center">
-            {order?.product?.name}
+            {product?.name}
           </Typography>
         </Stack>
 
@@ -48,10 +98,10 @@ export default function OrderCard({ order }) {
           spacing={1}
         >
           <Typography variant="body2" fontWeight={600} textAlign="center">
-            Placed On:
+            Placed On
           </Typography>
           <Typography color="text.secondary" variant="body2" textAlign="center">
-            {formatOrderDate(order.createdAt)}
+            {formatOrderDate(createdAt)}
           </Typography>
         </Stack>
 
@@ -62,10 +112,10 @@ export default function OrderCard({ order }) {
           spacing={1}
         >
           <Typography variant="body2" fontWeight={600} textAlign="center">
-            Price:
+            Price
           </Typography>
           <Typography color="text.secondary" variant="body2" textAlign="center">
-            ${order.product.price.toFixed(2)}{" "}
+            ${product.price.toFixed(2)}{" "}
           </Typography>
         </Stack>
 
@@ -76,10 +126,10 @@ export default function OrderCard({ order }) {
           spacing={1}
         >
           <Typography variant="body2" fontWeight={600} textAlign="center">
-            Quantity:
+            Quantity
           </Typography>
           <Typography color="text.secondary" variant="body2" textAlign="center">
-            {order.quantity}
+            {quantity}
           </Typography>
         </Stack>
 
@@ -90,10 +140,10 @@ export default function OrderCard({ order }) {
           spacing={1}
         >
           <Typography variant="body2" fontWeight={600} textAlign="center">
-            Total:
+            Total
           </Typography>
           <Typography color="text.secondary" variant="body2" textAlign="center">
-            ${order.total.toFixed(2)}
+            ${total.toFixed(2)}
           </Typography>
         </Stack>
 
@@ -104,7 +154,7 @@ export default function OrderCard({ order }) {
           spacing={1}
         >
           <Typography variant="body2" fontWeight={600} textAlign="center">
-            Payment Status:
+            Payment Status
           </Typography>
           <Typography
             color="primary"
@@ -117,7 +167,18 @@ export default function OrderCard({ order }) {
               },
             }}
           >
-            Paid
+            {isPaid ? (
+              "Paid"
+            ) : (
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                }}
+                onClick={() => handlePaymentNow(_id)}
+              >
+                Pay Now
+              </Typography>
+            )}
           </Typography>
         </Stack>
 
@@ -128,7 +189,7 @@ export default function OrderCard({ order }) {
           spacing={1}
         >
           <Typography variant="body2" fontWeight={600} textAlign="center">
-            Order Status:
+            Order Status
           </Typography>
           <Typography
             color="primary"
@@ -141,17 +202,41 @@ export default function OrderCard({ order }) {
               },
             }}
           >
-            {order.status}
+            {status}
           </Typography>
         </Stack>
 
-        {/** Order Status Link */}
+        {/** Cancel Order Section */}
+        <Stack
+          direction={{ xs: "row", md: "column" }}
+          alignItems="center"
+          spacing={1}
+        >
+          <Typography variant="body2" fontWeight={600} textAlign="center">
+            Cancel Order
+          </Typography>
+          <Typography
+            color="primary"
+            variant="body2"
+            textAlign="center"
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                color: "secondary.main",
+              },
+            }}
+          >
+            Cancel
+          </Typography>
+        </Stack>
+
+        {/** View Order Link */}
         <Stack
           direction="row"
           alignItems="center"
           spacing={1}
           component={Link}
-          href={`/dashboard/user/orders/${order._id}`}
+          href={`/dashboard/user/orders/${_id}`}
           sx={{
             textDecoration: "none",
             color: "primary.main",

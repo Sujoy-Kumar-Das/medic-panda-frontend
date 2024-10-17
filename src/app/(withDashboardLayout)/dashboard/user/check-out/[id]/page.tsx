@@ -63,6 +63,7 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
   const defaultValues = {
     name: userInfo?.name || "",
     email: userInfo?.user?.email || "",
+    contact: userInfo?.contact || "",
     street: userInfo?.address?.street || "",
     city: userInfo?.address?.city || "",
     postalCode: userInfo?.address?.postalCode || "",
@@ -184,6 +185,14 @@ export default function PlaceOrderPage({ params }: { params: { id: string } }) {
                         type="email"
                         name="email"
                         label="Email"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <PandaInputField
+                        type="tel"
+                        name="contact"
+                        label="Contact"
                         fullWidth
                       />
                     </Grid>

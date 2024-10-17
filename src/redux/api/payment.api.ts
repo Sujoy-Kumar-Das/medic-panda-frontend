@@ -8,7 +8,13 @@ const paymentApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    paymentNow: builder.mutation({
+      query: (id) => ({
+        url: `/pay-now/${id}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useGetPaymentHistoryQuery } = paymentApi;
+export const { useGetPaymentHistoryQuery, usePaymentNowMutation } = paymentApi;

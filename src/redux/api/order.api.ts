@@ -36,10 +36,9 @@ const orderApi = baseApi.injectEndpoints({
       },
     }),
     cancelOrder: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/order/${id}`,
+      query: (id) => ({
+        url: `/order/cancel/${id}`,
         method: "PATCH",
-        body: data,
       }),
     }),
     deleteDelete: builder.mutation({
@@ -53,6 +52,7 @@ const orderApi = baseApi.injectEndpoints({
 
 export const {
   usePlaceOrderMutation,
+  useCancelOrderMutation,
   useGetAllOrderQuery,
   useGetSingleOrderQuery,
 } = orderApi;

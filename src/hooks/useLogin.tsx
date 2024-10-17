@@ -1,47 +1,63 @@
 import { useAddToCartMutation } from "@/redux/api/addToCart.api";
 import { useLoginMutation } from "@/redux/api/auth.api";
+import { removeProduct } from "@/redux/features/cart.slice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IGenericErrorMessage } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FieldValues } from "react-hook-form";
+import { useCallback, useEffect, useState } from "react";
 
 export const useLogin = () => {
-  // login hook redux
   const [login, { isLoading, isSuccess: isLoginSuccess, isError, error }] =
     useLoginMutation();
-  const [addToCart] = useAddToCartMutation();
 
-  const [isSuccess, setIsSuccess] = useState(false); // Local state to track success
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); // Error message state
+  const [addToCart, { isSuccess: isAddToCartSuccess }] = useAddToCartMutation();
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
 
-  // login handler
-  const handleLogin = async (data: FieldValues) => {
-    await login(data);
-  };
+  const { carts } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const handleCartSync = async () => {
-      try {
-        if (isLoginSuccess) {
-          setIsSuccess(true);
-          // Redirect after cart sync
-          if (redirect) {
-            router.push(redirect as string);
-          } else {
-            router.push("/");
+  // handle sync cart local to remote
+  const handleCartSync = useCallback(async () => {
+    try {
+      if (isLoginSuccess && carts.length) {
+        const productsToRemove = []; // Temporary array to store products that need to be removed
+
+        for (const item of carts) {
+          const cartItem = {
+            product: item.id,
+            quantity: item.quantity,
+          };
+
+          // Add to cart (remote) and await its completion
+          const res = await addToCart(cartItem).unwrap();
+
+          if (res._id) {
+            // Push the product ID to the removal queue if successfully added
+            productsToRemove.push(item.id);
           }
         }
-      } catch (err) {
-        console.error("Error during cart sync:", err);
-        setErrorMessage((err as IGenericErrorMessage)?.message);
-      }
-    };
 
-    // Handle login success and cart synchronization
+        // After all products are successfully added, remove them from the cart
+        productsToRemove.forEach((id) => {
+          dispatch(removeProduct({ id }));
+        });
+      }
+
+      setIsSuccess(true); // Set success state after the entire process
+      router.push(redirect || "/"); // Redirect after sync
+    } catch (err) {
+      console.error("Error during cart sync:", err);
+      setErrorMessage((err as IGenericErrorMessage)?.message);
+    }
+  }, [isLoginSuccess, carts, redirect, router, addToCart, dispatch]);
+
+  useEffect(() => {
     if (isLoginSuccess) {
       handleCartSync();
     } else if (isError) {
@@ -49,7 +65,7 @@ export const useLogin = () => {
         (error as IGenericErrorMessage)?.message || "Login failed";
       setErrorMessage(errorMsg);
     }
-  }, [isLoginSuccess, isError, error, router, redirect, addToCart]);
+  }, [isLoginSuccess, isError, error, handleCartSync]);
 
-  return { handleLogin, isLoading, isSuccess, errorMessage };
+  return { login, isLoading, isSuccess, errorMessage };
 };

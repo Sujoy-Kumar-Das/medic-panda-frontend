@@ -316,7 +316,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
             component={Link}
             href="/dashboard/user/my-cart"
           >
-            Checkout
+            View Cart
           </Button>
         </Box>
       </Menu>
