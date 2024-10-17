@@ -116,7 +116,7 @@ export default function LoginPage() {
                   Forgot password?{" "}
                   <Typography
                     component={Link}
-                    href="/reset-password"
+                    href="/forgot-password"
                     sx={{
                       color: "primary.main",
                       fontWeight: "bold",
