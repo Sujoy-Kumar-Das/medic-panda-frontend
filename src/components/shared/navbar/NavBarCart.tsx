@@ -35,6 +35,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
   ] = useRemoveCartProductMutation();
 
   const dispatch = useAppDispatch();
+  const [loadingProductId, setLoadingProductId] = useState<string | null>(null); // Local loading state for each product
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -46,27 +47,40 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
 
   const handleRemoveFromCart = async (product: IProduct) => {
     const userId = user.userId;
-    // remove from local storage
+
+    // Set loading state for the specific product
+    setLoadingProductId(product._id);
+
     if (!user && !userId) {
       dispatch(removeSingleProduct({ id: product._id }));
+      setLoadingProductId(null); // Reset loader after dispatch
       return;
     }
 
-    // remove from db
-    await removeCartItemFromDB({
-      product: product._id,
-    }).unwrap();
-  };
+    try {
+      // Remove from db
+      await removeCartItemFromDB({
+        product: product._id,
+      }).unwrap();
 
-  // manage remove product from db state;
-  useEffect(() => {
-    if (isSuccess) {
+      // On success, show toast
       toast.success("Cart removed successfully");
       handleCloseUserMenu();
-    } else if (isError) {
+    } catch (error) {
+      // Handle error
       toast.error((error as IGenericErrorResponse).message);
+    } finally {
+      // Reset loading state
+      setLoadingProductId(null);
     }
-  }, [isSuccess, isError, error]);
+  };
+
+  // Manage remove product from db state;
+  useEffect(() => {
+    if (isSuccess) {
+      handleCloseUserMenu();
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -205,7 +219,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                     </Stack>
                     <IconButton
                       onClick={() => handleRemoveFromCart(cart.product)}
-                      disabled={removeCartLoader}
+                      disabled={loadingProductId === cart.product._id} // Disable only for the product being deleted
                       color="error"
                       sx={{
                         transition: "background-color 0.3s ease",
@@ -214,7 +228,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                         },
                       }}
                     >
-                      {removeCartLoader ? (
+                      {loadingProductId === cart.product._id ? (
                         <CircularProgress size={24} color="inherit" />
                       ) : (
                         <DeleteIcon />
@@ -270,7 +284,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                     </Stack>
                     <IconButton
                       onClick={() => handleRemoveFromCart(cart.id)}
-                      disabled={removeCartLoader}
+                      disabled={loadingProductId === cart.id} // Disable only for the product being deleted
                       color="error"
                       sx={{
                         transition: "background-color 0.3s ease",
@@ -279,7 +293,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                         },
                       }}
                     >
-                      {removeCartLoader ? (
+                      {loadingProductId === cart.id ? (
                         <CircularProgress size={24} color="inherit" />
                       ) : (
                         <DeleteIcon />
@@ -306,15 +320,15 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
             fullWidth
             sx={{
               borderRadius: 2,
-              py: 1.5,
-              fontWeight: "bold",
               boxShadow: "none",
+              transition: "transform 0.3s ease",
               "&:hover": {
+                transform: "scale(1.05)",
                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
               },
             }}
             component={Link}
-            href="/dashboard/user/my-cart"
+            href="/cart"
           >
             View Cart
           </Button>

@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import ProductCard from "../ui/card/productCard/ProductCard";
 
-export default async function ProductSection({ user }: { user: IUserInfo }) {
+export default async function ProductSection() {
   const { data: products } = await getAllProductService(6);
   return (
     <Container sx={{ py: 10 }}>
@@ -44,7 +44,7 @@ export default async function ProductSection({ user }: { user: IUserInfo }) {
 
       <ProductSlider>
         {products.map((product: IProduct) => (
-          <ProductCard key={product._id} product={product} user={user} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </ProductSlider>
     </Container>

@@ -1,50 +1,49 @@
 "use client";
+import useUserInfo from "@/hooks/useUserInfo";
 import { addProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IGenericErrorResponse, IProduct } from "@/types";
-import { IUserInfo } from "@/types/user.type";
 import { ShoppingCart } from "@mui/icons-material";
-import { Button, CircularProgress } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Button, CircularProgress, IconButton, SxProps } from "@mui/material";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useAddToCartMutation } from "../../../redux/api/addToCart.api";
 
+interface IAddToCartButtonProps {
+  product: IProduct;
+  basic?: boolean;
+  sx?: SxProps;
+  className?: string;
+}
+
 export default function AddToCartButton({
   product,
-  user,
-}: {
-  product: IProduct;
-  user: IUserInfo;
-}) {
+  basic = false,
+  sx,
+  className,
+}: IAddToCartButtonProps) {
+  const user = useUserInfo();
   const [addToCartInDB, { isLoading, isSuccess, isError, error }] =
     useAddToCartMutation();
-
   const dispatch = useAppDispatch();
 
   const handleAddToCart = async (productData: IProduct) => {
     const { name, thumbnail, _id, price } = productData;
+    const userId = user?.userId;
 
-    const userId = user.userId;
-
-    if (!user && !userId) {
-      // Add product to the local cart store
-      dispatch(
-        addProduct({
-          name,
-          thumbnail,
-          id: _id,
-          price,
-        })
-      );
-
+    if (!userId) {
+      // Local cart handling
+      dispatch(addProduct({ name, thumbnail, id: _id, price }));
       toast.success("Product added to cart locally.");
       return;
     }
 
-    await addToCartInDB({
-      product: _id,
-      quantity: 1,
-    }).unwrap();
+    try {
+      await addToCartInDB({ product: _id, quantity: 1 }).unwrap();
+    } catch (err) {
+      console.error("Add to cart failed", err);
+    }
   };
 
   useEffect(() => {
@@ -52,31 +51,60 @@ export default function AddToCartButton({
       toast.success("Product added to cart.");
     } else if (isError) {
       const errorMessage = (error as IGenericErrorResponse).message;
-      toast.error(errorMessage);
+      toast.error(errorMessage || "Failed to add product to cart.");
     }
   }, [isSuccess, isError, error]);
 
+  const commonButtonProps = {
+    onClick: () => handleAddToCart(product),
+    disabled: isLoading,
+    "aria-label": `Add ${product.name} to cart`,
+  };
+
   return (
-    <Button
-      color="primary"
-      endIcon={
-        isLoading ? (
-          <CircularProgress size={16} sx={{ color: "white" }} />
-        ) : (
-          <ShoppingCart />
-        )
-      }
-      sx={{
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        borderRadius: 2,
-        p: 1,
-      }}
-      size={"small"}
-      onClick={() => handleAddToCart(product)}
-      disabled={isLoading}
-    >
-      {isLoading ? "Adding..." : "Add to cart"}
-    </Button>
+    <>
+      {basic ? (
+        <Button
+          {...commonButtonProps}
+          className={className}
+          color="primary"
+          endIcon={
+            isLoading ? (
+              <CircularProgress size={16} sx={{ color: "white" }} />
+            ) : (
+              <ShoppingCart />
+            )
+          }
+          size="small"
+          sx={{
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            borderRadius: 2,
+            p: 1,
+            transition: "transform 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.05)",
+            },
+            ...sx, // Ensure sx is passed correctly here
+          }}
+        >
+          {isLoading ? "Adding..." : "Add to cart"}
+        </Button>
+      ) : (
+        <IconButton
+          {...commonButtonProps}
+          className={className}
+          sx={{
+            transition: "transform 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.05)",
+            },
+            ...sx, // Ensure sx is passed correctly here
+          }}
+        >
+          {isLoading ? <CircularProgress size={24} /> : <ShoppingCartIcon />}
+        </IconButton>
+      )}
+    </>
   );
 }

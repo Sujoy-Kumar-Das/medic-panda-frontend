@@ -136,7 +136,11 @@ const ProductCard = ({ product, user }: IProductCardProps) => {
         className="cardHover"
       >
         <WishListButton id={_id} />
-        <AddToCartButton user={user} product={product} />
+        <AddToCartButton
+          sx={{ color: "text.disabled" }}
+          basic
+          product={product}
+        />
         <IconButton
           color="primary"
           component={Link}

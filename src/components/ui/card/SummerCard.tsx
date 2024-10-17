@@ -1,5 +1,4 @@
 import { IProduct } from "@/types";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Box,
@@ -10,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import AddToCartButton from "../buttons/AddToCartButton";
 import WishListButton from "../buttons/WishListButton";
 
 export default function SummerCard({ product }: { product: IProduct }) {
@@ -114,19 +114,17 @@ export default function SummerCard({ product }: { product: IProduct }) {
         overflow={"hidden"}
       >
         <WishListButton id={product._id} btnType="Summer" />
-        <IconButton
-          color="primary"
-          size="small"
+        <AddToCartButton
           className="button"
           sx={{
             transform: "translateY(500px)",
+            color: "primary.main",
             opacity: 0,
             transition:
               "transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s ease",
           }}
-        >
-          <ShoppingCartIcon />
-        </IconButton>
+          product={product}
+        />
         <IconButton
           color="primary"
           size="small"

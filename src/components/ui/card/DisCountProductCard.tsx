@@ -1,6 +1,5 @@
 import { IProduct } from "@/types/product.type";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StarIcon from "@mui/icons-material/Star";
 import {
   Box,
@@ -14,6 +13,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "../buttons/AddToCartButton";
 import WishListButton from "../buttons/WishListButton";
 
 export default function DisCountProductCard({
@@ -141,7 +141,7 @@ export default function DisCountProductCard({
       >
         <WishListButton btnType="Discount" id={_id} />
 
-        <IconButton
+        <AddToCartButton
           className="button"
           sx={{
             color: "primary.main",
@@ -159,9 +159,8 @@ export default function DisCountProductCard({
               transform: "scale(1.1) translateX(0)",
             },
           }}
-        >
-          <ShoppingCartIcon />
-        </IconButton>
+          product={product}
+        />
         <IconButton
           className="button"
           sx={{
