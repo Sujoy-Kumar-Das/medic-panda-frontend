@@ -89,7 +89,7 @@ export default async function ProductDetailsPage({
         </Stack>
         <ProductDetailsTab
           category={category}
-          manufacturer={manufacture}
+          manufacture={manufacture}
           variant={variant}
         />
       </Container>

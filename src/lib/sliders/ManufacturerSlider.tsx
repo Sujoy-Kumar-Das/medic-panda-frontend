@@ -1,8 +1,13 @@
 "use client";
+import { IManufacturer } from "@/types/Imanufacturer.type";
 import { Box, Typography } from "@mui/material";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-export default function ManufacturerSlider({ data }) {
+export default function ManufacturerSlider({
+  data,
+}: {
+  data: IManufacturer[];
+}) {
   return (
     <Swiper
       autoplay={{
@@ -26,7 +31,7 @@ export default function ManufacturerSlider({ data }) {
         },
       }}
     >
-      {data?.map((item) => (
+      {data?.map((item: IManufacturer) => (
         <SwiperSlide key={item._id}>
           <Box
             sx={{

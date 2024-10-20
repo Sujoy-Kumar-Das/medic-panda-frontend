@@ -1,6 +1,5 @@
 import SearchBar from "@/components/shared/searchBar/SearchBar";
 import { Box, Button, Container, Stack } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 
 export default function AllAdminPage() {
   return (
@@ -18,7 +17,7 @@ export default function AllAdminPage() {
         </Stack>
       </Box>
 
-      <Box>
+      {/* <Box>
         <DataGrid
           rows={data || []}
           columns={columns}
@@ -30,7 +29,7 @@ export default function AllAdminPage() {
           hideFooterPagination
           hideFooterSelectedRowCount
         />
-      </Box>
+      </Box> */}
     </Container>
   );
 }

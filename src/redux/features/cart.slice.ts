@@ -85,7 +85,7 @@ const cartSlice = createSlice({
             existingProduct.price
           );
         } else {
-          state.carts = state.carts.filter((item) => item.id !== id);
+          state.carts = state.carts.filter((item: ICartItem) => item.id !== id);
         }
       }
     },
@@ -101,7 +101,7 @@ const cartSlice = createSlice({
         existingProduct.quantity = (existingProduct.quantity ?? 0) - quantity;
 
         if (existingProduct.quantity <= 0) {
-          state.carts = state.carts.filter((item) => item.id !== id);
+          state.carts = state.carts.filter((item: ICartItem) => item.id !== id);
         } else {
           existingProduct.totalPrice = calculateTotalPrice(
             existingProduct.quantity,
@@ -111,7 +111,9 @@ const cartSlice = createSlice({
       }
     },
     removeProduct: (state, action: PayloadAction<{ id: string }>) => {
-      state.carts = state.carts.filter((item) => item.id !== action.payload.id);
+      state.carts = state.carts.filter(
+        (item: ICartItem) => item.id !== action.payload.id
+      );
     },
   },
 });

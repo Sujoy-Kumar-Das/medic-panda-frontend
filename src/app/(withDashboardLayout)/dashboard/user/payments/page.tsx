@@ -30,7 +30,7 @@ export default function PaymentHistoryPage() {
       />
 
       <Stack>
-        {paymentHistories?.map((paymentHistory) => (
+        {paymentHistories?.map((paymentHistory: any) => (
           <PaymentCard
             key={paymentHistory._id}
             paymentHistory={paymentHistory}

@@ -95,7 +95,6 @@ export default function UserDashboard() {
 
     return <ErrorPage error={allErrors} />;
   }
-  console.log(userMetaData);
   return (
     <Container>
       <Header

@@ -1,6 +1,7 @@
 "use client";
 import ProductCard from "@/components/ui/card/productCard/ProductCard";
 import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
+import { ICategory, IProduct } from "@/types";
 import CategoryIcon from "@mui/icons-material/Category";
 import SearchIcon from "@mui/icons-material/Search";
 import {
@@ -15,23 +16,29 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import CategoryModal from "./CategoryModal";
 
-export default function ProductDrawer({ products, meta }) {
+interface IProductProps {
+  products: IProduct[];
+  meta: any;
+}
+
+export default function ProductDrawer({ products, meta }: IProductProps) {
   const [openCategoryModal, setOpenCategoryModal] = useState(false);
-  const [skip, setSkip] = useState<number>(0);
   const { data } = useGetAllCategoriesQuery(undefined);
 
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathName = usePathname();
 
+  // handle the category modal
   const handleCategoryModal = () => {
     setOpenCategoryModal((prev) => !prev);
   };
 
-  const handleQueryParams = (event) => {
+  // search query handler
+  const handleQueryParams = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get("searchTerm");
@@ -46,11 +53,12 @@ export default function ProductDrawer({ products, meta }) {
     replace(`${pathName}?${params.toString()}`);
   };
 
-  const handlePagination = (event, page) => {
+  // pagination handler
+  const handlePagination = (event: any, page: number) => {
     const params = new URLSearchParams(searchParams);
 
     if (page) {
-      params.set("page", page);
+      params.set("page", String(page));
     } else {
       params.delete("page");
     }
@@ -131,7 +139,7 @@ export default function ProductDrawer({ products, meta }) {
               </Typography>
               <Divider sx={{ mb: 2 }} />
               <Stack direction={"column"} spacing={1}>
-                {data?.map((item) => (
+                {data?.map((item: ICategory) => (
                   <Typography
                     key={item._id}
                     component={Link}
@@ -181,6 +189,7 @@ export default function ProductDrawer({ products, meta }) {
         </Grid>
       </Grid>
 
+      {/* category modal for mobile */}
       {data && (
         <CategoryModal
           open={openCategoryModal}

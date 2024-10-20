@@ -5,7 +5,7 @@ import {
 } from "@/redux/api/addToCart.api";
 import { removeSingleProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { IGenericErrorResponse, IProduct } from "@/types";
+import { ICart, IGenericErrorResponse, IProduct } from "@/types";
 import { IUserInfo } from "@/types/user.type";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -169,7 +169,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
           ) : (
             <>
               {user && data?.length ? (
-                data?.map((cart) => (
+                data?.map((cart: ICart) => (
                   <Stack
                     direction="row"
                     alignItems="center"
@@ -237,7 +237,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                   </Stack>
                 ))
               ) : !user && carts.length ? (
-                carts.map((cart) => (
+                carts.map((cart: any) => (
                   <Stack
                     direction="row"
                     alignItems="center"
@@ -328,7 +328,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
               },
             }}
             component={Link}
-            href="/cart"
+            href="/dashboard/user/my-cart"
           >
             View Cart
           </Button>

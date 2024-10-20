@@ -2,15 +2,18 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Button, InputBase, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { FormEvent } from "react";
 
 export default function SearchBar() {
   const router = useRouter();
-  const handleSearch = (event) => {
+  const handleSearch = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const value = event.target.search.value;
+    const value = (event.target as HTMLFormElement).search.value;
     if (value) {
       router.push(`/products?title=${value}`);
+    } else {
+      router.push("/product");
     }
   };
 

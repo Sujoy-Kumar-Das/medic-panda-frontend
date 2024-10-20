@@ -27,6 +27,16 @@ const addToCartApi = baseApi.injectEndpoints({
       }),
       providesTags: [TTagTypes.cart],
     }),
+    incrementCartProduct: builder.mutation({
+      query: (data: any) => {
+        return {
+          url: `/cart/${data.id}`,
+          method: "PATCH",
+          data,
+        };
+      },
+      invalidatesTags: [TTagTypes.cart],
+    }),
     removeCartProduct: builder.mutation({
       query: (data: any) => {
         return {
@@ -45,4 +55,5 @@ export const {
   useGetAllCartProductsQuery,
   useGetSingleCartProductsQuery,
   useRemoveCartProductMutation,
+  useIncrementCartProductMutation,
 } = addToCartApi;

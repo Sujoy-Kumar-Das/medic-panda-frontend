@@ -20,7 +20,7 @@ export default function CreateAccountPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    handleLogin,
+    login,
     isLoading: isLoginLoading,
     errorMessage,
     isSuccess,
@@ -39,7 +39,7 @@ export default function CreateAccountPage() {
           email: data.email,
           password: data.password,
         };
-        await handleLogin(userData);
+        await login(userData);
       } else {
         toast.error(res.message);
         setIsLoading(false);

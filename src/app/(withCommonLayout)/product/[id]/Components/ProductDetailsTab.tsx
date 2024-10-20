@@ -1,11 +1,24 @@
 "use client";
+import { ICategory } from "@/types";
+import { IManufacturer } from "@/types/Imanufacturer.type";
+import { IVariant } from "@/types/IVariant";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import { useState } from "react";
 import MoreDetails from "./MoreDetails";
 import ProductReviewTab from "./ProductReviewTab";
 
-export default function ProductDetailsTab({ category, manufacturer, variant }) {
+interface IProductDetailsTab {
+  category: ICategory;
+  manufacture: IManufacturer;
+  variant: IVariant;
+}
+
+export default function ProductDetailsTab({
+  category,
+  manufacture,
+  variant,
+}: IProductDetailsTab) {
   const [value, setValue] = useState<string>("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -26,7 +39,7 @@ export default function ProductDetailsTab({ category, manufacturer, variant }) {
       <TabPanel value="1" sx={{ p: 0 }}>
         <MoreDetails
           category={category}
-          manufacturer={manufacturer}
+          manufacture={manufacture}
           variant={variant}
         />
       </TabPanel>

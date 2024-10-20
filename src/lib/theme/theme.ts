@@ -1,5 +1,34 @@
 import { createTheme } from "@mui/material";
 
+// Extend MUI Palette interface to include gradients
+declare module "@mui/material/styles" {
+  interface Palette {
+    gradients: {
+      totalPrice: string;
+      totalOrders: string;
+      totalWishlist: string;
+      cartItems: string;
+      pendingOrders: string;
+      shippedOrders: string;
+      deliveredOrders: string;
+      canceledOrders: string;
+    };
+  }
+
+  interface PaletteOptions {
+    gradients?: {
+      totalPrice: string;
+      totalOrders: string;
+      totalWishlist: string;
+      cartItems: string;
+      pendingOrders: string;
+      shippedOrders: string;
+      deliveredOrders: string;
+      canceledOrders: string;
+    };
+  }
+}
+
 const theme = createTheme({
   palette: {
     mode: "light",

@@ -6,12 +6,9 @@ import {
   Divider,
   Rating,
   Typography,
-  useTheme,
 } from "@mui/material";
 
 const ProductReviewTab = () => {
-  const theme = useTheme();
-
   return (
     <Card elevation={3} sx={{ borderRadius: 2, overflow: "hidden" }}>
       <CardContent>

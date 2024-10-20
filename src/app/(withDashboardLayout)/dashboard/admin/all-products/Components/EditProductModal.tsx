@@ -9,6 +9,8 @@ import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
 import { useGetAllManufactureQuery } from "@/redux/api/manufacture.api";
 import { useGetSingleProductQuery } from "@/redux/api/product.api";
 import { createProductSchema } from "@/schemas/product-schema";
+import { ICategory } from "@/types";
+import { IManufacturer } from "@/types/Imanufacturer.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import { Dispatch, useEffect } from "react";
@@ -36,12 +38,12 @@ export default function EditProductModal({
     setOpen((prev: boolean) => !prev);
   };
 
-  const categoryItems = categories?.map((category) => ({
+  const categoryItems = categories?.map((category: ICategory) => ({
     name: `${category.name.toUpperCase()}`,
     value: category?._id,
   }));
 
-  const manufactureItems = manufactures?.map((manufacture) => ({
+  const manufactureItems = manufactures?.map((manufacture: IManufacturer) => ({
     name: `${manufacture.name.toUpperCase()}`,
     value: manufacture?._id,
   }));

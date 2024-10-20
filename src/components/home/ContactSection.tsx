@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";

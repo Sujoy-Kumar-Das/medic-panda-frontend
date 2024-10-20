@@ -9,6 +9,8 @@ import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
 import { useGetAllManufactureQuery } from "@/redux/api/manufacture.api";
 import { useCreateProductMutation } from "@/redux/api/product.api";
 import { createProductSchema } from "@/schemas/product-schema";
+import { ICategory } from "@/types";
+import { IManufacturer } from "@/types/Imanufacturer.type";
 import { dateFormatter } from "@/utils/date.formatter";
 import { imageUploader } from "@/utils/imageUploader";
 import { timeFormatter } from "@/utils/time.formatter";
@@ -84,12 +86,12 @@ export default function AddProductModal({ open, setOpen }: ICreateModalProps) {
     }
   };
 
-  const categoryItems = data?.map((category) => ({
+  const categoryItems = data?.map((category:ICategory) => ({
     name: `${category.name.toUpperCase()}`,
     value: category?._id,
   }));
 
-  const manufactureItems = manufactures?.map((manufacture) => ({
+  const manufactureItems = manufactures?.map((manufacture:IManufacturer) => ({
     name: `${manufacture.name.toUpperCase()}`,
     value: manufacture?._id,
   }));

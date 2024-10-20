@@ -1,3 +1,5 @@
+import { ICategory } from "./ICategory.type";
+
 export interface IDiscount {
   percentage: number;
   discountStatus?: boolean;
@@ -19,6 +21,7 @@ export interface IProductDetail {
 export interface IProduct {
   _id: string;
   name: string;
+  category: ICategory;
   thumbnail: string;
   price: number;
   discount?: IDiscount;

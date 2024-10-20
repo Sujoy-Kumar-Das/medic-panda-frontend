@@ -5,7 +5,12 @@ import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
-import { IGenericErrorResponse, OrderStatus } from "@/types";
+import {
+  IGenericErrorResponse,
+  IOrder,
+  IOrderDetails,
+  OrderStatus,
+} from "@/types";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import {
   Button,
@@ -125,7 +130,7 @@ export default function OrdersPage() {
 
       {data?.length ? (
         <Stack spacing={2} sx={{ mt: 3 }}>
-          {data.map((orderItem) => (
+          {data.map((orderItem: IOrder) => (
             <OrderCard key={orderItem._id} order={orderItem} />
           ))}
         </Stack>

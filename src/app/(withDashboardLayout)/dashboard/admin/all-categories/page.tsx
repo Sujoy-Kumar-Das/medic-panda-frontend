@@ -1,13 +1,14 @@
 "use client";
+import Loader from "@/components/shared/loader/Loader";
 import SearchBar from "@/components/shared/searchBar/SearchBar";
 import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
+import { ICategory } from "@/types";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
-  CircularProgress,
   Container,
   IconButton,
   Stack,
@@ -33,7 +34,7 @@ export default function AllProductsPage() {
       headerName: "Thumbnail",
       width: 200,
       headerAlign: "center",
-      renderCell: ({ row }: { row }) => (
+      renderCell: ({ row }: { row: ICategory }) => (
         <Box
           sx={{
             display: "flex",
@@ -60,7 +61,7 @@ export default function AllProductsPage() {
       headerName: "Name",
       width: 300,
       headerAlign: "center",
-      renderCell: ({ row }: { row }) => (
+      renderCell: ({ row }: { row: ICategory }) => (
         <Typography align="center" py={2}>
           {row.name}
         </Typography>
@@ -71,7 +72,7 @@ export default function AllProductsPage() {
       headerName: "Edit",
       width: 180,
       headerAlign: "center",
-      renderCell: ({ row }: { row }) => (
+      renderCell: ({ row }: { row: ICategory }) => (
         <Stack
           direction={"row"}
           justifyContent={"center"}
@@ -88,7 +89,7 @@ export default function AllProductsPage() {
       headerName: "Delete",
       width: 180,
       headerAlign: "center",
-      renderCell: ({ row }: { row }) => (
+      renderCell: ({ row }: { row: ICategory }) => (
         <Stack
           direction={"row"}
           justifyContent={"center"}
@@ -105,7 +106,7 @@ export default function AllProductsPage() {
       headerName: "Detail",
       width: 180,
       headerAlign: "center",
-      renderCell: ({ row }: { row }) => (
+      renderCell: ({ row }: { row: ICategory }) => (
         <Stack
           direction={"row"}
           justifyContent={"center"}
@@ -120,16 +121,7 @@ export default function AllProductsPage() {
   ];
 
   if (isLoading) {
-    return (
-      <Container sx={{ py: 5 }}>
-        <Typography variant="h4" align="center">
-          Loading...
-        </Typography>
-        <Box display="flex" justifyContent="center" my={4}>
-          <CircularProgress />
-        </Box>
-      </Container>
-    );
+    return <Loader />;
   }
 
   return (

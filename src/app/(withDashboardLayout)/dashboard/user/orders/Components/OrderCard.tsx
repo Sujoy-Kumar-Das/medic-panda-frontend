@@ -1,6 +1,6 @@
 import { useCancelOrderMutation } from "@/redux/api/order.api";
 import { usePaymentNowMutation } from "@/redux/api/payment.api";
-import { IGenericErrorResponse } from "@/types";
+import { IGenericErrorResponse, IOrder } from "@/types";
 import formatOrderDate from "@/utils/format.order.date";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { Box, Stack, Typography } from "@mui/material";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-export default function OrderCard({ order }) {
+export default function OrderCard({ order }: { order: IOrder }) {
   const { isPaid, quantity, product, total, createdAt, status, _id } = order;
 
   const [

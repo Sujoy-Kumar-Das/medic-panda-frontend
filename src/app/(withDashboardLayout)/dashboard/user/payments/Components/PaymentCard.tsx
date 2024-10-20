@@ -1,7 +1,24 @@
 import { dateFormatter } from "@/utils/date.formatter";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
-const PaymentCard = ({ paymentHistory }) => {
+interface IPaymentHistory {
+  order: {
+    product: {
+      name: string;
+    };
+    createdAt: string;
+    completedDate?: string;
+    status: string;
+  };
+  transactionId: string;
+  createdAt: string;
+}
+
+interface IPaymentCardProps {
+  paymentHistory: IPaymentHistory;
+}
+
+const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
   const { order, transactionId, createdAt } = paymentHistory;
   return (
     <Card

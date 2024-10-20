@@ -1,8 +1,20 @@
 import CustomModal from "@/components/customModal/CustomModal";
+import { ICategory } from "@/types";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 
-export default function CategoryModal({ open, setOpen, data }) {
+interface ICategoryModalProps {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  data: ICategory[];
+}
+
+export default function CategoryModal({
+  open,
+  setOpen,
+  data,
+}: ICategoryModalProps) {
   return (
     <CustomModal open={open} setOpen={setOpen} closeBtn={false}>
       <Box

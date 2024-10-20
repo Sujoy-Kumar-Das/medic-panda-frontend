@@ -37,7 +37,7 @@ export default function WishListPage() {
       />
 
       <Grid container spacing={5}>
-        {data?.map(({ product }) => (
+        {data?.map(({ product }: { product: any }) => (
           <Grid item xs={12} sm={6} md={4} key={product._id}>
             <WishListCard product={product} key={product._id} />
           </Grid>

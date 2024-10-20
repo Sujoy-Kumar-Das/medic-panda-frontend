@@ -1,35 +1,20 @@
+import { ICategory } from "@/types";
+import { IManufacturer } from "@/types/Imanufacturer.type";
+import { IVariant } from "@/types/IVariant";
 import CategoryIcon from "@mui/icons-material/Category";
 import { Avatar, Box, Divider, Grid, Typography } from "@mui/material";
 
-interface MoreDetailsProps {
-  category: {
-    _id: string;
-    name: string;
-    thumbnail: string;
-  };
-  variant?: {
-    name: string;
-    quantity: number;
-  };
-  manufacturer?: {
-    name: string;
-    description: string;
-    contact: string;
-    address: {
-      state: string;
-      city: string;
-      country: string;
-      zipCode: number;
-    };
-    isDeleted?: boolean;
-  };
+interface IMoreDetailsProps {
+  category: ICategory;
+  manufacture: IManufacturer;
+  variant: IVariant;
 }
 
 export default function MoreDetails({
   category,
   variant,
-  manufacturer,
-}: MoreDetailsProps): JSX.Element {
+  manufacture: manufacturer,
+}: IMoreDetailsProps) {
   return (
     <Box py={2}>
       <Typography
