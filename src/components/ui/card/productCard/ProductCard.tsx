@@ -1,5 +1,4 @@
 import { IProduct } from "@/types/product.type";
-import { IUserInfo } from "@/types/user.type";
 import { Visibility } from "@mui/icons-material";
 import {
   Box,
@@ -16,10 +15,9 @@ import WishListButton from "../../buttons/WishListButton";
 
 interface IProductCardProps {
   product: IProduct;
-  user: IUserInfo;
 }
 
-const ProductCard = ({ product, user }: IProductCardProps) => {
+const ProductCard = ({ product }: IProductCardProps) => {
   const { thumbnail, name, price, discount, _id } = product;
 
   return (

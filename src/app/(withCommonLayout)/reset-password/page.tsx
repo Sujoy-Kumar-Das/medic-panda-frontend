@@ -75,7 +75,6 @@ export default function ResetPasswordPage() {
           },
         }
       );
-      console.log(res);
       const data = res.data;
       if (data.success) {
         toast.success(data.message);
