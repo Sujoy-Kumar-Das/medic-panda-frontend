@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
+// Fade-in animation for card appearance
 const fadeInUp = keyframes`
   0% {
     opacity: 0;
@@ -32,6 +33,7 @@ const fadeInUp = keyframes`
   }
 `;
 
+// Scale-up animation for hover effect
 const scaleUp = keyframes`
   0% {
     transform: scale(1);
@@ -40,6 +42,7 @@ const scaleUp = keyframes`
     transform: scale(1.05);
   }
 `;
+
 export default function MyCartCard({
   cart,
   index,
@@ -48,13 +51,18 @@ export default function MyCartCard({
   index: number;
 }) {
   // increment hook
-  const [incrementQuantity, { isError, error }] =
+  const [incrementQuantity, { isLoading, isError, error }] =
     useIncrementCartProductMutation();
   // decrement hook
   const [
     decrementQuantity,
-    { isError: isDecrementError, error: decrementError },
+    {
+      isLoading: decrementLoader,
+      isError: isDecrementError,
+      error: decrementError,
+    },
   ] = useRemoveCartProductMutation();
+
   const handleIncrementQuantity = async (id: string) => {
     await incrementQuantity({ id });
   };
@@ -85,10 +93,12 @@ export default function MyCartCard({
         p: 3,
         borderRadius: 4,
         boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+        animation: `${fadeInUp} 0.4s ease ${
+          index * 0.1
+        }s both, ${scaleUp} 0.3s ease-out`,
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
-        animation: `${fadeInUp} 0.4s ease ${index * 0.1}s both`,
         "&:hover": {
-          transform: "translateY(-4px)",
+          transform: "scale(1.05)",
           boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
         },
         textAlign: "center",
@@ -158,6 +168,7 @@ export default function MyCartCard({
                   bgcolor: "primary.dark",
                 },
               }}
+              disabled={isLoading}
               onClick={() => handleIncrementQuantity(cart._id)}
             >
               <AddIcon />
@@ -174,6 +185,7 @@ export default function MyCartCard({
                   bgcolor: "secondary.dark",
                 },
               }}
+              disabled={decrementLoader}
               onClick={() => handleDecrementQuantity(cart.product._id)}
             >
               <RemoveIcon />
