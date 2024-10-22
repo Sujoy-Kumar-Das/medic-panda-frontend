@@ -1,19 +1,8 @@
+import { IProduct } from "@/types";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import Image from "next/image";
 import RemoveFromWIshListButton from "./RemoveFromWIshListButton";
 import WishListBuyNowButton from "./WishListBuyNowButton";
-
-interface IProduct {
-  _id: string;
-  name: string;
-  price: number;
-  thumbnail: string;
-  discount?: {
-    discountStatus: boolean;
-    percentage: number;
-    discountPrice: number;
-  };
-}
 
 interface ProductCardProps {
   product: IProduct;
@@ -88,7 +77,7 @@ export default function WishListCard({ product }: ProductCardProps) {
               fontWeight="bold"
               mt={1}
             >
-              ${product.discount.discountPrice.toFixed(2)}
+              ${Number(product?.discount?.discountPrice).toFixed(2)}
             </Typography>
             <Typography
               variant="body2"
