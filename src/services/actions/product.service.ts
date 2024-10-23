@@ -23,3 +23,15 @@ export const getAllProductService = async (
   const data = await res.json();
   return data;
 };
+
+export const getProductDetailsService = async (id: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_base_url_local}/product/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  const data = await res.json();
+  return data;
+};
