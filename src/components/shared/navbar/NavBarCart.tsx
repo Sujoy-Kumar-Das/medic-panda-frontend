@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ICart, IGenericErrorResponse } from "@/types";
 import { IUserInfo } from "@/types/user.type";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   Avatar,
   Box,
@@ -20,19 +19,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import NavUserMenu from "./NavUserMenu";
+
+const NavCartButton = dynamic(() => import("./NavCartButton"));
 
 export default function NavBarCart({ user }: { user: IUserInfo }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { carts } = useAppSelector((state) => state.cart);
   const { data, isLoading } = useGetAllCartProductsQuery(undefined);
-  const [
-    removeCartItemFromDB,
-    { isLoading: removeCartLoader, isSuccess, isError, error },
-  ] = useRemoveCartProductMutation();
+  const [removeCartItemFromDB, { isSuccess, isError, error }] =
+    useRemoveCartProductMutation();
 
   const dispatch = useAppDispatch();
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null); // Local loading state for each product
@@ -78,66 +77,21 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
   // Manage remove product from db state;
   useEffect(() => {
     if (isSuccess) {
+      toast.success("Item removed from cart");
       handleCloseUserMenu();
+    } else if (isError) {
+      toast.error((error as IGenericErrorResponse).message);
     }
-  }, [isSuccess]);
+  }, [isSuccess, isError, error]);
 
   return (
     <>
-      {user ? (
-        <>
-          <Box position={"relative"}>
-            <IconButton
-              color="primary"
-              onClick={handleOpenUserMenu}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                p: 1,
-                transition: "background-color 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "rgba(0, 0, 0, 0.08)",
-                },
-              }}
-            >
-              <ShoppingCartIcon />
-              {data?.length >= 1 && (
-                <Typography
-                  color="success"
-                  sx={{ position: "absolute", top: -3, right: 1 }}
-                >
-                  {data?.length}
-                </Typography>
-              )}
-            </IconButton>
-          </Box>
-
-          <Box display={{ xs: "none", md: "flex" }}>
-            <NavUserMenu />
-          </Box>
-        </>
-      ) : (
-        <Button
-          variant="contained"
-          endIcon={<ShoppingCartIcon />}
-          sx={{
-            boxShadow: "none",
-            display: { xs: "none", md: "flex" },
-            transition: "transform 0.3s ease",
-            "&:hover": {
-              transform: "scale(1.05)",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            },
-            borderRadius: 2,
-            px: 3,
-            py: 1,
-          }}
-          onClick={handleOpenUserMenu}
-        >
-          My Cart
-        </Button>
-      )}
+      <NavCartButton
+        user={user ? true : false}
+        cartLength={carts?.length}
+        dataLength={data?.length}
+        handleOpenUserMenu={handleOpenUserMenu}
+      />
 
       <Menu
         sx={{

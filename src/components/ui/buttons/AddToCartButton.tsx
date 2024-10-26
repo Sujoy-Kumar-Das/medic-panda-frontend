@@ -15,6 +15,7 @@ interface IAddToCartButtonProps {
   basic?: boolean;
   sx?: SxProps;
   className?: string;
+  icon?: boolean;
 }
 
 export default function AddToCartButton({
@@ -22,6 +23,7 @@ export default function AddToCartButton({
   basic = false,
   sx,
   className,
+  icon = true,
 }: IAddToCartButtonProps) {
   const user = useUserInfo();
   const [addToCartInDB, { isLoading, isSuccess, isError, error }] =
@@ -71,8 +73,10 @@ export default function AddToCartButton({
           endIcon={
             isLoading ? (
               <CircularProgress size={16} sx={{ color: "white" }} />
-            ) : (
+            ) : icon ? (
               <ShoppingCart />
+            ) : (
+              ""
             )
           }
           size="small"
