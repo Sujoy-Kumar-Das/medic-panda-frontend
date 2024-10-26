@@ -1,3 +1,4 @@
+import { TTagTypes } from "../tag-types";
 import { baseApi } from "./base.api";
 
 const reviewApi = baseApi.injectEndpoints({
@@ -8,8 +9,16 @@ const reviewApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
+      invalidatesTags: [TTagTypes.review],
+    }),
+    getAllReview: builder.query({
+      query: () => ({
+        url: "/review",
+        method: "GET",
+      }),
+      providesTags: [TTagTypes.review],
     }),
   }),
 });
 
-export const { useCreateReviewMutation } = reviewApi;
+export const { useCreateReviewMutation, useGetAllReviewQuery } = reviewApi;
