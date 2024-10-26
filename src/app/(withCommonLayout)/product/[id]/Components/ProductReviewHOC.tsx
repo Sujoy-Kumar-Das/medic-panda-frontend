@@ -1,5 +1,6 @@
 "use client";
 import HandleLoadingErrorAndNoData from "@/components/hoc/HandleLoadingErrorAndNoData";
+import { IReview } from "@/types";
 import formatOrderDate from "@/utils/format.order.date";
 import {
   Box,
@@ -12,7 +13,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 
-function ProductReviewCompo({ data: reviews }) {
+function ProductReviewCompo({ data: reviews }: { data: IReview[] }) {
   return (
     <Stack spacing={4}>
       {reviews.map((review) => (
@@ -22,12 +23,6 @@ function ProductReviewCompo({ data: reviews }) {
           sx={{
             borderRadius: 3,
             overflow: "hidden",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            transition: "transform 0.2s, box-shadow 0.2s",
-            "&:hover": {
-              transform: "scale(1.02)",
-              boxShadow: "0 6px 16px rgba(0, 0, 0, 0.15)",
-            },
           }}
         >
           <CardContent sx={{ padding: 3 }}>
@@ -82,18 +77,20 @@ function ProductReviewCompo({ data: reviews }) {
                   {review.userInfo.name}
                 </Typography>
 
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{
-                    fontSize: "0.875rem",
-                    color: "text.secondary",
-                    display: "block",
-                    marginTop: "2px",
-                  }}
-                >
-                  {formatOrderDate(review.createdAt || new Date())}
-                </Typography>
+                {review.createdAt && (
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{
+                      fontSize: "0.875rem",
+                      color: "text.secondary",
+                      display: "block",
+                      marginTop: "2px",
+                    }}
+                  >
+                    {formatOrderDate(review.createdAt as string)}
+                  </Typography>
+                )}
               </Box>
             </Box>
           </CardContent>

@@ -43,7 +43,7 @@ export default function NavBar() {
       ))}
       {!user && (
         <Typography
-          href={"register/login"}
+          href={"/register/login"}
           component={Link}
           sx={{
             fontSize: "18px",

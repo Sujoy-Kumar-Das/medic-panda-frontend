@@ -5,7 +5,7 @@ import {
 } from "@/redux/api/addToCart.api";
 import { removeSingleProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { ICart, IGenericErrorResponse, IProduct } from "@/types";
+import { ICart, IGenericErrorResponse } from "@/types";
 import { IUserInfo } from "@/types/user.type";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -45,14 +45,14 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
     setAnchorElUser(null);
   };
 
-  const handleRemoveFromCart = async (product: IProduct) => {
-    const userId = user.userId;
+  const handleRemoveFromCart = async (id: string) => {
+    const userId = user?.userId;
 
     // Set loading state for the specific product
-    setLoadingProductId(product._id);
+    setLoadingProductId(id);
 
     if (!user && !userId) {
-      dispatch(removeSingleProduct({ id: product._id }));
+      dispatch(removeSingleProduct({ id }));
       setLoadingProductId(null); // Reset loader after dispatch
       return;
     }
@@ -60,7 +60,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
     try {
       // Remove from db
       await removeCartItemFromDB({
-        product: product._id,
+        product: id,
       }).unwrap();
 
       // On success, show toast
@@ -218,7 +218,7 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
                       </Box>
                     </Stack>
                     <IconButton
-                      onClick={() => handleRemoveFromCart(cart.product)}
+                      onClick={() => handleRemoveFromCart(cart.product._id)}
                       disabled={loadingProductId === cart.product._id} // Disable only for the product being deleted
                       color="error"
                       sx={{

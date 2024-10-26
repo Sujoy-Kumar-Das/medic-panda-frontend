@@ -7,7 +7,7 @@ import { useCreateReviewMutation } from "@/redux/api/review.api";
 import { IGenericErrorResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Typography } from "@mui/material";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -29,10 +29,16 @@ export default function AddReviewTab() {
   const [createReview, { isLoading, isError, error, isSuccess }] =
     useCreateReviewMutation();
   const user = useUserInfo();
+  const router = useRouter();
   const { id } = useParams();
 
   const handleSubmit = useCallback(
     async (values: FieldValues) => {
+      if (!user) {
+        router.push("/register/login");
+        return;
+      }
+
       const reviewData = {
         user: user.userId,
         product: id,
@@ -42,7 +48,7 @@ export default function AddReviewTab() {
 
       await createReview(reviewData);
     },
-    [user, id, createReview]
+    [user, id, createReview, router]
   );
 
   useEffect(() => {

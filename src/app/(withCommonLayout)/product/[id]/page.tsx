@@ -1,6 +1,5 @@
 import { getProductDetailsService } from "@/services/actions/product.service";
 import { Box, Container, Rating, Stack, Typography } from "@mui/material";
-import ProductDetailsSlider from "./Components/ProductDetailsSlider";
 import ProductDetailsTab from "./Components/ProductDetailsTab";
 import ProductQuantity from "./Components/ProductQuantity";
 
@@ -82,7 +81,7 @@ export default async function ProductDetailsPage({
                 >
                   {description}
                 </Typography>
-                <ProductQuantity />
+                <ProductQuantity product={data} />
               </Box>
             </Stack>
             <ProductDetailsTab
