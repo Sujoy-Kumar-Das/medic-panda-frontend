@@ -4,7 +4,9 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import CategoryCard from "./Components/CategoryCard";
 
 export default async function CategoriesPage() {
-  const { data: categories } = await getAllCategoriesService(6);
+  const { data } = await getAllCategoriesService();
+
+  const categories = data?.data;
 
   return (
     <Box sx={{ py: 4 }}>

@@ -81,42 +81,74 @@ export default function BannerSliderCard({
             timeout={{ enter: 600, exit: 600 }}
             style={{ transitionDelay: "400ms" }}
           >
-            <Stack direction={"row"} spacing={3}>
+            <Stack
+              direction="row"
+              justifyContent={{ xs: "center", md: "flex-start" }}
+              spacing={3}
+            >
               <AddToCartButton
                 product={item}
                 basic
                 icon={false}
                 sx={{
-                  transition: "transform 0.3s ease",
+                  textTransform: "capitalize",
+                  px: 3,
+                  py: 1.5,
+                  fontWeight: "bold",
+                  color: "primary.contrastText",
+                  bgcolor: "primary.main",
+                  borderRadius: "8px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                   "&:hover": {
-                    transform: "scale(1)",
+                    bgcolor: "primary.dark",
+                    boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.15)",
                   },
                 }}
               />
-              <Button component={Link} href={`/product/${item._id}`}>
+
+              <Button
+                component={Link}
+                href={`/product/${item._id}`}
+                sx={{
+                  textTransform: "capitalize",
+                  px: 3,
+                  py: 1.5,
+                  fontWeight: "bold",
+                  color: "primary.contrastText",
+                  bgcolor: "primary.main",
+                  borderRadius: "8px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  "&:hover": {
+                    bgcolor: "primary.dark",
+                    boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.15)",
+                  },
+                }}
+              >
                 View Details
               </Button>
             </Stack>
           </Slide>
         </Box>
 
-        {/* Image with Custom Animation */}
+        {/* Image with Fixed Size */}
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             width: { xs: "100%", md: "50%" },
-            opacity: isVisible ? 1 : 0, // Change opacity based on visibility
-            transform: isVisible ? "scale(1)" : "scale(1.3)", // Scale effect based on visibility
-            transition: "opacity 0.5s ease-in-out, transform 0.5s ease-in-out", // Transition for opacity and scale
+            maxWidth: 500,
+            height: 500,
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "scale(1)" : "scale(1.3)",
+            transition: "opacity 0.5s ease-in-out, transform 0.5s ease-in-out",
           }}
         >
           <Image
             src={item.thumbnail}
             width={500}
             height={500}
-            style={{ height: "100%", width: "100%", objectFit: "cover" }}
-            alt={`${item.thumbnail} image`}
+            style={{ objectFit: "cover" }}
+            alt={`${item.name} image`}
           />
         </Box>
       </Box>

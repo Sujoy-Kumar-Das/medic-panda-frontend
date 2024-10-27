@@ -2,17 +2,15 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 
 export default function ProductDetailsSlider({ images }: { images: string[] }) {
-  const [thumbsSwiper, setThumbsSwiper] = useState();
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   return (
     <>
@@ -25,7 +23,7 @@ export default function ProductDetailsSlider({ images }: { images: string[] }) {
             modules={[FreeMode, Thumbs]}
             style={{ marginBottom: "20px" }}
           >
-            {images.map((image, index: number) => (
+            {images.map((image, index) => (
               <SwiperSlide key={index}>
                 <Box
                   sx={{

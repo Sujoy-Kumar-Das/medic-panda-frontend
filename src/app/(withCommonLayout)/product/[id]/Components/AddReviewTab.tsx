@@ -35,6 +35,7 @@ export default function AddReviewTab() {
   const handleSubmit = useCallback(
     async (values: FieldValues) => {
       if (!user) {
+        toast.error("Please login for add your review.");
         router.push("/register/login");
         return;
       }

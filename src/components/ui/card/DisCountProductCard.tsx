@@ -180,7 +180,7 @@ export default function DisCountProductCard({
             },
           }}
           component={Link}
-          href={`/products/${product._id}`}
+          href={`/product/${product._id}`}
         >
           <RemoveRedEyeIcon />
         </IconButton>

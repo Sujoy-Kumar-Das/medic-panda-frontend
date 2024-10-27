@@ -1,6 +1,6 @@
 "use client";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
 import ProductCard from "@/components/ui/card/productCard/ProductCard";
-import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
 import { ICategory, IProduct } from "@/types";
 import CategoryIcon from "@mui/icons-material/Category";
 import SearchIcon from "@mui/icons-material/Search";
@@ -21,12 +21,16 @@ import CategoryModal from "./CategoryModal";
 
 interface IProductProps {
   products: IProduct[];
+  categories: ICategory[];
   meta: any;
 }
 
-export default function ProductDrawer({ products, meta }: IProductProps) {
+export default function ProductDrawer({
+  products,
+  categories,
+  meta,
+}: IProductProps) {
   const [openCategoryModal, setOpenCategoryModal] = useState(false);
-  const { data } = useGetAllCategoriesQuery(undefined);
 
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -139,7 +143,24 @@ export default function ProductDrawer({ products, meta }: IProductProps) {
               </Typography>
               <Divider sx={{ mb: 2 }} />
               <Stack direction={"column"} spacing={1}>
-                {data?.map((item: ICategory) => (
+                <Typography
+                  component={Link}
+                  href={`/product`}
+                  sx={{
+                    textDecoration: "none",
+                    color: "text.secondary",
+                    fontSize: 18,
+                    fontWeight: "500",
+                    display: "block",
+                    transition: "color 0.3s",
+                    "&:hover": {
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  All
+                </Typography>
+                {categories?.map((item: ICategory) => (
                   <Typography
                     key={item._id}
                     component={Link}
@@ -182,19 +203,17 @@ export default function ProductDrawer({ products, meta }: IProductProps) {
               </Stack>
             </>
           ) : (
-            <Typography variant="h6" textAlign="center" color="text.secondary">
-              No products available
-            </Typography>
+            <NoDataFound message="No Data Found" />
           )}
         </Grid>
       </Grid>
 
       {/* category modal for mobile */}
-      {data && (
+      {categories && (
         <CategoryModal
           open={openCategoryModal}
           setOpen={setOpenCategoryModal}
-          data={data}
+          data={categories}
         />
       )}
     </>

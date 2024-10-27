@@ -51,10 +51,11 @@ export default function ContactInfoCompo() {
         <Button
           variant="outlined"
           sx={{
-            color: "background.paper",
+            color: "text.disabled",
             borderColor: "background.paper",
             "&:hover": {
               backgroundColor: "background.default",
+              color: "text.primary",
             },
           }}
         >
@@ -63,10 +64,11 @@ export default function ContactInfoCompo() {
         <Button
           variant="outlined"
           sx={{
-            color: "background.paper",
+            color: "text.disabled",
             borderColor: "background.paper",
             "&:hover": {
               backgroundColor: "background.default",
+              color: "text.primary",
             },
           }}
         >

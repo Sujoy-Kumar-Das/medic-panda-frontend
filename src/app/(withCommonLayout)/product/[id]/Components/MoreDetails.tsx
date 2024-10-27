@@ -1,18 +1,15 @@
 import { ICategory } from "@/types";
 import { IManufacturer } from "@/types/Imanufacturer.type";
-import { IVariant } from "@/types/IVariant";
 import CategoryIcon from "@mui/icons-material/Category";
 import { Avatar, Box, Divider, Grid, Typography } from "@mui/material";
 
 interface IMoreDetailsProps {
   category: ICategory;
   manufacture: IManufacturer;
-  variant: IVariant;
 }
 
 export default function MoreDetails({
   category,
-  variant,
   manufacture: manufacturer,
 }: IMoreDetailsProps) {
   return (
@@ -47,16 +44,6 @@ export default function MoreDetails({
             />
             <Typography variant="body1">{category.name}</Typography>
           </Box>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            Variant
-          </Typography>
-          <Typography variant="body1">{variant?.name}</Typography>
-          <Typography variant="body2" color="text.secondary">
-            {variant?.quantity} units
-          </Typography>
         </Grid>
 
         <Grid item xs={12} md={4}>

@@ -18,8 +18,8 @@ export default function ProductQuantity({ product }: { product: IProduct }) {
     useAddToCartMutation();
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = async (productData: { product: IProduct }) => {
-    const { name, thumbnail, _id, price } = productData.product;
+  const handleAddToCart = async (product: IProduct) => {
+    const { name, thumbnail, _id, price } = product;
 
     const userId = user?.userId;
 

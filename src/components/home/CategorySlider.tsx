@@ -82,18 +82,18 @@ export default function CategorySlider({
               >
                 {category.name}
               </Typography>
-              <Link href="/" passHref>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "white",
-                    textDecoration: "underline",
-                    fontWeight: "light",
-                  }}
-                >
-                  View Products
-                </Typography>
-              </Link>
+              <Typography
+                variant="body1"
+                component={Link}
+                href={`/product?category=${category._id}`}
+                sx={{
+                  color: "white",
+                  textDecoration: "underline",
+                  fontWeight: "light",
+                }}
+              >
+                View Products
+              </Typography>
             </Box>
           </Box>
         </SwiperSlide>

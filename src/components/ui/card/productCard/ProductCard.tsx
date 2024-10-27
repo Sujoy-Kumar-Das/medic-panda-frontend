@@ -20,6 +20,8 @@ interface IProductCardProps {
 const ProductCard = ({ product }: IProductCardProps) => {
   const { thumbnail, name, price, discount, _id } = product;
 
+  console.log(product);
+
   return (
     <Box
       sx={{

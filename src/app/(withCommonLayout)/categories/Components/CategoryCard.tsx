@@ -65,10 +65,6 @@ export default function CategoryCard({ category }: { category: ICategory }) {
           >
             {category.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary" mb={2}>
-            {category.description ||
-              "Explore the best products in this category."}
-          </Typography>
         </div>
         <Button
           variant="contained"

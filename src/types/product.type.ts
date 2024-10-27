@@ -1,4 +1,5 @@
 import { ICategory } from "./ICategory.type";
+import { IManufacturer } from "./Imanufacturer.type";
 
 export interface IDiscount {
   percentage: number;
@@ -10,21 +11,25 @@ export interface IDiscount {
   endTime: string;
 }
 
-export interface IProductDetail {
-  category: string;
-  manufacture: string;
-  description: string;
-  stock: number;
-  images?: string[];
-}
-
 export interface IProduct {
   _id: string;
   name: string;
-  category: ICategory;
   thumbnail: string;
   price: number;
-  discount?: IDiscount;
+  discount: IDiscount;
+  stockStatus: boolean;
+  category: ICategory;
+  manufacturer: IManufacturer;
+  rating: number;
+}
+
+export interface IProductDetail {
+  _id: string;
+  product: IProduct;
+  images: string[];
+  description: string;
+  stock: number;
+  status: string;
 }
 
 export interface IProductData {

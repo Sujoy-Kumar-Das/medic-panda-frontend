@@ -13,6 +13,8 @@ export const getAllProductService = async (
     ...(category && { category }),
   }).toString();
 
+  console.log({ limit, page, searchTerm, category });
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_base_url_local}/product?${queryString}`,
     {

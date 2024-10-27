@@ -26,9 +26,9 @@ const bounce = keyframes`
 `;
 
 interface INoDataFoundProps {
-  message: string;
-  link: string;
-  text: string;
+  message?: string;
+  link?: string;
+  text?: string;
 }
 
 export default function NoDataFound({
@@ -71,25 +71,27 @@ export default function NoDataFound({
         {message ? message : "Currently this page is empty."}
       </Typography>
 
-      <Button
-        variant="contained"
-        color="primary"
-        component={Link}
-        href={link}
-        sx={{
-          textTransform: "none",
-          paddingX: 4,
-          paddingY: 1.5,
-          borderRadius: 2,
-          transition: "background-color 0.3s ease-in-out",
-          "&:hover": {
-            backgroundColor: "#0056b3",
-            transform: "scale(1.05)",
-          },
-        }}
-      >
-        {text}
-      </Button>
+      {link && (
+        <Button
+          variant="contained"
+          color="primary"
+          component={Link}
+          href={link}
+          sx={{
+            textTransform: "none",
+            paddingX: 4,
+            paddingY: 1.5,
+            borderRadius: 2,
+            transition: "background-color 0.3s ease-in-out",
+            "&:hover": {
+              backgroundColor: "#0056b3",
+              transform: "scale(1.05)",
+            },
+          }}
+        >
+          {text || "No Data Found"}
+        </Button>
+      )}
     </Container>
   );
 }

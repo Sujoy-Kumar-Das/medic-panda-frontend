@@ -36,12 +36,32 @@ export default function CategoryModal({
           </Typography>
           <Divider sx={{ my: 2 }} />
           <Stack direction={"column"} spacing={1}>
+            <Typography
+              component={Link}
+              textAlign={"center"}
+              href={`/product`}
+              onClick={() => setOpen((prev) => !prev)}
+              sx={{
+                textDecoration: "none",
+                color: "text.secondary",
+                fontSize: 18,
+                fontWeight: "500",
+                display: "block",
+                transition: "color 0.3s",
+                "&:hover": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              All
+            </Typography>
             {data?.map((item) => (
               <Typography
                 key={item._id}
                 component={Link}
                 textAlign={"center"}
-                href={"/"}
+                href={`/product?category=${item._id}`}
+                onClick={() => setOpen((prev) => !prev)}
                 sx={{
                   textDecoration: "none",
                   color: "text.secondary",
