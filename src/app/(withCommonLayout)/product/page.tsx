@@ -9,12 +9,13 @@ export default async function ProductsPage({
   searchParams: { page: number | string; searchTerm: string; category: string };
 }) {
   const { page, searchTerm, category } = searchParams;
-  const { data: products, meta } = await getAllProductService(
-    9,
-    (page as number) || 1,
+
+  const { data: products, meta } = await getAllProductService({
+    limit: 9,
+    page: (page as number) || 1,
     searchTerm,
-    category
-  );
+    category,
+  });
 
   const categories = await getAllCategoriesService();
 

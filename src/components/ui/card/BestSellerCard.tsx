@@ -1,5 +1,4 @@
 import { IProduct } from "@/types";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import {
   Box,
@@ -12,6 +11,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "../buttons/AddToCartButton";
+import WishListButton from "../buttons/WishListButton";
+
 export default function BestSellerCard({ product }: { product: IProduct }) {
   return (
     <Stack
@@ -79,12 +80,13 @@ export default function BestSellerCard({ product }: { product: IProduct }) {
         </Box>
         <Rating readOnly value={4} />
       </Stack>
-      <Box sx={{ position: "relative" }}>
+      <Box sx={{ position: "relative", width: 180, height: 180 }}>
         <Image
           alt="product image"
           src={product.thumbnail}
-          height={180}
-          width={180}
+          layout="fill"
+          objectFit="cover"
+          style={{ borderRadius: "8px" }}
         />
         <Stack
           className="show-buttons"
@@ -103,7 +105,8 @@ export default function BestSellerCard({ product }: { product: IProduct }) {
             transitionDelay: "0s",
           }}
         >
-          <IconButton
+          <WishListButton
+            id={product._id}
             sx={{
               color: "primary.main",
               border: "1px solid #cccccc",
@@ -117,11 +120,10 @@ export default function BestSellerCard({ product }: { product: IProduct }) {
               "&:hover": {
                 color: "text.disabled",
                 borderColor: "primary.main",
+                bgcolor: "primary.main",
               },
             }}
-          >
-            <FavoriteBorderIcon />
-          </IconButton>
+          />
 
           <AddToCartButton
             product={product}
@@ -138,6 +140,7 @@ export default function BestSellerCard({ product }: { product: IProduct }) {
               "&:hover": {
                 color: "text.disabled",
                 borderColor: "primary.main",
+                bgcolor: "primary.main",
               },
             }}
           />
@@ -156,10 +159,11 @@ export default function BestSellerCard({ product }: { product: IProduct }) {
               "&:hover": {
                 color: "text.disabled",
                 borderColor: "primary.main",
+                bgcolor: "primary.main",
               },
             }}
             component={Link}
-            href={`/products/${product._id}`}
+            href={`/product/${product._id}`}
           >
             <RemoveRedEyeIcon />
           </IconButton>

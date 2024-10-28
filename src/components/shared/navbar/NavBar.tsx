@@ -115,12 +115,13 @@ export default function NavBar() {
           </IconButton>
         </Stack>
 
+        {/* for responsive */}
         <Box
           component={"nav"}
           sx={{
             height: "100vh",
             width: "100%",
-            bgcolor: "secondary.main",
+            bgcolor: "background.default",
             position: "absolute",
             top: 0,
             left: 0,
@@ -153,7 +154,10 @@ export default function NavBar() {
                 Panda
               </Typography>
             </Box>
-            <IconButton onClick={handleDrawerToggle}>
+            <IconButton
+              onClick={handleDrawerToggle}
+              sx={{ color: "primary.main" }}
+            >
               <CloseIcon />
             </IconButton>
           </Stack>

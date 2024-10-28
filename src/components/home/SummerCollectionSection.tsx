@@ -4,7 +4,8 @@ import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import SummerCard from "../ui/card/SummerCard";
 
 export default async function SummerCollectionSection() {
-  const { data: products } = await getAllProductService(6);
+  const { data: products } = await getAllProductService({ limit: 9 });
+
   return (
     <Box height={"100%"} width={"100%"} bgcolor={"background.default"}>
       <Container sx={{ py: 10 }}>
@@ -22,22 +23,23 @@ export default async function SummerCollectionSection() {
           <Typography
             color={"primary.light"}
             fontWeight={"bold"}
-            component={"h5"}
+            component={"h2"} // Changed from h5 to h2 for SEO hierarchy
             variant="h3"
             textAlign={"center"}
           >
             Summer Skin Products
           </Typography>
         </Box>
+
         <Stack
           sx={{ marginTop: 5 }}
-          direction={"row"}
+          direction={{ xs: "column", md: "row" }} // Make it responsive to stack vertically on smaller screens
           justifyContent={"space-between"}
           alignItems={"flex-start"}
           spacing={3}
         >
           <Box
-            height={"100vh"}
+            height={"90vh"}
             width={{ xs: "100%", md: "40%" }}
             sx={{
               position: "relative",
@@ -113,10 +115,13 @@ export default async function SummerCollectionSection() {
               </Stack>
             </Box>
           </Box>
+
           <Box sx={{ width: { xs: "100%", md: "60%" } }}>
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
+              {" "}
+              {/* Increased spacing for better visuals */}
               {products.map((product: IProduct) => (
-                <Grid item xs={12} md={4} key={product._id}>
+                <Grid item xs={12} sm={6} md={4} key={product._id}>
                   <SummerCard product={product} />
                 </Grid>
               ))}

@@ -4,7 +4,7 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import BestSellerCard from "../ui/card/BestSellerCard";
 
 export default async function BestSellSection() {
-  const { data: products } = await getAllProductService(6);
+  const { data: products } = await getAllProductService({ limit: 6 });
 
   return (
     <Box>

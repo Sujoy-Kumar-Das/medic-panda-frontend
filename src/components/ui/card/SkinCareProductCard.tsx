@@ -16,7 +16,7 @@ import Link from "next/link";
 import AddToCartButton from "../buttons/AddToCartButton";
 import WishListButton from "../buttons/WishListButton";
 
-export default function DisCountProductCard({
+export default function SkinCareProductCard({
   product,
 }: {
   product: IProduct;
@@ -33,6 +33,7 @@ export default function DisCountProductCard({
         boxShadow: 3,
         borderRadius: 2,
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        flexGrow: 1, // Allows the card to grow within the flex container
         "&:hover": {
           transform: "translateY(-5px)",
           boxShadow: 6,
@@ -43,7 +44,9 @@ export default function DisCountProductCard({
         },
       }}
     >
-      <CardActionArea>
+      <CardActionArea
+        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -136,7 +139,6 @@ export default function DisCountProductCard({
           display: "flex",
           flexDirection: "column",
           gap: 1.5,
-          mt: "auto",
         }}
       >
         <WishListButton btnType="Discount" id={_id} />
@@ -154,7 +156,7 @@ export default function DisCountProductCard({
             opacity: 0,
             transitionDelay: "0.2s",
             "&:hover": {
-              color: "text.disabled",
+              color: "primary.main",
               borderColor: "primary.main",
               transform: "scale(1.1) translateX(0)",
             },
@@ -174,7 +176,7 @@ export default function DisCountProductCard({
             opacity: 0,
             transitionDelay: "0.4s",
             "&:hover": {
-              color: "text.disabled",
+              color: "primary.main",
               borderColor: "primary.main",
               transform: "scale(1.1) translateX(0)",
             },

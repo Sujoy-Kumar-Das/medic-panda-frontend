@@ -1,15 +1,20 @@
 "use client";
 import { useAddToWishListMutation } from "@/redux/api/wish-listApi";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { CircularProgress, IconButton, Tooltip } from "@mui/material";
+import { CircularProgress, IconButton, SxProps, Tooltip } from "@mui/material";
 import { toast } from "sonner";
 
 interface IWishListButtonProps {
   id: string;
   btnType?: "Discount" | "Summer";
+  sx?: SxProps;
 }
 
-export default function WishListButton({ id, btnType }: IWishListButtonProps) {
+export default function WishListButton({
+  id,
+  btnType,
+  sx,
+}: IWishListButtonProps) {
   const [addToWishList, { isLoading }] = useAddToWishListMutation();
 
   const handleAddToWishList = async () => {
@@ -41,10 +46,11 @@ export default function WishListButton({ id, btnType }: IWishListButtonProps) {
             transform: "translateX(100%)",
             opacity: 0,
             "&:hover": {
-              color: "text.disabled",
+              color: "primary.main",
               borderColor: "primary.main",
               transform: "scale(1.1) translateX(0)",
             },
+            ...sx,
           }}
           onClick={handleAddToWishList}
           disabled={isLoading}
@@ -61,6 +67,7 @@ export default function WishListButton({ id, btnType }: IWishListButtonProps) {
             opacity: 0,
             transition:
               "transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s ease",
+            ...sx,
           }}
           onClick={handleAddToWishList}
           disabled={isLoading}
@@ -73,6 +80,7 @@ export default function WishListButton({ id, btnType }: IWishListButtonProps) {
           aria-label="add to favorites"
           onClick={handleAddToWishList}
           disabled={isLoading}
+          sx={{ ...sx }}
         >
           {isLoading ? <CircularProgress size={24} /> : <FavoriteBorderIcon />}
         </IconButton>

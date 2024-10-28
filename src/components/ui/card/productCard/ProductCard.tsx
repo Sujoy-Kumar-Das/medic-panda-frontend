@@ -20,8 +20,6 @@ interface IProductCardProps {
 const ProductCard = ({ product }: IProductCardProps) => {
   const { thumbnail, name, price, discount, _id } = product;
 
-  console.log(product);
-
   return (
     <Box
       sx={{
@@ -65,8 +63,8 @@ const ProductCard = ({ product }: IProductCardProps) => {
           objectFit="cover"
           objectPosition="center"
           alt={name}
-          width={500}
-          height={500}
+          width={200}
+          height={200}
         />
       </Box>
 

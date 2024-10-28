@@ -1,19 +1,24 @@
 "use server";
 
-export const getAllProductService = async (
-  limit: number = 6,
-  page: number = 1,
-  searchTerm: string = "",
-  category: string = ""
-) => {
+interface IQueryParams {
+  limit?: number;
+  page?: number;
+  searchTerm?: string;
+  category?: string;
+}
+
+export const getAllProductService = async ({
+  limit = 6,
+  page = 1,
+  searchTerm = "",
+  category = "",
+}: IQueryParams) => {
   const queryString = new URLSearchParams({
     limit: String(limit),
     page: String(page),
     searchTerm,
     ...(category && { category }),
   }).toString();
-
-  console.log({ limit, page, searchTerm, category });
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_base_url_local}/product?${queryString}`,

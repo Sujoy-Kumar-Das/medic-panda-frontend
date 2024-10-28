@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import ProductCard from "../ui/card/productCard/ProductCard";
 
 export default async function FeaturedProductSection() {
-  const { data: products } = await getAllProductService(6);
+  const { data: products } = await getAllProductService({ limit: 9 });
   return (
     <Box>
       <Container sx={{ py: 10 }}>

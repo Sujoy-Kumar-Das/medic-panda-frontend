@@ -22,19 +22,20 @@ export default function ProductSlider({ children, title }: ProductSliderProps) {
     <Box position="relative">
       {/* Stack to center both title and buttons */}
       <Stack
-        direction={"row"}
+        direction={{ xs: "column", sm: "row" }} // Stack vertically on small screens
         justifyContent={"space-between"}
         alignItems={"center"}
         sx={{ mb: 5 }}
       >
         {/* Title */}
         <Typography
-          variant="h4"
           sx={{
             fontWeight: "bold",
             color: "text.secondary",
             textAlign: "left",
             flex: 1,
+            fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" }, // Responsive font sizes
+            mb: { xs: 2, sm: 0 }, // Margin bottom for small screens
           }}
         >
           {title}
@@ -106,15 +107,23 @@ export default function ProductSlider({ children, title }: ProductSliderProps) {
           }
         }}
         breakpoints={{
-          640: {
+          320: {
+            // For mobile screens
             slidesPerView: 1,
             spaceBetween: 10,
           },
+          640: {
+            // For small tablets
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
           768: {
-            slidesPerView: 4,
+            // For tablets and small desktops
+            slidesPerView: 3,
             spaceBetween: 20,
           },
           1024: {
+            // For desktops
             slidesPerView: 4,
             spaceBetween: 20,
           },
