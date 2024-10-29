@@ -15,7 +15,11 @@ const fadeUp = keyframes`
   }
 `;
 
-function UserDashboardCompo({ data: { user, userMetaData } }) {
+function UserDashboardCompo({
+  data: { user, userMetaData },
+}: {
+  data: { user: any; userMetaData: any };
+}) {
   return (
     <Container>
       <Header
@@ -26,7 +30,7 @@ function UserDashboardCompo({ data: { user, userMetaData } }) {
 
       <Box sx={{ py: 2 }}>
         <Grid container spacing={3}>
-          {userMetaData?.map((card, index) => (
+          {userMetaData?.map((card: any, index: number) => (
             <Grid
               item
               xs={12}

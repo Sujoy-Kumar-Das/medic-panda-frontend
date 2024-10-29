@@ -8,7 +8,7 @@ import { IGenericErrorResponse, IProduct } from "@/types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function ProductQuantity({ product }: { product: IProduct }) {
@@ -20,13 +20,10 @@ export default function ProductQuantity({ product }: { product: IProduct }) {
 
   const handleAddToCart = async (product: IProduct) => {
     const { name, thumbnail, _id, price } = product;
-
     const userId = user?.userId;
-
     const productQuantity = quantity || 1;
 
     if (!userId) {
-      // Local cart handling
       dispatch(
         addProduct({
           name,
@@ -68,6 +65,11 @@ export default function ProductQuantity({ product }: { product: IProduct }) {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    setQuantity(isNaN(newQuantity) ? 0 : newQuantity);
+  };
+
   return (
     <Stack direction="row" alignItems="center" spacing={2} mt={1}>
       <Box
@@ -91,7 +93,11 @@ export default function ProductQuantity({ product }: { product: IProduct }) {
           variant="outlined"
           size="small"
           value={quantity}
-          inputProps={{ style: { textAlign: "center", width: "100%" } }}
+          onChange={handleInputChange}
+          inputProps={{
+            style: { textAlign: "center", width: "100%" },
+            inputMode: "numeric",
+          }}
           sx={{
             "& .MuiOutlinedInput-root": {
               padding: "0 30px",

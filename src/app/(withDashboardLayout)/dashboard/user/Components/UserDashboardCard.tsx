@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from "@mui/material";
 
-export default function UserDashboardCard({ card }) {
+export default function UserDashboardCard({ card }: { card: any }) {
   return (
     <Card
       sx={{

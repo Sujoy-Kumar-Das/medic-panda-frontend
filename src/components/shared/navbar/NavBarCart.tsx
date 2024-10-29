@@ -23,8 +23,11 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import NavCartLoaderButton from "./NavCartLoaderButton";
 
-const NavCartButton = dynamic(() => import("./NavCartButton"));
+const NavCartButton = dynamic(() => import("./NavCartButton"), {
+  loading: () => <NavCartLoaderButton />,
+});
 
 export default function NavBarCart({ user }: { user: IUserInfo }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
