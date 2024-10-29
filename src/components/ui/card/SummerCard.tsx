@@ -70,7 +70,12 @@ export default function SummerCard({ product }: { product: IProduct }) {
       </Box>
 
       <Stack direction={"column"} spacing={1} overflow={"hidden"}>
-        <Typography component={"h3"} variant="h6" color={"text.primary"}>
+        <Typography
+          component={"h3"}
+          color={"text.primary"}
+          fontSize={18}
+          mt={2}
+        >
           {product.name}
         </Typography>
         <Box>

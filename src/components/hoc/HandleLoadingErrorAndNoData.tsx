@@ -11,6 +11,8 @@ interface WithLoadingAndErrorProps<T> {
   noDataMessage?: string;
   noDataLink?: string;
   noDataText?: string;
+  LoaderCompo?: React.ElementType;
+  ErrorCompo?: React.ElementType;
 }
 
 function HandleLoadingErrorAndNoData<T extends any[] | object>(
@@ -26,17 +28,27 @@ function HandleLoadingErrorAndNoData<T extends any[] | object>(
       noDataMessage = "No data found.",
       noDataLink = "/",
       noDataText = "Go back",
+      LoaderCompo,
+      ErrorCompo,
     } = props;
 
     if (isLoading) {
-      return <Loader />;
+      return <>{LoaderCompo ? <LoaderCompo /> : <Loader />}</>;
     }
 
     if (error) {
-      return <ErrorPage error={error} />;
+      return (
+        <>
+          {ErrorCompo ? (
+            <ErrorCompo error={error} />
+          ) : (
+            <ErrorPage error={error} />
+          )}
+        </>
+      );
     }
 
-    if (!data || data.length === 0) {
+    if (!data || (Array.isArray(data) && data.length === 0)) {
       return (
         <NoDataFound
           link={noDataLink}
