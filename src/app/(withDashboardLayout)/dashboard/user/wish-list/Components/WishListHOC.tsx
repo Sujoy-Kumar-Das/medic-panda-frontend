@@ -15,7 +15,7 @@ function WishListCompo({ data }: { data: IProduct[] }) {
       <Grid container spacing={5}>
         {data?.map((product: IProduct) => (
           <Grid item xs={12} sm={6} md={4} key={product._id}>
-            <WishListCard product={product} key={product._id} />
+            <WishListCard product={product?.product} key={product._id} />
           </Grid>
         ))}
       </Grid>

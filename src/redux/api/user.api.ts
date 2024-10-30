@@ -31,6 +31,14 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TTagTypes.user],
     }),
+    confirmUserOTP: builder.mutation({
+      query: (data: { otp: number }) => ({
+        url: "/user/confirm-verification-email",
+        method: "PATCH",
+        data,
+      }),
+      invalidatesTags: [TTagTypes.user],
+    }),
   }),
 });
 
@@ -39,4 +47,5 @@ export const {
   useGetAllUsersQuery,
   useGetAllBlockedUsersQuery,
   useVerifyUserMutation,
+  useConfirmUserOTPMutation,
 } = userApi;

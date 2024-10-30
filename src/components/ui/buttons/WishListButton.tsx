@@ -1,4 +1,5 @@
 "use client";
+import useUserInfo from "@/hooks/useUserInfo";
 import { useAddToWishListMutation } from "@/redux/api/wish-listApi";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { CircularProgress, IconButton, SxProps, Tooltip } from "@mui/material";
@@ -17,7 +18,14 @@ export default function WishListButton({
 }: IWishListButtonProps) {
   const [addToWishList, { isLoading }] = useAddToWishListMutation();
 
+  const user = useUserInfo();
+
   const handleAddToWishList = async () => {
+    if (!user) {
+      toast.error("Please login for add to wishlist.");
+      return;
+    }
+
     try {
       const res = await addToWishList({ product: id }).unwrap();
 

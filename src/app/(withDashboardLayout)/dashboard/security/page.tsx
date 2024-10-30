@@ -1,4 +1,11 @@
 "use client";
+import ErrorPage from "@/components/shared/error/Error";
+import Header from "@/components/shared/header/Header";
+import Loader from "@/components/shared/loader/Loader";
+import NoDataFound from "@/components/shared/notFound/NoDataFound";
+import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import { useVerifyUserMutation } from "@/redux/api/user.api";
+import { IGenericErrorResponse } from "@/types";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   EmailOutlined as EmailOutlinedIcon,
@@ -11,13 +18,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import UpdateEmailModal from "./Components/UpdateEmailModal";
 import UpdatePasswordModal from "./Components/UpdatePasswordModal";
-import { useGetMeQuery } from "@/redux/api/myProfile.api";
-import { useVerifyUserMutation } from "@/redux/api/user.api";
-import Loader from "@/components/shared/loader/Loader";
-import ErrorPage from "@/components/shared/error/Error";
-import { IGenericErrorResponse } from "@/types";
-import NoDataFound from "@/components/shared/notFound/NoDataFound";
-import Header from "@/components/shared/header/Header";
+import VerifyEmailOTPModal from "./Components/VerifyEmailOTPModal";
 
 export default function SecurityPage() {
   const { data, isLoading, error } = useGetMeQuery(undefined);
@@ -25,6 +26,7 @@ export default function SecurityPage() {
     useVerifyUserMutation();
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [openEmailModal, setOpenEmailModal] = useState(false);
+  const [otpModal, setOTPModal] = useState(false);
 
   // Handlers for opening/closing modals
   const handelPasswordModal = () => {
@@ -42,6 +44,7 @@ export default function SecurityPage() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Please check your email and verify.");
+      setOTPModal((prev) => !prev);
     } else if (isError) {
       const errorMessage = verificationError as IGenericErrorResponse;
       toast.error(errorMessage.message);
@@ -221,6 +224,10 @@ export default function SecurityPage() {
 
       {openEmailModal && (
         <UpdateEmailModal open={openEmailModal} setOpen={setOpenEmailModal} />
+      )}
+
+      {otpModal && (
+        <VerifyEmailOTPModal open={otpModal} setOpen={setOTPModal} />
       )}
     </Container>
   );

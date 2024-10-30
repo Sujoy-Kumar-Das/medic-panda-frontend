@@ -9,6 +9,7 @@ interface ProductCardProps {
 }
 
 export default function WishListCard({ product }: ProductCardProps) {
+  console.log(product);
   return (
     <Card
       sx={{
@@ -94,7 +95,7 @@ export default function WishListCard({ product }: ProductCardProps) {
             fontWeight="bold"
             mb={2}
           >
-            ${product.price.toFixed(2)}
+            ${Number(product?.price)?.toFixed(2)}
           </Typography>
         )}
 

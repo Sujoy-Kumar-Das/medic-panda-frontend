@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import AddToCartButton from "../buttons/AddToCartButton";
 import WishListButton from "../buttons/WishListButton";
 
@@ -134,6 +135,8 @@ export default function SummerCard({ product }: { product: IProduct }) {
           color="primary"
           size="small"
           className="button"
+          component={Link}
+          href={`/product/${product._id}`}
           sx={{
             transform: "translateY(500px)",
             opacity: 0,

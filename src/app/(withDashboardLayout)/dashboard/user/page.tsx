@@ -49,16 +49,16 @@ export default function UserDashboard() {
 
   const userMetaData = [
     { value: data?.totalOrders || 0, ...cardColors[0] },
-    { value: data?.wishListItem || 0, ...cardColors[1] },
-    { value: data?.cartItem || 0, ...cardColors[2] },
+    { value: data?.wishlistCount || 0, ...cardColors[1] },
+    { value: data?.cartCount || 0, ...cardColors[2] },
     {
-      value: `$ ${Number(data?.totalPurchasePrice).toFixed(2) || 0}`,
+      value: `$ ${Number(data?.totalPurchaseAmount).toFixed(2) || 0}`,
       ...cardColors[3],
     },
     { value: data?.completedOrders || 0, ...cardColors[4] },
     { value: data?.pendingOrders || 0, ...cardColors[5] },
     { value: data?.returnedOrders || 0, ...cardColors[6] },
-    { value: data?.unPaidOrders || 0, ...cardColors[7] },
+    { value: data?.unpaidOrders || 0, ...cardColors[7] },
   ];
 
   const loader = isLoading || userLoading;

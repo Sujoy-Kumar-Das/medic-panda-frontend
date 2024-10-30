@@ -222,7 +222,21 @@ export const DashboardDrawer = () => {
         </ListItem>
 
         <ListItem disablePadding onClick={handleLogout}>
-          <Button fullWidth startIcon={<LogoutIcon />}>
+          <Button
+            variant="contained"
+            fullWidth
+            startIcon={<LogoutIcon />}
+            sx={{
+              padding: "10px 20px",
+              fontWeight: "bold",
+              borderRadius: "8px",
+              backgroundColor: "#d32f2f",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#b71c1c",
+              },
+            }}
+          >
             Logout
           </Button>
         </ListItem>
