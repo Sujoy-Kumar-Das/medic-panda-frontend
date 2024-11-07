@@ -30,7 +30,8 @@ export default function OrderCard({ order }: { order: IOrder }) {
 
   // handle payment handler
   const handlePaymentNow = async (id: string) => {
-    await paymentNow(id);
+    const res = await paymentNow(id);
+    console.log(res);
   };
 
   // handle cancel order
@@ -115,7 +116,7 @@ export default function OrderCard({ order }: { order: IOrder }) {
             Price
           </Typography>
           <Typography color="text.secondary" variant="body2" textAlign="center">
-            ${product.price.toFixed(2)}{" "}
+            ${product?.price?.toFixed(2)}{" "}
           </Typography>
         </Stack>
 

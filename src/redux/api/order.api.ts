@@ -1,3 +1,5 @@
+import getUserInfoToLocalStorage from "@/utils/getUserInfoToLocalStorage";
+import { io } from "socket.io-client";
 import { baseApi } from "./base.api";
 
 const orderApi = baseApi.injectEndpoints({
@@ -12,13 +14,11 @@ const orderApi = baseApi.injectEndpoints({
     getAllOrder: builder.query({
       query: (query) => {
         const params = new URLSearchParams();
-
         if (query) {
           Object.keys(query).forEach((key) => {
             params.append(key, query[key]);
           });
         }
-
         return {
           url: `/order`,
           method: "GET",
@@ -26,14 +26,11 @@ const orderApi = baseApi.injectEndpoints({
         };
       },
     }),
-
     getSingleOrder: builder.query({
-      query: (id) => {
-        return {
-          url: `/order/${id}`,
-          method: "GET",
-        };
-      },
+      query: (id) => ({
+        url: `/order/${id}`,
+        method: "GET",
+      }),
     }),
     cancelOrder: builder.mutation({
       query: (id) => ({
@@ -41,7 +38,7 @@ const orderApi = baseApi.injectEndpoints({
         method: "PATCH",
       }),
     }),
-    deleteDelete: builder.mutation({
+    deleteOrder: builder.mutation({
       query: (id) => ({
         url: `/order/${id}`,
         method: "DELETE",

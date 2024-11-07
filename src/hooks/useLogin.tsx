@@ -1,14 +1,18 @@
+import { authKey } from "@/constants/auth.key";
 import { useAddToCartMutation } from "@/redux/api/addToCart.api";
 import { useLoginMutation } from "@/redux/api/auth.api";
 import { removeProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IGenericErrorMessage } from "@/types";
+import { setToLocalStorage } from "@/utils/local-storage";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 export const useLogin = () => {
-  const [login, { isLoading, isSuccess: isLoginSuccess, isError, error }] =
-    useLoginMutation();
+  const [
+    login,
+    { isLoading, isSuccess: isLoginSuccess, isError, error, data },
+  ] = useLoginMutation();
 
   const [addToCart, { isSuccess: isAddToCartSuccess }] = useAddToCartMutation();
 
@@ -49,13 +53,16 @@ export const useLogin = () => {
         });
       }
 
+      // set token to local storage
+      setToLocalStorage(authKey, data);
+
       setIsSuccess(true); // Set success state after the entire process
       router.push(redirect || "/"); // Redirect after sync
     } catch (err) {
       console.error("Error during cart sync:", err);
       setErrorMessage((err as IGenericErrorMessage)?.message);
     }
-  }, [isLoginSuccess, carts, redirect, router, addToCart, dispatch]);
+  }, [isLoginSuccess, carts, redirect, router, addToCart, dispatch, data]);
 
   useEffect(() => {
     if (isLoginSuccess) {

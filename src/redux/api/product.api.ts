@@ -3,13 +3,11 @@ import { baseApi } from "./base.api";
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createProduct: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/product",
-          method: "POST",
-          data,
-        };
-      },
+      query: (data) => ({
+        url: "/product",
+        method: "POST",
+        body: data,
+      }),
     }),
     getAllProducts: builder.query({
       query: () => ({
@@ -18,12 +16,10 @@ const productApi = baseApi.injectEndpoints({
       }),
     }),
     getSingleProduct: builder.query({
-      query: (id) => {
-        return {
-          url: `/product/${id}`,
-          method: "GET",
-        };
-      },
+      query: (id) => ({
+        url: `/product/${id}`,
+        method: "GET",
+      }),
     }),
     editProduct: builder.mutation({
       query: ({ id, data }) => ({
