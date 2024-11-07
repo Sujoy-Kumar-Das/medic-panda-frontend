@@ -2,6 +2,7 @@ import { getAllCategoriesService } from "@/services/actions/category.service";
 import { getAllProductService } from "@/services/actions/product.service";
 import { Box, Container } from "@mui/material";
 import ProductDrawer from "./Components/ProductDrawer";
+import ProductSocket from "./Components/ProductSocket";
 
 export default async function ProductsPage({
   searchParams,
@@ -21,6 +22,7 @@ export default async function ProductsPage({
 
   return (
     <Box>
+      <ProductSocket />
       <Container sx={{ py: 4 }}>
         <ProductDrawer
           products={products}
