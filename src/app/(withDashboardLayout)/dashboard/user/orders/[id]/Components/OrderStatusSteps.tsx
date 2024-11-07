@@ -9,27 +9,27 @@ import { Box, Card, Step, StepLabel, Stepper, Typography } from "@mui/material";
 // Define the steps with unique labels, icons, and statuses
 const steps = [
   {
-    label: "Pending",
+    label: OrderStatus.PENDING,
     icon: <HourglassEmptyIcon style={{ color: "#007bff" }} />,
     status: OrderStatus.PENDING,
   },
   {
-    label: "Paid",
+    label: OrderStatus.PAID,
     icon: <PaidIcon style={{ color: "#007bff" }} />,
     status: OrderStatus.PAID,
   },
   {
-    label: "Processing",
+    label: OrderStatus.PROCESSING,
     icon: <ProcessingIcon style={{ color: "#6c757d" }} />,
     status: OrderStatus.PROCESSING,
   },
   {
-    label: "Shipped",
+    label: OrderStatus.SHIPPED,
     icon: <ShippedIcon style={{ color: "#17a2b8" }} />,
     status: OrderStatus.SHIPPED,
   },
   {
-    label: "Delivered",
+    label: OrderStatus.DELIVERED,
     icon: <DeliveredIcon style={{ color: "#28a745" }} />,
     status: OrderStatus.DELIVERED,
   },

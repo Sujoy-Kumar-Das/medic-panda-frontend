@@ -33,8 +33,6 @@ export default function OrdersPage() {
     refetch();
   });
 
-  console.log(data?.length);
-
   if (isLoading) {
     return <Loader />;
   }
@@ -58,7 +56,7 @@ export default function OrdersPage() {
 
       {/* Orders List */}
       {data?.length ? (
-        <Stack spacing={2} sx={{ mt: 3 }}>
+        <Stack spacing={2} sx={{ py: 3 }}>
           {data.map((orderItem: IOrder) => (
             <OrderCard key={orderItem._id} order={orderItem} />
           ))}
