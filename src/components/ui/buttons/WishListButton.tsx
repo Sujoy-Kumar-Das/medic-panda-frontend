@@ -18,7 +18,7 @@ export default function WishListButton({
 }: IWishListButtonProps) {
   const [addToWishList, { isLoading }] = useAddToWishListMutation();
 
-  const user = useUserInfo();
+  const { userInfo: user } = useUserInfo();
 
   const handleAddToWishList = async () => {
     if (!user) {

@@ -16,7 +16,7 @@ export default function NavBar() {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const user = useUserInfo();
+  const { userInfo, setUserInfo } = useUserInfo();
 
   const navItems = (
     <>
@@ -41,7 +41,7 @@ export default function NavBar() {
           {item.text}
         </Typography>
       ))}
-      {!user && (
+      {!userInfo && (
         <Typography
           href={"/register/login"}
           component={Link}
@@ -100,7 +100,7 @@ export default function NavBar() {
             spacing={2}
             display={{ xs: "none", md: "flex" }}
           >
-            <NavBarCart user={user} />
+            <NavBarCart user={userInfo} />
           </Stack>
 
           <IconButton
@@ -168,7 +168,9 @@ export default function NavBar() {
             spacing={3}
             mt={10}
           >
-            <NavUserMenu />
+            {/* nav user menu  */}
+            <NavUserMenu userInfo={userInfo} setUserInfo={setUserInfo} />
+
             <Stack
               spacing={1}
               sx={{ textAlign: "center" }}
@@ -176,7 +178,7 @@ export default function NavBar() {
             >
               {navItems}
             </Stack>
-            <NavBarCart user={user} />
+            <NavBarCart user={userInfo} />
           </Stack>
         </Box>
       </Container>

@@ -1,4 +1,5 @@
 "use client";
+import useSocket from "@/hooks/useSocket";
 import {
   useGetAllCartProductsQuery,
   useRemoveCartProductMutation,
@@ -29,10 +30,12 @@ const NavCartButton = dynamic(() => import("./NavCartButton"), {
   loading: () => <NavCartLoaderButton />,
 });
 
-export default function NavBarCart({ user }: { user: IUserInfo }) {
+export default function NavBarCart({ user }: { user: IUserInfo | null }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { carts } = useAppSelector((state) => state.cart);
-  const { data, isLoading } = useGetAllCartProductsQuery(undefined);
+
+  const { data, isLoading, refetch } = useGetAllCartProductsQuery(undefined);
+
   const [removeCartItemFromDB, { isSuccess, isError, error }] =
     useRemoveCartProductMutation();
 
@@ -87,10 +90,15 @@ export default function NavBarCart({ user }: { user: IUserInfo }) {
     }
   }, [isSuccess, isError, error]);
 
+  // Use the custom socket hook
+  useSocket(["order"], () => {
+    refetch();
+  });
+
   return (
     <>
       <NavCartButton
-        user={user ? true : false}
+        user={user}
         cartLength={carts?.length}
         dataLength={data?.length}
         handleOpenUserMenu={handleOpenUserMenu}

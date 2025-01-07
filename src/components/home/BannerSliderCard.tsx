@@ -86,7 +86,7 @@ export default function BannerSliderCard({
             </Typography>
 
             {/* Display discount price only if it's greater than 0 */}
-            {item.discount?.discountPrice > 0 && (
+            {Number(item?.discount?.discountPrice) > 0 && (
               <Typography
                 sx={{
                   fontWeight: "bold",
@@ -95,7 +95,7 @@ export default function BannerSliderCard({
                   fontSize: 20,
                 }}
               >
-                ${item.discount.discountPrice}
+                ${item?.discount?.discountPrice}
               </Typography>
             )}
           </Stack>

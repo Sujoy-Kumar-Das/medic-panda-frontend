@@ -1,19 +1,14 @@
 "use client";
 
 import { authKey } from "@/constants/auth.key";
+import createSocketConnection from "@/utils/createSocketConnection";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import { useEffect } from "react";
-import { io, Socket } from "socket.io-client";
+import { Socket } from "socket.io-client";
 
 const useSocket = (events: string[], onUpdate: () => void) => {
   useEffect(() => {
-    const token = getFromLocalStorage(authKey);
-
-    const socket: Socket = io("http://localhost:5000/", {
-      auth: {
-        token,
-      },
-    });
+    const socket: Socket = createSocketConnection();
 
     socket.on("connect", () => {
       console.log("Connected to socket server.");

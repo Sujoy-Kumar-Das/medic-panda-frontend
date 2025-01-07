@@ -28,7 +28,7 @@ const reviewSchemaValidation = z.object({
 export default function AddReviewTab() {
   const [createReview, { isLoading, isError, error, isSuccess }] =
     useCreateReviewMutation();
-  const user = useUserInfo();
+  const { userInfo: user } = useUserInfo();
   const router = useRouter();
   const { id } = useParams();
 

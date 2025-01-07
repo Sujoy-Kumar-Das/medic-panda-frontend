@@ -25,7 +25,7 @@ export default function AddToCartButton({
   className,
   icon = true,
 }: IAddToCartButtonProps) {
-  const user = useUserInfo();
+  const { userInfo: user } = useUserInfo();
   const [addToCartInDB, { isLoading, isSuccess, isError, error }] =
     useAddToCartMutation();
   const dispatch = useAppDispatch();

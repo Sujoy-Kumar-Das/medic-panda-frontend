@@ -13,7 +13,7 @@ import { toast } from "sonner";
 
 export default function ProductQuantity({ product }: { product: IProduct }) {
   const [quantity, setQuantity] = useState(0);
-  const user = useUserInfo();
+  const { userInfo: user } = useUserInfo();
   const [addToCartInDB, { isLoading, isSuccess, isError, error }] =
     useAddToCartMutation();
   const dispatch = useAppDispatch();

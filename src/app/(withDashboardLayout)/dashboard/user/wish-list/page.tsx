@@ -13,7 +13,7 @@ export default function WishListPage() {
       error={error as IGenericErrorResponse}
       noDataLink="/product"
       noDataText="Start Shopping"
-      noDataMessage="Your wishlist is empty. Add items to your wishlist and come back here to view them."
+      noDataMessage="Your wishlist is empty. Add items to view."
     />
   );
 }

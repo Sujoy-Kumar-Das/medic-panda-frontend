@@ -4,7 +4,6 @@ import ErrorPage from "@/components/shared/error/Error";
 import Header from "@/components/shared/header/Header";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
-import useSocket from "@/hooks/useSocket";
 import { useGetAllOrderQuery } from "@/redux/api/order.api";
 import { IGenericErrorResponse, IOrder } from "@/types";
 import { Container, Stack } from "@mui/material";
@@ -15,7 +14,7 @@ import OrderCard from "./Components/OrderCard";
 export default function OrdersPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const { data, isLoading, error, refetch } = useGetAllOrderQuery({
+  const { data, isLoading, error } = useGetAllOrderQuery({
     searchTerm,
     ...(statusFilter && { status: statusFilter }),
   });
@@ -27,11 +26,6 @@ export default function OrdersPage() {
   const handleFilterChange = (filter: string) => {
     setStatusFilter(filter);
   };
-
-  // Use the custom socket hook
-  useSocket(["order"], () => {
-    refetch();
-  });
 
   if (isLoading) {
     return <Loader />;

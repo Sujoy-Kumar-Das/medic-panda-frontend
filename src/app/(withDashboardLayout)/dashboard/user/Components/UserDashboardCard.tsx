@@ -1,15 +1,19 @@
 import { Card, CardContent, Typography } from "@mui/material";
 
 export default function UserDashboardCard({
-  card,
+  title,
+  value,
+  gradient,
 }: {
   title: string;
   value: number;
+  gradient: string;
 }) {
   return (
     <Card
       sx={{
-        background: card.gradient,
+        // background: gradient,
+        background: gradient,
         height: 150,
         width: "100%",
         display: "flex",
@@ -24,10 +28,10 @@ export default function UserDashboardCard({
     >
       <CardContent>
         <Typography variant="h6" align="center" color="white">
-          {card.title}
+          {title}
         </Typography>
         <Typography variant="h4" fontWeight="bold" align="center" color="white">
-          {card.value}
+          {value}
         </Typography>
       </CardContent>
     </Card>

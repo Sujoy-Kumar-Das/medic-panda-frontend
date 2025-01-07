@@ -9,7 +9,6 @@ interface ProductCardProps {
 }
 
 export default function WishListCard({ product }: ProductCardProps) {
-  console.log(product);
   return (
     <Card
       sx={{

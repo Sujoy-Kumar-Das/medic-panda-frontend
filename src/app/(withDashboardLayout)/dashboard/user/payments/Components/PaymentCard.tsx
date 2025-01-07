@@ -92,7 +92,13 @@ const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
           }}
         >
           Status:
-          <span style={{ color: "#28a745", fontWeight: "bold" }}>
+          <span
+            style={{
+              color: "#28a745",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
             {order?.status}
           </span>
         </Typography>

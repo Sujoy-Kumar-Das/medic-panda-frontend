@@ -44,7 +44,11 @@ function UserDashboardCompo({
                 opacity: 0,
               }}
             >
-              <UserDashboardCard card={card} />
+              <UserDashboardCard
+                title={card.title}
+                value={card.value}
+                gradient={card.gradient}
+              />
             </Grid>
           ))}
         </Grid>
