@@ -6,13 +6,11 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { UserInfo } from "os";
-import * as React from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const settings = [
@@ -20,10 +18,8 @@ const settings = [
   { link: "/dashboard/user", text: "Dashboard" },
 ];
 
-function NavUserMenu() {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+function NavUserMenu({ userInfo }) {
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const { data: user } = useGetMeQuery(undefined);
 
@@ -45,7 +41,7 @@ function NavUserMenu() {
 
   return (
     <>
-      {user && (
+      {userInfo && user && (
         <Box>
           <>
             <IconButton

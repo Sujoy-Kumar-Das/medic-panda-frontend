@@ -4,13 +4,11 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import NavUserMenu from "./NavUserMenu";
 export default function NavCartButton({
   user,
-  dataLength,
-  cartLength,
+  cartItemLength,
   handleOpenUserMenu,
 }: {
   user: boolean;
-  dataLength: number;
-  cartLength: number;
+  cartItemLength: number | undefined;
   handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
 }) {
   return (
@@ -33,7 +31,7 @@ export default function NavCartButton({
               }}
             >
               <ShoppingCartIcon />
-              {dataLength >= 1 && (
+              {cartItemLength >= 1 && (
                 <Typography
                   color="common.white"
                   sx={{
@@ -57,14 +55,14 @@ export default function NavCartButton({
                     },
                   }}
                 >
-                  {dataLength}
+                  {cartItemLength && cartItemLength}
                 </Typography>
               )}
             </IconButton>
           </Box>
 
           <Box display={{ xs: "none", md: "flex" }}>
-            <NavUserMenu />
+            <NavUserMenu userInfo={user} />
           </Box>
         </>
       ) : (
@@ -86,7 +84,7 @@ export default function NavCartButton({
           onClick={handleOpenUserMenu}
         >
           My Cart{" "}
-          {cartLength >= 1 && (
+          {cartItemLength >= 1 && (
             <Typography
               color="common.white"
               sx={{
@@ -110,7 +108,7 @@ export default function NavCartButton({
                 },
               }}
             >
-              {cartLength}
+              {cartItemLength && cartItemLength}
             </Typography>
           )}
         </Button>

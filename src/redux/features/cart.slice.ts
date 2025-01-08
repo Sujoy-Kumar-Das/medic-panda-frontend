@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getLocalStore } from "next-persist";
 
-interface ICartItem {
+export interface ICartItemLocal {
   id: string;
   name: string;
   thumbnail: string;
@@ -11,7 +11,7 @@ interface ICartItem {
 }
 
 interface ICartState {
-  carts: ICartItem[];
+  carts: ICartItemLocal[];
 }
 
 const initialState: ICartState = {
@@ -23,9 +23,9 @@ const calculateTotalPrice = (quantity: number, price: number): number => {
 };
 
 const findProductById = (
-  carts: ICartItem[],
+  carts: ICartItemLocal[],
   id: string
-): ICartItem | undefined => {
+): ICartItemLocal | undefined => {
   return carts.find((item) => item.id === id);
 };
 
@@ -35,7 +35,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: persistedState,
   reducers: {
-    addProduct: (state, action: PayloadAction<ICartItem>) => {
+    addProduct: (state, action: PayloadAction<ICartItemLocal>) => {
       const { id, quantity = 1, price } = action.payload;
       const existingProduct = findProductById(state.carts, id);
 
@@ -53,6 +53,7 @@ const cartSlice = createSlice({
         });
       }
     },
+
     increaseQuantity: (
       state,
       action: PayloadAction<{ id: string; quantity?: number }>
@@ -68,6 +69,7 @@ const cartSlice = createSlice({
         );
       }
     },
+
     decreaseQuantity: (
       state,
       action: PayloadAction<{ id: string; quantity?: number }>
@@ -85,44 +87,21 @@ const cartSlice = createSlice({
             existingProduct.price
           );
         } else {
-          state.carts = state.carts.filter((item: ICartItem) => item.id !== id);
-        }
-      }
-    },
-
-    removeSingleProduct: (
-      state,
-      action: PayloadAction<{ id: string; quantity?: number }>
-    ) => {
-      const { id, quantity = 1 } = action.payload;
-      const existingProduct = findProductById(state.carts, id);
-
-      if (existingProduct) {
-        existingProduct.quantity = (existingProduct.quantity ?? 0) - quantity;
-
-        if (existingProduct.quantity <= 0) {
-          state.carts = state.carts.filter((item: ICartItem) => item.id !== id);
-        } else {
-          existingProduct.totalPrice = calculateTotalPrice(
-            existingProduct.quantity,
-            existingProduct.price
+          state.carts = state.carts.filter(
+            (item: ICartItemLocal) => item.id !== id
           );
         }
       }
     },
+
     removeProduct: (state, action: PayloadAction<{ id: string }>) => {
       state.carts = state.carts.filter(
-        (item: ICartItem) => item.id !== action.payload.id
+        (item: ICartItemLocal) => item.id !== action.payload.id
       );
     },
   },
 });
 
-export const {
-  addProduct,
-  increaseQuantity,
-  decreaseQuantity,
-  removeSingleProduct,
-  removeProduct,
-} = cartSlice.actions;
+export const { addProduct, increaseQuantity, decreaseQuantity, removeProduct } =
+  cartSlice.actions;
 export default cartSlice.reducer;

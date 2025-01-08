@@ -1,12 +1,11 @@
 "use client";
 import useUserInfo from "@/hooks/useUserInfo";
-import { menuLinks } from "@/routes/nav.path";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
-import Link from "next/link";
 import { useState } from "react";
 import NavBarCart from "./NavBarCart";
+import NavItems from "./NavItems";
 import NavUserMenu from "./NavUserMenu";
 
 export default function NavBar() {
@@ -18,52 +17,6 @@ export default function NavBar() {
 
   const { userInfo, setUserInfo } = useUserInfo();
 
-  const navItems = (
-    <>
-      {menuLinks.map((item) => (
-        <Typography
-          key={item.link}
-          href={item.link}
-          component={Link}
-          sx={{
-            fontSize: "18px",
-            color: "text.primary",
-            textDecoration: "none",
-            fontWeight: "bold",
-            transition: "all 0.4s ease-in-out",
-            "&:hover": {
-              color: "primary.main",
-              textShadow: "0px 4px 10px rgba(0, 123, 255, 0.3)",
-              transform: "scale(1.1)",
-            },
-          }}
-        >
-          {item.text}
-        </Typography>
-      ))}
-      {!userInfo && (
-        <Typography
-          href={"/register/login"}
-          component={Link}
-          sx={{
-            fontSize: "18px",
-            color: "text.primary",
-            textDecoration: "none",
-            fontWeight: "bold",
-            transition: "all 0.4s ease-in-out",
-            "&:hover": {
-              color: "primary.main",
-              textShadow: "0px 4px 10px rgba(0, 123, 255, 0.3)",
-              transform: "scale(1.1)",
-            },
-          }}
-        >
-          Login
-        </Typography>
-      )}
-    </>
-  );
-
   return (
     <Box position={"relative"} bgcolor="background.default">
       <Container sx={{ py: 2 }}>
@@ -72,6 +25,7 @@ export default function NavBar() {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
+          {/* logo for large and medium device */}
           <Box sx={{ display: "flex" }}>
             <Typography component={"h1"} variant="h4" fontWeight={"bold"}>
               Medic
@@ -86,13 +40,14 @@ export default function NavBar() {
             </Typography>
           </Box>
 
+          {/* navigation items for large and medium devices */}
           <Stack
             direction={"row"}
             alignItems={"center"}
             gap={3}
             display={{ xs: "none", md: "flex" }}
           >
-            {navItems}
+            <NavItems user={userInfo} />
           </Stack>
 
           <Stack
@@ -100,7 +55,7 @@ export default function NavBar() {
             spacing={2}
             display={{ xs: "none", md: "flex" }}
           >
-            <NavBarCart user={userInfo} />
+            <NavBarCart />
           </Stack>
 
           <IconButton
@@ -169,16 +124,18 @@ export default function NavBar() {
             mt={10}
           >
             {/* nav user menu  */}
-            <NavUserMenu userInfo={userInfo} setUserInfo={setUserInfo} />
+            <NavUserMenu userInfo={userInfo} />
 
+            {/* navigation items for small devices */}
             <Stack
               spacing={1}
               sx={{ textAlign: "center" }}
               onClick={handleDrawerToggle}
             >
-              {navItems}
+              <NavItems user={userInfo} />
             </Stack>
-            <NavBarCart user={userInfo} />
+
+            <NavBarCart />
           </Stack>
         </Box>
       </Container>
