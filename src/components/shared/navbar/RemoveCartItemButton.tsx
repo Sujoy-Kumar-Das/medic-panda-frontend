@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import useUserInfo from "@/hooks/useUserInfo";
+import { useAuth } from "@/hooks/useAuth";
 import { useRemoveCartProductMutation } from "@/redux/api/addToCart.api";
 import { decreaseQuantity } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
@@ -10,12 +10,20 @@ import { CircularProgress, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function RemoveCartItemButton({ id, handleCloseUserMenu }) {
+interface IRemoveCartItemButtonProps {
+  id: string;
+  handleCloseUserMenu: () => void;
+}
+
+export default function RemoveCartItemButton({
+  id,
+  handleCloseUserMenu,
+}: IRemoveCartItemButtonProps) {
   // Local loading state for each product
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
 
   //   get user
-  const { userInfo: user } = useUserInfo();
+  const { user } = useAuth();
 
   const dispatch = useAppDispatch();
 
