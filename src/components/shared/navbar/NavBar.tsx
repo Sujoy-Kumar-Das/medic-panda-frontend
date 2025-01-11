@@ -1,5 +1,5 @@
 "use client";
-import useUserInfo from "@/hooks/useUserInfo";
+import { useAuth } from "@/hooks/useAuth";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
@@ -14,8 +14,6 @@ export default function NavBar() {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const { userInfo, setUserInfo } = useUserInfo();
 
   return (
     <Box position={"relative"} bgcolor="background.default">
@@ -47,7 +45,7 @@ export default function NavBar() {
             gap={3}
             display={{ xs: "none", md: "flex" }}
           >
-            <NavItems user={userInfo} />
+            <NavItems />
           </Stack>
 
           <Stack
@@ -56,6 +54,7 @@ export default function NavBar() {
             display={{ xs: "none", md: "flex" }}
           >
             <NavBarCart />
+            <NavUserMenu />
           </Stack>
 
           <IconButton
@@ -124,7 +123,7 @@ export default function NavBar() {
             mt={10}
           >
             {/* nav user menu  */}
-            <NavUserMenu userInfo={userInfo} />
+            <NavUserMenu />
 
             {/* navigation items for small devices */}
             <Stack
@@ -132,7 +131,7 @@ export default function NavBar() {
               sx={{ textAlign: "center" }}
               onClick={handleDrawerToggle}
             >
-              <NavItems user={userInfo} />
+              <NavItems />
             </Stack>
 
             <NavBarCart />

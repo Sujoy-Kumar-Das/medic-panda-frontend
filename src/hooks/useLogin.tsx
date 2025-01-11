@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { authKey } from "@/constants/auth.key";
 import { useAddToCartMutation } from "@/redux/api/addToCart.api";
 import { useLoginMutation } from "@/redux/api/auth.api";
@@ -7,6 +8,7 @@ import { IGenericErrorMessage } from "@/types";
 import { setToLocalStorage } from "@/utils/local-storage";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { useAuth } from "./useAuth";
 
 export const useLogin = () => {
   const [
@@ -15,6 +17,8 @@ export const useLogin = () => {
   ] = useLoginMutation();
 
   const [addToCart, { isSuccess: isAddToCartSuccess }] = useAddToCartMutation();
+
+  const { storeUser } = useAuth();
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -56,8 +60,14 @@ export const useLogin = () => {
       // set token to local storage
       setToLocalStorage(authKey, data);
 
-      setIsSuccess(true); // Set success state after the entire process
-      router.push(redirect || "/"); // Redirect after sync
+      // set the user
+      storeUser(data);
+
+      // Set success state after the entire process
+      setIsSuccess(true);
+
+      // Redirect after sync
+      router.push(redirect || "/");
     } catch (err) {
       console.error("Error during cart sync:", err);
       setErrorMessage((err as IGenericErrorMessage)?.message);
@@ -74,5 +84,10 @@ export const useLogin = () => {
     }
   }, [isLoginSuccess, isError, error, handleCartSync]);
 
-  return { login, isLoading, isSuccess, errorMessage };
+  return {
+    login,
+    isLoading,
+    isSuccess: isSuccess || isAddToCartSuccess,
+    errorMessage,
+  };
 };

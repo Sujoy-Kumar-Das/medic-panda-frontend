@@ -1,8 +1,11 @@
+import { useAuth } from "@/hooks/useAuth";
 import { menuLinks } from "@/routes/nav.path";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 
-export default function NavItems({ user }) {
+export default function NavItems() {
+  const { user } = useAuth();
+
   return (
     <>
       {menuLinks.map((item) => (

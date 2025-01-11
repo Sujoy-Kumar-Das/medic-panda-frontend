@@ -1,6 +1,6 @@
 "use client";
+import { useAuth } from "@/hooks/useAuth";
 import useSocket from "@/hooks/useSocket";
-import useUserInfo from "@/hooks/useUserInfo";
 import { useGetAllCartProductsQuery } from "@/redux/api/addToCart.api";
 import { ICartItemLocal } from "@/redux/features/cart.slice";
 import { useAppSelector } from "@/redux/hooks";
@@ -25,8 +25,6 @@ interface ICartData {
 export default function NavBarCart() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const { userInfo: user } = useUserInfo();
-
   const [cartData, setCartData] = useState<ICartData[] | undefined>(undefined);
 
   // get carts from local storage via redux state
@@ -34,6 +32,9 @@ export default function NavBarCart() {
 
   // get carts from server via rtk query
   const { data, isLoading, refetch } = useGetAllCartProductsQuery(undefined);
+
+  // auth state from context api
+  const { user } = useAuth();
 
   useEffect(() => {
     if (user && user.userId && data?.length) {
@@ -76,8 +77,7 @@ export default function NavBarCart() {
   return (
     <>
       <NavCartButton
-        user={user}
-        cartItemLength={cartData?.length && cartData?.length}
+        cartItemLength={Number(cartData?.length)}
         handleOpenUserMenu={handleOpenUserMenu}
       />
 

@@ -1,4 +1,5 @@
 "use client";
+import AuthContext from "@/context/AuthContext";
 import { store } from "@/redux/store";
 import { ThemeProvider } from "@emotion/react";
 import PersistWrapper from "next-persist/lib/NextPersistWrapper";
@@ -17,7 +18,9 @@ export default function Providers({ children }: { children: ReactNode }) {
   return (
     <Provider store={store}>
       <PersistWrapper wrapperConfig={npConfig}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <AuthContext>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        </AuthContext>
       </PersistWrapper>
     </Provider>
   );

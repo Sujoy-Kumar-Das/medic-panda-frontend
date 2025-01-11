@@ -1,16 +1,15 @@
 "use client";
+import { useAuth } from "@/hooks/useAuth";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import NavUserMenu from "./NavUserMenu";
 export default function NavCartButton({
-  user,
   cartItemLength,
   handleOpenUserMenu,
 }: {
-  user: boolean;
-  cartItemLength: number | undefined;
+  cartItemLength: number;
   handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
 }) {
+  const { user } = useAuth();
   return (
     <>
       {user ? (
@@ -59,10 +58,6 @@ export default function NavCartButton({
                 </Typography>
               )}
             </IconButton>
-          </Box>
-
-          <Box display={{ xs: "none", md: "flex" }}>
-            <NavUserMenu userInfo={user} />
           </Box>
         </>
       ) : (
