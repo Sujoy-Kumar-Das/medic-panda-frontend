@@ -46,7 +46,14 @@ export default function ProductDrawer({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get("searchTerm");
-    const params = new URLSearchParams(searchParams);
+
+    if (!searchTerm) {
+      replace(pathName);
+      return;
+    }
+
+    // Create a mutable copy of the searchParams
+    const params = new URLSearchParams(searchParams.toString());
 
     if (searchParams) {
       params.set("searchTerm", searchTerm as string);
@@ -59,7 +66,7 @@ export default function ProductDrawer({
 
   // pagination handler
   const handlePagination = (event: any, page: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
 
     if (page) {
       params.set("page", String(page));
@@ -117,7 +124,14 @@ export default function ProductDrawer({
                   <CategoryIcon />
                 </IconButton>
                 <InputBase
-                  sx={{ ml: 1, flex: 1 }}
+                  sx={{
+                    ml: 1,
+                    flex: 1,
+                    backgroundColor: "white",
+                    "&:focus-within": {
+                      backgroundColor: "transparent",
+                    },
+                  }}
                   placeholder="Search products"
                   inputProps={{ "aria-label": "search products" }}
                   name="searchTerm"

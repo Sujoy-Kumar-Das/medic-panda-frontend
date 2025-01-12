@@ -1,5 +1,4 @@
 "use client";
-import { useAuth } from "@/hooks/useAuth";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
@@ -54,7 +53,7 @@ export default function NavBar() {
             display={{ xs: "none", md: "flex" }}
           >
             <NavBarCart />
-            <NavUserMenu />
+            <NavUserMenu />{" "}
           </Stack>
 
           <IconButton

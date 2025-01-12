@@ -14,11 +14,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const settings = [
-  { link: "/dashboard/", text: "Profile" },
-  { link: "/dashboard/user", text: "Dashboard" },
-];
-
 function NavUserMenu() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -27,6 +22,11 @@ function NavUserMenu() {
   const { data: user } = useGetMeQuery(undefined);
 
   const router = useRouter();
+
+  const settings = [
+    { link: "/dashboard/", text: "Profile" },
+    { link: `/dashboard/${userInfo?.role}`, text: "Dashboard" },
+  ];
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);

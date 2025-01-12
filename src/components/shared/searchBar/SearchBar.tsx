@@ -4,16 +4,23 @@ import { Box, Button, InputBase, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
-export default function SearchBar() {
+export default function SearchBar({
+  url,
+  query,
+}: {
+  url: string;
+  query: string;
+}) {
   const router = useRouter();
   const handleSearch = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const value = (event.target as HTMLFormElement).search.value;
+
     if (value) {
-      router.push(`/products?title=${value}`);
+      router.push(`${url}?${query}=${value}`);
     } else {
-      router.push("/product");
+      router.push(url);
     }
   };
 
