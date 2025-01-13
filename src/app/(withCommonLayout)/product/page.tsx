@@ -1,4 +1,3 @@
-import { getAllCategoriesService } from "@/services/actions/category.service";
 import { getAllProductService } from "@/services/actions/product.service";
 import { Box, Container } from "@mui/material";
 import ProductDrawer from "./Components/ProductDrawer";
@@ -18,17 +17,11 @@ export default async function ProductsPage({
     category,
   });
 
-  const categories = await getAllCategoriesService();
-
   return (
     <Box>
       <ProductSocket />
       <Container sx={{ py: 4 }}>
-        <ProductDrawer
-          products={products}
-          categories={categories?.data}
-          meta={meta}
-        />
+        <ProductDrawer products={products} meta={meta} />
       </Container>
     </Box>
   );
