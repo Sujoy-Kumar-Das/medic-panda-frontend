@@ -12,9 +12,10 @@ const userApi = baseApi.injectEndpoints({
       invalidatesTags: [TTagTypes.user],
     }),
     getAllUsers: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/user",
         method: "GET",
+        params,
       }),
       providesTags: [TTagTypes.user],
     }),

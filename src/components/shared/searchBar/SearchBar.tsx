@@ -1,27 +1,40 @@
 "use client";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Button, InputBase, Stack } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FormEvent } from "react";
 
 export default function SearchBar({
-  url,
   query,
+  placeholder,
 }: {
-  url: string;
   query: string;
+  placeholder: string;
 }) {
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathName = usePathname();
   const handleSearch = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const value = (event.target as HTMLFormElement).search.value;
+    const formData = new FormData(event.currentTarget);
+    const searchTerm = formData.get(query);
 
-    if (value) {
-      router.push(`${url}?${query}=${value}`);
-    } else {
-      router.push(url);
+    if (!searchTerm) {
+      replace(pathName);
+      return;
     }
+
+    // Create a mutable copy of the searchParams
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (searchParams) {
+      params.set(query, searchTerm as string);
+    } else {
+      params.delete(query);
+    }
+
+    replace(`${pathName}?${params.toString()}`);
   };
 
   return (
@@ -41,10 +54,10 @@ export default function SearchBar({
         >
           <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
             <InputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
+              placeholder={placeholder || "Search..."}
+              inputProps={{ "aria-label": query }}
               sx={{ marginLeft: 1, flex: 1, boxShadow: "none" }}
-              name="search"
+              name={query}
             />
           </Box>
           <Button
