@@ -2,13 +2,13 @@
 import { useQueryParams } from "@/hooks/useQueryParams";
 import { useGetAllUsersQuery } from "@/redux/api/user.api";
 import { IGenericErrorResponse } from "@/types";
-import AllUsersHOC from "./Components/AllUsersHOC";
+import HandleUserDataHOC from "./Components/HandleUserDataHOC";
 export default function AllUsersPage() {
   const queryParams = useQueryParams();
   const { data, isLoading, error } = useGetAllUsersQuery(queryParams);
 
   return (
-    <AllUsersHOC
+    <HandleUserDataHOC
       data={data?.result || []}
       isLoading={isLoading}
       error={error as IGenericErrorResponse}

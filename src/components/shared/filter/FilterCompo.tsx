@@ -1,4 +1,4 @@
-import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent, SxProps } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -12,9 +12,11 @@ interface IFilterItem {
 export default function FilterCompo({
   placeholder,
   items,
+  sx,
 }: {
   placeholder?: string;
   items: IFilterItem[];
+  sx?: SxProps;
 }) {
   const [selectedItem, setSelectedItem] = useState<IFilterItem | null>(null);
 
@@ -53,7 +55,7 @@ export default function FilterCompo({
     <Select
       value={selectedItem?.id || ""}
       onChange={filteredDataHandler}
-      sx={{ width: 200 }}
+      sx={{ ...sx }}
       displayEmpty
       renderValue={(selected) => {
         if (!selected) return "Select a filter";
@@ -61,11 +63,11 @@ export default function FilterCompo({
         return selectedItem ? selectedItem.title : "Select a filter";
       }}
     >
-      <MenuItem value="" disabled>
+      <MenuItem value="" disabled sx={{ bgcolor: "inherit" }}>
         {placeholder || "Select A Item"}
       </MenuItem>
       {items.map((item) => (
-        <MenuItem key={item.id} value={item.id}>
+        <MenuItem key={item.id} value={item.id} sx={{ bgcolor: "inherit" }}>
           {item.title}
         </MenuItem>
       ))}
