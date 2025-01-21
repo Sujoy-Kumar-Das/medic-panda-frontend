@@ -1,9 +1,9 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import BlockIcon from "@mui/icons-material/Block";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Chip, IconButton, Stack, Typography } from "@mui/material";
+import OpenBlockUserModalButton from "./OpenBlockUserModalButton";
 export const UsersColumns: any = [
   {
     field: "email",
@@ -86,16 +86,7 @@ export const UsersColumns: any = [
     width: 120,
     headerAlign: "center",
     renderCell: ({ row }: { row: any }) => (
-      <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        py={1}
-      >
-        <IconButton color="error">
-          <BlockIcon />
-        </IconButton>
-      </Stack>
+      <OpenBlockUserModalButton userId={row._id} />
     ),
   },
   {

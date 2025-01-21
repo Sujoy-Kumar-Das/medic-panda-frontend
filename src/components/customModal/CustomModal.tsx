@@ -1,12 +1,13 @@
 "use client";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton } from "@mui/material";
+import { IconButton, SxProps, Theme } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import * as React from "react";
+import React from "react";
+
 interface ICustomModal {
   title?: string;
   open: boolean;
@@ -14,7 +15,9 @@ interface ICustomModal {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   closeBtn?: boolean;
   modalWidth?: "sm" | "md" | "lg";
+  sxProps?: SxProps<Theme>;
 }
+
 export default function CustomModal({
   title,
   open,
@@ -22,6 +25,7 @@ export default function CustomModal({
   children,
   closeBtn = true,
   modalWidth = "md",
+  sxProps,
 }: ICustomModal) {
   const handleClose = () => {
     setOpen(false);
@@ -41,22 +45,32 @@ export default function CustomModal({
             lg: "60%",
           },
         },
+        ...(sxProps || {}), // Safely apply additional styles
       }}
     >
-      {title && <DialogTitle>{title}</DialogTitle>}
-      <IconButton
-        aria-label="close"
-        onClick={handleClose}
-        sx={{
-          position: "absolute",
-          right: 8,
-          top: 8,
-          color: (theme) => theme.palette.grey[500],
-        }}
-      >
-        <CloseIcon />
-      </IconButton>
+      {/* Modal Title */}
+      {title && (
+        <DialogTitle>
+          {title}
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+      )}
+
+      {/* Modal Content */}
       <DialogContent>{children}</DialogContent>
+
+      {/* Close Button */}
       {closeBtn && (
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
