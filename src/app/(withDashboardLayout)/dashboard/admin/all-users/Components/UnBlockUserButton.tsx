@@ -1,4 +1,6 @@
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 import { Button } from "@mui/material";
+import useUnblockUserApiHook from "./useUnblockUserApiHook";
 
 interface UnBlockUserButtonProps {
   userId: string;
@@ -6,9 +8,24 @@ interface UnBlockUserButtonProps {
 }
 
 const UnBlockUserButton = ({ userId, onClose }: UnBlockUserButtonProps) => {
+  // handle unblock the user with the custom hook useBlockUserApiHook
+
+  const { handleUnblockUser, isLoading, isError, error, isSuccess } =
+    useUnblockUserApiHook({ id: userId, onClose });
+
+  // handle unblock the user with the custom hook useApiResponseHandler
+
+  useApiResponseHandler({
+    isError,
+    isSuccess,
+    successMessage: "User unblocked successfully",
+    error,
+  });
   return (
     <Button
       variant="contained"
+      onClick={handleUnblockUser}
+      disabled={isLoading}
       sx={{
         backgroundColor: "warning.main",
         color: "white",
@@ -18,7 +35,7 @@ const UnBlockUserButton = ({ userId, onClose }: UnBlockUserButtonProps) => {
         transition: "background-color 0.3s ease",
       }}
     >
-      Unblock User
+      {isLoading ? "Unblocking..." : "Unblock User"}
     </Button>
   );
 };
