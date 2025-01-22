@@ -3,7 +3,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Chip, IconButton, Stack, Typography } from "@mui/material";
-import OpenBlockUserModalButton from "./OpenBlockUserModalButton";
+import OpenBlockUserModalButton from "./block-user-modal/OpenBlockUserModalButton";
+import OpenUnBlockUserButton from "./unblock-user-modal/OpenUnBlockUserButton";
 export const UsersColumns: any = [
   {
     field: "email",
@@ -86,7 +87,13 @@ export const UsersColumns: any = [
     width: 120,
     headerAlign: "center",
     renderCell: ({ row }: { row: any }) => (
-      <OpenBlockUserModalButton userId={row._id} />
+      <>
+        {!row.isBlocked ? (
+          <OpenBlockUserModalButton userId={row._id} />
+        ) : (
+          <OpenUnBlockUserButton userId={row._id} />
+        )}
+      </>
     ),
   },
   {
