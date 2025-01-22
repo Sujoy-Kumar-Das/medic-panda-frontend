@@ -1,6 +1,8 @@
 import CustomModal from "@/components/customModal/CustomModal";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
+import BlockUserButton from "./BlockUserButton";
+import BlockUserCancelButton from "./BlockUserCancelButton";
 
 // Define the types for the props
 interface BlockUserModalProps {
@@ -14,7 +16,9 @@ export default function BlockUserModal({
   openBlockUserModal,
   setOpenBlockUserModal,
 }: BlockUserModalProps) {
-  const handleClose = () => setOpenBlockUserModal(false);
+  const handleClose = () => {
+    setOpenBlockUserModal((prev) => !prev);
+  };
 
   return (
     <CustomModal
@@ -32,57 +36,28 @@ export default function BlockUserModal({
       setOpen={setOpenBlockUserModal}
       closeBtn={false}
     >
-      <Box>
-        <Typography
-          variant="h5"
-          sx={{
-            color: "warning.main",
-            fontWeight: "bold",
-            marginBottom: 2,
-          }}
-        >
-          Warning: Block User
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            color: "text.secondary",
-            marginBottom: 3,
-          }}
-        >
-          Are you sure you want to block this user?
-        </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-          <Button
-            onClick={handleClose}
-            variant="outlined"
-            sx={{
-              color: "warning.main",
-              borderColor: "warning.main",
-              "&:hover": {
-                backgroundColor: "#FFECB3",
-              },
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              console.log(`Blocked user with ID: ${userId}`);
-              handleClose();
-            }}
-            variant="contained"
-            sx={{
-              backgroundColor: "warning.main",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "warning.dark",
-              },
-            }}
-          >
-            Block User
-          </Button>
-        </Box>
+      <Typography
+        variant="h5"
+        sx={{
+          color: "warning.main",
+          fontWeight: "bold",
+          marginBottom: 2,
+        }}
+      >
+        Warning: Block User
+      </Typography>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "text.secondary",
+          marginBottom: 3,
+        }}
+      >
+        Are you sure you want to block this user?
+      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+        <BlockUserCancelButton handleClose={handleClose} />
+        <BlockUserButton userId={userId} onClose={handleClose} />
       </Box>
     </CustomModal>
   );

@@ -40,6 +40,16 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TTagTypes.user],
     }),
+    blockUser: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/user/block-user",
+          method: "PATCH",
+          data,
+        };
+      },
+      invalidatesTags: [TTagTypes.user],
+    }),
   }),
 });
 
@@ -49,4 +59,5 @@ export const {
   useGetAllBlockedUsersQuery,
   useVerifyUserMutation,
   useConfirmUserOTPMutation,
+  useBlockUserMutation,
 } = userApi;
