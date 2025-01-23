@@ -1,9 +1,9 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import DeleteIcon from "@mui/icons-material/Delete";
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import OpenBlockUserModalButton from "./block-user-modal/OpenBlockUserModalButton";
+import OpenDeleteUserModalButton from "./delete-user-modal/OpenDeleteUserModalButton";
 import OpenUnBlockUserButton from "./unblock-user-modal/OpenUnBlockUserButton";
 export const UsersColumns: any = [
   {
@@ -102,16 +102,7 @@ export const UsersColumns: any = [
     width: 120,
     headerAlign: "center",
     renderCell: ({ row }: { row: any }) => (
-      <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        py={1}
-      >
-        <IconButton color="error">
-          <DeleteIcon />
-        </IconButton>
-      </Stack>
+      <OpenDeleteUserModalButton userId={row._id} />
     ),
   },
 
