@@ -8,7 +8,7 @@ import { Socket } from "socket.io-client";
 
 const useSocket = (events: string[], onUpdate: () => void) => {
   useEffect(() => {
-    const socket: Socket = createSocketConnection();
+    const socket = createSocketConnection();
 
     socket.on("connect", () => {
       console.log("Connected to socket server.");
