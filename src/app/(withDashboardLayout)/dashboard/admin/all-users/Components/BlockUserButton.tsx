@@ -1,6 +1,6 @@
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 import { Button } from "@mui/material";
-import useBlockUserApiHook from "./useBlockUserApiHook";
+import useBlockUserApiHook from "./hook/useBlockUserApiHook";
 
 interface BlockUserButtonProps {
   userId: string;

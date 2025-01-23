@@ -60,6 +60,16 @@ const userApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [TTagTypes.user],
     }),
+    deleteUser: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/user",
+          method: "DELETE",
+          data,
+        };
+      },
+      invalidatesTags: [TTagTypes.user],
+    }),
   }),
 });
 
@@ -71,4 +81,5 @@ export const {
   useConfirmUserOTPMutation,
   useBlockUserMutation,
   useUnblockUserMutation,
+  useDeleteUserMutation,
 } = userApi;

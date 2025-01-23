@@ -1,4 +1,6 @@
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 import { Button } from "@mui/material";
+import useDeleteUserApiHook from "./hook/useDeleteUserApi";
 
 interface DeleteUserButtonProps {
   userId: string;
@@ -8,26 +10,26 @@ interface DeleteUserButtonProps {
 const DeleteUserButton = ({ userId, onClose }: DeleteUserButtonProps) => {
   // handle block the user with the custom hook useBlockUserApiHook
 
-  //   const { handleDeleteUser, isLoading, isError, isSuccess, error } =
-  //     useBlockUserApiHook({
-  //       id: userId,
-  //       onClose,
-  //     });
+  const { handleDeleteUser, isLoading, isError, isSuccess, error } =
+    useDeleteUserApiHook({
+      id: userId,
+      onClose,
+    });
 
   // handle block the user with the custom hook useApiResponseHandler
 
-  //   useApiResponseHandler({
-  //     isError,
-  //     isSuccess,
-  //     successMessage: "User blocked successfully",
-  //     error,
-  //   });
+  useApiResponseHandler({
+    isError,
+    isSuccess,
+    successMessage: "User Deleted successfully",
+    error,
+  });
 
   return (
     <Button
-      //   onClick={handleDeleteUser}
+      onClick={handleDeleteUser}
       variant="contained"
-      //   disabled={isLoading}
+      disabled={isLoading}
       sx={{
         backgroundColor: "warning.main",
         color: "white",
