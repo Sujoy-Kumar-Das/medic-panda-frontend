@@ -1,6 +1,15 @@
-import { Paper, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
+import { ReactNode } from "react";
 
-const Header = ({ title, subtitle }: { title: string; subtitle: string }) => {
+const Header = ({
+  title,
+  subtitle,
+  action,
+}: {
+  title: string;
+  subtitle: string;
+  action?: ReactNode;
+}) => {
   return (
     <Paper
       sx={{
@@ -16,7 +25,14 @@ const Header = ({ title, subtitle }: { title: string; subtitle: string }) => {
       <Typography variant="h4" gutterBottom>
         {title}
       </Typography>
-      <Typography variant="h6">{subtitle}</Typography>
+      <Stack
+        direction={"row"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Typography variant="h6">{subtitle}</Typography>
+        {action && action}
+      </Stack>
     </Paper>
   );
 };

@@ -1,30 +1,17 @@
-import FilterCompo from "@/components/shared/filter/FilterCompo";
-import SearchBar from "@/components/shared/searchBar/SearchBar";
-import { Stack } from "@mui/material";
-import { filterItemsData } from "./filterItems";
+import Header from "@/components/shared/header/Header";
+import { Box } from "@mui/material";
+import AddUser from "./add-user/AddUser";
+import AllUsersFilterSection from "./AllUsersFilterSection";
 function AllUsersHeader() {
   return (
-    <Stack
-      direction={"row"}
-      justifyContent={"space-between"}
-      py={2}
-      borderRadius={1}
-    >
-      <SearchBar
-        query="email"
-        placeholder="Search With Email...."
-        sxProps={{ width: 300, height: 60 }}
+    <Box>
+      <Header
+        title="User's"
+        subtitle="Explore, Manage, and Track All Users"
+        action={<AddUser />}
       />
-      <FilterCompo
-        items={filterItemsData}
-        sx={{
-          width: 200,
-          height: 60,
-          border: "none",
-          bgcolor: "background.default",
-        }}
-      />
-    </Stack>
+      <AllUsersFilterSection />
+    </Box>
   );
 }
 

@@ -7,6 +7,8 @@ export default function AllUsersPage() {
   const queryParams = useQueryParams();
   const { data, isLoading, error } = useGetAllUsersQuery(queryParams);
 
+  console.log(data);
+
   return (
     <HandleUserDataHOC
       data={data?.result || []}

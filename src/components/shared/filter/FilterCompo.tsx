@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent, SxProps } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 interface IFilterItem {
   id: number;
@@ -14,7 +14,7 @@ export default function FilterCompo({
   items,
   sx,
 }: {
-  placeholder?: string;
+  placeholder?: string | ReactNode;
   items: IFilterItem[];
   sx?: SxProps;
 }) {
@@ -55,17 +55,25 @@ export default function FilterCompo({
     <Select
       value={selectedItem?.id || ""}
       onChange={filteredDataHandler}
-      sx={{ ...sx }}
+      sx={{
+        ...sx,
+        "& .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+        },
+      }}
       displayEmpty
       renderValue={(selected) => {
-        if (!selected) return "Select a filter";
+        if (!selected) return placeholder || "Select A Item";
         const selectedItem = items.find((item) => item.id === selected);
         return selectedItem ? selectedItem.title : "Select a filter";
       }}
     >
-      <MenuItem value="" disabled sx={{ bgcolor: "inherit" }}>
-        {placeholder || "Select A Item"}
-      </MenuItem>
       {items.map((item) => (
         <MenuItem key={item.id} value={item.id} sx={{ bgcolor: "inherit" }}>
           {item.title}
