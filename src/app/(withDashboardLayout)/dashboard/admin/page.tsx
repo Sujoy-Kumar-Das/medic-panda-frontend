@@ -7,7 +7,6 @@ import { Container, Grid } from "@mui/material";
 export default function AdminDashboardPage() {
   const { data, isLoading } = useGetAllProductsQuery(undefined);
 
-  console.log(data);
   return (
     <Container sx={{ py: 10 }}>
       <Grid container spacing={3}>

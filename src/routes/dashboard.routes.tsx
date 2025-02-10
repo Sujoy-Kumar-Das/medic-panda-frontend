@@ -2,10 +2,7 @@ import { USER_ROLE } from "@/constants/user.role";
 import { IDashboardRoute } from "@/types";
 import { ShoppingCartCheckout } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
-import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
-import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import BorderAllOutlinedIcon from "@mui/icons-material/BorderAllOutlined";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FactoryIcon from "@mui/icons-material/Factory";
@@ -14,7 +11,6 @@ import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import MergeTypeIcon from "@mui/icons-material/MergeType";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import PaidIcon from "@mui/icons-material/Paid";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import SecurityIcon from "@mui/icons-material/Security";
@@ -67,12 +63,7 @@ const dashboardRoutes: IDashboardRoute[] = [
     icon: <PeopleAltOutlinedIcon />,
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
   },
-  {
-    text: "Blocked Users",
-    link: "/dashboard/admin/block-users",
-    icon: <BlockOutlinedIcon />,
-    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
-  },
+
   {
     text: "Products",
     link: "/dashboard/admin/all-products",
@@ -110,18 +101,7 @@ const dashboardRoutes: IDashboardRoute[] = [
     icon: <BorderAllOutlinedIcon />,
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
   },
-  {
-    text: "Completed Orders",
-    link: "/dashboard/admin/completed-orders",
-    icon: <AddTaskOutlinedIcon />,
-    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
-  },
-  {
-    text: "Cancel Orders",
-    link: "/dashboard/admin/cancel-orders",
-    icon: <CancelOutlinedIcon />,
-    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
-  },
+
   {
     text: "Payment History",
     link: "/dashboard/user/payments",

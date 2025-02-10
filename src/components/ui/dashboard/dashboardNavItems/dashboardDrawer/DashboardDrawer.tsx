@@ -1,5 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import dashboardRoutes from "@/routes/dashboard.routes";
+import { IUserRoles } from "@/types/user.role.type";
 import logoutUser from "@/utils/logoutUser";
 import routeGenerator from "@/utils/route.generator";
 import HomeIcon from "@mui/icons-material/Home";
@@ -21,8 +22,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 export const DashboardDrawer = () => {
   const { user } = useAuth();
+
+  const role = (user?.role as IUserRoles) || undefined;
+
   // Generate items
-  const items = routeGenerator(dashboardRoutes, user?.role);
+  const items = routeGenerator(dashboardRoutes, role);
   const pathname = usePathname(); // Get current pathname
 
   const router = useRouter();
