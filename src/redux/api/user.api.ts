@@ -3,6 +3,16 @@ import { baseApi } from "./base.api";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    createAdmin: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/user/admin",
+          method: "POST",
+          data,
+        };
+      },
+      invalidatesTags: [TTagTypes.user],
+    }),
     updateUserEmail: builder.mutation({
       query: (data) => ({
         url: "/user/email/",
@@ -74,6 +84,7 @@ const userApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useCreateAdminMutation,
   useUpdateUserEmailMutation,
   useGetAllUsersQuery,
   useGetAllBlockedUsersQuery,

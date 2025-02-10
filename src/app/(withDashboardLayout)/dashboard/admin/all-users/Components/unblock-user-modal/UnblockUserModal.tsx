@@ -1,7 +1,7 @@
 import CustomModal from "@/components/customModal/CustomModal";
 import { Box, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import UnBlockUserButton from "../UnBlockUserButton";
+import UnBlockUserButton from "./ConfirmUnBlockUserButton";
 import UnBlockUserCancelButton from "./UnBlockUserCancelButton";
 
 // Define the types for the props

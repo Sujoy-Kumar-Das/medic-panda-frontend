@@ -1,7 +1,9 @@
 export const filterItemsData = [
-  { id: 0, title: "All", value: "", query: "" },
-  { id: 1, title: "Active", value: false, query: "isBlocked" },
-  { id: 2, title: "Blocked", value: true, query: "isBlocked" },
-  { id: 3, title: "Verified", value: true, query: "isVerified" },
-  { id: 4, title: "unverified", value: false, query: "isVerified" },
-];
+  { title: "All", value: "", query: "" },
+  { title: "Admin", value: "admin", query: "role" },
+  { title: "User", value: "user", query: "role" },
+  { title: "Active", value: false, query: "isBlocked" },
+  { title: "Blocked", value: true, query: "isBlocked" },
+  { title: "Verified", value: true, query: "isVerified" },
+  { title: "Unverified", value: false, query: "isVerified" },
+].map((item) => ({ ...item, id: crypto.randomUUID() }));

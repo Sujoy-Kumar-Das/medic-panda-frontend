@@ -1,13 +1,13 @@
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 import { Button } from "@mui/material";
-import useBlockUserApiHook from "./hook/useBlockUserApiHook";
+import useBlockUserApiHook from "../hook/useBlockUserApiHook";
 
 interface BlockUserButtonProps {
   userId: string;
   onClose: () => void;
 }
 
-const BlockUserButton = ({ userId, onClose }: BlockUserButtonProps) => {
+const ConfirmBlockUserButton = ({ userId, onClose }: BlockUserButtonProps) => {
   // handle block the user with the custom hook useBlockUserApiHook
 
   const { handleBlockUser, isLoading, isError, isSuccess, error } =
@@ -44,4 +44,4 @@ const BlockUserButton = ({ userId, onClose }: BlockUserButtonProps) => {
   );
 };
 
-export default BlockUserButton;
+export default ConfirmBlockUserButton;

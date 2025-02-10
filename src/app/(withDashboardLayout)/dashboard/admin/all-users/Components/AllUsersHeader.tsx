@@ -1,6 +1,6 @@
 import Header from "@/components/shared/header/Header";
 import { Box } from "@mui/material";
-import AddUser from "./add-user/AddUser";
+import OpenAddAdminModalButton from "./add-admin-modal/OpenAddAdminModalButton";
 import AllUsersFilterSection from "./AllUsersFilterSection";
 function AllUsersHeader() {
   return (
@@ -8,7 +8,7 @@ function AllUsersHeader() {
       <Header
         title="User's"
         subtitle="Explore, Manage, and Track All Users"
-        action={<AddUser />}
+        action={<OpenAddAdminModalButton />}
       />
       <AllUsersFilterSection />
     </Box>

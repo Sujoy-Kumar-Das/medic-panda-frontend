@@ -1,13 +1,16 @@
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 import { Button } from "@mui/material";
-import useDeleteUserApiHook from "./hook/useDeleteUserApi";
+import useDeleteUserApiHook from "../hook/useDeleteUserApi";
 
 interface DeleteUserButtonProps {
   userId: string;
   onClose: () => void;
 }
 
-const DeleteUserButton = ({ userId, onClose }: DeleteUserButtonProps) => {
+const ConfirmDeleteUserButton = ({
+  userId,
+  onClose,
+}: DeleteUserButtonProps) => {
   // handle block the user with the custom hook useBlockUserApiHook
 
   const { handleDeleteUser, isLoading, isError, isSuccess, error } =
@@ -44,4 +47,4 @@ const DeleteUserButton = ({ userId, onClose }: DeleteUserButtonProps) => {
   );
 };
 
-export default DeleteUserButton;
+export default ConfirmDeleteUserButton;
