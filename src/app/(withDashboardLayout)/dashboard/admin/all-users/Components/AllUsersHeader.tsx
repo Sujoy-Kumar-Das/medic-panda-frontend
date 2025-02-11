@@ -5,11 +5,9 @@ import AllUsersFilterSection from "./AllUsersFilterSection";
 function AllUsersHeader() {
   return (
     <Box>
-      <Header
-        title="User's"
-        subtitle="Explore, Manage, and Track All Users"
-        action={<OpenAddAdminModalButton />}
-      />
+      <Header title="User's" subtitle="Explore, Manage, and Track All Users">
+        <OpenAddAdminModalButton />
+      </Header>
       <AllUsersFilterSection />
     </Box>
   );

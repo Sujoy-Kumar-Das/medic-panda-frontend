@@ -1,14 +1,16 @@
-import { Paper, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, SxProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 
 const Header = ({
   title,
   subtitle,
-  action,
+  children,
+  sx,
 }: {
   title: string;
   subtitle: string;
-  action?: ReactNode;
+  children?: ReactNode;
+  sx?: SxProps;
 }) => {
   return (
     <Paper
@@ -22,16 +24,23 @@ const Header = ({
         marginTop: 2,
       }}
     >
-      <Typography variant="h4" gutterBottom>
-        {title}
-      </Typography>
       <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          ...sx,
+        }}
       >
-        <Typography variant="h6">{subtitle}</Typography>
-        {action && action}
+        <Box>
+          <Typography variant="h4" gutterBottom>
+            {title}
+          </Typography>
+          <Typography variant="h6">{subtitle}</Typography>
+        </Box>
+
+        {children && children}
       </Stack>
     </Paper>
   );
