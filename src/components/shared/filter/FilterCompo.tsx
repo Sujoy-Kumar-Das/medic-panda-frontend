@@ -1,13 +1,7 @@
+import useFilterItem from "@/hooks/useFilterItem";
+import { IFilterItem } from "@/types/filter-item";
 import { MenuItem, Select, SelectChangeEvent, SxProps } from "@mui/material";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ReactNode, useState } from "react";
-
-interface IFilterItem {
-  id: number;
-  title: string;
-  value: string | boolean;
-  query: string;
-}
 
 export default function FilterCompo({
   placeholder,
@@ -20,9 +14,9 @@ export default function FilterCompo({
 }) {
   const [selectedItem, setSelectedItem] = useState<IFilterItem | null>(null);
 
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-  const pathName = usePathname();
+  const { searchParams, replace, pathName, filterHandler } = useFilterItem({
+    filterItems: items,
+  });
 
   //   handle filter users
   const filteredDataHandler = (event: SelectChangeEvent<string | number>) => {
@@ -40,15 +34,9 @@ export default function FilterCompo({
       return;
     }
 
-    const filteredItem = items.find((item) => item.id === Number(selectedId));
-    setSelectedItem(filteredItem || null);
+    const filteredItem = items.find((item) => item.id === String(selectedId));
 
-    if (filteredItem) {
-      const { query, value } = filteredItem;
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(query, String(value));
-      replace(`${pathName}?${params.toString()}`);
-    }
+    filterHandler(filteredItem as IFilterItem);
   };
 
   return (

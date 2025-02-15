@@ -1,4 +1,6 @@
-export const filterItemsData = [
+import randomUID from "@/utils/randomId";
+
+export const allUsersFilterItemsData = [
   { title: "All", value: "", query: "" },
   { title: "Admin", value: "admin", query: "role" },
   { title: "User", value: "user", query: "role" },
@@ -6,4 +8,4 @@ export const filterItemsData = [
   { title: "Blocked", value: true, query: "isBlocked" },
   { title: "Verified", value: true, query: "isVerified" },
   { title: "Unverified", value: false, query: "isVerified" },
-].map((item) => ({ ...item, id: crypto.randomUUID() }));
+].map((item) => ({ ...item, id: randomUID() }));

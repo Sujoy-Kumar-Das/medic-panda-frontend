@@ -1,7 +1,6 @@
 import FilterCompo from "@/components/shared/filter/FilterCompo";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Stack, Typography } from "@mui/material";
-import { filterItemsData } from "./filterItems";
 
 export default function AllUsersFilterItems() {
   return (
