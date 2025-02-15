@@ -1,8 +1,8 @@
 "use client";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Button, InputBase, Stack, SxProps } from "@mui/material";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FormEvent } from "react";
+import useSearch from "./useSearch";
 
 export default function SearchBar({
   query,
@@ -13,30 +13,15 @@ export default function SearchBar({
   placeholder: string;
   sxProps?: SxProps;
 }) {
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-  const pathName = usePathname();
+  const { search } = useSearch();
   const handleSearch = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get(query);
 
-    if (!searchTerm) {
-      replace(pathName);
-      return;
-    }
-
-    // Create a mutable copy of the searchParams
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (searchParams) {
-      params.set(query, searchTerm as string);
-    } else {
-      params.delete(query);
-    }
-
-    replace(`${pathName}?${params.toString()}`);
+    search({ query, value: searchTerm as string });
+    event.currentTarget.reset();
   };
 
   return (
