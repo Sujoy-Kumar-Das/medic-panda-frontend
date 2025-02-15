@@ -5,6 +5,7 @@ import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import OpenBlockUserModalButton from "./block-user-modal/OpenBlockUserModalButton";
 import OpenDeleteUserModalButton from "./delete-user-modal/OpenDeleteUserModalButton";
 import OpenUnBlockUserButton from "./unblock-user-modal/OpenUnBlockUserButton";
+
 export const UsersColumns: any = [
   {
     field: "email",

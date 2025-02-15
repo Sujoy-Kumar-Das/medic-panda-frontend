@@ -1,25 +1,22 @@
 import { IFilterItem } from "@/types/filter-item";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function useFilterItem({
-  filterItems,
+export default function useFilter({
+  filterItems = [],
 }: {
-  filterItems: IFilterItem[];
+  filterItems: IFilterItem[] | null;
 }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathName = usePathname();
 
   // Handle filter users
-  const filterHandler = (filterItem: IFilterItem) => {
+  const applyFilter = (filterItem: IFilterItem | null) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (!filterItem.query) {
-      // Clear the query from URL
-      const params = new URLSearchParams(searchParams.toString());
-
+    if (!filterItem?.query) {
       // Remove all possible filters
-      filterItems.forEach((item) => params.delete(item.query));
+      filterItems?.forEach((item) => params.delete(item.query));
 
       replace(pathName);
       return;
@@ -30,5 +27,5 @@ export default function useFilterItem({
     replace(`${pathName}?${params.toString()}`);
   };
 
-  return { searchParams, replace, pathName, filterHandler };
+  return { applyFilter, searchParams };
 }

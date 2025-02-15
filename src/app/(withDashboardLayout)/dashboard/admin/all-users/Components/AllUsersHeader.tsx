@@ -1,8 +1,10 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
-import shortcutFilterItemsData from "@/data/filter-item/all-users-shortcut-filter-items-data";
 import { Box } from "@mui/material";
 import OpenAddAdminModalButton from "./add-admin-modal/OpenAddAdminModalButton";
-import { allUsersFilterItemsData } from "./allUsersFilterItemsData";
+import {
+  allUsersFilterItems,
+  allUsersShortcutFilterItems,
+} from "./all-users-filter-items";
 function AllUsersHeader() {
   const mainHeaderProps = {
     title: "User",
@@ -11,13 +13,13 @@ function AllUsersHeader() {
   };
 
   const allFilterProps = {
-    items: allUsersFilterItemsData,
+    items: allUsersFilterItems,
   };
   return (
     <Box>
       <DashboardHeaderWithFIlterAndSearchBar
         mainHeaderOptions={mainHeaderProps}
-        shortcutFilterOptions={{ items: shortcutFilterItemsData }}
+        shortcutFilterOptions={{ items: allUsersShortcutFilterItems }}
         allFilterOptions={allFilterProps}
         searchbarOptions={{ query: "email" }}
       />

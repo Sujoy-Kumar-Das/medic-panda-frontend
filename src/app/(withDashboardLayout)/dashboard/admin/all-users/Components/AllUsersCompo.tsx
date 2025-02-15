@@ -1,34 +1,13 @@
-import { Container, Typography } from "@mui/material";
-import { useSearchParams } from "next/navigation";
+import { Container } from "@mui/material";
 import AllUsersDataGrid from "./AllUsersDataGrid";
 import AllUsersHeader from "./AllUsersHeader";
+import AllUsersSearchResultHeader from "./AllUsersSearchResultHeader";
 
 const AllUsersCompo = ({ data }: { data: [] }) => {
-  const searchParams = useSearchParams();
-
-  const userEmail = searchParams.get("email");
   return (
     <Container>
       <AllUsersHeader />
-      {userEmail && (
-        <Typography
-          variant="h6"
-          sx={{
-            mt: 2,
-            p: 2,
-            bgcolor: "primary.light",
-            color: "primary.contrastText",
-            borderRadius: 2,
-            boxShadow: 2,
-            fontWeight: 500,
-            textAlign: "center",
-            mb: 2,
-          }}
-        >
-          🔍 Search Result for <strong>{userEmail}</strong>
-        </Typography>
-      )}
-
+      <AllUsersSearchResultHeader />
       <AllUsersDataGrid users={data} />
     </Container>
   );

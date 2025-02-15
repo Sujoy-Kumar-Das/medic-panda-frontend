@@ -1,4 +1,4 @@
-import useFilterItem from "@/hooks/useFilterItem";
+import useFilter from "@/hooks/useFilter";
 import { IFilterItem } from "@/types/filter-item";
 import isActivePath from "@/utils/isActivePath";
 import { Button, Stack } from "@mui/material";
@@ -10,7 +10,7 @@ interface ShortcutFIlterButtonsProps {
 export default function ShortcutFIlterButtons({
   filterItems,
 }: ShortcutFIlterButtonsProps) {
-  const { filterHandler, searchParams } = useFilterItem({
+  const { applyFilter, searchParams } = useFilter({
     filterItems,
   });
 
@@ -38,7 +38,7 @@ export default function ShortcutFIlterButtons({
               boxShadow: "none",
             },
           }}
-          onClick={() => filterHandler(item)}
+          onClick={() => applyFilter(item)}
         >
           {item.title}
         </Button>

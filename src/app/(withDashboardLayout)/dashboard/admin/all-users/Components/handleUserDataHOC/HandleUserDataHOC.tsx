@@ -1,5 +1,5 @@
 import HandleLoadingErrorAndNoData from "@/components/hoc/HandleLoadingErrorAndNoData";
-import AllUsersCompo from "./AllUsersCompo";
+import AllUsersCompo from "../AllUsersCompo";
 
 const HandleUserDataHOC = HandleLoadingErrorAndNoData(AllUsersCompo);
 
