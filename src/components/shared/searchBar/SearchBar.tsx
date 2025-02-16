@@ -2,7 +2,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Button, InputBase, Stack, SxProps } from "@mui/material";
 import { FormEvent } from "react";
-import useSearch from "./useSearch";
+import useSearch from "../../../hooks/useSearch";
 
 export default function SearchBar({
   query,

@@ -2,7 +2,7 @@
 
 import { useGetAllProductsQuery } from "@/redux/api/product.api";
 import { IGenericErrorResponse } from "@/types";
-import AllProductsHOC from "./Components/AllProductHOC";
+import AllProductsHOC from "./Components/all-product-HOC/AllProductHOC";
 
 export default function AllProductsPage() {
   const { data, isLoading, error } = useGetAllProductsQuery(undefined);
