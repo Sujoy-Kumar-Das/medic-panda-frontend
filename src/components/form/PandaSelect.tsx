@@ -2,7 +2,8 @@ import { MenuItem, SxProps, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
 interface IItem {
-  name: string;
+  id: string;
+  title: string;
   value: string;
 }
 
@@ -49,9 +50,9 @@ const PandaSelect = ({
             isError ? (formState.errors[name]?.message as string) : ""
           }
         >
-          {items?.map((name) => (
-            <MenuItem key={name.name} value={name.value}>
-              {name.name}
+          {items?.map((item) => (
+            <MenuItem key={item.id} value={item.value}>
+              {item.title}
             </MenuItem>
           ))}
         </TextField>

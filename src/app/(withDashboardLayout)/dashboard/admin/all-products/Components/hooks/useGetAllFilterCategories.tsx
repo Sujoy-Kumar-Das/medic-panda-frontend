@@ -3,7 +3,7 @@ import { ICategory } from "@/types";
 import randomUID from "@/utils/randomId";
 
 export default function useGetAllFilterCategories() {
-  const { data, isLoading } = useGetAllCategoriesQuery(undefined);
+  const { data, ...apiResponse } = useGetAllCategoriesQuery(undefined);
 
   const items =
     data?.map((item: ICategory) => ({
@@ -18,5 +18,5 @@ export default function useGetAllFilterCategories() {
     ...items,
   ];
 
-  return { items: allFilterItems, isLoading };
+  return { items: allFilterItems, ...apiResponse };
 }
