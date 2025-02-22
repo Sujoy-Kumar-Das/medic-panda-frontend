@@ -1,4 +1,4 @@
-import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
+import { useApiResponseHandler } from "@/hooks/useApiMutationResponseHandler";
 import { Button } from "@mui/material";
 import useBlockUserApiHook from "../hook/useBlockUserApiHook";
 

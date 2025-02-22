@@ -1,12 +1,12 @@
-import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
+import { useApiMutationResponseHandler } from "@/hooks/useApiMutationResponseHandler";
 import { useCreateProductMutation } from "@/redux/api/product.api";
 import { imageUploader } from "@/utils/imageUploader";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function useCreateProductHook() {
-  const [createProduct, { isError, error, isSuccess, isLoading }] =
-    useCreateProductMutation();
+  const [createProduct, apiResponse] = useCreateProductMutation();
+
   const handleCreatedProduct = async (values: FieldValues) => {
     // upload the thumbnail to imgbb
     try {
@@ -18,12 +18,10 @@ export default function useCreateProductHook() {
     }
   };
 
-  useApiResponseHandler({
-    error,
-    isError,
-    isSuccess,
+  useApiMutationResponseHandler({
+    apiResponse,
     successMessage: "Product created.",
   });
 
-  return { handleCreatedProduct, isLoading };
+  return { handleCreatedProduct, isLoading: apiResponse.isLoading };
 }

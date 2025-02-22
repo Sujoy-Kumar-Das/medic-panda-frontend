@@ -3,19 +3,27 @@ import { onErrorMessageToast } from "@/utils/onErrorMessageToast";
 import { onSuccessMessageToast } from "@/utils/onSuccessMessageToast";
 import { useEffect } from "react";
 
-interface IUseApiResponseHandler {
+// You can extend RTK Query's mutation result type to capture all properties.
+interface IApiResponse {
+  data?: any;
+  error?: any;
   isError: boolean;
   isSuccess: boolean;
-  error: any;
+  isLoading: boolean;
+  status: string;
+}
+
+interface IUseApiMutationResponseHandler {
+  apiResponse: IApiResponse;
   successMessage: string;
 }
 
-export const useApiResponseHandler = ({
-  isError,
-  isSuccess,
-  error,
+export const useApiMutationResponseHandler = ({
+  apiResponse,
   successMessage,
-}: IUseApiResponseHandler) => {
+}: IUseApiMutationResponseHandler) => {
+  const { isError, isSuccess, error } = apiResponse;
+
   useEffect(() => {
     if (isError) {
       onErrorMessageToast(error);

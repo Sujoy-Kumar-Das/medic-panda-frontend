@@ -1,6 +1,6 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
+import { useApiResponseHandler } from "@/hooks/useApiMutationResponseHandler";
 import { useCreateAdminMutation } from "@/redux/api/user.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Stack } from "@mui/material";
