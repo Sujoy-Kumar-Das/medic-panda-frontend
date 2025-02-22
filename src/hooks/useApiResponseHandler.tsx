@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IGenericErrorResponse } from "@/types";
 import { onErrorMessageToast } from "@/utils/onErrorMessageToast";
 import { onSuccessMessageToast } from "@/utils/onSuccessMessageToast";
 import { useEffect } from "react";

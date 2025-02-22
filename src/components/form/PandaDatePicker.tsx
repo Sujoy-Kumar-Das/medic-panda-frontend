@@ -1,8 +1,8 @@
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { SxProps } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
-import { SxProps } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
 interface IDatePicker {
@@ -27,7 +27,7 @@ const PandaDatePicker = ({
     <Controller
       name={name}
       control={control}
-      defaultValue={dayjs(new Date().toDateString())}
+      defaultValue={null}
       render={({ field: { onChange, value, ...field } }) => {
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -36,8 +36,10 @@ const PandaDatePicker = ({
               timezone="system"
               disablePast
               {...field}
-              onChange={(date) => onChange(date)}
-              value={value || Date.now()}
+              value={value ? dayjs(value) : null}
+              onChange={(newValue) =>
+                onChange(newValue ? newValue.toISOString() : "")
+              }
               slotProps={{
                 textField: {
                   required: required,

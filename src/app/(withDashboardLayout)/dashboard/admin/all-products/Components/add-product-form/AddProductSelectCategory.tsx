@@ -11,5 +11,5 @@ export default function AddProductSelectCategory() {
     value: item._id,
   }));
 
-  return <PandaSelect name="category" items={items} label="Category" />;
+  return <PandaSelect name="product.category" items={items} label="Category" />;
 }

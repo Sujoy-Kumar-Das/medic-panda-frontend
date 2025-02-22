@@ -11,5 +11,11 @@ export default function AddProductManufacturer() {
     value: item._id,
   }));
 
-  return <PandaSelect items={items} label="Manufacturer" name="manufacturer" />;
+  return (
+    <PandaSelect
+      items={items}
+      label="Manufacturer"
+      name="product.manufacturer"
+    />
+  );
 }

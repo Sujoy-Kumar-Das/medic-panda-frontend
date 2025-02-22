@@ -1,37 +1,44 @@
-import PandaDatePicker from "@/components/form/PandaDatePicker";
 import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import PandaTimePicker from "@/components/form/PandaTimePikcer";
+import { createProductValidationSchema } from "@/schemas/product-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Grid } from "@mui/material";
+import { FieldValues } from "react-hook-form";
 import AddProductManufacturer from "./AddProductManufacturer";
 import AddProductSelectCategory from "./AddProductSelectCategory";
+import DiscountForm from "./DiscountForm";
+import useCreateProductHook from "./hooks/useCreateProductHook";
 
 export default function AddProductForm({ onClose }: { onClose: () => void }) {
+  const { handleCreatedProduct, isLoading } = useCreateProductHook();
+
+  const handleAddProduct = async (values: FieldValues) => {
+    await handleCreatedProduct(values);
+  };
+
   return (
-    <PandaForm>
+    <PandaForm
+      onSubmit={handleAddProduct}
+      resolver={zodResolver(createProductValidationSchema)}
+    >
       <Grid container spacing={2} mt={2}>
-        {/* Product Name */}
         <Grid item xs={12}>
           <PandaInputField
-            name="name"
+            name="product.name"
             type="text"
             label="Product Name"
             fullWidth
           />
         </Grid>
-
-        {/* Price */}
         <Grid item xs={12} sm={6}>
           <PandaInputField
-            name="price"
+            name="product.price"
             type="number"
             label="Price ($)"
             fullWidth
           />
         </Grid>
-
-        {/* Stock */}
         <Grid item xs={12} sm={6}>
           <PandaInputField
             name="productDetail.stock"
@@ -40,48 +47,22 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
             fullWidth
           />
         </Grid>
-
-        {/* Category */}
         <Grid item xs={12}>
           <AddProductSelectCategory />
         </Grid>
-
-        {/* Manufacturer */}
         <Grid item xs={12}>
           <AddProductManufacturer />
         </Grid>
-
-        {/* Thumbnail Upload */}
         <Grid item xs={12}>
-          <PandaFileUploader name="thumbnail" label="Upload Product Image" />
-        </Grid>
-
-        {/* Discount Percentage */}
-        <Grid item xs={12} sm={6}>
-          <PandaInputField
-            name="discount.percentage"
-            label="Discount (%)"
-            fullWidth
+          <PandaFileUploader
+            name="product.thumbnail"
+            label="Upload Product Image"
           />
         </Grid>
 
-        {/* Discount Date Range */}
-        <Grid item xs={12} sm={6}>
-          <PandaDatePicker name="discount.startDate" label="Start Date" />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <PandaDatePicker name="discount.endDate" label="End Date" />
-        </Grid>
+        {/* discount form */}
+        <DiscountForm />
 
-        {/* Discount Time Range */}
-        <Grid item xs={12} sm={6}>
-          <PandaTimePicker name="discount.startTime" label="Start Time" />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <PandaTimePicker name="discount.endTime" label="End Time" />
-        </Grid>
-
-        {/* Description */}
         <Grid item xs={12}>
           <PandaInputField
             name="productDetail.description"
@@ -91,8 +72,6 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
             fullWidth
           />
         </Grid>
-
-        {/* Submit & Cancel Buttons */}
         <Grid
           item
           xs={12}
@@ -106,13 +85,18 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
           <Button
             variant="outlined"
             color="secondary"
-            size="large"
+            type="button"
             onClick={onClose}
           >
             Cancel
           </Button>
-          <Button variant="contained" color="primary" size="large">
-            Add Product
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? "Adding..." : "Add Product"}
           </Button>
         </Grid>
       </Grid>

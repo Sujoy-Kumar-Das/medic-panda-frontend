@@ -30,15 +30,17 @@ const PandaTimePicker = ({
     <Controller
       control={control}
       name={name}
-      defaultValue={dayjs(new Date().toDateString())}
+      defaultValue={null}
       render={({ field: { onChange, value, ...field } }) => {
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <TimePicker
               {...field}
               label={label}
-              value={value || Date.now()}
-              onChange={(time) => onChange(time)}
+              value={value ? dayjs(value) : null}
+              onChange={(newValue) =>
+                onChange(newValue ? newValue.toISOString() : "")
+              }
               timezone="system"
               slotProps={{
                 textField: {
