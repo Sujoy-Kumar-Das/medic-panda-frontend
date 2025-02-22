@@ -14,7 +14,7 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
   const { handleCreatedProduct, isLoading } = useCreateProductHook();
 
   const handleAddProduct = async (values: FieldValues) => {
-    await handleCreatedProduct(values);
+    await handleCreatedProduct(values, onClose);
   };
 
   return (
