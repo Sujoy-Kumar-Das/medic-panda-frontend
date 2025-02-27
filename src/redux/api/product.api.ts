@@ -12,10 +12,13 @@ const productApi = baseApi.injectEndpoints({
       },
     }),
     getAllProducts: builder.query({
-      query: () => ({
-        url: "/product",
-        method: "GET",
-      }),
+      query: (params) => {
+        return {
+          url: "/product",
+          method: "GET",
+          params,
+        };
+      },
     }),
     getSingleProduct: builder.query({
       query: (id) => ({

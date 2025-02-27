@@ -1,6 +1,6 @@
 import CustomModal from "@/components/customModal/CustomModal";
 import { Dispatch, SetStateAction } from "react";
-import AddProductForm from "../add-product-form/AddProductForm";
+import AddProductForm from "./add-product-form/AddProductForm";
 import AddProductModalHeader from "./AddProductModalHeader";
 interface AddProductModalProps {
   open: boolean;
