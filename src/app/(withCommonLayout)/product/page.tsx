@@ -10,7 +10,7 @@ export default async function ProductsPage({
 }) {
   const { page, searchTerm, category } = searchParams;
 
-  const { data: products, meta } = await getAllProductService({
+  const { data } = await getAllProductService({
     limit: 9,
     page: (page as number) || 1,
     searchTerm,
@@ -21,7 +21,7 @@ export default async function ProductsPage({
     <Box>
       <ProductSocket />
       <Container sx={{ py: 4 }}>
-        <ProductDrawer products={products} meta={meta} />
+        <ProductDrawer products={data.result} meta={data.meta} />
       </Container>
     </Box>
   );

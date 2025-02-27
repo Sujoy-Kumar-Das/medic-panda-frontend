@@ -1,9 +1,8 @@
-"use client";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
+import PaginationCompo from "@/components/shared/PaginationCompo/PaginationCompo";
 import ProductCard from "@/components/ui/card/productCard/ProductCard";
 import { IProduct } from "@/types";
-import { Grid, Pagination, Stack } from "@mui/material";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Grid, Stack } from "@mui/material";
 
 interface IProductProps {
   products: IProduct[];
@@ -11,22 +10,7 @@ interface IProductProps {
 }
 
 const Products = ({ products, meta }: IProductProps) => {
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-  const pathName = usePathname();
-
-  // pagination handler
-  const handlePagination = (event: any, page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (page) {
-      params.set("page", String(page));
-    } else {
-      params.delete("page");
-    }
-    replace(`${pathName}?${params.toString()}`);
-  };
-
+  console.log({ meta, products });
   return (
     <>
       {products?.length ? (
@@ -39,7 +23,7 @@ const Products = ({ products, meta }: IProductProps) => {
             ))}
           </Grid>
           <Stack direction={"row"} justifyContent={"center"} mt={5}>
-            <Pagination count={meta.totalPage} onChange={handlePagination} />
+            <PaginationCompo totalPageCount={meta.totalPage} />
           </Stack>
         </>
       ) : (

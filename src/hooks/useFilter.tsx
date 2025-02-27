@@ -14,7 +14,7 @@ export default function useFilter({
   const applyFilter = (filterItem: IFilterItem | null) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (!filterItem?.query) {
+    if (!filterItem || filterItem.value === "") {
       // Remove all possible filters
       filterItems?.forEach((item) => params.delete(item.query));
 
