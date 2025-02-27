@@ -89,7 +89,7 @@ export const productColumns: GridColDef<any>[] = [
         {/* <IconButton color="primary">
           <MoreVertIcon />
         </IconButton> */}
-        <ActionMenu />
+        <ActionMenu id={row._id} />
       </Stack>
     ),
   },

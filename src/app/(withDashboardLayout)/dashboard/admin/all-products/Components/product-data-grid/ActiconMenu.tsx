@@ -1,7 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   IconButton,
   ListItemIcon,
@@ -10,8 +9,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import { MouseEvent, useState } from "react";
+import OpenProductDetailsModalButton from "../productDetailsModal/OpenProductDetailsModalButton";
 
-const ActionMenu = () => {
+const ActionMenu = ({ id }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -29,16 +29,7 @@ const ActionMenu = () => {
         <MoreVertIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-          }}
-        >
-          <ListItemIcon>
-            <VisibilityIcon />
-          </ListItemIcon>
-          <ListItemText primary="Details" />
-        </MenuItem>
+        <OpenProductDetailsModalButton productId={id} />
         <MenuItem
           onClick={() => {
             handleClose();

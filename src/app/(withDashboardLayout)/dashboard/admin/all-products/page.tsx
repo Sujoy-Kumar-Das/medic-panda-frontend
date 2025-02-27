@@ -10,11 +10,9 @@ export default function AllProductsPage() {
 
   const { data, isLoading, error } = useGetAllProductsQuery(queryParams);
 
-  console.log({ data: data?.result });
-
   return (
     <AllProductsHOC
-      data={data?.result || []}
+      data={data || []}
       isLoading={isLoading}
       error={error as IGenericErrorResponse}
       noDataLink="/dashboard/admin/all-products"
