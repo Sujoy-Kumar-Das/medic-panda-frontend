@@ -6,14 +6,14 @@ interface ProductDetailsModalProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   productId: string;
-  onCloseMenu: () => void;
+  onClose: () => void;
 }
 
 export default function ProductDetailsModal({
   open,
   setOpen,
   productId,
-  onCloseMenu,
+  onClose,
 }: ProductDetailsModalProps) {
   return (
     <CustomModal
@@ -25,7 +25,7 @@ export default function ProductDetailsModal({
         },
       }}
     >
-      <ProductDetailsCompo productId={productId} onCloseMenu={onCloseMenu} />
+      <ProductDetailsCompo productId={productId} onClose={onClose} />
     </CustomModal>
   );
 }

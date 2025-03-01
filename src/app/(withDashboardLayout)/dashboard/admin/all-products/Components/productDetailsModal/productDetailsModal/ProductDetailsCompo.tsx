@@ -6,10 +6,10 @@ import ProductDetailsModalSkeleton from "./ProductDetailsModalSkeleton";
 
 export default function ProductDetailsCompo({
   productId,
-  onCloseMenu,
+  onClose,
 }: {
   productId: string;
-  onCloseMenu: () => void;
+  onClose: () => void;
 }) {
   const { data: product, isLoading } = useGetSingleProductQuery(productId);
   return (
@@ -22,7 +22,7 @@ export default function ProductDetailsCompo({
       }}
     >
       <Box>
-        <CustomModal.TitleWithCloseButton onClose={onCloseMenu}>
+        <CustomModal.TitleWithCloseButton onClose={onClose}>
           Product Details
         </CustomModal.TitleWithCloseButton>
         {isLoading ? (

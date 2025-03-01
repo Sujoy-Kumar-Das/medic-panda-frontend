@@ -3,7 +3,6 @@ import { onErrorMessageToast } from "@/utils/onErrorMessageToast";
 import { onSuccessMessageToast } from "@/utils/onSuccessMessageToast";
 import { useEffect } from "react";
 
-// You can extend RTK Query's mutation result type to capture all properties.
 interface IApiResponse {
   data?: any;
   error?: any;

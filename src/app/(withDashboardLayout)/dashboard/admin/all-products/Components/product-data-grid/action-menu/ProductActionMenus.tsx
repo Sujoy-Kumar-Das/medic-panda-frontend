@@ -1,7 +1,7 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
-import OpenProductDetailsModalButton from "../../productDetailsModal/OpenProductDetailsModalButton";
+import DeleteProductMenuItem from "../../productDetailsModal/deleteProductModal/DeleteProductMenuItem";
+import ProductDetailMenuItem from "../../productDetailsModal/ProductDetailMenuItem";
 
 interface ProductActionMenuProps {
   onClose: () => void;
@@ -18,29 +18,16 @@ export default function ProductActionMenu({
 }: ProductActionMenuProps) {
   return (
     <Menu anchorEl={anchorEl} open={open} onClose={onClose}>
-      <OpenProductDetailsModalButton productId={id} onCloseMenu={onClose} />
+      <ProductDetailMenuItem productId={id} onClose={onClose} />
 
-      <MenuItem
-        onClick={() => {
-          onClose();
-        }}
-      >
+      <MenuItem>
         <ListItemIcon>
           <EditIcon />
         </ListItemIcon>
         <ListItemText primary="Edit" />
       </MenuItem>
-      <MenuItem
-        onClick={() => {
-          onClose();
-        }}
-        sx={{ color: "red" }}
-      >
-        <ListItemIcon>
-          <DeleteIcon color="error" />
-        </ListItemIcon>
-        <ListItemText primary="Delete" />
-      </MenuItem>
+
+      <DeleteProductMenuItem productId={id} onClose={onClose} />
     </Menu>
   );
 }

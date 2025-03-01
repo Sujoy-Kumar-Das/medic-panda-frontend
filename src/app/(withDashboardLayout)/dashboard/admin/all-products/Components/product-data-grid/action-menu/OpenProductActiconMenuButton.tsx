@@ -1,7 +1,7 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton, Stack } from "@mui/material";
 import { MouseEvent, useState } from "react";
-import ProductActionMenu from "./ProductActionMenu";
+import ProductActionMenu from "./ProductActionMenus";
 
 const OpenProductActionMenuButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
