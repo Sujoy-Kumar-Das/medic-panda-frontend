@@ -7,16 +7,7 @@ const ModalCloseButton = ({ children }: { children?: ReactNode }) => {
   const { closeModal } = useModal();
 
   return (
-    <IconButton
-      onClick={closeModal}
-      aria-label="close"
-      sx={{
-        position: "absolute",
-        right: 8,
-        top: 8,
-        color: (theme) => theme.palette.grey[500],
-      }}
-    >
+    <IconButton onClick={closeModal} aria-label="close">
       {children || <CloseIcon />}
     </IconButton>
   );

@@ -1,16 +1,12 @@
-import CancelIcon from "@mui/icons-material/Cancel";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import CustomModal from "@/components/customModal/CustomModal";
+import { Box, Stack, Typography } from "@mui/material";
 
-export default function AddProductModalHeader({
-  onClose,
-}: {
-  onClose: () => void;
-}) {
+export default function AddProductModalHeader() {
   return (
     <Stack
       direction="row"
       justifyContent="space-between"
-      alignItems="center"
+      alignItems="flex-start"
       spacing={2}
       borderBottom={"1px solid"}
       borderColor={"divider"}
@@ -36,9 +32,7 @@ export default function AddProductModalHeader({
       </Box>
 
       {/* Close Button */}
-      <IconButton onClick={onClose} size="large" aria-label="close">
-        <CancelIcon fontSize="inherit" />
-      </IconButton>
+      <CustomModal.CloseButton />
     </Stack>
   );
 }

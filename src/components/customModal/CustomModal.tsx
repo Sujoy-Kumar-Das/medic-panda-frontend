@@ -34,6 +34,8 @@ function CustomModal({
         sx={{
           "& .MuiDialog-paper": {
             width: { xs: "100%", md: "80%", lg: "60%" },
+            padding: 4,
+            margin: 0,
           },
           ...(sxProps || {}),
         }}
