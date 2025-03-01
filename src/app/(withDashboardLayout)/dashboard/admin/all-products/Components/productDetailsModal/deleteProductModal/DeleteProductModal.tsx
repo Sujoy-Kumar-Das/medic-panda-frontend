@@ -1,14 +1,8 @@
 import CustomModal from "@/components/customModal/CustomModal";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import useDeleteProduct from "./useDeleteProduct";
+import { toast } from "sonner";
+import DeleteProductModalButton from "./DeleteProductModalButton";
 
 interface DeleteProductModalProps {
   open: boolean;
@@ -23,15 +17,9 @@ export default function DeleteProductModal({
   productId,
   onClose,
 }: DeleteProductModalProps) {
-  const { handleDeleteProduct, isLoading } = useDeleteProduct();
-
   const handleClose = () => {
+    toast.error("You Canceled the deletion operation");
     setOpen(false);
-  };
-
-  const handleDelete = async (id: string) => {
-    await handleDeleteProduct(id);
-    handleClose();
     onClose();
   };
 
@@ -64,18 +52,7 @@ export default function DeleteProductModal({
             Cancel
           </Button>
 
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => handleDelete(productId)}
-            sx={{ width: 120 }}
-          >
-            {isLoading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Delete"
-            )}
-          </Button>
+          <DeleteProductModalButton id={productId} onClose={handleClose} />
         </Stack>
       </Box>
     </CustomModal>
