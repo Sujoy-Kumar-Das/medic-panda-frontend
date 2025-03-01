@@ -1,47 +1,96 @@
-import { Box, Card, CardContent, Divider, Skeleton } from "@mui/material";
+import { Box, Card, Divider, Grid, Skeleton, Stack } from "@mui/material";
 
 export default function ProductDetailsModalSkeleton() {
   return (
-    <Box className="p-6 bg-gray-100 min-w-[400px] flex justify-center">
-      <Card className="w-full max-w-4xl p-6 shadow-lg rounded-2xl">
+    <Box
+      sx={{
+        p: 4,
+        backgroundColor: "grey.100",
+        minWidth: 600,
+        display: "flex",
+        justifyContent: "center",
+        bgcolor: "background.default",
+      }}
+    >
+      <Card
+        sx={{
+          width: "100%",
+          maxWidth: "xl",
+          p: 6,
+          boxShadow: 3,
+          borderRadius: "16px",
+        }}
+      >
         {/* Skeleton for Image */}
-        <Box className="flex justify-center mb-6">
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
           <Skeleton
             variant="rectangular"
-            width={200}
-            height={200}
-            className="rounded-lg"
+            width={220}
+            height={220}
+            sx={{ borderRadius: 2 }}
           />
         </Box>
 
-        {/* Skeleton for Product Information */}
-        <CardContent>
+        {/* Skeleton for Product Header */}
+        <Stack spacing={2} alignItems="center" mb={4}>
           <Skeleton variant="text" width={180} height={32} />
-          <Skeleton variant="text" width={150} height={24} className="mt-2" />
-          <Skeleton variant="text" width={180} height={24} className="mt-1" />
+          <Skeleton variant="text" width={150} height={24} />
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Skeleton variant="text" width={120} height={20} />
+            <Skeleton variant="rectangular" width={16} height={16} />
+            <Skeleton variant="text" width={120} height={20} />
+          </Stack>
+        </Stack>
 
-          <Box className="mt-4">
-            <Skeleton variant="text" width={120} height={28} />
+        <Divider sx={{ my: 3 }} />
+
+        {/* Skeleton for Product Information Grid */}
+        <Grid container spacing={3}>
+          {/* Pricing */}
+          <Grid item xs={12} sm={6}>
+            <Skeleton variant="text" width={80} height={24} />
+            <Skeleton variant="text" width={120} height={32} sx={{ mt: 2 }} />
+            <Skeleton variant="text" width={180} height={24} sx={{ mt: 1 }} />
+          </Grid>
+
+          {/* Stock Status */}
+          <Grid item xs={12} sm={6}>
+            <Skeleton variant="text" width={100} height={24} />
             <Skeleton
               variant="rectangular"
-              width={180}
+              width={100}
               height={32}
-              className="mt-2"
+              sx={{ mt: 2 }}
             />
-          </Box>
+          </Grid>
 
-          <Box className="mt-4 flex gap-4">
-            <Skeleton variant="rectangular" width={100} height={32} />
-            <Skeleton variant="rectangular" width={100} height={32} />
-          </Box>
+          {/* Rating & Wishlist */}
+          <Grid item xs={12} sm={6}>
+            <Skeleton variant="text" width={120} height={24} />
+            <Skeleton
+              variant="rectangular"
+              width={100}
+              height={32}
+              sx={{ mt: 2 }}
+            />
+          </Grid>
+        </Grid>
 
-          <Divider className="my-6" />
+        <Divider sx={{ my: 3 }} />
 
-          <Box className="bg-green-50 p-4 rounded-lg">
-            <Skeleton variant="text" width={150} height={24} />
-            <Skeleton variant="text" width={200} height={20} className="mt-1" />
-          </Box>
-        </CardContent>
+        {/* Skeleton for Discount Period */}
+        <Box
+          sx={{
+            bgcolor: "green.50",
+            p: 2,
+            borderRadius: 1,
+            border: 1,
+            borderColor: "green.300",
+          }}
+        >
+          <Skeleton variant="text" width={100} height={24} />
+          <Skeleton variant="text" width={200} height={20} sx={{ mt: 1 }} />
+        </Box>
       </Card>
     </Box>
   );

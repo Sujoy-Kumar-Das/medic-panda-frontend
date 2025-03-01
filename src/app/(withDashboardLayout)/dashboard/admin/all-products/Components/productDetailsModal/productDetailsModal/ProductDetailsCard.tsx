@@ -1,3 +1,4 @@
+import { IProduct } from "@/types";
 import { InfoOutlined } from "@mui/icons-material";
 import {
   Box,
@@ -9,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-export default function ProductDetails({ product }) {
+export default function ProductDetailsCard({ product }: { product: IProduct }) {
   return (
     <Box
       sx={{
@@ -19,6 +20,7 @@ export default function ProductDetails({ product }) {
         border: 1,
         borderColor: "grey.300",
         borderRadius: 2,
+        bgcolor: "background.default",
       }}
     >
       {/* Product Header */}
@@ -87,16 +89,6 @@ export default function ProductDetails({ product }) {
           <Chip
             label={`⭐ ${product?.rating}`}
             color="warning"
-            sx={{ fontWeight: 500 }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" fontWeight={600}>
-            Wishlist Status:
-          </Typography>
-          <Chip
-            label={product?.isWishList ? "In Wishlist" : "Not in Wishlist"}
-            color={product?.isWishList ? "info" : "default"}
             sx={{ fontWeight: 500 }}
           />
         </Grid>

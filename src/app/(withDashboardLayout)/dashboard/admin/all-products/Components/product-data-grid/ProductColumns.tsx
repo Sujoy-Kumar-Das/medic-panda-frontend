@@ -1,6 +1,6 @@
-import { Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import ActionMenu from "./ActiconMenu";
+import ActionMenu from "./action-menu/OpenProductActiconMenuButton";
 export const productColumns: GridColDef<any>[] = [
   {
     field: "index",
@@ -79,18 +79,6 @@ export const productColumns: GridColDef<any>[] = [
     flex: 1,
     minWidth: 100,
     headerAlign: "center",
-    renderCell: ({ row }) => (
-      <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        py={1}
-      >
-        {/* <IconButton color="primary">
-          <MoreVertIcon />
-        </IconButton> */}
-        <ActionMenu id={row._id} />
-      </Stack>
-    ),
+    renderCell: ({ row }) => <ActionMenu id={row._id} />,
   },
 ];

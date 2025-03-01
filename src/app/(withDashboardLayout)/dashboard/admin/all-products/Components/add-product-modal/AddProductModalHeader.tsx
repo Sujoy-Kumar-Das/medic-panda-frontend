@@ -1,7 +1,11 @@
 import CustomModal from "@/components/customModal/CustomModal";
 import { Box, Stack, Typography } from "@mui/material";
 
-export default function AddProductModalHeader() {
+export default function AddProductModalHeader({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
   return (
     <Stack
       direction="row"
@@ -32,7 +36,7 @@ export default function AddProductModalHeader() {
       </Box>
 
       {/* Close Button */}
-      <CustomModal.CloseButton />
+      <CustomModal.CloseButton onClose={onClose} />
     </Stack>
   );
 }

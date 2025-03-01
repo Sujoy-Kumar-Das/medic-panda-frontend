@@ -16,7 +16,7 @@ export default function AddProductModal({
   };
   return (
     <CustomModal open={open} setOpen={setOpen}>
-      <AddProductModalHeader />
+      <AddProductModalHeader onClose={handleCloseModal} />
       <AddProductForm onClose={handleCloseModal} />
     </CustomModal>
   );

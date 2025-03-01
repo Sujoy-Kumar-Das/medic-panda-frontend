@@ -4,11 +4,19 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { useState } from "react";
 import ProductDetailsModal from "./ProductDetailsModal";
 
-export default function OpenProductDetailsModalButton({ productId }) {
-  const [open, setOpen] = useState(false);
+interface OpenProductDetailsModalButtonProps {
+  productId: string;
+  onCloseMenu: () => void;
+}
+
+export default function OpenProductDetailsModalButton({
+  productId,
+  onCloseMenu,
+}: OpenProductDetailsModalButtonProps) {
+  const [openModal, setOpenModal] = useState(false);
 
   const handleProductDetailsModal = () => {
-    setOpen((prev) => !prev);
+    setOpenModal((prev) => !prev);
   };
   return (
     <>
@@ -20,9 +28,10 @@ export default function OpenProductDetailsModalButton({ productId }) {
       </MenuItem>
 
       <ProductDetailsModal
-        open={open}
-        setOpen={setOpen}
+        open={openModal}
+        setOpen={setOpenModal}
         productId={productId}
+        onCloseMenu={onCloseMenu}
       />
     </>
   );

@@ -1,7 +1,12 @@
+import { IProduct } from "@/types";
 import { DataGrid } from "@mui/x-data-grid";
 import { productColumns } from "./ProductColumns";
 
-export default function ProductsDataGrid({ products }) {
+export default function ProductsDataGrid({
+  products,
+}: {
+  products: IProduct[];
+}) {
   return (
     <>
       <DataGrid
