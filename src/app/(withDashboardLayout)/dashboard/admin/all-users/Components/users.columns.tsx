@@ -2,11 +2,12 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Chip, IconButton, Stack, Typography } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
 import OpenBlockUserModalButton from "./block-user-modal/OpenBlockUserModalButton";
 import OpenDeleteUserModalButton from "./delete-user-modal/OpenDeleteUserModalButton";
 import OpenUnBlockUserButton from "./unblock-user-modal/OpenUnBlockUserButton";
 
-export const UsersColumns: any = [
+export const UsersColumns: GridColDef<any>[] = [
   {
     field: "email",
     headerName: "Email",

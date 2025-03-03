@@ -5,6 +5,7 @@ import OrdersHOC from "./Components/OrdersHOC";
 
 export default function AllOrdersPage() {
   const { data, isLoading, error } = useGetAllOrdersForAdminQuery(undefined);
+
   return (
     <OrdersHOC
       data={data}
