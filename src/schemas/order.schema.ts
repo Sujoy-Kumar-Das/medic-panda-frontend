@@ -10,5 +10,7 @@ export const orderShippingAddressSchema = z.object({
 });
 
 export const changeOrderStatusSchema = z.object({
-  status: z.enum(Object.values(OrderStatus) as [string, ...string[]]),
+  status: z.enum(Object.values(OrderStatus) as [string, ...string[]], {
+    message: "Please Select a status value.",
+  }),
 });

@@ -14,7 +14,7 @@ export default function ChangeOrderStatusModal({ open, setOpen, orderId }) {
       >
         Change Order Status
       </CustomModal.TitleWithCloseButton>
-      <ChangeOrderStatusForm />
+      <ChangeOrderStatusForm orderId={orderId} />
     </CustomModal>
   );
 }

@@ -83,6 +83,14 @@ const orderApi = baseApi.injectEndpoints({
       }),
       providesTags: [TTagTypes.order],
     }),
+    changeOrderStatus: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/order/change-status/${id}`,
+        method: "PATCH",
+        data,
+      }),
+      invalidatesTags: [TTagTypes.order],
+    }),
     cancelOrder: builder.mutation({
       query: (id) => ({
         url: `/order/cancel/${id}`,
@@ -107,4 +115,5 @@ export const {
   useGetSingleOrderQuery,
   useDeleteOrderMutation,
   useGetAllOrdersForAdminQuery,
+  useChangeOrderStatusMutation,
 } = orderApi;

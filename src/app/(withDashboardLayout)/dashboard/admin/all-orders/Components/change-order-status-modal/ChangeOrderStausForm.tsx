@@ -1,13 +1,15 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaSelect from "@/components/form/PandaSelect";
+import useChangeOrderStatus from "@/hooks/useChangeOrderStatus";
 import { changeOrderStatusSchema } from "@/schemas/order.schema";
 import { OrderStatus } from "@/types";
 import randomUID from "@/utils/randomId";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@mui/material";
-import { FieldValue } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 
-export default function ChangeOrderStatusForm() {
+export default function ChangeOrderStatusForm({ orderId }) {
+  const { handleChangeOrderStatus } = useChangeOrderStatus();
   // Define the Order Status Items
   const OrderStatusItems = [
     {
@@ -33,8 +35,8 @@ export default function ChangeOrderStatusForm() {
   ];
 
   // Handle form submission
-  const handleSubmit = (value: FieldValue<{ status: OrderStatus }>) => {
-    console.log(`Selected Status: ${value.status}`);
+  const handleSubmit = async (value: FieldValues) => {
+    await handleChangeOrderStatus(orderId, value);
   };
 
   return (
