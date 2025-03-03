@@ -1,6 +1,6 @@
 import CustomModal from "@/components/customModal/CustomModal";
 import { Dispatch, SetStateAction } from "react";
-import ProductDetailsCompo from "./productDetailsModal/ProductDetailsCompo";
+import ProductDetailsCompo from "./details/ProductDetailsCompo";
 
 interface ProductDetailsModalProps {
   open: boolean;

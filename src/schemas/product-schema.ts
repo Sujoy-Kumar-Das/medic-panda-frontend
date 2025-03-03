@@ -23,11 +23,9 @@ const discountValidationSchema = z.object({
 
 export const createProductValidationSchema = z.object({
   product: z.object({
-    name: z
-      .string({ required_error: "Product Name is required." })
-      .min(3, {
-        message: "Product name should be at least 3 characters long.",
-      }),
+    name: z.string({ required_error: "Product Name is required." }).min(3, {
+      message: "Product name should be at least 3 characters long.",
+    }),
     thumbnail: z
       .instanceof(File)
       .refine((file) => file.size <= MAX_FILE_SIZE, {
@@ -61,5 +59,29 @@ export const createProductValidationSchema = z.object({
         message: "Only .jpg, .jpeg, .png, and .webp files are accepted.",
       })
       .optional(),
+  }),
+});
+
+export const updateProductValidationSchema = z.object({
+  product: z.object({
+    name: z.string({ required_error: "Product Name is required." }).min(3, {
+      message: "Product name should be at least 3 characters long.",
+    }),
+    category: z.string({ required_error: "Category ID is required." }),
+    manufacturer: z.string({ required_error: "Manufacturer ID is required." }),
+    price: z.coerce
+      .number({ required_error: "Product price is required." })
+      .positive({ message: "Product price must be a positive number." }),
+    discount: discountValidationSchema.optional(),
+  }),
+  productDetail: z.object({
+    description: z
+      .string({ required_error: "Description is required." })
+      .min(100, {
+        message: "Description should be at least 100 characters long.",
+      }),
+    stock: z.coerce
+      .number({ required_error: "Stock is required." })
+      .nonnegative({ message: "Stock should be positive." }),
   }),
 });

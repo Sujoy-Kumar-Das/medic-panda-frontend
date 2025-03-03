@@ -39,7 +39,7 @@ const PandaTimePicker = ({
               label={label}
               value={value ? dayjs(value) : null}
               onChange={(newValue) =>
-                onChange(newValue ? newValue.toISOString() : "")
+                onChange(newValue ? newValue.format("HH:mm") : "")
               }
               timezone="system"
               slotProps={{

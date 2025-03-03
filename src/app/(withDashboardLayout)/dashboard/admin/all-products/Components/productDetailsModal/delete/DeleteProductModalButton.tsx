@@ -1,5 +1,5 @@
 import { Button, CircularProgress } from "@mui/material";
-import useDeleteProduct from "./useDeleteProduct";
+import useDeleteProduct from "./useDeleteProduct.hook";
 
 export default function DeleteProductModalButton({
   id,

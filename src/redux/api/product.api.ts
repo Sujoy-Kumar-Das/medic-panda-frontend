@@ -27,13 +27,16 @@ const productApi = baseApi.injectEndpoints({
       providesTags: [TTagTypes.product],
     }),
     editProduct: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/product/${id}`,
-        method: "PATCH",
-        body: data,
-      }),
+      query: ({ id, data }) => {
+        return {
+          url: `/product/${id}`,
+          method: "PATCH",
+          data,
+        };
+      },
       invalidatesTags: [TTagTypes.product],
     }),
+
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `/product/${id}`,
