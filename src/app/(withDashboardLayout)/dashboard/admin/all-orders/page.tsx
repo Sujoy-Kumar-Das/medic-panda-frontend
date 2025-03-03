@@ -1,19 +1,15 @@
-import SearchBar from "@/components/shared/searchBar/SearchBar";
-import { Box, Button, Container, Stack } from "@mui/material";
+"use client";
+import { useGetAllOrdersForAdminQuery } from "@/redux/api/order.api";
+import { IGenericErrorResponse } from "@/types";
+import OrdersHOC from "./Components/OrdersHOC";
 
 export default function AllOrdersPage() {
+  const { data, isLoading, error } = useGetAllOrdersForAdminQuery(undefined);
   return (
-    <Container>
-      <Box bgcolor={"background.paper"} p={3} borderRadius={1}>
-        <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <SearchBar />
-          <Button>ADD User</Button>
-        </Stack>
-      </Box>
-    </Container>
+    <OrdersHOC
+      data={data}
+      error={error as IGenericErrorResponse}
+      isLoading={isLoading}
+    />
   );
 }
