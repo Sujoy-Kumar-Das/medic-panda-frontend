@@ -9,8 +9,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 
-export default function ChangeOrderStatusForm({ orderId, onChange }) {
+interface ChangeOrderStatusFormProps {
+  orderId: string;
+  onChange: () => void;
+}
+
+export default function ChangeOrderStatusForm({
+  orderId,
+  onChange,
+}: ChangeOrderStatusFormProps) {
   const { handleChangeOrderStatus, isLoading } = useChangeOrderStatus();
+
   // Define the Order Status Items
   const OrderStatusItems = [
     {
