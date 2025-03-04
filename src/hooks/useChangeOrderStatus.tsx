@@ -5,8 +5,13 @@ import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 export default function useChangeOrderStatus() {
   const [changeStatus, apiResponse] = useChangeOrderStatusMutation();
 
-  const handleChangeOrderStatus = async (id: string, data: FieldValues) => {
+  const handleChangeOrderStatus = async (
+    id: string,
+    data: FieldValues,
+    onChange: () => void
+  ) => {
     await changeStatus({ id, data });
+    onChange();
   };
 
   useApiMutationResponseHandler({

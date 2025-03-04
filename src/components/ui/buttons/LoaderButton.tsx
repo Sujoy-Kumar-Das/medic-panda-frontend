@@ -1,4 +1,4 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress, SxProps } from "@mui/material";
 import { ReactNode } from "react";
 
 interface LoaderButtonProps {
@@ -12,6 +12,8 @@ interface LoaderButtonProps {
   fullWidth?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
+  sxProps?: SxProps;
+  type?: "button" | "submit" | "reset";
 }
 
 const LoaderButton: React.FC<LoaderButtonProps> = ({
@@ -25,6 +27,8 @@ const LoaderButton: React.FC<LoaderButtonProps> = ({
   fullWidth = false,
   startIcon,
   endIcon,
+  sxProps,
+  type = "button",
 }) => {
   return (
     <Button
@@ -35,6 +39,8 @@ const LoaderButton: React.FC<LoaderButtonProps> = ({
       fullWidth={fullWidth}
       startIcon={!isLoading ? startIcon : undefined}
       endIcon={!isLoading ? endIcon : undefined}
+      sx={{ ...sxProps }}
+      type={type}
     >
       {isLoading
         ? loadingText || <CircularProgress size={24} color="inherit" />

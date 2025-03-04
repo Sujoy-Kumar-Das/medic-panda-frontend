@@ -1,15 +1,16 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaSelect from "@/components/form/PandaSelect";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useChangeOrderStatus from "@/hooks/useChangeOrderStatus";
 import { changeOrderStatusSchema } from "@/schemas/order.schema";
 import { OrderStatus } from "@/types";
 import randomUID from "@/utils/randomId";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 
-export default function ChangeOrderStatusForm({ orderId }) {
-  const { handleChangeOrderStatus } = useChangeOrderStatus();
+export default function ChangeOrderStatusForm({ orderId, onChange }) {
+  const { handleChangeOrderStatus, isLoading } = useChangeOrderStatus();
   // Define the Order Status Items
   const OrderStatusItems = [
     {
@@ -36,7 +37,7 @@ export default function ChangeOrderStatusForm({ orderId }) {
 
   // Handle form submission
   const handleSubmit = async (value: FieldValues) => {
-    await handleChangeOrderStatus(orderId, value);
+    await handleChangeOrderStatus(orderId, value, onChange);
   };
 
   return (
@@ -64,21 +65,14 @@ export default function ChangeOrderStatusForm({ orderId }) {
         />
 
         {/* Submit Button */}
-        <Button
+
+        <LoaderButton
+          isLoading={isLoading}
+          loadingText="Changing Status"
           type="submit"
-          variant="contained"
-          color="primary"
-          sx={{
-            padding: "12px 24px",
-            borderRadius: 2,
-            boxShadow: 2,
-            "&:hover": {
-              backgroundColor: "primary.dark",
-            },
-          }}
         >
           Change
-        </Button>
+        </LoaderButton>
       </Box>
     </PandaForm>
   );
