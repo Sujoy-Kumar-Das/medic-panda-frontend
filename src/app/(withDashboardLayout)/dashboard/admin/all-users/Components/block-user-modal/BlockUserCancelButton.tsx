@@ -1,30 +1,17 @@
-import { Button } from "@mui/material";
-import { toast } from "sonner";
+import CancelButton from "@/components/ui/buttons/CancelButton";
 
 interface BlockUserCancelButtonProps {
-  handleClose: () => void;
+  onClose: () => void;
 }
 
 export default function BlockUserCancelButton({
-  handleClose,
+  onClose,
 }: BlockUserCancelButtonProps) {
-  const handleCancelBlockUser = () => {
-    toast.error("You Canceled blocking the user.");
-    handleClose();
-  };
   return (
-    <Button
-      onClick={handleCancelBlockUser}
-      variant="outlined"
-      sx={{
-        color: "warning.main",
-        borderColor: "warning.main",
-        "&:hover": {
-          backgroundColor: "#FFECB3",
-        },
-      }}
-    >
-      Cancel
-    </Button>
+    <CancelButton
+      onClose={onClose}
+      label="Cancel"
+      cancelMessage="You Canceled blocking the user."
+    />
   );
 }

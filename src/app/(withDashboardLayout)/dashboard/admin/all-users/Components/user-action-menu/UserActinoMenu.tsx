@@ -3,6 +3,7 @@ import { KeyOff } from "@mui/icons-material";
 import BlockIcon from "@mui/icons-material/Block";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
+import BlockUserModal from "../block-user-modal/BlockUserModal";
 import DeleteUserModal from "../delete-user-modal/DeleteUserModal";
 import UnblockUserModal from "../unblock-user-modal/UnblockUserModal";
 
@@ -50,6 +51,13 @@ const UserActionMenu = ({
       <DeleteUserModal
         open={isDeleteOpen}
         setOpen={setIsDeleteOpen}
+        userId={id}
+        onClose={onClose}
+      />
+
+      <BlockUserModal
+        open={isBlockOpen}
+        setOpen={setIsBlockOpen}
         userId={id}
         onClose={onClose}
       />

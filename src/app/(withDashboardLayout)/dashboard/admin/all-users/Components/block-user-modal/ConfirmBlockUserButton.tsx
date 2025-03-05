@@ -1,6 +1,5 @@
-import { useApiResponseHandler } from "@/hooks/useApiMutationResponseHandler";
-import { Button } from "@mui/material";
-import useBlockUserApiHook from "../hook/useBlockUserApiHook";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import useBlockUser from "@/hooks/useBlockUser";
 
 interface BlockUserButtonProps {
   userId: string;
@@ -8,39 +7,21 @@ interface BlockUserButtonProps {
 }
 
 const ConfirmBlockUserButton = ({ userId, onClose }: BlockUserButtonProps) => {
-  // handle block the user with the custom hook useBlockUserApiHook
+  const { handleFunc, isLoading } = useBlockUser();
 
-  const { handleBlockUser, isLoading, isError, isSuccess, error } =
-    useBlockUserApiHook({
-      id: userId,
-      onClose,
-    });
-
-  // handle block the user with the custom hook useApiResponseHandler
-
-  useApiResponseHandler({
-    isError,
-    isSuccess,
-    successMessage: "User blocked successfully",
-    error,
-  });
-
+  const handleBlockUser = async () => {
+    await handleFunc(userId);
+    onClose();
+  };
   return (
-    <Button
-      onClick={handleBlockUser}
-      variant="contained"
+    <LoaderButton
+      loadingText="Blocking..."
+      isLoading={isLoading}
       disabled={isLoading}
-      sx={{
-        backgroundColor: "warning.main",
-        color: "white",
-        "&:hover": {
-          backgroundColor: "warning.dark",
-        },
-        transition: "background-color 0.3s ease",
-      }}
+      onClick={handleBlockUser}
     >
-      {isLoading ? "Blocking..." : "Block User"}
-    </Button>
+      Block User
+    </LoaderButton>
   );
 };
 
