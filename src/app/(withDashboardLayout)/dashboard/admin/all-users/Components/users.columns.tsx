@@ -1,19 +1,29 @@
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import OpenBlockUserModalButton from "./block-user-modal/OpenBlockUserModalButton";
-import OpenDeleteUserModalButton from "./delete-user-modal/OpenDeleteUserModalButton";
-import OpenUnBlockUserButton from "./unblock-user-modal/OpenUnBlockUserButton";
+import UserActinMenu from "./user-action-menu/UserActinoMenu";
 
 export const UsersColumns: GridColDef<any>[] = [
   {
+    field: "index",
+    headerName: "Index",
+    headerAlign: "center",
+    flex: 0.5, // Smaller width
+    minWidth: 50, // Ensures it doesn't get too small
+    renderCell: (params) => (
+      <Typography align="center" py={2}>
+        {params.api.getAllRowIds().indexOf(params.id) + 1}
+      </Typography>
+    ),
+  },
+  {
     field: "email",
     headerName: "Email",
-    width: 300,
     headerAlign: "center",
-    renderCell: ({ row }: { row: any }) => (
+    flex: 2, // Takes more space
+    minWidth: 200, // Prevents shrinking too much
+    renderCell: ({ row }) => (
       <Typography align="center" py={2}>
         {row.email}
       </Typography>
@@ -22,15 +32,11 @@ export const UsersColumns: GridColDef<any>[] = [
   {
     field: "role",
     headerName: "Role",
-    width: 100,
     headerAlign: "center",
-    renderCell: ({ row }: { row: any }) => (
-      <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        py={1}
-      >
+    flex: 1,
+    minWidth: 100,
+    renderCell: ({ row }) => (
+      <Stack direction="row" justifyContent="center" alignItems="center" py={1}>
         <Chip
           sx={{ fontWeight: "bold", textTransform: "uppercase" }}
           color="primary"
@@ -42,15 +48,11 @@ export const UsersColumns: GridColDef<any>[] = [
   {
     field: "isVerified",
     headerName: "Verification",
-    width: 150,
     headerAlign: "center",
-    renderCell: ({ row }: { row: any }) => (
-      <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        py={1}
-      >
+    flex: 1,
+    minWidth: 120,
+    renderCell: ({ row }) => (
+      <Stack direction="row" justifyContent="center" alignItems="center" py={1}>
         {row?.isVerified ? (
           <IconButton color="primary">
             <VerifiedUserIcon />
@@ -66,15 +68,11 @@ export const UsersColumns: GridColDef<any>[] = [
   {
     field: "isBlocked",
     headerName: "Status",
-    width: 150,
     headerAlign: "center",
-    renderCell: ({ row }: { row: any }) => (
-      <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        py={1}
-      >
+    flex: 1,
+    minWidth: 120,
+    renderCell: ({ row }) => (
+      <Stack direction="row" justifyContent="center" alignItems="center" py={1}>
         <Chip
           sx={{ fontWeight: "bold", textTransform: "uppercase" }}
           color={row?.isBlocked ? "error" : "primary"}
@@ -84,46 +82,11 @@ export const UsersColumns: GridColDef<any>[] = [
     ),
   },
   {
-    field: "block-user",
-    headerName: "Block",
-    width: 120,
-    headerAlign: "center",
-    renderCell: ({ row }: { row: any }) => (
-      <>
-        {!row.isBlocked ? (
-          <OpenBlockUserModalButton userId={row._id} />
-        ) : (
-          <OpenUnBlockUserButton userId={row._id} />
-        )}
-      </>
-    ),
-  },
-  {
-    field: "delete-user",
+    field: "action-menu",
     headerName: "Action",
-    width: 120,
     headerAlign: "center",
-    renderCell: ({ row }: { row: any }) => (
-      <OpenDeleteUserModalButton userId={row._id} />
-    ),
-  },
-
-  {
-    field: "view-profile",
-    headerName: "Details",
-    width: 120,
-    headerAlign: "center",
-    renderCell: ({ row }: { row: any }) => (
-      <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        py={1}
-      >
-        <IconButton color="primary">
-          <ArrowForwardIcon />
-        </IconButton>
-      </Stack>
-    ),
+    flex: 1,
+    minWidth: 120,
+    renderCell: ({ row }) => <UserActinMenu id={row._id} />,
   },
 ];

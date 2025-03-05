@@ -13,26 +13,26 @@ const ConfirmDeleteUserButton = ({
 }: DeleteUserButtonProps) => {
   // handle block the user with the custom hook useBlockUserApiHook
 
-  const { handleDeleteUser, isLoading, isError, isSuccess, error } =
-    useDeleteUserApiHook({
-      id: userId,
-      onClose,
-    });
+  // const { handleDeleteUser, isLoading, isError, isSuccess, error } =
+  //   useDeleteUserApiHook({
+  //     id: userId,
+  //     onClose,
+  //   });
 
-  // handle block the user with the custom hook useApiResponseHandler
+  // // handle block the user with the custom hook useApiResponseHandler
 
-  useApiResponseHandler({
-    isError,
-    isSuccess,
-    successMessage: "User Deleted successfully",
-    error,
-  });
+  // useApiResponseHandler({
+  //   isError,
+  //   isSuccess,
+  //   successMessage: "User Deleted successfully",
+  //   error,
+  // });
 
   return (
     <Button
-      onClick={handleDeleteUser}
+      // onClick={handleDeleteUser}
       variant="contained"
-      disabled={isLoading}
+      // disabled={isLoading}
       sx={{
         backgroundColor: "warning.main",
         color: "white",
