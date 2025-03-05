@@ -1,4 +1,4 @@
-import CustomModal from "@/components/customModal/CustomModal";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { Box, Stack, Typography } from "@mui/material";
 
 export default function AddProductModalHeader({

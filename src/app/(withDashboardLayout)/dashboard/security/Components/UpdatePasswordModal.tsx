@@ -1,6 +1,6 @@
-import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { useChangePasswordMutation } from "@/redux/api/auth.api";
 import updatePasswordValidationSchema from "@/schemas/updatePasswordValidationSchema";
 import { IGenericErrorResponse } from "@/types";

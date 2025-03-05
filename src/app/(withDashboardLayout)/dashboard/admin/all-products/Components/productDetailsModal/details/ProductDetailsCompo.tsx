@@ -1,4 +1,4 @@
-import CustomModal from "@/components/customModal/CustomModal";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { useGetSingleProductQuery } from "@/redux/api/product.api";
 import { Box } from "@mui/material";
 import ProductDetailsCard from "./ProductDetailsCard";

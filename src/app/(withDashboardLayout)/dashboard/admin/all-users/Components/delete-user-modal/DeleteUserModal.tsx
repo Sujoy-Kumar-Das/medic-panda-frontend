@@ -1,5 +1,4 @@
-import CustomModal from "@/components/customModal/CustomModal";
-import { Box, Typography } from "@mui/material";
+import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
 import { Dispatch, SetStateAction } from "react";
 import DeleteUserButton from "./ConfirmDeleteUserButton";
 import DeleteUserCancelButton from "./DeleteUserCancelButton";
@@ -9,56 +8,29 @@ interface DeleteUserModalProps {
   userId: string;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 export default function DeleteUserModal({
   userId,
   open,
   setOpen,
+  onClose,
 }: DeleteUserModalProps) {
   const handleClose = () => {
     setOpen((prev) => !prev);
+    onClose();
   };
 
   return (
-    <CustomModal
-      sxProps={{
-        "& .MuiDialog-paper": {
-          padding: 3,
-          backgroundColor: "background.paper",
-          borderRadius: 3,
-          textAlign: "center",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-          width: "50%",
-        },
-      }}
+    <DeleteModal
+      title="Confirm User Deletion"
+      message="This will permanently remove the user and their data. Proceed with caution."
       open={open}
       setOpen={setOpen}
-      closeBtn={false}
     >
-      <Typography
-        variant="h5"
-        sx={{
-          color: "warning.main",
-          fontWeight: "bold",
-          marginBottom: 2,
-        }}
-      >
-        Warning: Delete User
-      </Typography>
-      <Typography
-        variant="body1"
-        sx={{
-          color: "text.secondary",
-          marginBottom: 3,
-        }}
-      >
-        Are you sure you want to Delete this user?
-      </Typography>
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-        <DeleteUserCancelButton onClose={handleClose} />
-        <DeleteUserButton userId={userId} onClose={handleClose} />
-      </Box>
-    </CustomModal>
+      <DeleteUserCancelButton onClose={handleClose} />
+      <DeleteUserButton userId={userId} onClose={handleClose} />
+    </DeleteModal>
   );
 }

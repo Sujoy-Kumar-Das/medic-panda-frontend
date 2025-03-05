@@ -1,4 +1,4 @@
-import CustomModal from "@/components/customModal/CustomModal";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { Dispatch, SetStateAction } from "react";
 import ChangeOrderStatusForm from "./ChangeOrderStausForm";
 

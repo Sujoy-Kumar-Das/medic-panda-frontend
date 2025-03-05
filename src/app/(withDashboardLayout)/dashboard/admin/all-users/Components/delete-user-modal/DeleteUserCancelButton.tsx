@@ -1,5 +1,4 @@
-import { Button } from "@mui/material";
-import { toast } from "sonner";
+import CancelButton from "@/components/ui/buttons/CancelButton";
 
 interface DeleteUserCancelButtonProps {
   onClose: () => void;
@@ -8,23 +7,11 @@ interface DeleteUserCancelButtonProps {
 export default function DeleteUserCancelButton({
   onClose,
 }: DeleteUserCancelButtonProps) {
-  const handleCancelDeleteUser = () => {
-    toast.error("You Canceled Deleting the user.");
-    onClose();
-  };
   return (
-    <Button
-      onClick={handleCancelDeleteUser}
-      variant="outlined"
-      sx={{
-        color: "warning.main",
-        borderColor: "warning.main",
-        "&:hover": {
-          backgroundColor: "#FFECB3",
-        },
-      }}
-    >
-      Cancel
-    </Button>
+    <CancelButton
+      onClose={onClose}
+      cancelMessage={`You Canceled Deleting the user`}
+      label="Cancel"
+    />
   );
 }

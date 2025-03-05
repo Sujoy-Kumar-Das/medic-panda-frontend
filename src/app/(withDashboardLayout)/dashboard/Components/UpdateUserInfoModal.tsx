@@ -1,6 +1,6 @@
-import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
 import { IGenericErrorMessage } from "@/types";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";

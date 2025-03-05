@@ -1,4 +1,4 @@
-import CustomModal from "@/components/customModal/CustomModal";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import EditProductHeader from "./EditProductHeader";
 import EditProductForm from "./form/EditProductForm";
 

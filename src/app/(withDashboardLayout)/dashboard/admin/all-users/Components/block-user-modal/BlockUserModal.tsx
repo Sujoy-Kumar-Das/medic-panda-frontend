@@ -1,4 +1,4 @@
-import CustomModal from "@/components/customModal/CustomModal";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { Box, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import BlockUserCancelButton from "./BlockUserCancelButton";

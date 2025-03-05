@@ -1,5 +1,4 @@
-import CustomModal from "@/components/customModal/CustomModal";
-import { ICategory } from "@/types";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { Box } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import ProductCategory from "./ProductCategory";

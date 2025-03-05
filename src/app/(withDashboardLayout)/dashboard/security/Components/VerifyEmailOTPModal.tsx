@@ -1,6 +1,6 @@
-import CustomModal from "@/components/customModal/CustomModal";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import CustomModal from "@/components/modal/customModal/CustomModal";
 import { useConfirmUserOTPMutation } from "@/redux/api/user.api";
 import { IGenericErrorResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";

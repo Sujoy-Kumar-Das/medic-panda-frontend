@@ -1,6 +1,5 @@
-import { useApiResponseHandler } from "@/hooks/useApiMutationResponseHandler";
-import { Button } from "@mui/material";
-import useDeleteUserApiHook from "../hook/useDeleteUserApi";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import useDeleteUser from "@/hooks/useDeleteUser";
 
 interface DeleteUserButtonProps {
   userId: string;
@@ -11,39 +10,23 @@ const ConfirmDeleteUserButton = ({
   userId,
   onClose,
 }: DeleteUserButtonProps) => {
-  // handle block the user with the custom hook useBlockUserApiHook
+  const { deleteUserHandler, isLoading } = useDeleteUser();
 
-  // const { handleDeleteUser, isLoading, isError, isSuccess, error } =
-  //   useDeleteUserApiHook({
-  //     id: userId,
-  //     onClose,
-  //   });
-
-  // // handle block the user with the custom hook useApiResponseHandler
-
-  // useApiResponseHandler({
-  //   isError,
-  //   isSuccess,
-  //   successMessage: "User Deleted successfully",
-  //   error,
-  // });
+  // Renamed the function to avoid conflict
+  const handleConfirmDeleteUser = async () => {
+    await deleteUserHandler(userId, onClose);
+  };
 
   return (
-    <Button
-      // onClick={handleDeleteUser}
+    <LoaderButton
+      onClick={handleConfirmDeleteUser}
       variant="contained"
-      // disabled={isLoading}
-      sx={{
-        backgroundColor: "warning.main",
-        color: "white",
-        "&:hover": {
-          backgroundColor: "warning.dark",
-        },
-        transition: "background-color 0.3s ease",
-      }}
+      disabled={isLoading}
+      loadingText="Deleting..."
+      isLoading={isLoading}
     >
       Delete
-    </Button>
+    </LoaderButton>
   );
 };
 
