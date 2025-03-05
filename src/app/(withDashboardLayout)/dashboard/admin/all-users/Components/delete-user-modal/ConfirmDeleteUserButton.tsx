@@ -12,9 +12,9 @@ const ConfirmDeleteUserButton = ({
 }: DeleteUserButtonProps) => {
   const { deleteUserHandler, isLoading } = useDeleteUser();
 
-  // Renamed the function to avoid conflict
   const handleConfirmDeleteUser = async () => {
-    await deleteUserHandler(userId, onClose);
+    await deleteUserHandler(userId);
+    onClose();
   };
 
   return (

@@ -4,9 +4,8 @@ import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 export default function useDeleteUser() {
   const [deleteUser, apiResponse] = useDeleteUserMutation();
 
-  const deleteUserHandler = async (id: string, onClose: () => void) => {
+  const deleteUserHandler = async (id: string) => {
     await deleteUser({ id }).unwrap();
-    onClose();
   };
 
   useApiMutationResponseHandler({

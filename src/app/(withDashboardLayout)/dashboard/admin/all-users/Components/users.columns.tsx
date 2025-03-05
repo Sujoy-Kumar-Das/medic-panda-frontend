@@ -87,6 +87,8 @@ export const UsersColumns: GridColDef<any>[] = [
     headerAlign: "center",
     flex: 1,
     minWidth: 120,
-    renderCell: ({ row }) => <UserActinMenu id={row._id} />,
+    renderCell: ({ row }) => (
+      <UserActinMenu isBlocked={row.isBlocked} id={row._id} />
+    ),
   },
 ];

@@ -1,6 +1,5 @@
-import { useApiResponseHandler } from "@/hooks/useApiMutationResponseHandler";
-import { Button } from "@mui/material";
-import useUnblockUserApiHook from "../hook/useUnblockUserApiHook";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import useUnblockUser from "@/hooks/useUnblockUser";
 
 interface UnBlockUserButtonProps {
   userId: string;
@@ -11,35 +10,22 @@ const ConfirmUnBlockUserButton = ({
   userId,
   onClose,
 }: UnBlockUserButtonProps) => {
-  // handle unblock the user with the custom hook useBlockUserApiHook
+  const { handleUnblockUser, isLoading } = useUnblockUser();
 
-  const { handleUnblockUser, isLoading, isError, error, isSuccess } =
-    useUnblockUserApiHook({ id: userId, onClose });
+  const handleUnblock = async () => {
+    await handleUnblockUser(userId);
+    onClose();
+  };
 
-  // handle unblock the user with the custom hook useApiResponseHandler
-
-  useApiResponseHandler({
-    isError,
-    isSuccess,
-    successMessage: "User unblocked successfully",
-    error,
-  });
   return (
-    <Button
+    <LoaderButton
       variant="contained"
-      onClick={handleUnblockUser}
+      onClick={handleUnblock}
+      loadingText="Unblocking..."
       disabled={isLoading}
-      sx={{
-        backgroundColor: "warning.main",
-        color: "white",
-        "&:hover": {
-          backgroundColor: "warning.dark",
-        },
-        transition: "background-color 0.3s ease",
-      }}
     >
-      {isLoading ? "Unblocking..." : "Unblock User"}
-    </Button>
+      Unblock User
+    </LoaderButton>
   );
 };
 
