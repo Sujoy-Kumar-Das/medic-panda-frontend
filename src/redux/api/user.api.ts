@@ -35,6 +35,13 @@ const userApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getSingleUser: builder.query({
+      query: ({ id }) => ({
+        url: `/user/${id}`,
+        method: "GET",
+      }),
+      providesTags: [TTagTypes.user],
+    }),
     verifyUser: builder.mutation({
       query: () => ({
         url: "/user/verify-email",
@@ -87,6 +94,7 @@ export const {
   useCreateAdminMutation,
   useUpdateUserEmailMutation,
   useGetAllUsersQuery,
+  useGetSingleUserQuery,
   useGetAllBlockedUsersQuery,
   useVerifyUserMutation,
   useConfirmUserOTPMutation,

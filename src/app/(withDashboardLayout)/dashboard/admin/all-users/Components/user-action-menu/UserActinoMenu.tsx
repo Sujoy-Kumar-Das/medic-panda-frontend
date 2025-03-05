@@ -2,10 +2,12 @@ import CustomActionMenu from "@/components/shared/custom-action-menu/CustomActio
 import { KeyOff } from "@mui/icons-material";
 import BlockIcon from "@mui/icons-material/Block";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useState } from "react";
 import BlockUserModal from "../block-user-modal/BlockUserModal";
 import DeleteUserModal from "../delete-user-modal/DeleteUserModal";
 import UnblockUserModal from "../unblock-user-modal/UnblockUserModal";
+import UserDetailsModal from "../user-details-modal/UserDetailsModal";
 
 const UserActionMenu = ({
   id,
@@ -16,6 +18,7 @@ const UserActionMenu = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const [isUserDetailsOpen, setIsUserDetailsOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
   const [isUnBlockOpen, setIsUnBlockOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -35,16 +38,28 @@ const UserActionMenu = ({
         setAnchorEl={setAnchorEl}
         items={[
           {
-            icon: <DeleteIcon />,
-            label: "Delete",
-            onClick: () => setIsDeleteOpen(true),
+            icon: <VisibilityIcon />,
+            label: "Details",
+            onClick: () => setIsUserDetailsOpen(true),
           },
           {
             icon: isBlocked ? <KeyOff /> : <BlockIcon />,
             label: isBlocked ? `UnBlock` : `Block`,
             onClick: blockHandler,
           },
+          {
+            icon: <DeleteIcon />,
+            label: "Delete",
+            onClick: () => setIsDeleteOpen(true),
+          },
         ]}
+      />
+
+      <UserDetailsModal
+        open={isUserDetailsOpen}
+        setOpen={setIsUserDetailsOpen}
+        userId={id}
+        onClose={onClose}
       />
 
       <DeleteUserModal
