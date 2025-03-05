@@ -12,6 +12,7 @@ export default function ProductDetailsCompo({
   onClose: () => void;
 }) {
   const { data: product, isLoading } = useGetSingleProductQuery(productId);
+
   return (
     <Box
       sx={{

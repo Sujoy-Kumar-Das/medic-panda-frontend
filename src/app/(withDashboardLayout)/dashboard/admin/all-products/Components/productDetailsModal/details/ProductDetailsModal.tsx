@@ -1,6 +1,6 @@
 import CustomModal from "@/components/modal/customModal/CustomModal";
 import { Dispatch, SetStateAction } from "react";
-import ProductDetailsCompo from "./details/ProductDetailsCompo";
+import ProductDetailsCompo from "./ProductDetailsCompo";
 
 interface ProductDetailsModalProps {
   open: boolean;
@@ -15,6 +15,11 @@ export default function ProductDetailsModal({
   productId,
   onClose,
 }: ProductDetailsModalProps) {
+  // handle close the menu item and modal handler
+  const handleCloseModal = () => {
+    setOpen((prev) => !prev);
+    onClose();
+  };
   return (
     <CustomModal
       open={open}
@@ -25,7 +30,7 @@ export default function ProductDetailsModal({
         },
       }}
     >
-      <ProductDetailsCompo productId={productId} onClose={onClose} />
+      <ProductDetailsCompo productId={productId} onClose={handleCloseModal} />
     </CustomModal>
   );
 }

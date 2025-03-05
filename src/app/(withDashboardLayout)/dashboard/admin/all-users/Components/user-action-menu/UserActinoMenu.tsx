@@ -18,7 +18,6 @@ const UserActionMenu = ({
 
   const [isBlockOpen, setIsBlockOpen] = useState(false);
   const [isUnBlockOpen, setIsUnBlockOpen] = useState(false);
-
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const onClose = () => {

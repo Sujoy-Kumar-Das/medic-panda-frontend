@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import ActionMenu from "./action-menu/OpenProductActiconMenuButton";
+import ActionMenu from "./action-menu/ProductActionMenu";
 export const productColumns: GridColDef<any>[] = [
   {
     field: "index",
