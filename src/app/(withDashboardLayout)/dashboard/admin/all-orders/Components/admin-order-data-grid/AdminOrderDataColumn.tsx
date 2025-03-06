@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import ChangeOrderStatusModalButton from "../change-order-status-modal/ChangeOrderStatusModalButton";
+import OrderDetailsModalButton from "../order-details-modal/OrderDetailsModalButton";
 import OrderStatusChip from "./OrderStatusChip";
 
 export const AdminOrderDataColumn: GridColDef<any>[] = [
@@ -56,15 +57,11 @@ export const AdminOrderDataColumn: GridColDef<any>[] = [
     renderCell: ({ row }) => <ChangeOrderStatusModalButton orderId={row._id} />,
   },
   {
-    field: "Admin Order action menu",
+    field: "order details",
     headerName: "Action",
     headerAlign: "center",
     flex: 1,
     minWidth: 150,
-    renderCell: ({ row }) => (
-      <Typography align="center" py={2}>
-        Action
-      </Typography>
-    ),
+    renderCell: ({ row }) => <OrderDetailsModalButton orderId={row?._id} />,
   },
 ];

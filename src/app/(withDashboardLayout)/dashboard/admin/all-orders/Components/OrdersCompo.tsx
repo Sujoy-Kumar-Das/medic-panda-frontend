@@ -4,7 +4,6 @@ import OrderHeader from "./OrderHeader";
 import AdminOrderDataGrid from "./admin-order-data-grid/AdminOrderDataGrid";
 
 export default function OrdersCompo({ data }: { data: IOrder[] }) {
-  console.log(data);
   return (
     <Container>
       <OrderHeader />

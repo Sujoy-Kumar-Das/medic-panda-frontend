@@ -83,6 +83,13 @@ const orderApi = baseApi.injectEndpoints({
       }),
       providesTags: [TTagTypes.order],
     }),
+    getSingleOrderForAdmin: builder.query({
+      query: (id) => ({
+        url: `/order/${id}/admin`,
+        method: "GET",
+      }),
+      providesTags: [TTagTypes.order],
+    }),
     changeOrderStatus: builder.mutation({
       query: ({ id, data }) => ({
         url: `/order/change-status/${id}`,
@@ -116,4 +123,5 @@ export const {
   useDeleteOrderMutation,
   useGetAllOrdersForAdminQuery,
   useChangeOrderStatusMutation,
+  useGetSingleOrderForAdminQuery,
 } = orderApi;
