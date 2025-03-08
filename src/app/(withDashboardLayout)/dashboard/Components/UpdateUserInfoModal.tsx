@@ -1,12 +1,11 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
-import { IGenericErrorMessage } from "@/types";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import useUpdateUserInfo from "@/hooks/useUpdateUserInfo";
+import { Box, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { FieldValues } from "react-hook-form";
-import { toast } from "sonner";
 
 interface IUpdateUserInfo {
   open: boolean;
@@ -21,25 +20,15 @@ export default function UpdateUserInfoModal({
   label,
   name,
 }: IUpdateUserInfo) {
-  const [updateCustomerInfo, { isLoading, error }] =
-    useUpdateCustomerInfoMutation();
+  const { handleUpdateInfo, isLoading } = useUpdateUserInfo();
 
-  const handleUpdateInfo = async (value: FieldValues) => {
-    const res = await updateCustomerInfo(value).unwrap();
-
-    if (res._id) {
-      toast.success(`${res.name}'s information updated successfully.`);
-      setOpen((prev) => !prev);
-    }
-
-    if (error) {
-      const errorDetails = error as IGenericErrorMessage;
-      toast.error(errorDetails.message);
-    }
+  const handleUpdateInformation = async (value: FieldValues) => {
+    await handleUpdateInfo(value);
+    setOpen(false);
   };
 
   return (
-    <CustomModal open={open} setOpen={setOpen} closeBtn={false}>
+    <CustomModal open={open} setOpen={setOpen}>
       <Box>
         <Typography
           variant="h6"
@@ -50,7 +39,7 @@ export default function UpdateUserInfoModal({
           Update Your {label}
         </Typography>
 
-        <PandaForm onSubmit={handleUpdateInfo}>
+        <PandaForm onSubmit={handleUpdateInformation}>
           <PandaInputField
             type="text"
             name={name}
@@ -67,32 +56,12 @@ export default function UpdateUserInfoModal({
             }}
           />
 
-          <Button
+          <LoaderButton
+            isLoading={isLoading}
+            loadingText={`Updating ${label} info`}
             type="submit"
             fullWidth
-            variant="contained"
-            sx={{
-              mt: 2,
-              py: 1.5,
-              fontSize: "16px",
-              bgcolor: "primary.main",
-              color: "#fff",
-              borderRadius: 2,
-              boxShadow: "0px 6px 20px rgba(0, 123, 255, 0.2)",
-              transition: "all 0.3s ease-in-out",
-              "&:hover": {
-                bgcolor: "primary.dark",
-                boxShadow: "0px 8px 25px rgba(0, 123, 255, 0.3)",
-              },
-            }}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <CircularProgress size={24} sx={{ color: "#fff" }} />
-            ) : (
-              "Update"
-            )}
-          </Button>
+          >{`Update ${label} info`}</LoaderButton>
         </PandaForm>
       </Box>
     </CustomModal>
