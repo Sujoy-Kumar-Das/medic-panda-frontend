@@ -1,9 +1,6 @@
 "use client";
 
 import HandleLoadingErrorAndNoData from "@/components/hoc/HandleLoadingErrorAndNoData";
-import { useUpdateCustomerInfoMutation } from "@/redux/api/customer.api";
-import { IGenericErrorResponse } from "@/types";
-import { imageUploader } from "@/utils/imageUploader";
 import {
   CallOutlined as CallOutlinedIcon,
   HomeOutlined as HomeOutlinedIcon,
@@ -15,7 +12,6 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PublicIcon from "@mui/icons-material/Public";
 import {
   Box,
-  Button,
   Container,
   Grid,
   Paper,
@@ -23,9 +19,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 import { useState } from "react";
-import { toast } from "sonner";
+import UpdateUserImage from "./UpdateUserImage";
 import UpdateUserInfoModal from "./UpdateUserInfoModal";
 import UserInfoCard from "./UserInfoCard";
 
@@ -38,10 +33,6 @@ function UserInfoCompo({ data: user }: { data: any }) {
   // state for handle modal
   const [openModal, setOpenModal] = useState(false);
   const [currentField, setCurrentField] = useState<Field | null>(null);
-
-  // update user redux hook
-  const [updateCustomerImage, { error: imageError }] =
-    useUpdateCustomerInfoMutation();
 
   const handleOpenModal = (field: Field) => {
     setCurrentField(field);
@@ -88,36 +79,6 @@ function UserInfoCompo({ data: user }: { data: any }) {
     },
   ];
 
-  // Change image handler
-  const handleChangeImage = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-
-    if (!file) {
-      toast.error("No file selected. Please choose an image.");
-      return;
-    }
-
-    const imageURL = await imageUploader(file);
-
-    if (!imageURL) {
-      toast.error("Image upload failed. Please try again.");
-      return;
-    }
-
-    const res = await updateCustomerImage({ photo: imageURL }).unwrap();
-
-    if (res?._id) {
-      toast.success("Profile image uploaded successfully.");
-    }
-
-    if (imageError) {
-      const errorMessage = (imageError as IGenericErrorResponse).message;
-      toast.error(errorMessage);
-    }
-  };
-
   return (
     <Container>
       <Stack direction="row" justifyContent="center" mt={3} mb={4}>
@@ -136,68 +97,7 @@ function UserInfoCompo({ data: user }: { data: any }) {
           >
             <Stack direction="row" alignItems="center" gap={3}>
               {/* Image with upload hover */}
-              <Box
-                sx={{
-                  position: "relative",
-                  width: 100,
-                  height: 100,
-                  "&:hover .upload-btn": {
-                    opacity: 1,
-                    visibility: "visible",
-                  },
-                }}
-              >
-                <Image
-                  alt="User image"
-                  src={user?.photo}
-                  height={100}
-                  width={100}
-                  style={{
-                    width: 100,
-                    height: 100,
-                    boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.15)",
-                    border: "2px solid #ffffff",
-                    transition: "transform 0.3s ease-in-out",
-                    borderRadius: "50%",
-                  }}
-                />
-                <>
-                  <Box
-                    className="upload-btn"
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      opacity: 0,
-                      visibility: "hidden",
-                      transition: "opacity 0.3s ease-in-out",
-                    }}
-                  >
-                    <input
-                      accept="image/*"
-                      id="upload-image"
-                      type="file"
-                      name="photo"
-                      style={{ display: "none" }}
-                      onChange={handleChangeImage}
-                    />
-                    <label htmlFor="upload-image">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        component="span"
-                        sx={{
-                          padding: "6px 12px",
-                          borderRadius: "50px",
-                        }}
-                      >
-                        Change
-                      </Button>
-                    </label>
-                  </Box>
-                </>
-              </Box>
+              <UpdateUserImage photoLink={user?.photo} />
 
               {/* User Info */}
               <Box>

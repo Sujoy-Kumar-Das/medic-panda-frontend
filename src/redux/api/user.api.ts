@@ -87,6 +87,14 @@ const userApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [TTagTypes.user],
     }),
+    updateUserInfo: builder.mutation({
+      query: (data) => ({
+        url: `/user`,
+        method: "PATCH",
+        data,
+      }),
+      invalidatesTags: [TTagTypes.user],
+    }),
   }),
 });
 
@@ -101,4 +109,5 @@ export const {
   useBlockUserMutation,
   useUnblockUserMutation,
   useDeleteUserMutation,
+  useUpdateUserInfoMutation,
 } = userApi;

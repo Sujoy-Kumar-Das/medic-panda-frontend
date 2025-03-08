@@ -37,7 +37,7 @@ export default function EditProductForm({
     <>
       {!isLoading && (
         <PandaForm
-          resolver={zodResolver(updateProductValidationSchema)}
+          // resolver={zodResolver(updateProductValidationSchema)}
           onSubmit={handleAddProduct}
           defaultValues={defaultValues}
         >
