@@ -1,6 +1,9 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
-import randomUID from "@/utils/randomId";
 import CategoryModalButton from "./add-category-modal/CategoryModalButton";
+import {
+  categoryAllFilterOptions,
+  categoryShortcutFilterOptions,
+} from "./category.filter-item";
 
 export default function CategoryHeader() {
   const mainHeaderOptions = {
@@ -9,32 +12,11 @@ export default function CategoryHeader() {
     children: <CategoryModalButton />,
   };
 
-  const shortcutFilterOptions = [
-    {
-      id: randomUID(),
-      title: "All",
-      value: "",
-      query: "",
-    },
-    {
-      id: randomUID(),
-      title: "Recent",
-      value: "",
-      query: "",
-    },
-    {
-      id: randomUID(),
-      title: "Old",
-      value: "",
-      query: "",
-    },
-  ];
-
   return (
     <DashboardHeaderWithFIlterAndSearchBar
       mainHeaderOptions={mainHeaderOptions}
-      shortcutFilterOptions={{ items: shortcutFilterOptions }}
-      allFilterOptions={{ items: [] }}
+      shortcutFilterOptions={{ items: categoryShortcutFilterOptions }}
+      allFilterOptions={{ items: categoryAllFilterOptions }}
       searchbarOptions={{ query: "" }}
     />
   );
