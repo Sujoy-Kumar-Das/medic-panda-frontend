@@ -1,28 +1,17 @@
 "use client";
-import Loader from "@/components/shared/loader/Loader";
-import SearchBar from "@/components/shared/searchBar/SearchBar";
 import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
-import { ICategory } from "@/types";
+import { ICategory, IGenericErrorResponse } from "@/types";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
-import CreateCategoryModal from "./Components/CreateCategoryModal";
+import CategoryHOC from "./Components/CategoryHOC";
 
 export default function AllProductsPage() {
   const [createCategoryModal, setCreateCategoryModal] = useState(false);
-  const { data, isLoading } = useGetAllCategoriesQuery(undefined);
-  console.log(data);
+  const { data, isLoading, error } = useGetAllCategoriesQuery(undefined);
 
   const handleCreateCategoryModal = () => {
     setCreateCategoryModal((prev) => !prev);
@@ -120,47 +109,11 @@ export default function AllProductsPage() {
     },
   ];
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
-    <Container sx={{ py: 5 }}>
-      <Box bgcolor={"background.paper"} borderRadius={1} mb={2}>
-        <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateCategoryModal}
-          >
-            Create Category
-          </Button>
-          <SearchBar />
-        </Stack>
-      </Box>
-
-      <Box>
-        <DataGrid
-          rows={data || []}
-          columns={columns}
-          getRowId={(row) => row._id}
-          disableColumnSorting
-          disableColumnMenu
-          disableColumnResize
-          hideFooter
-          hideFooterPagination
-          hideFooterSelectedRowCount
-        />
-      </Box>
-
-      <CreateCategoryModal
-        open={createCategoryModal}
-        setOpen={setCreateCategoryModal}
-      />
-    </Container>
+    <CategoryHOC
+      data={data}
+      error={error as IGenericErrorResponse}
+      isLoading={isLoading}
+    />
   );
 }
