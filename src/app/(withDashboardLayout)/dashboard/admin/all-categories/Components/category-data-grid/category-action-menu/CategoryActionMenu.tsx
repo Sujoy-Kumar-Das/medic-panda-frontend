@@ -5,6 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import CategoryDetailsModal from "../../category-details-modal/CategoryDetailsModal";
+import CategoryDeleteModal from "../../category-modal-delete/CategoryDeleteModal";
 
 export default function CategoryActionMenu({
   category,
@@ -52,6 +53,15 @@ export default function CategoryActionMenu({
           setOpen={setDetails}
           onClose={handleMenuClose}
           category={category}
+        />
+      )}
+
+      {deleteModal && (
+        <CategoryDeleteModal
+          open={deleteModal}
+          setOpen={setDeleteModal}
+          onClose={handleMenuClose}
+          categoryId={category._id}
         />
       )}
     </>

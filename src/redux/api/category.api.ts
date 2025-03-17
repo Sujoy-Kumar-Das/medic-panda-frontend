@@ -1,3 +1,4 @@
+import { TTagTypes } from "../tag-types";
 import { baseApi } from "./base.api";
 
 const categoryApi = baseApi.injectEndpoints({
@@ -8,12 +9,14 @@ const categoryApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
+      invalidatesTags: [TTagTypes.category],
     }),
     getAllCategories: builder.query({
       query: () => ({
         url: "/category",
         method: "GET",
       }),
+      providesTags: [TTagTypes.category],
     }),
     getSingleCategory: builder.query({
       query: (id) => {
@@ -22,6 +25,7 @@ const categoryApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: [TTagTypes.category],
     }),
     editCategory: builder.mutation({
       query: ({ id, data }) => ({
@@ -29,12 +33,14 @@ const categoryApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
+      invalidatesTags: [TTagTypes.category],
     }),
     deleteCategory: builder.mutation({
       query: (id) => ({
         url: `/category/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: [TTagTypes.category],
     }),
   }),
 });
