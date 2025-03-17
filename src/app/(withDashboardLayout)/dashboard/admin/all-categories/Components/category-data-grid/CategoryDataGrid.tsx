@@ -1,7 +1,12 @@
+import { ICategory } from "@/types";
 import { DataGrid } from "@mui/x-data-grid";
 import { CategoryColumns } from "./categoryColumns";
 
-export default function CategoryDataGrid({ categories }) {
+export default function CategoryDataGrid({
+  categories,
+}: {
+  categories: ICategory[];
+}) {
   return (
     <DataGrid
       rows={categories}
