@@ -1,6 +1,7 @@
 import formatOrderDate from "@/utils/format.order.date";
 import { Chip, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
+import CategoryActionMenu from "./category-action-menu/CategoryActionMenu";
 
 export const CategoryColumns: GridColDef[] = [
   {
@@ -54,5 +55,13 @@ export const CategoryColumns: GridColDef[] = [
         {row.createdAt ? formatOrderDate(row.createdAt) : "N/A"}
       </Typography>
     ),
+  },
+  {
+    field: "action",
+    headerName: "Action",
+    width: 180,
+    headerAlign: "center",
+    align: "center",
+    renderCell: ({ row }) => <CategoryActionMenu category={row} />,
   },
 ];
