@@ -18,7 +18,7 @@ export default function CategoryDeleteButton({
     <LoaderButton
       onClick={() => handleDeleteCategory(id)}
       isLoading={isLoading}
-      loadingText="Deleting"
+      loadingText="Deleting..."
     >
       Delete
     </LoaderButton>

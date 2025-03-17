@@ -28,13 +28,16 @@ const categoryApi = baseApi.injectEndpoints({
       providesTags: [TTagTypes.category],
     }),
     editCategory: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/category/${id}`,
-        method: "PATCH",
-        body: data,
-      }),
+      query: ({ id, data }) => {
+        return {
+          url: `/category/${id}`,
+          method: "PATCH",
+          data,
+        };
+      },
       invalidatesTags: [TTagTypes.category],
     }),
+
     deleteCategory: builder.mutation({
       query: (id) => ({
         url: `/category/${id}`,
