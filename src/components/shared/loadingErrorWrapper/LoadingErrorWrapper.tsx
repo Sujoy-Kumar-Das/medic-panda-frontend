@@ -12,12 +12,16 @@ export default function LoadingErrorWrapper({
   // Safely cast the error to IGenericErrorResponse
   const error = isGenericErrorResponse(query.error) ? query.error : undefined;
 
+  const loading = query.isLoading || query.isFetching;
+
   // Handle loading state
-  if (query.isLoading) return LoaderComponent;
+  if (loading) return LoaderComponent;
 
   // Handle error state
   if (query.isError) {
-    return ErrorComponent || <ErrorPage error={error} />;
+    return (
+      ErrorComponent || <ErrorPage error={error} refetch={query.refetch} />
+    );
   }
 
   // Return children when successful
