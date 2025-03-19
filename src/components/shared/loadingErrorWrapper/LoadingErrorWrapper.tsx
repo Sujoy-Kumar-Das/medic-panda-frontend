@@ -12,6 +12,7 @@ export default function LoadingErrorWrapper({
   // Safely cast the error to IGenericErrorResponse
   const error = isGenericErrorResponse(query.error) ? query.error : undefined;
 
+  // handle the loading and refetch state while fetching
   const loading = query.isLoading || query.isFetching;
 
   // Handle loading state
