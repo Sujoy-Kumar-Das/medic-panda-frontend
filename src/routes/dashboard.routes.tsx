@@ -1,7 +1,6 @@
 import { USER_ROLE } from "@/constants/user.role";
 import { IDashboardRoute } from "@/types";
 import { ShoppingCartCheckout } from "@mui/icons-material";
-import AddIcon from "@mui/icons-material/Add";
 import BorderAllOutlinedIcon from "@mui/icons-material/BorderAllOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -10,7 +9,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import MergeTypeIcon from "@mui/icons-material/MergeType";
 import PaidIcon from "@mui/icons-material/Paid";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import SecurityIcon from "@mui/icons-material/Security";
@@ -77,24 +75,11 @@ const dashboardRoutes: IDashboardRoute[] = [
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
   },
   {
-    text: "Variants",
-    link: "/dashboard/admin/all-variants",
-    icon: <MergeTypeIcon />,
-    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
-  },
-  {
-    text: "Companies",
-    link: "/dashboard/admin/all-companies",
+    text: "Manufacturer",
+    link: "/dashboard/admin/manufacturer",
     icon: <FactoryIcon />,
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
   },
-  {
-    text: "Create Product",
-    link: "/dashboard/admin/create-product",
-    icon: <AddIcon />,
-    access: [USER_ROLE.admin, USER_ROLE.superAdmin],
-  },
-
   {
     text: "Orders",
     link: "/dashboard/admin/all-orders",
