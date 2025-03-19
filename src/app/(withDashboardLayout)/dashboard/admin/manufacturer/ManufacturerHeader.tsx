@@ -1,12 +1,13 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
 import randomUID from "@/utils/randomId";
+import AddManufacturerButton from "./add-manufacturer-modal/AddManufacturerButton";
 
 export default function ManufacturerHeader() {
   const mainHeaderOptions = {
     title: "Manufacturer Management",
     subtitle:
       "View, add, and manage manufacturers for your online pharmacy effortlessly",
-    children: <h1>OK fine</h1>,
+    children: <AddManufacturerButton />,
   };
   const shortcutFilterOptions = [
     { id: randomUID(), query: "", title: "All", value: "" },

@@ -3,11 +3,13 @@ import { baseApi } from "./base.api";
 const manufactureApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createManufacture: builder.mutation({
-      query: (data) => ({
-        url: "/manufacturer",
-        method: "POST",
-        body: data,
-      }),
+      query: (data) => {
+        return {
+          url: "/manufacturer",
+          method: "POST",
+          data,
+        };
+      },
     }),
     getAllManufacture: builder.query({
       query: () => ({
