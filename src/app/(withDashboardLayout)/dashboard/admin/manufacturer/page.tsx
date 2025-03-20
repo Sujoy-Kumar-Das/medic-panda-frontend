@@ -1,18 +1,10 @@
 "use client";
 
-import LoadingErrorWrapper from "@/components/shared/loadingErrorWrapper/LoadingErrorWrapper";
 import { useGetAllManufactureQuery } from "@/redux/api/manufacture.api";
-import { Container } from "@mui/material";
-import ManufacturerHeader from "./ManufacturerHeader";
+import ManufacturerHOC from "./ManufacturerHOC";
 
 export default function ManufacturerPage() {
-  const { data, ...query } = useGetAllManufactureQuery(undefined);
+  const query = useGetAllManufactureQuery(undefined);
 
-  return (
-    <LoadingErrorWrapper query={query}>
-      <Container>
-        <ManufacturerHeader />
-      </Container>
-    </LoadingErrorWrapper>
-  );
+  return <ManufacturerHOC query={query} />;
 }

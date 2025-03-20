@@ -1,6 +1,7 @@
 import { isGenericErrorResponse } from "@/utils/isGenericErrorResponseTypeGuard";
 import ErrorPage from "../error/Error";
 import Loader from "../loader/Loader";
+import NoDataFound from "../notFound/NoDataFound";
 import { LoadingErrorWrapperProps } from "./loadingErrorWrapper.type";
 
 export default function LoadingErrorWrapper({
@@ -24,6 +25,16 @@ export default function LoadingErrorWrapper({
       ErrorComponent || <ErrorPage error={error} refetch={query.refetch} />
     );
   }
+
+  // if (!data || (Array.isArray(data) && data.length === 0)) {
+  //   return (
+  //     <NoDataFound
+  //       link={noDataLink}
+  //       message={noDataMessage}
+  //       text={noDataText}
+  //     />
+  //   );
+  // }
 
   // Return children when successful
   return <>{children}</>;

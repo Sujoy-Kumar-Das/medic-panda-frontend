@@ -1,16 +1,11 @@
-import { IProduct } from "@/types";
 import { DataGrid } from "@mui/x-data-grid";
-import { productColumns } from "./ProductColumns";
+import { ManufacturerColumns } from "./ManufacturerColumns";
 
-export default function ProductsDataGrid({
-  products,
-}: {
-  products: IProduct[];
-}) {
+export default function ManufacturerDataGrid({ manufacturers }) {
   return (
     <DataGrid
-      rows={products || []}
-      columns={productColumns}
+      rows={manufacturers || []}
+      columns={ManufacturerColumns}
       getRowId={(row: any) => row._id}
       disableColumnSorting
       disableColumnMenu

@@ -10,9 +10,9 @@ export default function ManufacturerHeader() {
     children: <AddManufacturerButton />,
   };
   const shortcutFilterOptions = [
-    { id: randomUID(), query: "", title: "All", value: "" },
-    { id: randomUID(), query: "createdAt", title: "New", value: "" },
-    { id: randomUID(), query: "createdAt", title: "Old", value: "" },
+    { id: randomUID(), query: "", title: "All", value: "ffff" },
+    { id: randomUID(), query: "createdAt", title: "New", value: "aaaa" },
+    { id: randomUID(), query: "createdAt", title: "Old", value: "hhhhh" },
   ];
 
   return (
