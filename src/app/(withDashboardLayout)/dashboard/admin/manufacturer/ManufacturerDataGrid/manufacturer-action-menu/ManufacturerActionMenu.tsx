@@ -4,7 +4,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useState } from "react";
+import ManufacturerDeleteModal from "../../manufacturer-delete-modal/ManufacturerDeleteModal";
 import ManufacturerDetailsModal from "../../manufaturer-details-modal/ManufacturerDetailsModal";
+import ManufacturerEditModal from "../../manufaturer-edit-modal/ManufacturerEditModal";
 
 interface ManufacturerActionMenuProps {
   manufacturer: IManufacturer;
@@ -56,7 +58,7 @@ export default function ManufacturerActionMenu({
       )}
 
       {isEditOpen && (
-        <ManufacturerDetailsModal
+        <ManufacturerEditModal
           open={isEditOpen}
           setOpen={setIsEditOpen}
           onClose={handleClose}
@@ -64,10 +66,11 @@ export default function ManufacturerActionMenu({
       )}
 
       {isDeleteOpen && (
-        <ManufacturerDetailsModal
+        <ManufacturerDeleteModal
           open={isDeleteOpen}
           setOpen={setIsDeleteOpen}
           onClose={handleClose}
+          id={manufacturer._id}
         />
       )}
     </>

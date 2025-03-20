@@ -10,6 +10,7 @@ export enum TTagTypes {
   review = "review",
   product = "product",
   category = "category",
+  manufacture = "manufacture",
 }
 
 export const tagTypesList = [

@@ -1,3 +1,4 @@
+import { TTagTypes } from "../tag-types";
 import { baseApi } from "./base.api";
 
 const manufactureApi = baseApi.injectEndpoints({
@@ -10,12 +11,14 @@ const manufactureApi = baseApi.injectEndpoints({
           data,
         };
       },
+      invalidatesTags: [TTagTypes.manufacture],
     }),
     getAllManufacture: builder.query({
       query: () => ({
         url: "/manufacturer",
         method: "GET",
       }),
+      providesTags: [TTagTypes.manufacture],
     }),
     getSingleManufacture: builder.query({
       query: (id) => {
@@ -24,19 +27,22 @@ const manufactureApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: [TTagTypes.manufacture],
     }),
     editManufacture: builder.mutation({
       query: ({ id, data }) => ({
         url: `/manufacturer/${id}`,
         method: "PATCH",
-        body: data,
+        data,
       }),
+      invalidatesTags: [TTagTypes.manufacture],
     }),
     deleteManufacture: builder.mutation({
       query: (id) => ({
         url: `/manufacturer/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: [TTagTypes.manufacture],
     }),
   }),
 });

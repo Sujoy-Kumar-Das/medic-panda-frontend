@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 interface CancelButtonProps {
   onClose: () => void;
-  label?: string;
+  children?: string;
   cancelMessage?: string;
   fullWidth?: boolean;
   sxProps?: SxProps;
@@ -11,10 +11,10 @@ interface CancelButtonProps {
 
 export default function CancelButton({
   onClose,
-  label = "Cancel",
+  children = "Cancel",
   cancelMessage = "Action canceled successfully!",
   fullWidth = false,
-  sxProps,
+  sxProps = {}, // Ensure sxProps defaults to an empty object
 }: CancelButtonProps) {
   const handleCancel = () => {
     toast.success(cancelMessage);
@@ -26,9 +26,13 @@ export default function CancelButton({
       variant="outlined"
       color="secondary"
       onClick={handleCancel}
-      sx={{ width: fullWidth ? "100%" : 120, ...sxProps }}
+      sx={{
+        width: fullWidth ? "100%" : "auto",
+        whiteSpace: "nowrap",
+        ...sxProps,
+      }}
     >
-      {label}
+      {children}
     </Button>
   );
 }

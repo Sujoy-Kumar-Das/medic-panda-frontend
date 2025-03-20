@@ -5,7 +5,7 @@ import ManufacturerHeader from "./ManufacturerHeader";
 export default function ManufacturerCompo({ data }) {
   console.log(data);
   return (
-    <Container>
+    <Container sx={{ pb: 3 }}>
       <ManufacturerHeader />
       <ManufacturerDataGrid manufacturers={data} />
     </Container>
