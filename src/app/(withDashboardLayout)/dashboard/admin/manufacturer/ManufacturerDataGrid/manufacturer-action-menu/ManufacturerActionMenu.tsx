@@ -1,11 +1,18 @@
 import CustomActionMenu from "@/components/shared/custom-action-menu/CustomActionMenu";
+import { IManufacturer } from "@/types/Imanufacturer.type";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useState } from "react";
 import ManufacturerDetailsModal from "../../manufaturer-details-modal/ManufacturerDetailsModal";
 
-export default function ManufacturerActionMenu({ manufacturer }) {
+interface ManufacturerActionMenuProps {
+  manufacturer: IManufacturer;
+}
+
+export default function ManufacturerActionMenu({
+  manufacturer,
+}: ManufacturerActionMenuProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -44,6 +51,7 @@ export default function ManufacturerActionMenu({ manufacturer }) {
           open={isDetailsOpen}
           setOpen={setIsDetailsOpen}
           onClose={handleClose}
+          manufacturer={manufacturer}
         />
       )}
 
