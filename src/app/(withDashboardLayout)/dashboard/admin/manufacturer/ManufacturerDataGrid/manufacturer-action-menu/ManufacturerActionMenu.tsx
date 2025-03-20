@@ -62,6 +62,7 @@ export default function ManufacturerActionMenu({
           open={isEditOpen}
           setOpen={setIsEditOpen}
           onClose={handleClose}
+          manufacturer={manufacturer}
         />
       )}
 

@@ -1,21 +1,15 @@
 "use client";
 import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
-import { ICategory, IGenericErrorResponse } from "@/types";
+import { ICategory } from "@/types";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
 import CategoryHOC from "./Components/CategoryHOC";
 
-export default function AllProductsPage() {
-  const [createCategoryModal, setCreateCategoryModal] = useState(false);
-  const { data, isLoading, error } = useGetAllCategoriesQuery(undefined);
-
-  const handleCreateCategoryModal = () => {
-    setCreateCategoryModal((prev) => !prev);
-  };
+export default function AllCategoriesPage() {
+  const query = useGetAllCategoriesQuery(undefined);
 
   const columns: any = [
     {
@@ -109,11 +103,5 @@ export default function AllProductsPage() {
     },
   ];
 
-  return (
-    <CategoryHOC
-      data={data}
-      error={error as IGenericErrorResponse}
-      isLoading={isLoading}
-    />
-  );
+  return <CategoryHOC query={query} />;
 }

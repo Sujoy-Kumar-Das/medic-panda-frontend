@@ -1,5 +1,4 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Box, Typography } from "@mui/material";
+import FormModal from "@/components/modal/FormModal/FormModal";
 import { Dispatch, SetStateAction } from "react";
 import AddManufacturerForm from "./AddManufacturerForm";
 
@@ -15,25 +14,14 @@ export default function AddManufacturerModal({
   onClose,
 }: AddManufacturerModalProps) {
   return (
-    <CustomModal open={open} setOpen={setOpen}>
-      <Box
-        sx={{
-          p: 4,
-          bgcolor: "background.default",
-          borderRadius: 2,
-          mb: 3,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-        }}
-      >
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
-          Add Manufacturer
-        </Typography>
-        <CustomModal.CloseButton onClose={onClose} />
-      </Box>
-
+    <FormModal
+      open={open}
+      setOpen={setOpen}
+      title="Add Manufacturer"
+      subtitle="Provide the necessary information to add a new manufacturer"
+      onClose={onClose}
+    >
       <AddManufacturerForm onClose={onClose} />
-    </CustomModal>
+    </FormModal>
   );
 }

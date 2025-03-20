@@ -30,10 +30,10 @@ function HandleLoadingErrorAndNoData<
     LoaderCompo,
     ErrorCompo,
   }: WithLoadingAndErrorProps<T, QueryArg, BaseQuery>) {
-    const { data, isLoading, isFetching, isError, error, refetch } = query;
+    const { data, isLoading, isError, error, refetch } = query;
 
     // Handle loading state
-    if (isLoading || isFetching) {
+    if (isLoading) {
       return <>{LoaderCompo ? <LoaderCompo /> : <Loader />}</>;
     }
 
