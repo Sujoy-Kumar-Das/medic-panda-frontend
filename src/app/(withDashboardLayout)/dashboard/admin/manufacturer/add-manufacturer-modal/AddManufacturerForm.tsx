@@ -12,11 +12,10 @@ export default function AddManufacturerForm({
 }: {
   onClose: () => void;
 }) {
-  const { handlerFunc, isLoading } = useAddManufacturer();
+  const { handlerFunc, isLoading } = useAddManufacturer(onClose);
 
   const handleCreateManufacturer = async (data: FieldValues) => {
     await handlerFunc(data);
-    onClose();
   };
 
   return (

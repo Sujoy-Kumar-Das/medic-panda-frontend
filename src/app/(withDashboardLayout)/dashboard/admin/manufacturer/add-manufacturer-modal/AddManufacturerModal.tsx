@@ -6,15 +6,14 @@ import AddManufacturerForm from "./AddManufacturerForm";
 interface AddManufacturerModalProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 export default function AddManufacturerModal({
   open,
   setOpen,
+  onClose,
 }: AddManufacturerModalProps) {
-  const handleCloseModal = () => {
-    setOpen((prev) => !prev);
-  };
   return (
     <CustomModal open={open} setOpen={setOpen}>
       <Box
@@ -31,10 +30,10 @@ export default function AddManufacturerModal({
         <Typography variant="h5" fontWeight="bold" gutterBottom>
           Add Manufacturer
         </Typography>
-        <CustomModal.CloseButton onClose={handleCloseModal} />
+        <CustomModal.CloseButton onClose={onClose} />
       </Box>
 
-      <AddManufacturerForm onClose={handleCloseModal} />
+      <AddManufacturerForm onClose={onClose} />
     </CustomModal>
   );
 }

@@ -1,4 +1,4 @@
-import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
+import { IGenericErrorResponse } from "@/types";
 import axios, { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({ withCredentials: true });
@@ -17,15 +17,9 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  //@ts-ignore
+  // @ts-ignore
   function (response: AxiosResponse) {
-    const transformedResponse: ResponseSuccessType = {
-      success: response?.data?.success,
-      data: response?.data?.data,
-      meta: response?.data?.meta,
-      message: response?.data?.message,
-    };
-    return transformedResponse;
+    return { data: response?.data?.data };
   },
   function (error) {
     const errorResponseData = error?.response?.data || {};

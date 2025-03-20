@@ -12,7 +12,13 @@ export default function AddManufacturerButton() {
     <>
       <Button onClick={handleManufacturerModal}>Add Manufacturer</Button>
 
-      {open && <AddManufacturerModal open={open} setOpen={setOpen} />}
+      {open && (
+        <AddManufacturerModal
+          open={open}
+          setOpen={setOpen}
+          onClose={handleManufacturerModal}
+        />
+      )}
     </>
   );
 }
