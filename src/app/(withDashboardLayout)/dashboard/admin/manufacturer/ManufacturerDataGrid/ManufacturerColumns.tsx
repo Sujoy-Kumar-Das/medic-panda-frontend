@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
+import ManufacturerActionMenu from "./manufacturer-action-menu/ManufacturerActionMenu";
 export const ManufacturerColumns: GridColDef<any>[] = [
   {
     field: "index",
@@ -49,12 +50,12 @@ export const ManufacturerColumns: GridColDef<any>[] = [
       </Typography>
     ),
   },
-  // {
-  //   field: "actions",
-  //   headerName: "Action",
-  //   flex: 1,
-  //   minWidth: 100,
-  //   headerAlign: "center",
-  //   renderCell: ({ row }) => <ActionMenu id={row._id} />,
-  // },
+  {
+    field: "actions",
+    headerName: "Action",
+    flex: 1,
+    minWidth: 100,
+    headerAlign: "center",
+    renderCell: ({ row }) => <ManufacturerActionMenu manufacturer={row} />,
+  },
 ];

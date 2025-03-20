@@ -7,7 +7,6 @@ export default function ManufacturerCompo({ data }) {
   return (
     <Container>
       <ManufacturerHeader />
-
       <ManufacturerDataGrid manufacturers={data} />
     </Container>
   );
