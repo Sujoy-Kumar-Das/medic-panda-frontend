@@ -1,4 +1,5 @@
 import CustomActionMenu from "@/components/shared/custom-action-menu/CustomActionMenu";
+import useToggleState from "@/hooks/useToggleState";
 import { ICategory } from "@/types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -14,9 +15,10 @@ export default function CategoryActionMenu({
   category: ICategory;
 }) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [details, setDetails] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
+
+  const detailsModal = useToggleState();
+  const editModal = useToggleState();
+  const deleteModal = useToggleState();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -26,17 +28,17 @@ export default function CategoryActionMenu({
     {
       icon: <InfoIcon />,
       label: "Details",
-      onClick: () => setDetails(true),
+      onClick: detailsModal.onOpen,
     },
     {
       icon: <EditIcon />,
       label: "Edit",
-      onClick: () => setEdit(true),
+      onClick: editModal.onOpen,
     },
     {
       icon: <DeleteIcon />,
       label: "Delete",
-      onClick: () => setDeleteModal(true),
+      onClick: deleteModal.onOpen,
     },
   ];
 
@@ -48,29 +50,30 @@ export default function CategoryActionMenu({
         items={items}
       />
 
-      {details && (
+      {detailsModal.state && (
         <CategoryDetailsModal
-          open={details}
-          setOpen={setDetails}
+          open={detailsModal.state}
+          onModalClose={detailsModal.onClose}
           onClose={handleMenuClose}
           category={category}
         />
       )}
 
-      {deleteModal && (
-        <CategoryDeleteModal
-          open={deleteModal}
-          setOpen={setDeleteModal}
-          onClose={handleMenuClose}
-          categoryId={category._id}
-        />
-      )}
-      {edit && (
+      {editModal.state && (
         <EditCategoryModal
-          open={edit}
-          setOpen={setEdit}
+          open={editModal.state}
+          onModalClose={editModal.onClose}
           onClose={handleMenuClose}
           category={category}
+        />
+      )}
+
+      {deleteModal.state && (
+        <CategoryDeleteModal
+          open={deleteModal.state}
+          onModalClose={deleteModal.onClose}
+          onClose={handleMenuClose}
+          categoryId={category._id}
         />
       )}
     </>

@@ -1,36 +1,35 @@
 import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
 import CancelButton from "@/components/ui/buttons/CancelButton";
-import { Dispatch, SetStateAction } from "react";
 import CategoryDeleteButton from "./CategoryDeleteButton";
 
 interface CategoryDeleteModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
   categoryId: string;
 }
 
 export default function CategoryDeleteModal({
   open,
-  setOpen,
+  onModalClose,
   onClose,
   categoryId,
 }: CategoryDeleteModalProps) {
   const handleCancelDelete = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
 
   return (
     <DeleteModal
       open={open}
-      setOpen={setOpen}
+      onClose={handleCancelDelete}
       title="Are you sure?"
       message="This action is permanent and cannot be undone."
     >
       {/* Action Buttons */}
-      <CancelButton onClose={handleCancelDelete} />
-      <CategoryDeleteButton id={categoryId} onclose={handleCancelDelete} />
+      <CancelButton onClose={handleCancelDelete}>Cancel</CancelButton>
+      <CategoryDeleteButton id={categoryId} onClose={handleCancelDelete} />
     </DeleteModal>
   );
 }

@@ -2,28 +2,27 @@ import CustomModal from "@/components/modal/customModal/CustomModal";
 import { ICategory } from "@/types";
 import { Avatar, Box, Chip, Divider, Typography } from "@mui/material";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
 
 interface CategoryDetailsModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
   category: ICategory;
 }
 
 export default function CategoryDetailsModal({
   open,
-  setOpen,
+  onModalClose,
   onClose,
   category,
 }: CategoryDetailsModalProps) {
   const handleCloseModal = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
 
   return (
-    <CustomModal open={open} setOpen={setOpen}>
+    <CustomModal open={open} onClose={handleCloseModal}>
       {/* Centered Box */}
       <Box
         sx={{

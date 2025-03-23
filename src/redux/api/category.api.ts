@@ -12,9 +12,10 @@ const categoryApi = baseApi.injectEndpoints({
       invalidatesTags: [TTagTypes.category],
     }),
     getAllCategories: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/category",
         method: "GET",
+        params,
       }),
       providesTags: [TTagTypes.category],
     }),

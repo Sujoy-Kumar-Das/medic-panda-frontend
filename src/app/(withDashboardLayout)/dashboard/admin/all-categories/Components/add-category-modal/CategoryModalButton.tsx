@@ -1,18 +1,20 @@
+import useToggleState from "@/hooks/useToggleState";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import AddCategoryModal from "./AddCategoryModal";
 
 export default function CategoryModalButton() {
-  const [open, setOpen] = useState(false);
+  const addCategoryModal = useToggleState();
 
-  const handleCategoryModal = () => {
-    setOpen((prev) => !prev);
-  };
   return (
     <>
-      <Button onClick={handleCategoryModal}>Add Category</Button>
+      <Button onClick={addCategoryModal.onOpen}>Add Category</Button>
 
-      {open && <AddCategoryModal open={open} setOpen={setOpen} />}
+      {addCategoryModal.state && (
+        <AddCategoryModal
+          open={addCategoryModal.state}
+          onClose={addCategoryModal.onClose}
+        />
+      )}
     </>
   );
 }

@@ -3,16 +3,15 @@ import useDeleteCategory from "@/hooks/useDeleteCategory";
 
 export default function CategoryDeleteButton({
   id,
-  onclose,
+  onClose,
 }: {
   id: string;
-  onclose: () => void;
+  onClose: () => void;
 }) {
-  const { handlerFunc, isLoading } = useDeleteCategory();
+  const { handlerFunc, isLoading } = useDeleteCategory(onClose);
 
   const handleDeleteCategory = async (id: string) => {
     await handlerFunc(id);
-    onclose();
   };
   return (
     <LoaderButton

@@ -3,10 +3,10 @@ import { imageUploader } from "@/utils/imageUploader";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
-export default function useAddCategory() {
-  const [createCategory, { isLoading: creatingCategory, ...apiResponse }] =
-    useCreateCategoryMutation();
+export default function useAddCategory(onClose: () => void) {
+  const [createCategory, apiResponse] = useCreateCategoryMutation();
   const [uploading, setUploading] = useState(false);
 
   const handleFunc = async (data: FieldValues) => {
@@ -19,16 +19,10 @@ export default function useAddCategory() {
         return;
       }
 
-      const res = await createCategory({
+      await createCategory({
         ...data,
         thumbnail: uploadedImage,
       }).unwrap();
-
-      if (res?._id) {
-        toast.success("Category created successfully.");
-      } else {
-        toast.error("Failed to create category.");
-      }
     } catch (error) {
       toast.error("An error occurred while creating the category.");
     } finally {
@@ -36,9 +30,16 @@ export default function useAddCategory() {
     }
   };
 
+  useApiMutationResponseHandler({
+    successMessage: "Category created successfully.",
+    apiResponse,
+    onClose,
+  });
+
+  apiResponse.isLoading = uploading || apiResponse.isLoading;
+
   return {
     handleFunc,
-    isLoading: uploading || creatingCategory,
     ...apiResponse,
   };
 }

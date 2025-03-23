@@ -1,39 +1,32 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Box, Typography } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import FormModal from "@/components/modal/FormModal/FormModal";
+import { ICategory } from "@/types";
 import EditCategoryForm from "./EditCategoryForm";
 
 interface EditCategoryModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
-  category: { id: string; name: string };
+  category: ICategory;
 }
 
 export default function EditCategoryModal({
   open,
-  setOpen,
+  onModalClose,
   onClose,
   category,
 }: EditCategoryModalProps) {
   const handleCloseModal = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
   return (
-    <CustomModal open={open} setOpen={setOpen}>
-      <Box sx={{ p: 4, maxWidth: 500, width: "100%", mx: "auto" }}>
-        {/* Modal Title */}
-        <Typography
-          variant="h6"
-          align="center"
-          sx={{ mb: 2, fontWeight: "bold" }}
-        >
-          Edit Category
-        </Typography>
-
-        <EditCategoryForm category={category} onClose={handleCloseModal} />
-      </Box>
-    </CustomModal>
+    <FormModal
+      title="Edit Category"
+      subtitle="Modify category details to ensure accurate classification of medicines"
+      open={open}
+      onClose={handleCloseModal}
+    >
+      <EditCategoryForm category={category} onClose={handleCloseModal} />
+    </FormModal>
   );
 }

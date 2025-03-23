@@ -6,6 +6,7 @@ import {
   BaseQueryFn,
   TypedUseQueryHookResult,
 } from "@reduxjs/toolkit/query/react";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 interface WithLoadingAndErrorProps<T, QueryArg, BaseQuery extends BaseQueryFn> {
@@ -25,12 +26,16 @@ function HandleLoadingErrorAndNoData<
   return function WithLoadingAndErrorWrapper({
     query,
     noDataMessage = "No data found.",
-    noDataLink = "/",
+    noDataLink,
     noDataText = "Go back",
     LoaderCompo,
     ErrorCompo,
   }: WithLoadingAndErrorProps<T, QueryArg, BaseQuery>) {
     const { data, isLoading, isError, error, refetch } = query;
+
+    const path = usePathname();
+
+    console.log(path);
 
     // Handle loading state
     if (isLoading) {
@@ -55,7 +60,7 @@ function HandleLoadingErrorAndNoData<
     if (!data || (Array.isArray(data) && data.length === 0)) {
       return (
         <NoDataFound
-          link={noDataLink}
+          link={noDataLink || path}
           message={noDataMessage}
           text={noDataText}
         />

@@ -24,11 +24,10 @@ export default function EditCategoryForm({
   onClose,
   category,
 }: EditCategoryFormProps) {
-  const { handlerFunc, isLoading } = useEditCategory();
+  const { handlerFunc, isLoading } = useEditCategory(onClose);
 
   const handleEditCategory = async (data: FieldValues) => {
     await handlerFunc(category._id, data);
-    onClose();
   };
 
   //   default value
@@ -48,7 +47,7 @@ export default function EditCategoryForm({
         alignItems={"center"}
         mt={3}
       >
-        <CancelButton onClose={onClose} />
+        <CancelButton onClose={onClose}>Cancel</CancelButton>
         <LoaderButton
           loadingText="Updating..."
           type="submit"
