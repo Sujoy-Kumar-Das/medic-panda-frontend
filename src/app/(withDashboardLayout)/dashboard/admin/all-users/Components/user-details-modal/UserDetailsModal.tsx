@@ -1,32 +1,32 @@
 import CustomModal from "@/components/modal/customModal/CustomModal";
 import { useGetSingleUserQuery } from "@/redux/api/user.api";
 import { Typography } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
 import UserDetailCloseButton from "./UserDetailCloseButton";
 import UserDetailsCard from "./UserDetailsCard";
 import UserDetailsCardSkeleton from "./UserDetailsCardSkeleton";
 
 interface UserDetailsModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
   userId: string;
 }
 
 export default function UserDetailsModal({
   open,
-  setOpen,
+  onModalClose,
   onClose,
   userId,
 }: UserDetailsModalProps) {
   const { data, isLoading } = useGetSingleUserQuery({ id: userId });
 
   const handleClose = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
+
   return (
-    <CustomModal open={open} setOpen={setOpen}>
+    <CustomModal open={open} onClose={onModalClose}>
       {/* Modal Title */}
       <Typography
         variant="h5"

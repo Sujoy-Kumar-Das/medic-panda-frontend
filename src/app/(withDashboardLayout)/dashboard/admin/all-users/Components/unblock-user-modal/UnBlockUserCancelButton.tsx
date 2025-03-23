@@ -8,10 +8,8 @@ export default function UnBlockUserCancelButton({
   onClose,
 }: UnBlockUserCancelButtonProps) {
   return (
-    <CancelButton
-      onClose={onClose}
-      cancelMessage="Unblock action canceled."
-      label="Cancel"
-    />
+    <CancelButton onClose={onClose} cancelMessage="Unblock action canceled.">
+      Cancel
+    </CancelButton>
   );
 }

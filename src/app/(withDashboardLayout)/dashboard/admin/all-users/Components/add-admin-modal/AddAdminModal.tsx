@@ -1,53 +1,20 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Divider, Stack, Typography } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import FormModal from "@/components/modal/FormModal/FormModal";
 import AddAdminForm from "./AddAdminForm";
 
 interface AddAdminModalProps {
-  openAddAdminModal: boolean;
-  setOpenAddAdminModal: Dispatch<SetStateAction<boolean>>;
+  open: boolean;
+  onClose: () => void;
 }
 
-export default function AddAdminModal({
-  openAddAdminModal,
-  setOpenAddAdminModal,
-}: AddAdminModalProps) {
-  const handleCloseAdminModal = () => {
-    setOpenAddAdminModal(false);
-  };
-
+export default function AddAdminModal({ open, onClose }: AddAdminModalProps) {
   return (
-    <CustomModal open={openAddAdminModal} setOpen={setOpenAddAdminModal}>
-      <Stack spacing={2} alignItems="center">
-        <Stack
-          direction="row"
-          width="100%"
-          alignItems="center"
-          justifyContent="center"
-          position="relative"
-        >
-          {/* Close Button at Top Right */}
-          <CustomModal.CloseButton
-            sxProps={{
-              position: "absolute",
-              right: 0,
-            }}
-            onClose={handleCloseAdminModal}
-          />
-
-          {/* Centered Title */}
-          <Typography variant="h5" fontWeight="bold">
-            Add New Admin
-          </Typography>
-        </Stack>
-
-        <Divider sx={{ width: "100%" }} />
-        <Typography variant="body2" color="text.secondary">
-          Enter the email address to grant admin access.
-        </Typography>
-
-        <AddAdminForm onClose={handleCloseAdminModal} />
-      </Stack>
-    </CustomModal>
+    <FormModal
+      open={open}
+      onClose={onClose}
+      title="Add New Admin"
+      subtitle="Enter the email address to grant admin access."
+    >
+      <AddAdminForm onClose={onClose} />
+    </FormModal>
   );
 }

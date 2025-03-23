@@ -26,8 +26,6 @@ const UserDetailsCard = ({ user }: UserDetailsCardProps) => {
         width: "100%",
         maxWidth: 500,
         borderRadius: 2,
-        boxShadow: 3,
-        backgroundColor: "#f9f9f9",
         height: "auto",
       }}
     >

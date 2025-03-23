@@ -1,4 +1,5 @@
 import CustomActionMenu from "@/components/shared/custom-action-menu/CustomActionMenu";
+import useToggleState from "@/hooks/useToggleState";
 import { KeyOff } from "@mui/icons-material";
 import BlockIcon from "@mui/icons-material/Block";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,17 +19,16 @@ const UserActionMenu = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const [isUserDetailsOpen, setIsUserDetailsOpen] = useState(false);
-  const [isBlockOpen, setIsBlockOpen] = useState(false);
-  const [isUnBlockOpen, setIsUnBlockOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  // Using the custom hook for modal states
+  const userDetailModal = useToggleState();
+  const blockUserModal = useToggleState();
+  const unblockUserModal = useToggleState();
+  const deleteUserModal = useToggleState();
 
-  const onClose = () => {
-    setAnchorEl(null);
-  };
+  const onClose = () => setAnchorEl(null);
 
   const blockHandler = () => {
-    isBlocked ? setIsUnBlockOpen(true) : setIsBlockOpen(true);
+    isBlocked ? unblockUserModal.onOpen() : blockUserModal.onOpen();
   };
 
   return (
@@ -40,48 +40,57 @@ const UserActionMenu = ({
           {
             icon: <VisibilityIcon />,
             label: "Details",
-            onClick: () => setIsUserDetailsOpen(true),
+            onClick: userDetailModal.onOpen,
           },
           {
             icon: isBlocked ? <KeyOff /> : <BlockIcon />,
-            label: isBlocked ? `UnBlock` : `Block`,
+            label: isBlocked ? `Unblock` : `Block`,
             onClick: blockHandler,
           },
           {
             icon: <DeleteIcon />,
             label: "Delete",
-            onClick: () => setIsDeleteOpen(true),
+            onClick: deleteUserModal.onOpen,
           },
         ]}
       />
 
-      <UserDetailsModal
-        open={isUserDetailsOpen}
-        setOpen={setIsUserDetailsOpen}
-        userId={id}
-        onClose={onClose}
-      />
+      {/* Modals using useToggleState */}
+      {userDetailModal.state && (
+        <UserDetailsModal
+          open={userDetailModal.state}
+          onClose={onClose}
+          userId={id}
+          onModalClose={userDetailModal.onClose}
+        />
+      )}
 
-      <DeleteUserModal
-        open={isDeleteOpen}
-        setOpen={setIsDeleteOpen}
-        userId={id}
-        onClose={onClose}
-      />
+      {deleteUserModal.state && (
+        <DeleteUserModal
+          open={deleteUserModal.state}
+          onModalClose={deleteUserModal.onClose}
+          userId={id}
+          onClose={onClose}
+        />
+      )}
 
-      <BlockUserModal
-        open={isBlockOpen}
-        setOpen={setIsBlockOpen}
-        userId={id}
-        onClose={onClose}
-      />
+      {blockUserModal.state && (
+        <BlockUserModal
+          open={blockUserModal.state}
+          onModalClose={blockUserModal.onClose}
+          userId={id}
+          onClose={onClose}
+        />
+      )}
 
-      <UnblockUserModal
-        open={isUnBlockOpen}
-        setOpen={setIsUnBlockOpen}
-        userId={id}
-        onClose={onClose}
-      />
+      {unblockUserModal.state && (
+        <UnblockUserModal
+          open={unblockUserModal.state}
+          onModalClose={unblockUserModal.onClose}
+          userId={id}
+          onClose={onClose}
+        />
+      )}
     </>
   );
 };

@@ -7,12 +7,10 @@ interface BlockUserButtonProps {
 }
 
 const ConfirmBlockUserButton = ({ userId, onClose }: BlockUserButtonProps) => {
-  const { handleFunc, isLoading } = useBlockUser();
+  const { handleFunc, isLoading } = useBlockUser(onClose);
 
-  const handleBlockUser = async () => {
-    await handleFunc(userId);
-    onClose();
-  };
+  const handleBlockUser = async () => await handleFunc(userId);
+
   return (
     <LoaderButton
       loadingText="Blocking..."

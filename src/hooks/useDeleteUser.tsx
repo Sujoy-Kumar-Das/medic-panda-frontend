@@ -1,17 +1,18 @@
 import { useDeleteUserMutation } from "@/redux/api/user.api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
-export default function useDeleteUser() {
+export default function useDeleteUser(onClose: () => void) {
   const [deleteUser, apiResponse] = useDeleteUserMutation();
 
-  const deleteUserHandler = async (id: string) => {
+  const handlerFunc = async (id: string) => {
     await deleteUser({ id }).unwrap();
   };
 
   useApiMutationResponseHandler({
     successMessage: "User Deleted successfully",
     apiResponse,
+    onClose,
   });
 
-  return { deleteUserHandler, ...apiResponse };
+  return { handlerFunc, ...apiResponse };
 }

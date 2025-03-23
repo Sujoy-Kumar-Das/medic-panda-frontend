@@ -9,8 +9,8 @@ export const UsersColumns: GridColDef<any>[] = [
     field: "index",
     headerName: "Index",
     headerAlign: "center",
-    flex: 0.5, // Smaller width
-    minWidth: 50, // Ensures it doesn't get too small
+    flex: 0.5,
+    minWidth: 50,
     renderCell: (params) => (
       <Typography align="center" py={2}>
         {params.api.getAllRowIds().indexOf(params.id) + 1}
@@ -21,8 +21,8 @@ export const UsersColumns: GridColDef<any>[] = [
     field: "email",
     headerName: "Email",
     headerAlign: "center",
-    flex: 2, // Takes more space
-    minWidth: 200, // Prevents shrinking too much
+    flex: 2,
+    minWidth: 200,
     renderCell: ({ row }) => (
       <Typography align="center" py={2}>
         {row.email}

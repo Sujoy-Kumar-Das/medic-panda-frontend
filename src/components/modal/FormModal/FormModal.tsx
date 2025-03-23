@@ -1,10 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 import CustomModal from "../customModal/CustomModal";
 
 interface FormModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
   onClose: () => void;
   children: ReactNode;
   title: string;
@@ -13,14 +12,13 @@ interface FormModalProps {
 
 export default function FormModal({
   open,
-  setOpen,
   onClose,
   children,
   title,
   subtitle,
 }: FormModalProps) {
   return (
-    <CustomModal open={open} setOpen={setOpen}>
+    <CustomModal open={open} onClose={onClose}>
       <Stack
         direction="row"
         justifyContent="space-between"

@@ -8,10 +8,10 @@ import { Stack } from "@mui/material";
 import { FieldValue } from "react-hook-form";
 
 export default function AddAdminForm({ onClose }: { onClose: () => void }) {
-  const { handleAddAdmin, isLoading } = useAddAdmin();
+  const { handlerFunc, isLoading } = useAddAdmin(onClose);
 
   const handleSubmit = async (value: FieldValue<{ email: string }>) => {
-    await handleAddAdmin(value, onClose);
+    await handlerFunc(value);
   };
 
   return (

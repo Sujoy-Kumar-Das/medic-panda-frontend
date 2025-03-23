@@ -1,18 +1,16 @@
+import useToggleState from "@/hooks/useToggleState";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import AddAdminModal from "./AddAdminModal";
 
 export default function OpenAddAdminModalButton() {
-  const [openAddAdminModal, setOpenAddAdminModal] = useState(false);
+  const addAdminModal = useToggleState();
   return (
     <>
-      <Button onClick={() => setOpenAddAdminModal((prev) => !prev)}>
-        Add Admin
-      </Button>
+      <Button onClick={addAdminModal.onOpen}>Add Admin</Button>
 
       <AddAdminModal
-        openAddAdminModal={openAddAdminModal}
-        setOpenAddAdminModal={setOpenAddAdminModal}
+        open={addAdminModal.state}
+        onClose={addAdminModal.onClose}
       />
     </>
   );

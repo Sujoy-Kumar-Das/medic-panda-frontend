@@ -1,10 +1,10 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 import CustomModal from "../customModal/CustomModal";
 
 interface DeleteModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
   title?: string;
   message?: string;
   children: ReactNode;
@@ -12,13 +12,13 @@ interface DeleteModalProps {
 
 export default function DeleteModal({
   open,
-  setOpen,
+  onClose,
   title = "Are you sure?",
   message = "This action is permanent and cannot be undone.",
   children,
 }: DeleteModalProps) {
   return (
-    <CustomModal open={open} setOpen={setOpen}>
+    <CustomModal open={open} onClose={onClose}>
       <Box sx={{ p: 4, maxWidth: 500, width: "100%", mx: "auto" }}>
         {/* Modal Title */}
         <Typography variant="h6" align="center" sx={{ mb: 2 }}>

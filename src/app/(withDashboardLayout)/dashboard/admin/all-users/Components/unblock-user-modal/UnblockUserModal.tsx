@@ -1,5 +1,4 @@
 import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
-import { Dispatch, SetStateAction } from "react";
 import UnBlockUserButton from "./ConfirmUnBlockUserButton";
 import UnBlockUserCancelButton from "./UnBlockUserCancelButton";
 
@@ -7,24 +6,24 @@ import UnBlockUserCancelButton from "./UnBlockUserCancelButton";
 interface UnblockUserModalProps {
   userId: string;
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
 }
 
 export default function UnblockUserModal({
   userId,
   open,
-  setOpen,
+  onModalClose,
   onClose,
 }: UnblockUserModalProps) {
   const handleClose = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
   return (
     <DeleteModal
       open={open}
-      setOpen={setOpen}
+      onClose={onModalClose}
       title="Confirm: Unblock User"
       message=" Are you sure you want to unblock this user? This action will grant the
           user access again."

@@ -10,12 +10,9 @@ const ConfirmDeleteUserButton = ({
   userId,
   onClose,
 }: DeleteUserButtonProps) => {
-  const { deleteUserHandler, isLoading } = useDeleteUser();
+  const { handlerFunc, isLoading } = useDeleteUser(onClose);
 
-  const handleConfirmDeleteUser = async () => {
-    await deleteUserHandler(userId);
-    onClose();
-  };
+  const handleConfirmDeleteUser = async () => await handlerFunc(userId);
 
   return (
     <LoaderButton

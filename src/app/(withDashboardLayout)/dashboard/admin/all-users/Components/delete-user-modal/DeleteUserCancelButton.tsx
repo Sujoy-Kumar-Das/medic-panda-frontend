@@ -11,7 +11,8 @@ export default function DeleteUserCancelButton({
     <CancelButton
       onClose={onClose}
       cancelMessage={`You Canceled Deleting the user`}
-      label="Cancel"
-    />
+    >
+      Cancel
+    </CancelButton>
   );
 }

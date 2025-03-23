@@ -1,5 +1,4 @@
 import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
-import { Dispatch, SetStateAction } from "react";
 import DeleteUserButton from "./ConfirmDeleteUserButton";
 import DeleteUserCancelButton from "./DeleteUserCancelButton";
 
@@ -7,18 +6,18 @@ import DeleteUserCancelButton from "./DeleteUserCancelButton";
 interface DeleteUserModalProps {
   userId: string;
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
 }
 
 export default function DeleteUserModal({
   userId,
   open,
-  setOpen,
+  onModalClose,
   onClose,
 }: DeleteUserModalProps) {
   const handleClose = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
 
@@ -27,7 +26,7 @@ export default function DeleteUserModal({
       title="Confirm User Deletion"
       message="This will permanently remove the user and their data. Proceed with caution."
       open={open}
-      setOpen={setOpen}
+      onClose={onModalClose}
     >
       <DeleteUserCancelButton onClose={handleClose} />
       <DeleteUserButton userId={userId} onClose={handleClose} />

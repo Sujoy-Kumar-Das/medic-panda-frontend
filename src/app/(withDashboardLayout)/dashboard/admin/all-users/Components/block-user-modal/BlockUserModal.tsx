@@ -1,5 +1,4 @@
 import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
-import { Dispatch, SetStateAction } from "react";
 import BlockUserCancelButton from "./BlockUserCancelButton";
 import BlockUserButton from "./ConfirmBlockUserButton";
 
@@ -7,18 +6,18 @@ import BlockUserButton from "./ConfirmBlockUserButton";
 interface BlockUserModalProps {
   userId: string;
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
 }
 
 export default function BlockUserModal({
   userId,
   open,
-  setOpen,
+  onModalClose,
   onClose,
 }: BlockUserModalProps) {
   const handleClose = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
 
@@ -27,7 +26,7 @@ export default function BlockUserModal({
       title="Warning: Block User"
       message="Are you sure you want to block this user?"
       open={open}
-      setOpen={setOpen}
+      onClose={onModalClose}
     >
       <BlockUserCancelButton onClose={handleClose} />
       <BlockUserButton userId={userId} onClose={handleClose} />

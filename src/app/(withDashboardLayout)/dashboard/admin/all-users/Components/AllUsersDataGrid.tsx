@@ -1,6 +1,7 @@
+import { IUserData } from "@/types/user.type";
 import { DataGrid } from "@mui/x-data-grid";
 import { UsersColumns } from "./users.columns";
-export default function AllUsersDataGrid({ users }: { users: [] }) {
+export default function AllUsersDataGrid({ users }: { users: IUserData[] }) {
   return (
     <DataGrid
       rows={users || []}

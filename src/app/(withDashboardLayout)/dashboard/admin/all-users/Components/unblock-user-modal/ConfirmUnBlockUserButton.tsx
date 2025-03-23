@@ -10,12 +10,9 @@ const ConfirmUnBlockUserButton = ({
   userId,
   onClose,
 }: UnBlockUserButtonProps) => {
-  const { handleUnblockUser, isLoading } = useUnblockUser();
+  const { handlerFunc, isLoading } = useUnblockUser(onClose);
 
-  const handleUnblock = async () => {
-    await handleUnblockUser(userId);
-    onClose();
-  };
+  const handleUnblock = async () => await handlerFunc(userId);
 
   return (
     <LoaderButton

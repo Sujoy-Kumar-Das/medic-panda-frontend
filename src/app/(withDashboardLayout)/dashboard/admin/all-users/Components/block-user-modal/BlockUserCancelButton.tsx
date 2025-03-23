@@ -10,8 +10,9 @@ export default function BlockUserCancelButton({
   return (
     <CancelButton
       onClose={onClose}
-      label="Cancel"
       cancelMessage="You Canceled blocking the user."
-    />
+    >
+      Cancel
+    </CancelButton>
   );
 }
