@@ -1,11 +1,14 @@
 import useUserFieldsData from "@/hooks/useUserFieldsData";
 import { Grid } from "@mui/material";
 import { useState } from "react";
+import { AnyZodObject } from "zod";
 import UpdateUserInfoModal from "./UpdateUserInfoModal";
 import UserInfoCard from "./UserInfoCard";
 interface Field {
   label: string;
   value: string;
+  schema: AnyZodObject;
+  type?: string;
 }
 export default function UserInfoGrid({ user }: { user: any }) {
   const { userFields } = useUserFieldsData(user);
@@ -32,6 +35,8 @@ export default function UserInfoGrid({ user }: { user: any }) {
               handleOpenModal({
                 label: field.label,
                 value: field.name || "",
+                schema: field.schema,
+                type: field.type || "text",
               })
             }
           />
@@ -44,6 +49,8 @@ export default function UserInfoGrid({ user }: { user: any }) {
           setOpen={setOpenModal}
           label={currentField.label}
           name={currentField.value}
+          schema={currentField.schema}
+          type={currentField.type as string}
         />
       )}
     </>

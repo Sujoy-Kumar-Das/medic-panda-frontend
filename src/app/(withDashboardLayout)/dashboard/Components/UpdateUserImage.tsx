@@ -3,7 +3,7 @@ import { Avatar, Box, Button, CircularProgress } from "@mui/material";
 import Image from "next/image";
 
 export default function UpdateUserImage({ photoLink }: { photoLink: string }) {
-  const { handleUploadImage, isLoading } = useUploadImage();
+  const { handlerFunc, isLoading } = useUploadImage();
 
   // Change image handler
   const handleChangeImage = async (
@@ -11,7 +11,7 @@ export default function UpdateUserImage({ photoLink }: { photoLink: string }) {
   ) => {
     if (!event.target.files?.length) return;
 
-    await handleUploadImage(event);
+    await handlerFunc(event);
   };
 
   return (

@@ -10,9 +10,7 @@ export default function useUploadImage() {
   const [loading, setLoading] = useState(false);
 
   // Change image handler
-  const handleUploadImage = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handlerFunc = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setLoading(true);
       const file = event.target.files?.[0];
@@ -42,7 +40,7 @@ export default function useUploadImage() {
   });
 
   return {
-    handleUploadImage,
+    handlerFunc,
     isLoading: loading || apiResponse.isLoading,
   };
 }

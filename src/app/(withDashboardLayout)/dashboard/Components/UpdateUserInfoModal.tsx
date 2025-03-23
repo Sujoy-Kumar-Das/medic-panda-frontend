@@ -3,15 +3,19 @@ import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
 import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useUpdateUserInfo from "@/hooks/useUpdateUserInfo";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { FieldValues } from "react-hook-form";
+import { AnyZodObject } from "zod";
 
 interface IUpdateUserInfo {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   label: string;
   name: string;
+  schema: AnyZodObject;
+  type: string;
 }
 
 export default function UpdateUserInfoModal({
@@ -19,12 +23,18 @@ export default function UpdateUserInfoModal({
   setOpen,
   label,
   name,
+  schema,
+  type,
 }: IUpdateUserInfo) {
-  const { handleUpdateInfo, isLoading } = useUpdateUserInfo();
+  // close the modal;
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  const { handlerFunc, isLoading } = useUpdateUserInfo(handleCloseModal);
 
   const handleUpdateInformation = async (value: FieldValues) => {
-    await handleUpdateInfo(value);
-    setOpen(false);
+    await handlerFunc(value);
   };
 
   return (
@@ -39,9 +49,12 @@ export default function UpdateUserInfoModal({
           Update Your {label}
         </Typography>
 
-        <PandaForm onSubmit={handleUpdateInformation}>
+        <PandaForm
+          onSubmit={handleUpdateInformation}
+          resolver={zodResolver(schema)}
+        >
           <PandaInputField
-            type="text"
+            type={type}
             name={name}
             fullWidth
             sx={{
