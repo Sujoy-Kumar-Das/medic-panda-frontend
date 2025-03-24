@@ -5,13 +5,23 @@ import ManufacturerHeader from "./ManufacturerHeader";
 
 interface ManufacturerCompoProps {
   data: IManufacturer[];
+  isLoading: boolean;
+  isError: boolean;
 }
 
-export default function ManufacturerCompo({ data }: ManufacturerCompoProps) {
+export default function ManufacturerCompo({
+  data,
+  isLoading,
+  isError,
+}: ManufacturerCompoProps) {
   return (
     <Container sx={{ pb: 3 }}>
       <ManufacturerHeader />
-      <ManufacturerDataGrid manufacturers={data} />
+      <ManufacturerDataGrid
+        manufacturers={data}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </Container>
   );
 }

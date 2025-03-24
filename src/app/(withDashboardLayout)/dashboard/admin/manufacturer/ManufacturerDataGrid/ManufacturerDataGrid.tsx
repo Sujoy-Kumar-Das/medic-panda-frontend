@@ -1,18 +1,25 @@
-import { DataGrid } from "@mui/x-data-grid";
+import CustomDataGrid from "@/components/CustomDataGrid/CustomDataGrid";
+import { IManufacturer } from "@/types/Imanufacturer.type";
 import { ManufacturerColumns } from "./ManufacturerColumns";
 
-export default function ManufacturerDataGrid({ manufacturers }) {
+interface ManufacturerDataGridProps {
+  manufacturers: IManufacturer[];
+  isLoading: boolean;
+  isError: boolean;
+}
+
+export default function ManufacturerDataGrid({
+  manufacturers,
+  isLoading,
+  isError,
+}: ManufacturerDataGridProps) {
   return (
-    <DataGrid
+    <CustomDataGrid
       rows={manufacturers || []}
       columns={ManufacturerColumns}
-      getRowId={(row: any) => row._id}
-      disableColumnSorting
-      disableColumnMenu
-      disableColumnResize
-      hideFooter
-      hideFooterPagination
-      hideFooterSelectedRowCount
+      loading={isLoading}
+      error={isError}
+      noDataMessage="No Manufacturer found."
     />
   );
 }
