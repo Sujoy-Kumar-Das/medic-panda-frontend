@@ -9,8 +9,6 @@ export default function useOrderDataByAdmin(id: string) {
 
   useEffect(() => {
     if (data?.order) {
-      console.log(data.order.product.name);
-
       setOrderData({
         orderId: data.order._id ?? "N/A",
         status: data.order.status ?? "N/A",

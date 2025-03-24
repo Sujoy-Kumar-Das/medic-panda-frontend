@@ -1,5 +1,5 @@
+import useToggleState from "@/hooks/useToggleState";
 import { Button, Chip } from "@mui/material";
-import { useState } from "react";
 import ChangeOrderStatusModal from "./ChangeOrderStatusModal";
 
 export default function ChangeOrderStatusModalButton({
@@ -7,21 +7,25 @@ export default function ChangeOrderStatusModalButton({
 }: {
   orderId: string;
 }) {
-  const [open, setOpen] = useState(false);
-
-  const handleChangeStatus = () => setOpen((prev) => !prev);
+  const changeOrderStatusModal = useToggleState();
 
   return (
     <>
       <Chip
-        onClick={handleChangeStatus}
+        onClick={changeOrderStatusModal.onOpen}
         color="primary"
         label={"Change Status"}
         component={Button}
         sx={{ display: "flex", justifySelf: "center", my: 1 }}
       />
 
-      <ChangeOrderStatusModal open={open} setOpen={setOpen} orderId={orderId} />
+      {changeOrderStatusModal.state && (
+        <ChangeOrderStatusModal
+          open={changeOrderStatusModal.state}
+          onClose={changeOrderStatusModal.onClose}
+          orderId={orderId}
+        />
+      )}
     </>
   );
 }

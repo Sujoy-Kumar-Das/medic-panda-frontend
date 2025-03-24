@@ -1,18 +1,25 @@
-import { DataGrid } from "@mui/x-data-grid";
+import CustomDataGrid from "@/components/CustomDataGrid/CustomDataGrid";
+import { IOrder } from "@/types";
 import { AdminOrderDataColumn } from "./AdminOrderDataColumn";
 
-export default function AdminOrderDataGrid({ orders }) {
+interface AdminOrderDataGridProps {
+  orders: IOrder[];
+  isLoading: boolean;
+  isError: boolean;
+}
+
+export default function AdminOrderDataGrid({
+  orders,
+  isLoading,
+  isError,
+}: AdminOrderDataGridProps) {
   return (
-    <DataGrid
+    <CustomDataGrid
       rows={orders || []}
       columns={AdminOrderDataColumn}
-      getRowId={(row: any) => row._id}
-      disableColumnSorting
-      disableColumnMenu
-      disableColumnResize
-      hideFooter
-      hideFooterPagination
-      hideFooterSelectedRowCount
+      noDataMessage="No Order Found"
+      loading={isLoading}
+      error={isError}
     />
   );
 }

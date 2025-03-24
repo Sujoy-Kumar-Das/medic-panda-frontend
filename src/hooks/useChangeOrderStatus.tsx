@@ -2,22 +2,18 @@ import { useChangeOrderStatusMutation } from "@/redux/api/order.api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
-export default function useChangeOrderStatus() {
+export default function useChangeOrderStatus(onClose: () => void) {
   const [changeStatus, apiResponse] = useChangeOrderStatusMutation();
 
-  const handleChangeOrderStatus = async (
-    id: string,
-    data: FieldValues,
-    onChange: () => void
-  ) => {
+  const handlerFunc = async (id: string, data: FieldValues) => {
     await changeStatus({ id, data });
-    onChange();
   };
 
   useApiMutationResponseHandler({
     apiResponse,
     successMessage: "Order Changed successfully.",
+    onClose,
   });
 
-  return { handleChangeOrderStatus, isLoading: apiResponse.isLoading };
+  return { handlerFunc, ...apiResponse };
 }

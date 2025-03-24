@@ -1,16 +1,11 @@
 "use client";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { useGetAllOrdersForAdminQuery } from "@/redux/api/order.api";
-import { IGenericErrorResponse } from "@/types";
 import OrdersHOC from "./Components/OrdersHOC";
 
 export default function AllOrdersPage() {
-  const { data, isLoading, error } = useGetAllOrdersForAdminQuery(undefined);
+  const queryParams = useQueryParams();
+  const query = useGetAllOrdersForAdminQuery(queryParams);
 
-  return (
-    <OrdersHOC
-      data={data}
-      error={error as IGenericErrorResponse}
-      isLoading={isLoading}
-    />
-  );
+  return <OrdersHOC query={query} />;
 }

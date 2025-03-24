@@ -1,6 +1,6 @@
+import useToggleState from "@/hooks/useToggleState";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import OrderDetailsModal from "./OrderDetailsModal";
 
 export default function OrderDetailsModalButton({
@@ -8,12 +8,12 @@ export default function OrderDetailsModalButton({
 }: {
   orderId: string;
 }) {
-  const [isOpenDetails, setIsOpenOrderDetails] = useState(false);
+  const orderDetailsModal = useToggleState();
 
   return (
     <>
       <Button
-        onClick={() => setIsOpenOrderDetails(true)}
+        onClick={orderDetailsModal.onOpen}
         variant="contained"
         startIcon={<VisibilityIcon />}
         size="small"
@@ -21,10 +21,11 @@ export default function OrderDetailsModalButton({
       >
         View Details
       </Button>
-      {isOpenDetails && (
+
+      {orderDetailsModal.state && (
         <OrderDetailsModal
-          open={isOpenDetails}
-          setOpen={setIsOpenOrderDetails}
+          open={orderDetailsModal.state}
+          onClose={orderDetailsModal.onClose}
           orderId={orderId}
         />
       )}

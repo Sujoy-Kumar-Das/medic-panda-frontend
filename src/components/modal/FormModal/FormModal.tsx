@@ -7,7 +7,7 @@ interface FormModalProps {
   onClose: () => void;
   children: ReactNode;
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 export default function FormModal({

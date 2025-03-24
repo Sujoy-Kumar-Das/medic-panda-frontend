@@ -1,48 +1,35 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
 import { IModifiedOrderData } from "@/types/IOrderDetails";
-import { Typography } from "@mui/material";
 
+import FormModal from "@/components/modal/FormModal/FormModal";
 import useOrderDataByAdmin from "@/hooks/useOrderDataByAdmin";
-import { Dispatch, SetStateAction } from "react";
-import OrderDetailsCompo from "../order-details-compo/OrderDetailsCompo";
-import OrderDetailsSkeleton from "../order-details-compo/OrderDetailsSkeleton";
+import OrderDetailsCompo from "./order-details-compo/OrderDetailsCompo";
+import OrderDetailsSkeleton from "./order-details-compo/OrderDetailsSkeleton";
 
 interface OrderDetailsModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
   orderId: string;
 }
 
 export default function OrderDetailsModal({
   open,
-  setOpen,
+  onClose,
   orderId,
 }: OrderDetailsModalProps) {
   const { orderData, isLoading } = useOrderDataByAdmin(orderId);
 
-  const handleModal = () => {
-    setOpen((prev) => !prev);
-  };
-
   return (
-    <CustomModal open={open} setOpen={setOpen}>
+    <FormModal
+      open={open}
+      onClose={onClose}
+      title="Order Details"
+      subtitle=" Manage and review the order information for this transaction."
+    >
       {isLoading ? (
         <OrderDetailsSkeleton />
       ) : (
         <OrderDetailsCompo orderData={orderData as IModifiedOrderData} />
       )}
-
-      <Typography
-        onClick={handleModal}
-        sx={{
-          mt: 2,
-          textTransform: "none",
-          textAlign: "center",
-          cursor: "pointer",
-        }}
-      >
-        Close
-      </Typography>
-    </CustomModal>
+    </FormModal>
   );
 }

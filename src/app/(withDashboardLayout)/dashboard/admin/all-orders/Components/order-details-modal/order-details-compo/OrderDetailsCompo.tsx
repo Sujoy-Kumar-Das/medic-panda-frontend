@@ -13,12 +13,8 @@ export default function OrderDetailsCompo({
   return (
     <Box
       sx={{
-        p: 3,
         width: "100%",
-        maxWidth: 500,
-        borderRadius: 2,
         mx: "auto",
-        border: "1px solid #ddd",
       }}
     >
       <OrderInfo orderData={orderData} />

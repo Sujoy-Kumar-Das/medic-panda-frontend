@@ -1,35 +1,25 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Dispatch, SetStateAction } from "react";
+import FormModal from "@/components/modal/FormModal/FormModal";
 import ChangeOrderStatusForm from "./ChangeOrderStausForm";
 
 interface ChangeOrderStatusModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
   orderId: string;
 }
 
 export default function ChangeOrderStatusModal({
   open,
-  setOpen,
+  onClose,
   orderId,
 }: ChangeOrderStatusModalProps) {
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
   return (
-    <CustomModal
+    <FormModal
       open={open}
-      setOpen={setOpen}
-      sxProps={{ width: "100%", maxWidth: 800, mx: "auto" }}
+      onClose={onClose}
+      title="Change Order Status"
+      subtitle=""
     >
-      <CustomModal.TitleWithCloseButton
-        onClose={handleCloseModal}
-        titleSx={{ color: "primary.main" }}
-      >
-        Change Order Status
-      </CustomModal.TitleWithCloseButton>
-
-      <ChangeOrderStatusForm orderId={orderId} onChange={handleCloseModal} />
-    </CustomModal>
+      <ChangeOrderStatusForm orderId={orderId} onClose={onClose} />
+    </FormModal>
   );
 }
