@@ -16,11 +16,7 @@ export default function ProductDetailsCard({ product }: { product: IProduct }) {
       sx={{
         width: "100%",
         maxWidth: 600,
-        p: 4,
-        border: 1,
-        borderColor: "grey.300",
-        borderRadius: 2,
-        bgcolor: "background.default",
+        pt: 4,
       }}
     >
       {/* Product Header */}

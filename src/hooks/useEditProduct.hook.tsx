@@ -2,17 +2,18 @@ import { useApiMutationResponseHandler } from "@/hooks/useApiMutationResponseHan
 import { useEditProductMutation } from "@/redux/api/product.api";
 import { FieldValues } from "react-hook-form";
 
-export default function useEditProduct() {
+export default function useEditProduct(onClose: () => void) {
   const [editProduct, apiResponse] = useEditProductMutation();
 
-  const handleUpdateProductData = async (id: string, values: FieldValues) => {
+  const handlerFunc = async (id: string, values: FieldValues) => {
     await editProduct({ id, values });
   };
 
   useApiMutationResponseHandler({
     apiResponse,
     successMessage: "Product Updated Successfully.",
+    onClose,
   });
 
-  return { handleUpdateProductData, isLoading: apiResponse.isLoading };
+  return { handlerFunc, ...apiResponse };
 }

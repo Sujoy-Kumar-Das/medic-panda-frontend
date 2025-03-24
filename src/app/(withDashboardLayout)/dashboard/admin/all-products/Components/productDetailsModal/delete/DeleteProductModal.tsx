@@ -1,23 +1,22 @@
 import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
-import { Dispatch, SetStateAction } from "react";
 import DeleteProductConfirmButton from "./DeleteProductConfirmButton";
 import ProductDeleteCancelButton from "./ProductDeleteCancelButton";
 
 interface DeleteProductModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   productId: string;
   onClose: () => void;
 }
 
 export default function DeleteProductModal({
   open,
-  setOpen,
+  onModalClose,
   productId,
   onClose,
 }: DeleteProductModalProps) {
   const handleClose = () => {
-    setOpen(false);
+    onModalClose();
     onClose();
   };
 
@@ -26,7 +25,7 @@ export default function DeleteProductModal({
       title="Are you sure you want to delete this product?"
       message="Deleting this product is permanent and cannot be undone. Please confirm your action."
       open={open}
-      setOpen={setOpen}
+      onClose={handleClose}
     >
       <ProductDeleteCancelButton onClose={handleClose} />
       <DeleteProductConfirmButton id={productId} onClose={handleClose} />

@@ -1,7 +1,7 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
-import OpenAddProductModalButton from "../add-product-modal/OpenAddProductModalButton";
+import OpenAddProductModalButton from "../add-product-modal/AddProductModalButton";
 import { shortcutFilterOptions } from "../filter-product-items/filter-product-items";
-import useGetAllFilterCategories from "../hooks/useGetAllFilterCategories";
+import useGetAllFilterCategories from "../../../../../../../hooks/useGetAllFilterCategories";
 
 export default function ProductsHeader() {
   const { items } = useGetAllFilterCategories();

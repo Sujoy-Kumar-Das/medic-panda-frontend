@@ -1,23 +1,25 @@
+import CustomDataGrid from "@/components/CustomDataGrid/CustomDataGrid";
 import { IProduct } from "@/types";
-import { DataGrid } from "@mui/x-data-grid";
 import { productColumns } from "./ProductColumns";
+
+interface ProductsDataGridProps {
+  products: IProduct[];
+  isLoading: boolean;
+  isError: boolean;
+}
 
 export default function ProductsDataGrid({
   products,
-}: {
-  products: IProduct[];
-}) {
+  isError,
+  isLoading,
+}: ProductsDataGridProps) {
   return (
-    <DataGrid
+    <CustomDataGrid
       rows={products || []}
       columns={productColumns}
-      getRowId={(row: any) => row._id}
-      disableColumnSorting
-      disableColumnMenu
-      disableColumnResize
-      hideFooter
-      hideFooterPagination
-      hideFooterSelectedRowCount
+      error={isError}
+      loading={isLoading}
+      noDataMessage="No Product Found"
     />
   );
 }

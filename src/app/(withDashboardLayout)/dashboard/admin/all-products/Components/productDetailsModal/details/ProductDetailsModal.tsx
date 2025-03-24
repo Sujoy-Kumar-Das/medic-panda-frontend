@@ -1,36 +1,32 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Dispatch, SetStateAction } from "react";
+import FormModal from "@/components/modal/FormModal/FormModal";
 import ProductDetailsCompo from "./ProductDetailsCompo";
 
 interface ProductDetailsModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   productId: string;
   onClose: () => void;
 }
 
 export default function ProductDetailsModal({
   open,
-  setOpen,
+  onModalClose,
   productId,
   onClose,
 }: ProductDetailsModalProps) {
   // handle close the menu item and modal handler
   const handleCloseModal = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
   return (
-    <CustomModal
+    <FormModal
+      title="Product Details"
+      subtitle="Detailed information about the selected product"
       open={open}
-      setOpen={setOpen}
-      sxProps={{
-        "& .MuiDialog-paper": {
-          padding: 0,
-        },
-      }}
+      onClose={handleCloseModal}
     >
-      <ProductDetailsCompo productId={productId} onClose={handleCloseModal} />
-    </CustomModal>
+      <ProductDetailsCompo productId={productId} />
+    </FormModal>
   );
 }

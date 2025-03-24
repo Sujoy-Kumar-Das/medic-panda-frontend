@@ -12,6 +12,11 @@ export default function AllUsersDataGrid({
   isError: boolean;
 }) {
   return (
-    <CustomDataGrid rows={users} columns={UsersColumns} loading={isLoading} />
+    <CustomDataGrid
+      rows={users}
+      columns={UsersColumns}
+      loading={isLoading}
+      error={isError}
+    />
   );
 }

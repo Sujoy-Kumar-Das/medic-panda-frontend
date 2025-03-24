@@ -5,34 +5,32 @@ import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-export default function useCreateProductHook() {
-  // handle the loading state for the image upload;
-  const [loading, setLoading] = useState(false);
+export default function useCreateProductHook(onClose: () => void) {
+  const [uploading, setUploading] = useState(false);
   const [createProduct, apiResponse] = useCreateProductMutation();
 
-  const handleCreatedProduct = async (
-    values: FieldValues,
-    onClose: () => void
-  ) => {
-    setLoading(true);
-    // upload the thumbnail to imgbb
+  const handlerFunc = async (values: FieldValues) => {
+    setUploading(true);
     try {
       const thumbnailURL = await imageUploader(values.product.thumbnail);
       values.product.thumbnail = thumbnailURL;
       await createProduct(values);
-      onClose();
-      setLoading(false);
     } catch (error) {
-      onClose();
-      setLoading(false);
       toast.message("Failed to create product.");
+    } finally {
+      setUploading(false);
     }
   };
 
   useApiMutationResponseHandler({
     apiResponse,
     successMessage: "Product created successfully.",
+    onClose,
   });
 
-  return { handleCreatedProduct, isLoading: apiResponse.isLoading || loading };
+  return {
+    handlerFunc,
+    ...apiResponse,
+    isLoading: uploading || apiResponse.isLoading,
+  };
 }

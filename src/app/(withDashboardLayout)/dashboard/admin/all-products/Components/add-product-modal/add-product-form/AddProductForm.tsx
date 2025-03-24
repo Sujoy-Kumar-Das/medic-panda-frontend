@@ -1,17 +1,19 @@
 import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import CancelButton from "@/components/ui/buttons/CancelButton";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import useCreateProductHook from "@/hooks/useCreateProductHook";
 import { createProductValidationSchema } from "@/schemas/product-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import AddProductManufacturer from "./AddProductManufacturer";
 import AddProductSelectCategory from "./AddProductSelectCategory";
 import DiscountForm from "./DiscountForm";
-import useCreateProductHook from "./hooks/useCreateProductHook";
 
 export default function AddProductForm({ onClose }: { onClose: () => void }) {
-  const { handleCreatedProduct, isLoading } = useCreateProductHook();
+  const { handlerFunc, isLoading } = useCreateProductHook(onClose);
 
   const handleAddProduct = async (values: FieldValues) => {
     // await handleCreatedProduct(values, onClose);
@@ -83,22 +85,15 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
             flexWrap: "wrap",
           }}
         >
-          <Button
-            variant="outlined"
-            color="secondary"
-            type="button"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
+          <CancelButton onClose={onClose}>Cancel</CancelButton>
+
+          <LoaderButton
             type="submit"
-            disabled={isLoading}
+            isLoading={isLoading}
+            loadingText="Creating Product..."
           >
-            {isLoading ? "Adding..." : "Add Product"}
-          </Button>
+            Create Product
+          </LoaderButton>
         </Grid>
       </Grid>
     </PandaForm>

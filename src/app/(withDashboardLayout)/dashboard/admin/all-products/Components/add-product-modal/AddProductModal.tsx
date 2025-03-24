@@ -1,23 +1,22 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Dispatch, SetStateAction } from "react";
+import FormModal from "@/components/modal/FormModal/FormModal";
 import AddProductForm from "./add-product-form/AddProductForm";
-import AddProductModalHeader from "./AddProductModalHeader";
 interface AddProductModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 export default function AddProductModal({
   open,
-  setOpen,
+  onClose,
 }: AddProductModalProps) {
-  const handleCloseModal = () => {
-    setOpen((prev) => !prev);
-  };
   return (
-    <CustomModal open={open} setOpen={setOpen}>
-      <AddProductModalHeader onClose={handleCloseModal} />
-      <AddProductForm onClose={handleCloseModal} />
-    </CustomModal>
+    <FormModal
+      title="Add New Product"
+      subtitle="Fill out the details below to add a new product"
+      open={open}
+      onClose={onClose}
+    >
+      <AddProductForm onClose={onClose} />
+    </FormModal>
   );
 }

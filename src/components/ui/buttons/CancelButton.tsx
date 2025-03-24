@@ -14,7 +14,7 @@ export default function CancelButton({
   children = "Cancel",
   cancelMessage = "Action canceled successfully!",
   fullWidth = false,
-  sxProps = {}, // Ensure sxProps defaults to an empty object
+  sxProps = {},
 }: CancelButtonProps) {
   const handleCancel = () => {
     toast.success(cancelMessage);

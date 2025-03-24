@@ -1,14 +1,14 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { updateProductValidationSchema } from "@/schemas/product-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Grid } from "@mui/material";
+import CancelButton from "@/components/ui/buttons/CancelButton";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import useEditProduct from "@/hooks/useEditProduct.hook";
+import useEditProductDefaultValue from "@/hooks/useEditProductDefaultValue.hook";
+import { Grid } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import DiscountForm from "./DiscountForm";
 import EditProductManufacturer from "./EditProductManufacturer";
 import EditProductSelectCategory from "./EditProductSelectCategory";
-import useEditProduct from "./hooks/useEditProduct.hook";
-import useEditProductDefaultValue from "./hooks/useEditProductDefaultValue.hook";
 
 export default function EditProductForm({
   productId,
@@ -22,8 +22,7 @@ export default function EditProductForm({
     id: productId,
   });
 
-  const { handleUpdateProductData, isLoading: updatingLoader } =
-    useEditProduct();
+  const { handlerFunc, isLoading: updatingLoader } = useEditProduct(onClose);
 
   const handleAddProduct = async (values: FieldValues) => {
     // await handleUpdateProductData(productId, values);
@@ -95,17 +94,15 @@ export default function EditProductForm({
                 flexWrap: "wrap",
               }}
             >
-              <Button
-                variant="outlined"
-                color="secondary"
-                type="button"
-                onClick={onClose}
+              <CancelButton onClose={onClose}>Cancel</CancelButton>
+
+              <LoaderButton
+                isLoading={updatingLoader}
+                type="submit"
+                loadingText="Updating..."
               >
-                Cancel
-              </Button>
-              <Button variant="contained" color="primary" type="submit">
-                Edit
-              </Button>
+                Update
+              </LoaderButton>
             </Grid>
           </Grid>
         </PandaForm>

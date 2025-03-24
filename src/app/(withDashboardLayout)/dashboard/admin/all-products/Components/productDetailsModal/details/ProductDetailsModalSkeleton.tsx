@@ -4,12 +4,9 @@ export default function ProductDetailsModalSkeleton() {
   return (
     <Box
       sx={{
-        p: 4,
-        backgroundColor: "grey.100",
         minWidth: 600,
         display: "flex",
         justifyContent: "center",
-        bgcolor: "background.default",
       }}
     >
       <Card
@@ -17,7 +14,7 @@ export default function ProductDetailsModalSkeleton() {
           width: "100%",
           maxWidth: "xl",
           p: 6,
-          boxShadow: 3,
+          boxShadow: 0,
           borderRadius: "16px",
         }}
       >

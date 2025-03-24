@@ -7,9 +7,10 @@ export default function ProductDeleteCancelButton({
 }) {
   return (
     <CancelButton
-      label="Cancel"
       cancelMessage="You Canceled the deletion operation"
       onClose={onClose}
-    />
+    >
+      Cancel
+    </CancelButton>
   );
 }

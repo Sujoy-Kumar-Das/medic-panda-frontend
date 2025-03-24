@@ -1,30 +1,32 @@
-import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Dispatch, SetStateAction } from "react";
-import EditProductHeader from "./EditProductHeader";
+import FormModal from "@/components/modal/FormModal/FormModal";
 import EditProductForm from "./form/EditProductForm";
 
 interface EditProductModalProps {
   productId: string;
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
 }
 
 export default function EditProductModal({
   productId,
   open,
-  setOpen,
+  onModalClose,
   onClose,
 }: EditProductModalProps) {
   // handle close the menu and and modal handler
   const handleClose = () => {
-    setOpen((prev) => !prev);
+    onModalClose();
     onClose();
   };
   return (
-    <CustomModal open={open} setOpen={setOpen}>
-      <EditProductHeader onClose={handleClose} />
+    <FormModal
+      title="Edit Product"
+      subtitle="Modify the product details below and save changes"
+      open={open}
+      onClose={handleClose}
+    >
       <EditProductForm onClose={handleClose} productId={productId} />
-    </CustomModal>
+    </FormModal>
   );
 }

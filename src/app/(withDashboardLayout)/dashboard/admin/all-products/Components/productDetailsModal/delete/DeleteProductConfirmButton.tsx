@@ -8,17 +8,12 @@ export default function DeleteProductConfirmButton({
   id: string;
   onClose: () => void;
 }) {
-  const { handleDeleteProduct, isLoading } = useDeleteProduct();
-
-  const handleDelete = async (id: string) => {
-    await handleDeleteProduct(id);
-    onClose();
-  };
+  const { handlerFunc, isLoading } = useDeleteProduct(onClose);
 
   return (
     <LoaderButton
       isLoading={isLoading}
-      onClick={() => handleDelete(id)}
+      onClick={() => handlerFunc(id)}
       loadingText="Deleting"
     >
       Delete
