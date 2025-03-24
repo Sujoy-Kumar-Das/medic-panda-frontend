@@ -13,7 +13,11 @@ export default function ConfirmManufacturerDeleteButton({
   const { handlerFunc, isLoading } = useDeleteManufacturer(onClose);
 
   return (
-    <LoaderButton isLoading={isLoading} onClick={() => handlerFunc(id)}>
+    <LoaderButton
+      isLoading={isLoading}
+      onClick={() => handlerFunc(id)}
+      loadingText="Deleting..."
+    >
       Delete
     </LoaderButton>
   );

@@ -1,4 +1,5 @@
 import CustomActionMenu from "@/components/shared/custom-action-menu/CustomActionMenu";
+import useToggleState from "@/hooks/useToggleState";
 import { IManufacturer } from "@/types/Imanufacturer.type";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -17,13 +18,14 @@ export default function ManufacturerActionMenu({
 }: ManufacturerActionMenuProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const detailsModal = useToggleState();
+  const editModal = useToggleState();
+  const deleteModal = useToggleState();
 
-  const handleClose = () => {
+  const handleCloseActionMenu = () => {
     setAnchorEl(null);
   };
+
   return (
     <>
       <CustomActionMenu
@@ -33,44 +35,44 @@ export default function ManufacturerActionMenu({
           {
             icon: <VisibilityIcon />,
             label: "Details",
-            onClick: () => setIsDetailsOpen(true),
+            onClick: detailsModal.onOpen,
           },
           {
             icon: <EditIcon />,
             label: "Edit",
-            onClick: () => setIsEditOpen(true),
+            onClick: editModal.onOpen,
           },
           {
             icon: <DeleteIcon color="error" />,
             label: "Delete",
-            onClick: () => setIsDeleteOpen(true),
+            onClick: deleteModal.onOpen,
           },
         ]}
       />
 
-      {isDetailsOpen && (
+      {detailsModal.state && (
         <ManufacturerDetailsModal
-          open={isDetailsOpen}
-          setOpen={setIsDetailsOpen}
-          onClose={handleClose}
+          open={detailsModal.state}
+          onModalClose={detailsModal.onClose}
+          onClose={handleCloseActionMenu}
           manufacturer={manufacturer}
         />
       )}
 
-      {isEditOpen && (
+      {editModal.state && (
         <ManufacturerEditModal
-          open={isEditOpen}
-          setOpen={setIsEditOpen}
-          onClose={handleClose}
+          open={editModal.state}
+          onModalClose={editModal.onClose}
+          onClose={handleCloseActionMenu}
           manufacturer={manufacturer}
         />
       )}
 
-      {isDeleteOpen && (
+      {deleteModal && (
         <ManufacturerDeleteModal
-          open={isDeleteOpen}
-          setOpen={setIsDeleteOpen}
-          onClose={handleClose}
+          open={deleteModal.state}
+          onModalClose={deleteModal.onClose}
+          onClose={handleCloseActionMenu}
           id={manufacturer._id}
         />
       )}

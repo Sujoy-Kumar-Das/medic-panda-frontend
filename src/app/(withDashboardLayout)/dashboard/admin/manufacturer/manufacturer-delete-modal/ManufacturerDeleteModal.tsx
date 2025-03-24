@@ -1,29 +1,28 @@
 import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
 import CancelButton from "@/components/ui/buttons/CancelButton";
-import { Dispatch, SetStateAction } from "react";
 import ConfirmManufacturerDeleteButton from "./ConfirmManufacturerDeleteButton";
 
 interface ManufacturerDeleteModalProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onModalClose: () => void;
   onClose: () => void;
   id: string;
 }
 
 export default function ManufacturerDeleteModal({
   open,
-  setOpen,
+  onModalClose,
   onClose,
   id,
 }: ManufacturerDeleteModalProps) {
-  const handleCancel = () => {
-    setOpen((prev) => !prev);
+  const handleCloseModal = () => {
+    onModalClose();
     onClose();
   };
   return (
-    <DeleteModal open={open} setOpen={setOpen}>
-      <CancelButton onClose={handleCancel}>Cancel</CancelButton>
-      <ConfirmManufacturerDeleteButton onClose={onClose} id={id} />
+    <DeleteModal open={open} onClose={handleCloseModal}>
+      <CancelButton onClose={handleCloseModal}>Cancel</CancelButton>
+      <ConfirmManufacturerDeleteButton onClose={handleCloseModal} id={id} />
     </DeleteModal>
   );
 }
