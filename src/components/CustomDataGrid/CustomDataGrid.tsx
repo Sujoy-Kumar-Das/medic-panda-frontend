@@ -7,6 +7,7 @@ interface CustomDataGridProps {
   rows: GridRowsProp;
   columns: GridColDef[];
   loading?: boolean;
+  error?: boolean;
   noDataMessage?: string;
 }
 

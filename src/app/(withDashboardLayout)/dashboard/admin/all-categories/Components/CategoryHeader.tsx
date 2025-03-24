@@ -17,7 +17,7 @@ export default function CategoryHeader() {
       mainHeaderOptions={mainHeaderOptions}
       shortcutFilterOptions={{ items: categoryShortcutFilterOptions }}
       allFilterOptions={{ items: categoryAllFilterOptions }}
-      searchbarOptions={{ query: "" }}
+      searchbarOptions={{ query: "searchTerm" }}
     />
   );
 }
