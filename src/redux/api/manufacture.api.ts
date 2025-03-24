@@ -14,9 +14,10 @@ const manufactureApi = baseApi.injectEndpoints({
       invalidatesTags: [TTagTypes.manufacture],
     }),
     getAllManufacture: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/manufacturer",
         method: "GET",
+        params,
       }),
       providesTags: [TTagTypes.manufacture],
     }),

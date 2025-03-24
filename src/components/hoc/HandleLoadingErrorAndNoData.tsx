@@ -22,7 +22,13 @@ function HandleLoadingErrorAndNoData<
   T,
   QueryArg,
   BaseQuery extends BaseQueryFn
->(Component: React.ComponentType<{ data: T }>) {
+>(
+  Component: React.ComponentType<{
+    data: T;
+    isLoading: boolean;
+    isError: boolean;
+  }>
+) {
   return function WithLoadingAndErrorWrapper({
     query,
     noDataMessage = "No data found.",
@@ -31,11 +37,9 @@ function HandleLoadingErrorAndNoData<
     LoaderCompo,
     ErrorCompo,
   }: WithLoadingAndErrorProps<T, QueryArg, BaseQuery>) {
-    const { data, isLoading, isError, error, refetch } = query;
+    const { data, isLoading, isError, error, isFetching, refetch } = query;
 
     const path = usePathname();
-
-    console.log(path);
 
     // Handle loading state
     if (isLoading) {
@@ -43,6 +47,7 @@ function HandleLoadingErrorAndNoData<
     }
 
     // Handle error state
+
     if (isError) {
       const formattedError = isGenericErrorResponse(error) ? error : undefined;
       return (
@@ -67,7 +72,13 @@ function HandleLoadingErrorAndNoData<
       );
     }
 
-    return <Component data={data} />;
+    return (
+      <Component
+        data={data}
+        isLoading={isLoading || isFetching}
+        isError={isError}
+      />
+    );
   };
 }
 

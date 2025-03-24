@@ -14,7 +14,11 @@ const pulse = keyframes`
   }
 `;
 
-export default function Loader() {
+export default function Loader({
+  height = "100vh",
+}: {
+  height?: "100vh" | "100%";
+}) {
   return (
     <Box
       sx={{
@@ -22,7 +26,7 @@ export default function Loader() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height,
         backgroundColor: "#f4f4f4",
       }}
     >

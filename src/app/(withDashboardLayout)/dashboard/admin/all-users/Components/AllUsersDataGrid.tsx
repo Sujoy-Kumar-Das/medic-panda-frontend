@@ -1,18 +1,17 @@
+import CustomDataGrid from "@/components/CustomDataGrid/CustomDataGrid";
 import { IUserData } from "@/types/user.type";
-import { DataGrid } from "@mui/x-data-grid";
 import { UsersColumns } from "./users.columns";
-export default function AllUsersDataGrid({ users }: { users: IUserData[] }) {
+
+export default function AllUsersDataGrid({
+  users,
+  isLoading,
+  isError,
+}: {
+  users: IUserData[];
+  isLoading: boolean;
+  isError: boolean;
+}) {
   return (
-    <DataGrid
-      rows={users || []}
-      columns={UsersColumns}
-      getRowId={(row: any) => row._id}
-      disableColumnSorting
-      disableColumnMenu
-      disableColumnResize
-      hideFooter
-      hideFooterPagination
-      hideFooterSelectedRowCount
-    />
+    <CustomDataGrid rows={users} columns={UsersColumns} loading={isLoading} />
   );
 }

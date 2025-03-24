@@ -1,22 +1,18 @@
+import useToggleState from "@/hooks/useToggleState";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import AddManufacturerModal from "./AddManufacturerModal";
 
 export default function AddManufacturerButton() {
-  const [open, setOpen] = useState(false);
+  const addManufacturerModal = useToggleState();
 
-  const handleManufacturerModal = () => {
-    setOpen((prev) => !prev);
-  };
   return (
     <>
-      <Button onClick={handleManufacturerModal}>Add Manufacturer</Button>
+      <Button onClick={addManufacturerModal.onOpen}>Add Manufacturer</Button>
 
-      {open && (
+      {addManufacturerModal.state && (
         <AddManufacturerModal
-          open={open}
-          setOpen={setOpen}
-          onClose={handleManufacturerModal}
+          open={addManufacturerModal.state}
+          onClose={addManufacturerModal.onClose}
         />
       )}
     </>

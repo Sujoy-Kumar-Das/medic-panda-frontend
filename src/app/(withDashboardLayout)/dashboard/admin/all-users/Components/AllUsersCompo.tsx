@@ -7,14 +7,22 @@ import AllUsersSearchResultHeader from "./AllUsersSearchResultHeader";
 
 const AllUsersCompo = ({
   data,
+  isLoading,
+  isError,
 }: {
   data: { meta: IMeta; data: IUserData[] };
+  isLoading: boolean;
+  isError: boolean;
 }) => {
   return (
     <Container>
       <AllUsersHeader />
       <AllUsersSearchResultHeader />
-      <AllUsersDataGrid users={data?.data} />
+      <AllUsersDataGrid
+        users={data?.data}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </Container>
   );
 };
