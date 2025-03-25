@@ -7,18 +7,28 @@ const discountValidationSchema = z.object({
     .number({ required_error: "Discount percentage is required." })
     .min(0, { message: "Product discount percentage must be at least 0." })
     .max(100, { message: "Product discount percentage must be at most 100." }),
+
   startDate: z.string().refine((val) => dayjs(val).isValid(), {
     message: "Invalid start date.",
   }),
+
   endDate: z.string().refine((val) => dayjs(val).isValid(), {
     message: "Invalid end date.",
   }),
-  startTime: z.string().refine((val) => dayjs(val, "HH:mm").isValid(), {
-    message: "Invalid start time.",
-  }),
-  endTime: z.string().refine((val) => dayjs(val, "HH:mm").isValid(), {
-    message: "Invalid end time.",
-  }),
+
+  startTime: z
+    .any()
+    .transform((val) => (dayjs.isDayjs(val) ? val.format("HH:mm") : val))
+    .refine((val) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(val), {
+      message: "Invalid start time format. Expected HH:mm.",
+    }),
+
+  endTime: z
+    .any()
+    .transform((val) => (dayjs.isDayjs(val) ? val.format("HH:mm") : val))
+    .refine((val) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(val), {
+      message: "Invalid end time format. Expected HH:mm.",
+    }),
 });
 
 export const createProductValidationSchema = z.object({

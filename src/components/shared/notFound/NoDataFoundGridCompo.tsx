@@ -46,13 +46,11 @@ export default function NoDataFoundGridCompo({
       <Box
         sx={{
           position: "relative",
-          width: 200,
-          height: 150,
-          mb: 2,
+          mb: 1,
           animation: `${bounce} 2s infinite`,
         }}
       >
-        <Image src={errorImage} alt="No Data" width={200} height={150} />
+        <Image src={errorImage} alt="No Data" width={300} height={300} />
       </Box>
       <Typography variant="h6" gutterBottom>
         {message}

@@ -5,8 +5,8 @@ import { FieldValues } from "react-hook-form";
 export default function useEditProduct(onClose: () => void) {
   const [editProduct, apiResponse] = useEditProductMutation();
 
-  const handlerFunc = async (id: string, values: FieldValues) => {
-    await editProduct({ id, values });
+  const handlerFunc = async (id: string, data: FieldValues) => {
+    await editProduct({ id, data });
   };
 
   useApiMutationResponseHandler({

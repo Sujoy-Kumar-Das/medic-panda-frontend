@@ -4,6 +4,8 @@ import CancelButton from "@/components/ui/buttons/CancelButton";
 import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useEditProduct from "@/hooks/useEditProduct.hook";
 import useEditProductDefaultValue from "@/hooks/useEditProductDefaultValue.hook";
+import { updateProductValidationSchema } from "@/schemas/product-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Grid } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import DiscountForm from "./DiscountForm";
@@ -25,8 +27,7 @@ export default function EditProductForm({
   const { handlerFunc, isLoading: updatingLoader } = useEditProduct(onClose);
 
   const handleAddProduct = async (values: FieldValues) => {
-    // await handleUpdateProductData(productId, values);
-    console.log(values);
+    await handlerFunc(productId, values);
   };
 
   // check is the discount is available or not;
@@ -36,7 +37,7 @@ export default function EditProductForm({
     <>
       {!isLoading && (
         <PandaForm
-          // resolver={zodResolver(updateProductValidationSchema)}
+          resolver={zodResolver(updateProductValidationSchema)}
           onSubmit={handleAddProduct}
           defaultValues={defaultValues}
         >

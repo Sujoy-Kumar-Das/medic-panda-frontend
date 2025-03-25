@@ -9,12 +9,12 @@ export default function useCreateProductHook(onClose: () => void) {
   const [uploading, setUploading] = useState(false);
   const [createProduct, apiResponse] = useCreateProductMutation();
 
-  const handlerFunc = async (values: FieldValues) => {
+  const handlerFunc = async (data: FieldValues) => {
     setUploading(true);
     try {
-      const thumbnailURL = await imageUploader(values.product.thumbnail);
-      values.product.thumbnail = thumbnailURL;
-      await createProduct(values);
+      const thumbnailURL = await imageUploader(data.product.thumbnail);
+      data.product.thumbnail = thumbnailURL;
+      await createProduct(data);
     } catch (error) {
       toast.message("Failed to create product.");
     } finally {
