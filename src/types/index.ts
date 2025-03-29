@@ -1,4 +1,5 @@
 export * from "./axios.type";
+export * from "./dashboardStats.type";
 export * from "./ICart.type";
 export * from "./ICategory.type";
 export * from "./IDashboardItem";

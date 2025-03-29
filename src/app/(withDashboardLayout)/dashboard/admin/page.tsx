@@ -1,29 +1,10 @@
 "use client";
 
-import DashboardItemCard from "@/app/(withDashboardLayout)/dashboard/admin/components/DashboardItemCard";
-import { useGetAllProductsQuery } from "@/redux/api/product.api";
-import { Container, Grid } from "@mui/material";
+import { useGetAdminMetaQuery } from "@/redux/api/meta.api";
+import AdminDashboardHOC from "./Components/AdminDashboardHOC";
 
 export default function AdminDashboardPage() {
-  const { data, isLoading } = useGetAllProductsQuery(undefined);
+  const query = useGetAdminMetaQuery(undefined);
 
-  return (
-    <Container sx={{ py: 10 }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <DashboardItemCard />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <DashboardItemCard />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <DashboardItemCard />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <DashboardItemCard />
-        </Grid>
-      </Grid>
-      {/* <TotalSaleChart /> */}
-    </Container>
-  );
+  return <AdminDashboardHOC query={query} />;
 }

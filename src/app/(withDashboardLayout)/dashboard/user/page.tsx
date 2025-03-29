@@ -41,6 +41,7 @@ const cardColors = [
 
 export default function UserDashboard() {
   const { data, isLoading, error } = useGetUserMetaQuery(undefined);
+
   const {
     data: user,
     isLoading: userLoading,
