@@ -12,10 +12,20 @@ export interface IUserInfo {
   role: string;
 }
 
-export interface IUserData {
-  _id: string;
-  email: string;
-  role: IUserRoles;
+export interface IUserAddress {
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
+export interface IModifiedUserData {
+  id: string;
+  name: string;
+  photo: string;
   isVerified: boolean;
-  isBlocked: boolean;
+  email: string;
+  role: "admin" | "user" | "super-admin";
+  contact: string;
+  address: IUserAddress;
 }
