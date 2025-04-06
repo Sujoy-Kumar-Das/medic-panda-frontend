@@ -2,6 +2,7 @@
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
 import NavBarCart from "./NavBarCart";
 import NavItems from "./NavItems";
@@ -23,7 +24,15 @@ export default function NavBar() {
           alignItems={"center"}
         >
           {/* logo for large and medium device */}
-          <Box sx={{ display: "flex" }}>
+          <Box
+            sx={{
+              display: "flex",
+              textDecoration: "none",
+              color: "text.primary",
+            }}
+            component={Link}
+            href={"/"}
+          >
             <Typography component={"h1"} variant="h4" fontWeight={"bold"}>
               Medic
             </Typography>
