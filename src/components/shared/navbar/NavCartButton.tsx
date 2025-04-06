@@ -4,12 +4,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 export default function NavCartButton({
   cartItemLength,
-  handleOpenUserMenu,
+  onOpen,
 }: {
   cartItemLength: number;
-  handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  onOpen: (event: React.MouseEvent<HTMLElement>) => void;
 }) {
   const { user } = useAuth();
+
+  console.log("i am consoled,NavCartButton");
   return (
     <>
       {user ? (
@@ -17,7 +19,7 @@ export default function NavCartButton({
           <Box position={"relative"}>
             <IconButton
               color="primary"
-              onClick={handleOpenUserMenu}
+              onClick={onOpen}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -76,7 +78,7 @@ export default function NavCartButton({
             px: 3,
             py: 1,
           }}
-          onClick={handleOpenUserMenu}
+          onClick={onOpen}
         >
           My Cart{" "}
           {cartItemLength >= 1 && (

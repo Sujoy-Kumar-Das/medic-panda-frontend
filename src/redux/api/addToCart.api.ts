@@ -63,6 +63,13 @@ export const addToCartApi = baseApi.injectEndpoints({
       }),
       providesTags: [TTagTypes.cart],
     }),
+    getCartLength: builder.query({
+      query: () => ({
+        url: `/cart-length`,
+        method: "GET",
+      }),
+      providesTags: [TTagTypes.cart],
+    }),
     incrementCartProduct: builder.mutation({
       query: (data: any) => {
         return {
@@ -92,4 +99,5 @@ export const {
   useGetSingleCartProductsQuery,
   useRemoveCartProductMutation,
   useIncrementCartProductMutation,
+  useGetCartLengthQuery,
 } = addToCartApi;

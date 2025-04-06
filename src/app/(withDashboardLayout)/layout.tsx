@@ -1,5 +1,5 @@
 "use client";
-import { DashboardDrawer } from "@/components/ui/dashboard/dashboardNavItems/dashboardDrawer/DashboardDrawer";
+import { DashboardDrawer } from "@/app/(withDashboardLayout)/Components/DashboardDrawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
@@ -110,8 +110,8 @@ export default function ResponsiveDrawer({
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              boxShadow: "none", // Remove box shadow
-              borderRight: "none", // Remove border between drawer and content
+              boxShadow: "none",
+              borderRight: "none",
             },
           }}
         >

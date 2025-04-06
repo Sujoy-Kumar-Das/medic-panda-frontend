@@ -1,69 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useAuth } from "@/hooks/useAuth";
-import { useRemoveCartProductMutation } from "@/redux/api/addToCart.api";
-import { decreaseQuantity } from "@/redux/features/cart.slice";
-import { useAppDispatch } from "@/redux/hooks";
-import { IGenericErrorResponse } from "@/types";
+import useRemoveCartItem from "@/hooks/useRemoveCartItem";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CircularProgress, IconButton } from "@mui/material";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface IRemoveCartItemButtonProps {
   id: string;
-  handleCloseUserMenu: () => void;
+  onClose: () => void;
 }
 
 export default function RemoveCartItemButton({
   id,
-  handleCloseUserMenu,
+  onClose,
 }: IRemoveCartItemButtonProps) {
-  // Local loading state for each product
-  const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
-
-  //   get user
-  const { user } = useAuth();
-
-  const dispatch = useAppDispatch();
-
-  // remove cart from server via rtk query
-  const [removeCartItemFromDB, { isSuccess, isError, error }] =
-    useRemoveCartProductMutation();
-
-  const handleRemoveFromCart = async (id: string) => {
-    const userId = user?.userId;
-
-    // Set loading state for the specific product
-    setLoadingProductId(id);
-
-    if (!user && !userId) {
-      dispatch(decreaseQuantity({ id }));
-      setLoadingProductId(null); // Reset loader after dispatch
-      return;
-    }
-
-    // Remove from db
-    await removeCartItemFromDB({
-      product: id,
-    }).unwrap();
-  };
-
-  // Manage remove product from db state;
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Item removed from cart");
-      handleCloseUserMenu();
-      setLoadingProductId(null);
-    } else if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-      setLoadingProductId(null);
-    }
-  }, [isSuccess, isError, error]);
+  const { handlerFunc, loadingProductId } = useRemoveCartItem(onClose);
 
   return (
     <IconButton
-      onClick={() => handleRemoveFromCart(id)}
+      onClick={() => handlerFunc(id)}
       disabled={loadingProductId === id}
       color="error"
       sx={{

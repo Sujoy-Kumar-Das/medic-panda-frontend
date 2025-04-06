@@ -7,3 +7,11 @@ export interface ICart {
   quantity?: number;
   totalPrice?: number;
 }
+
+export interface IModifiedCartData {
+  id: string;
+  name: string;
+  thumbnail: string;
+  total: number;
+  quantity: number;
+}
