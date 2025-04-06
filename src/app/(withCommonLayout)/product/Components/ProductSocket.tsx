@@ -1,9 +1,13 @@
 "use client";
+import { socketEvent } from "@/constants/socket-events";
 import useSocket from "@/hooks/useSocket";
-import { useRouter } from "next/navigation";
+import { TTagTypes } from "@/redux/tag-types";
+import { revalidateTagFunc } from "@/services/actions/revalidateTagFunc";
 
 export default function ProductSocket() {
-  const router = useRouter();
-  useSocket(["product"], () => router.refresh());
+  useSocket([socketEvent.product], () => {
+    revalidateTagFunc(TTagTypes.product);
+  });
+
   return null;
 }

@@ -86,7 +86,6 @@ const dashboardRoutes: IDashboardRoute[] = [
     icon: <BorderAllOutlinedIcon />,
     access: [USER_ROLE.admin, USER_ROLE.superAdmin],
   },
-
   {
     text: "Payment History",
     link: "/dashboard/user/payments",

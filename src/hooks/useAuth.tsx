@@ -9,7 +9,7 @@ export const useAuth = () => {
     throw new Error("useAuth must be used within an AuthContext.Provider");
   }
 
-  const { clearUser, user, storeUser } = context;
+  const { logoutUser, user, loginUser } = context;
 
-  return { clearUser, user, storeUser };
+  return { logoutUser, user, loginUser };
 };

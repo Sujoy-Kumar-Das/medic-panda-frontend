@@ -70,9 +70,9 @@ export default function NavBarCart() {
     setAnchorElUser(null);
   };
 
-  useSocket(["order"], () => {
-    refetch();
-  });
+  // useSocket(["order"], () => {
+  //   refetch();
+  // });
 
   return (
     <>

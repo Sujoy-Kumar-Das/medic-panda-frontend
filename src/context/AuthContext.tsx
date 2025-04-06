@@ -1,4 +1,5 @@
 "use client";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { createContext } from "react";
 
 interface IUser {
@@ -8,8 +9,8 @@ interface IUser {
 
 interface IAuthContext {
   user: IUser | null;
-  clearUser: () => void;
-  storeUser: (token: string) => void;
+  loginUser: (token: string) => void;
+  logoutUser: (router: AppRouterInstance) => void;
 }
 
 const AuthContext = createContext<IAuthContext | null>(null);

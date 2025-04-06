@@ -1,23 +1,6 @@
+import { dashboardBgColor } from "@/style";
 import { IDashboardStats } from "@/types";
 import { useEffect, useState } from "react";
-
-const dashboardBgColor = [
-  "linear-gradient(135deg, #4CAF50, #2E7D32)",
-  "linear-gradient(135deg, #FF9800, #E65100)",
-  "linear-gradient(135deg, #03A9F4, #0277BD)",
-  "linear-gradient(135deg, #9C27B0, #6A1B9A)",
-  "linear-gradient(135deg, #FFC107, #FF9800)",
-  "linear-gradient(135deg, #4CAF50, #2E7D32)",
-  "linear-gradient(135deg, #F44336, #D32F2F)",
-  "linear-gradient(135deg, #607D8B, #455A64)",
-  "linear-gradient(135deg, #FF5722, #E64A19)",
-  "linear-gradient(135deg, #4CAF50, #2E7D32)",
-  "linear-gradient(135deg, #3F51B5, #283593)",
-  "linear-gradient(135deg, #009688, #00796B)",
-  "linear-gradient(135deg, #8BC34A, #558B2F)",
-  "linear-gradient(135deg, #FF9800, #F57C00)",
-  "linear-gradient(135deg, #F44336, #D32F2F)",
-];
 
 interface useAdminDashboardDataProps {
   title: string;

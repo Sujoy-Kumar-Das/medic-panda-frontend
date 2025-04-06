@@ -9,9 +9,9 @@ export default function MyCartPage() {
     useGetAllCartProductsQuery(undefined);
 
   // Use the custom socket hook
-  useSocket(["order"], () => {
-    refetch();
-  });
+  // useSocket(["order"], () => {
+  //   refetch();
+  // });
 
   return (
     <MyCartWithHOC

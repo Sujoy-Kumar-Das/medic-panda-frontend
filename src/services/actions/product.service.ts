@@ -1,5 +1,7 @@
 "use server";
 
+import { TTagTypes } from "@/redux/tag-types";
+
 interface IQueryParams {
   limit?: number;
   page?: number;
@@ -23,7 +25,10 @@ export const getAllProductService = async ({
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_base_url_local}/product?${queryString}`,
     {
-      cache: "no-store",
+      next: {
+        tags: [TTagTypes.product],
+        revalidate: 60,
+      },
     }
   );
 
@@ -35,7 +40,10 @@ export const getProductDetailsService = async (id: string) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_base_url_local}/product/${id}`,
     {
-      cache: "no-store",
+      next: {
+        tags: [`${TTagTypes.product}${id} `],
+        revalidate: 60,
+      },
     }
   );
 

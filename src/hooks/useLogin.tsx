@@ -18,7 +18,7 @@ export const useLogin = () => {
 
   const [addToCart, { isSuccess: isAddToCartSuccess }] = useAddToCartMutation();
 
-  const { storeUser } = useAuth();
+  const { loginUser } = useAuth();
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -61,7 +61,7 @@ export const useLogin = () => {
       setToLocalStorage(authKey, data);
 
       // set the user
-      storeUser(data);
+      loginUser(data);
 
       // Set success state after the entire process
       setIsSuccess(true);

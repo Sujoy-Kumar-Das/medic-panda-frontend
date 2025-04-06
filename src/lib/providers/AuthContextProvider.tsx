@@ -1,9 +1,10 @@
 import { authKey } from "@/constants/auth.key";
 import AuthContext from "@/context/AuthContext";
 import getTokenFromCookie from "@/utils/getTokenFromCookie";
+import logoutFunc from "@/utils/logoutUser";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { ReactElement, useEffect, useState } from "react";
-
 interface IUser {
   userId: string;
   role: string;
@@ -30,7 +31,7 @@ const AuthContextProvider = ({ children }: { children: ReactElement }) => {
     fetchUserInfo();
   }, []);
 
-  const storeUser = (token: string) => {
+  const loginUser = (token: string) => {
     if (!token) setUser(null);
 
     const decodedData = jwtDecode(token) as JwtPayload & {
@@ -41,14 +42,15 @@ const AuthContextProvider = ({ children }: { children: ReactElement }) => {
     setUser({ userId: decodedData.userId, role: decodedData.role });
   };
 
-  const clearUser = () => {
-    setUser(() => null);
+  const logoutUser = (router: AppRouterInstance) => {
+    setUser(null);
+    logoutFunc(router);
   };
 
   const authValues = {
     user,
-    clearUser,
-    storeUser,
+    loginUser,
+    logoutUser,
   };
 
   return (

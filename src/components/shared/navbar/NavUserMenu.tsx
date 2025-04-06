@@ -1,6 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
-import logoutUser from "@/utils/logoutUser";
 import Person2Icon from "@mui/icons-material/Person2";
 import { Divider, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -17,7 +16,7 @@ import { toast } from "sonner";
 function NavUserMenu() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const { user: userInfo, clearUser } = useAuth();
+  const { user: userInfo, logoutUser } = useAuth();
 
   const { data: user } = useGetMeQuery(undefined);
 
@@ -37,9 +36,8 @@ function NavUserMenu() {
   };
 
   const handleLogout = () => {
-    logoutUser(router);
     handleCloseUserMenu();
-    clearUser();
+    logoutUser(router);
     toast.success("Logout successful");
   };
 

@@ -1,14 +1,11 @@
 import { useAuth } from "@/hooks/useAuth";
 import dashboardRoutes from "@/routes/dashboard.routes";
 import { IUserRoles } from "@/types/user.role.type";
-import logoutUser from "@/utils/logoutUser";
 import routeGenerator from "@/utils/route.generator";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Box,
-  Button,
   Divider,
   List,
   ListItem,
@@ -19,7 +16,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { toast } from "sonner";
+import DashboardLogoutButton from "./DashboardLogoutButton";
 export const DashboardDrawer = () => {
   const { user } = useAuth();
 
@@ -30,11 +27,6 @@ export const DashboardDrawer = () => {
   const pathname = usePathname(); // Get current pathname
 
   const router = useRouter();
-
-  const handleLogout = () => {
-    logoutUser(router);
-    toast.success("User logout successfully");
-  };
 
   return (
     <Box
@@ -227,24 +219,8 @@ export const DashboardDrawer = () => {
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding onClick={handleLogout}>
-          <Button
-            variant="contained"
-            fullWidth
-            startIcon={<LogoutIcon />}
-            sx={{
-              padding: "10px 20px",
-              fontWeight: "bold",
-              borderRadius: "8px",
-              backgroundColor: "#d32f2f",
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#b71c1c",
-              },
-            }}
-          >
-            Logout
-          </Button>
+        <ListItem disablePadding>
+          <DashboardLogoutButton />
         </ListItem>
       </List>
     </Box>
