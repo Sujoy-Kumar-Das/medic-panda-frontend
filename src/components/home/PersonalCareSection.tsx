@@ -1,13 +1,16 @@
+import summerCollectionBg from "@/assets/summer-collection-bg.jpg";
 import { getAllProductService } from "@/services/actions/product.service";
 import { IProduct } from "@/types";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import SummerCard from "../ui/card/SummerCard";
+import ProductSimpleAnimatedCard from "../ui/card/SimpleAnimatedCard";
 
 export default async function PersonalCareSection() {
-  const { data: products } = await getAllProductService({
+  const { data } = await getAllProductService({
     limit: 6,
     category: "Personal Care",
   });
+
+  const products = data?.result;
 
   return (
     <>
@@ -28,7 +31,7 @@ export default async function PersonalCareSection() {
               <Typography
                 color={"primary.light"}
                 fontWeight={"bold"}
-                component={"h2"} // Changed from h5 to h2 for SEO hierarchy
+                component={"h2"}
                 variant="h3"
                 textAlign={"center"}
               >
@@ -38,18 +41,16 @@ export default async function PersonalCareSection() {
 
             <Stack
               sx={{ marginTop: 5 }}
-              direction={{ xs: "column", md: "row" }} // Make it responsive to stack vertically on smaller screens
+              direction={{ xs: "column", md: "row" }}
               justifyContent={"space-between"}
-              alignItems={"stretch"} // Ensures children stretch to same height
+              alignItems={"stretch"}
               spacing={3}
             >
               <Box
                 sx={{
-                  flex: 1, // Allows the image section to grow
                   width: { xs: "100%", md: "40%" },
                   position: "relative",
-                  backgroundImage:
-                    'url("https://vitasana.qodeinteractive.com/wp-content/uploads/2024/04/h1-img-2-new.jpg")',
+                  backgroundImage: `url(${summerCollectionBg.src})`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
@@ -125,12 +126,12 @@ export default async function PersonalCareSection() {
                 </Box>
               </Box>
 
-              <Box sx={{ flex: 1, width: { xs: "100%", md: "60%" } }}>
+              <Box sx={{ flex: 1, width: { xs: "100%", md: "auto" } }}>
                 <Grid container spacing={2}>
                   {/* Increased spacing for better visuals */}
                   {products.map((product: IProduct) => (
                     <Grid item xs={12} sm={6} md={4} key={product._id}>
-                      <SummerCard product={product} />
+                      <ProductSimpleAnimatedCard product={product} />
                     </Grid>
                   ))}
                 </Grid>

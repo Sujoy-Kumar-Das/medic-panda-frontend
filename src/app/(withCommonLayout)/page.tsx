@@ -13,7 +13,7 @@ import TestimonialSection from "@/components/home/TestimonialSection";
 export default async function HomePage() {
   return (
     <>
-      {/* <BannerSection />
+      <BannerSection />
       <CategorySection />
       <FeaturedProductSection />
       <SkinCareProductSection />
@@ -23,7 +23,7 @@ export default async function HomePage() {
       <PersonalCareSection />
       <TestimonialSection />
       <BrandSection />
-      <ContactSection /> */}
+      <ContactSection />
     </>
   );
 }

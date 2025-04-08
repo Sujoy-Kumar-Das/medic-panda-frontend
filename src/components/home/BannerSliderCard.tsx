@@ -1,4 +1,4 @@
-import { title, titleChildren } from "@/animation/homeAnimation";
+import { title, titleChildren } from "@/lib/framer-motion/homeAnimation";
 import AddToCartButton from "@/components/ui/buttons/AddToCartButton";
 import { IProduct } from "@/types";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";

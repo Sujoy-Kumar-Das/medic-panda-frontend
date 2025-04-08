@@ -129,7 +129,7 @@ export default function ProductSlider({ children, title }: ProductSliderProps) {
           },
         }}
       >
-        {children.map((child, index) => (
+        {children?.map((child, index) => (
           <SwiperSlide key={index}>{child}</SwiperSlide>
         ))}
       </Swiper>

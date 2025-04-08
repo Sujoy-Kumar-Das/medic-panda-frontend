@@ -133,7 +133,10 @@ const ProductCard = ({ product }: IProductCardProps) => {
         }}
         className="cardHover"
       >
+        {/* wish list button */}
         <WishListButton id={_id} />
+
+        {/* add to cart button */}
         <AddToCartButton
           sx={{ color: "text.disabled" }}
           basic

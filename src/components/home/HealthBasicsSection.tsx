@@ -1,14 +1,15 @@
 import { getAllProductService } from "@/services/actions/product.service";
 import { IProduct } from "@/types";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import BestSellerCard from "../ui/card/BestSellerCard";
+import AnimatedHorizontalCard from "../ui/card/AnimatedHorizontalCard";
 
 export default async function HealthBasicsSection() {
-  const { data: products } = await getAllProductService({
+  const { data } = await getAllProductService({
     limit: 6,
     category: "Health Basics",
   });
 
+  const products = data?.result;
   return (
     <>
       {products?.length && (
@@ -45,7 +46,7 @@ export default async function HealthBasicsSection() {
                   md={4}
                   position={"relative"}
                 >
-                  <BestSellerCard product={product} />
+                  <AnimatedHorizontalCard product={product} />
                 </Grid>
               ))}
             </Grid>
