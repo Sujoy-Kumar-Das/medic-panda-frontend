@@ -138,10 +138,11 @@ const ProductCard = ({ product }: IProductCardProps) => {
 
         {/* add to cart button */}
         <AddToCartButton
-          sx={{ color: "text.disabled" }}
-          basic
+          sx={{ color: "text.disabled", p: 1 }}
           product={product}
-        />
+        >
+          Add To Cart
+        </AddToCartButton>
         <IconButton
           color="primary"
           component={Link}

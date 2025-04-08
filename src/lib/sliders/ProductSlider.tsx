@@ -128,6 +128,7 @@ export default function ProductSlider({ children, title }: ProductSliderProps) {
             spaceBetween: 20,
           },
         }}
+        style={{ padding: "20px 10px" }}
       >
         {children?.map((child, index) => (
           <SwiperSlide key={index}>{child}</SwiperSlide>

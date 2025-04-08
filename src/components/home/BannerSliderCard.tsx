@@ -1,5 +1,5 @@
-import { title, titleChildren } from "@/lib/framer-motion/homeAnimation";
 import AddToCartButton from "@/components/ui/buttons/AddToCartButton";
+import { title, titleChildren } from "@/lib/framer-motion/homeAnimation";
 import { IProduct } from "@/types";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { motion, useAnimation } from "framer-motion";
@@ -109,8 +109,6 @@ export default function BannerSliderCard({
           >
             <AddToCartButton
               product={item}
-              basic
-              icon={false}
               sx={{
                 textTransform: "capitalize",
                 px: 3,
@@ -125,7 +123,9 @@ export default function BannerSliderCard({
                   boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.3)",
                 },
               }}
-            />
+            >
+              Add To Cart
+            </AddToCartButton>
 
             <Button
               component={Link}

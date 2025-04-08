@@ -3,19 +3,11 @@ import {
   skinCareProductButtonVariants,
 } from "@/lib/framer-motion/card-animation";
 import { IProduct } from "@/types";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import {
-  Box,
-  Chip,
-  IconButton,
-  Rating,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Chip, Rating, Stack, Typography } from "@mui/material";
 import * as motion from "motion/react-client";
 import Image from "next/image";
-import Link from "next/link";
 import AddToCartButton from "../buttons/AddToCartButton";
+import ViewProductDetailsButton from "../buttons/ViewProductDetailsButton";
 import WishListButton from "../buttons/WishListButton";
 
 interface AnimatedHorizontalCardProps {
@@ -134,12 +126,10 @@ export default function AnimatedHorizontalCard({
             <motion.div variants={skinCareProductButtonVariants}>
               <AddToCartButton
                 product={product}
+                iconBtn
                 sx={{
                   color: "primary.main",
                   border: "1px solid #cccccc",
-                  height: "40px",
-                  width: "40px",
-                  padding: "10px",
                   "&:hover": {
                     color: "text.disabled",
                     borderColor: "primary.main",
@@ -150,7 +140,7 @@ export default function AnimatedHorizontalCard({
             </motion.div>
 
             <motion.div variants={skinCareProductButtonVariants}>
-              <IconButton
+              <ViewProductDetailsButton
                 sx={{
                   color: "primary.main",
                   border: "1px solid #cccccc",
@@ -163,11 +153,8 @@ export default function AnimatedHorizontalCard({
                     bgcolor: "primary.main",
                   },
                 }}
-                component={Link}
-                href={`/product/${product._id}`}
-              >
-                <RemoveRedEyeIcon />
-              </IconButton>
+                id={product._id}
+              />
             </motion.div>
           </motion.div>
         </Box>

@@ -3,7 +3,6 @@ import {
   skinCareProductButtonVariants,
 } from "@/lib/framer-motion/card-animation";
 import { IProduct } from "@/types/product.type";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import StarIcon from "@mui/icons-material/Star";
 import {
   Box,
@@ -11,14 +10,13 @@ import {
   CardActionArea,
   CardContent,
   Divider,
-  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
 import * as motion from "motion/react-client";
 import Image from "next/image";
-import Link from "next/link";
 import AddToCartButton from "../buttons/AddToCartButton";
+import ViewProductDetailsButton from "../buttons/ViewProductDetailsButton";
 import WishListButton from "../buttons/WishListButton";
 
 export default function SimpleAnimatedCard({ product }: { product: IProduct }) {
@@ -149,13 +147,20 @@ export default function SimpleAnimatedCard({ product }: { product: IProduct }) {
           </motion.div>
 
           <motion.div variants={skinCareProductButtonVariants}>
-            <AddToCartButton product={product} />
+            <AddToCartButton
+              product={product}
+              iconBtn
+              sx={{
+                color: "primary.main",
+              }}
+            />
           </motion.div>
 
           <motion.div variants={skinCareProductButtonVariants}>
-            <IconButton component={Link} href={`/product/${product._id}`}>
-              <RemoveRedEyeIcon />
-            </IconButton>
+            <ViewProductDetailsButton
+              sx={{ color: "primary.main" }}
+              id={product._id}
+            />
           </motion.div>
         </motion.div>
       </Card>
