@@ -1,93 +1,64 @@
+"use client";
 /* eslint-disable react-hooks/exhaustive-deps */
-import { authKey } from "@/constants/auth.key";
-import { useAddToCartMutation } from "@/redux/api/addToCart.api";
 import { useLoginMutation } from "@/redux/api/auth.api";
-import { removeProduct } from "@/redux/features/cart.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { IGenericErrorMessage } from "@/types";
-import { setToLocalStorage } from "@/utils/local-storage";
+import { IGenericErrorResponse } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 import { useAuth } from "./useAuth";
+import useSyncCart from "./useSyncCart";
 
 export const useLogin = () => {
-  const [
-    login,
-    { isLoading, isSuccess: isLoginSuccess, isError, error, data },
-  ] = useLoginMutation();
+  const [login, { isSuccess: isLoginSuccess, data, ...apiResponse }] =
+    useLoginMutation();
 
-  const [addToCart, { isSuccess: isAddToCartSuccess }] = useAddToCartMutation();
+  // custom hook for sync the cart
+  const {
+    handleCartSync,
+    isLoading: cartLoading,
+    isError: cartError,
+    error: cartErrorMessage,
+  } = useSyncCart();
 
+  // auth context for set the user;
   const { loginUser } = useAuth();
 
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
+  // get the redirect path after login;
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
 
-  const { carts } = useAppSelector((state) => state.cart);
-  const dispatch = useAppDispatch();
+  // handler function for handle login users;
+  const handlerFunc = async (data: FieldValues) => {
+    await login(data);
+  };
 
-  // handle sync cart local to remote
-  const handleCartSync = useCallback(async () => {
-    try {
-      if (isLoginSuccess && carts.length) {
-        const productsToRemove = []; // Temporary array to store products that need to be removed
+  // sync the loading,error and is error state
+  const isLoading = apiResponse.isLoading || cartLoading;
+  const error = apiResponse.error || cartErrorMessage;
+  const isError = apiResponse.isError || cartError;
 
-        for (const item of carts) {
-          const cartItem = {
-            product: item.id,
-            quantity: item.quantity,
-          };
-
-          // Add to cart (remote) and await its completion
-          const res = await addToCart(cartItem).unwrap();
-
-          if (res._id) {
-            // Push the product ID to the removal queue if successfully added
-            productsToRemove.push(item.id);
-          }
-        }
-
-        // After all products are successfully added, remove them from the cart
-        productsToRemove.forEach((id) => {
-          dispatch(removeProduct({ id }));
-        });
-      }
-
-      // set token to local storage
-      setToLocalStorage(authKey, data);
-
-      // set the user
-      loginUser(data);
-
-      // Set success state after the entire process
-      setIsSuccess(true);
-
-      // Redirect after sync
-      router.push(redirect || "/");
-    } catch (err) {
-      console.error("Error during cart sync:", err);
-      setErrorMessage((err as IGenericErrorMessage)?.message);
-    }
-  }, [isLoginSuccess, carts, redirect, router, addToCart, dispatch, data]);
-
+  // handling the cart synchronous, store user data and redirect user;
   useEffect(() => {
     if (isLoginSuccess) {
-      handleCartSync();
-    } else if (isError) {
-      const errorMsg =
-        (error as IGenericErrorMessage)?.message || "Login failed";
-      setErrorMessage(errorMsg);
+      handleCartSync({ isLoginSuccess });
+      loginUser(data);
+      router.push(redirect || "/");
     }
-  }, [isLoginSuccess, isError, error, handleCartSync]);
+
+    if (error && isError) {
+      console.log({ error });
+      const errorMessage = (error as IGenericErrorResponse).message;
+      toast.error(errorMessage);
+    }
+  }, [isLoginSuccess, handleCartSync, error, isError]);
 
   return {
-    login,
+    handlerFunc,
+    ...apiResponse,
     isLoading,
-    isSuccess: isSuccess || isAddToCartSuccess,
-    errorMessage,
+    isError,
+    error,
   };
 };

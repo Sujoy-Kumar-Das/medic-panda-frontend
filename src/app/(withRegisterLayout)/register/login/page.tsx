@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-"use client";
 import loginImage from "@/assets/lgoInBg.jpg";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
@@ -8,20 +7,11 @@ import LoginForm from "./Components/LoginForm";
 
 export default function LoginPage() {
   return (
-    <Container
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        py: { xs: 2, md: 6 },
-      }}
-    >
+    <Container>
       <Box
         sx={{
           bgcolor: "background.paper",
-          width: { xs: "100%", sm: "90%", md: "75%", lg: "60%" },
-          boxShadow: 3,
-          borderRadius: 3,
+          width: "100%",
           p: { xs: 3, md: 5 },
           display: "flex",
           flexDirection: "column",
@@ -64,6 +54,7 @@ export default function LoginPage() {
           <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             {/* login form */}
             <LoginForm />
+
             <Typography component="p" textAlign="center" mt={3}>
               Don't have an account?{" "}
               <Typography

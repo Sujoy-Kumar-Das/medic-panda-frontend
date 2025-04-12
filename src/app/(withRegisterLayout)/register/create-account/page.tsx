@@ -60,20 +60,11 @@ export default function CreateAccountPage() {
   }, [isSuccess, errorMessage]);
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        py: { xs: 2, md: 6 },
-      }}
-    >
+    <Container>
       <Box
         sx={{
           bgcolor: "background.paper",
-          width: { xs: "100%", sm: "90%", md: "75%", lg: "60%" },
-          boxShadow: 3,
-          borderRadius: 3,
+          width: "100%",
           p: { xs: 3, md: 5 },
           display: "flex",
           flexDirection: "column",
