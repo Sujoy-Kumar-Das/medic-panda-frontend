@@ -1,5 +1,3 @@
-import { IUserRoles } from "./user.role.type";
-
 export interface IUser {
   email: string;
   password: string;

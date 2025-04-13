@@ -1,7 +1,6 @@
 import { isGenericErrorResponse } from "@/utils/isGenericErrorResponseTypeGuard";
 import ErrorPage from "../error/Error";
 import Loader from "../loader/Loader";
-import NoDataFound from "../notFound/NoDataFound";
 import { LoadingErrorWrapperProps } from "./loadingErrorWrapper.type";
 
 export default function LoadingErrorWrapper({
