@@ -13,6 +13,16 @@ const userApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [TTagTypes.user],
     }),
+    createUser: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/user/customer",
+          method: "POST",
+          data,
+        };
+      },
+      invalidatesTags: [TTagTypes.user],
+    }),
     updateUserEmail: builder.mutation({
       query: (data) => ({
         url: "/user/email/",
@@ -100,6 +110,7 @@ const userApi = baseApi.injectEndpoints({
 
 export const {
   useCreateAdminMutation,
+  useCreateUserMutation,
   useUpdateUserEmailMutation,
   useGetAllUsersQuery,
   useGetSingleUserQuery,

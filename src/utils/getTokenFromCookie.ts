@@ -3,7 +3,8 @@
 import { cookies } from "next/headers";
 
 const getTokenFromCookie = (key: string) => {
-  return cookies().get(key)?.value;
+  const value = cookies().get(key)?.value;
+  return value || null;
 };
 
 export default getTokenFromCookie;

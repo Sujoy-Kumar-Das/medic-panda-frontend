@@ -1,5 +1,6 @@
 import { authKey } from "@/constants/auth.key";
 import AuthContext from "@/context/AuthContext";
+import { deleteCookies } from "@/utils/deleteCookies";
 import getTokenFromCookie from "@/utils/getTokenFromCookie";
 import logoutFunc from "@/utils/logoutUser";
 import { jwtDecode, JwtPayload } from "jwt-decode";
@@ -17,14 +18,20 @@ const AuthContextProvider = ({ children }: { children: ReactElement }) => {
     const fetchUserInfo = async () => {
       const authToken = await getTokenFromCookie(authKey);
 
-      if (authToken) {
-        const userData: JwtPayload & { userId: string; role: string } =
-          jwtDecode(authToken);
-
-        // Directly set userInfo without nesting under "user"
-        setUser({ userId: userData.userId, role: userData.role });
-      } else {
+      if (!authToken) {
         setUser(null);
+        return;
+      }
+
+      try {
+        const userData = jwtDecode(authToken) as JwtPayload & {
+          userId: string;
+          role: string;
+        };
+        setUser({ userId: userData.userId, role: userData.role });
+      } catch (error) {
+        setUser(null);
+        deleteCookies(authKey);
       }
     };
 
