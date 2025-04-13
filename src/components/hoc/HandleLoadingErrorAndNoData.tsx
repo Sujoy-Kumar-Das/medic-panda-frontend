@@ -1,22 +1,11 @@
 import ErrorPage from "@/components/shared/error/Error";
 import Loader from "@/components/shared/loader/Loader";
 import NoDataFound from "@/components/shared/notFound/NoDataFound";
+import { IWithLoadingAndErrorProps } from "@/types";
 import { isGenericErrorResponse } from "@/utils/isGenericErrorResponseTypeGuard";
-import {
-  BaseQueryFn,
-  TypedUseQueryHookResult,
-} from "@reduxjs/toolkit/query/react";
+import { BaseQueryFn } from "@reduxjs/toolkit/query/react";
 import { usePathname } from "next/navigation";
 import React from "react";
-
-interface WithLoadingAndErrorProps<T, QueryArg, BaseQuery extends BaseQueryFn> {
-  query: TypedUseQueryHookResult<T, QueryArg, BaseQuery>;
-  noDataMessage?: string;
-  noDataLink?: string;
-  noDataText?: string;
-  LoaderCompo?: React.ElementType;
-  ErrorCompo?: React.ElementType;
-}
 
 function HandleLoadingErrorAndNoData<
   T,
@@ -36,7 +25,7 @@ function HandleLoadingErrorAndNoData<
     noDataText = "Go back",
     LoaderCompo,
     ErrorCompo,
-  }: WithLoadingAndErrorProps<T, QueryArg, BaseQuery>) {
+  }: IWithLoadingAndErrorProps<T, QueryArg, BaseQuery>) {
     const { data, isLoading, isError, error, isFetching, refetch } = query;
 
     const path = usePathname();
