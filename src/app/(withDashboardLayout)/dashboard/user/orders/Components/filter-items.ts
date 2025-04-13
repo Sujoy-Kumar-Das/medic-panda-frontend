@@ -2,51 +2,56 @@ import { OrderStatus } from "@/types";
 import randomUID from "@/utils/randomId";
 
 export const shortcutOrderFilterOptions = [
-  { id: randomUID(), query: "", title: "All", value: "" },
-  { id: randomUID(), query: "", title: "Pending", value: "" },
-  { id: randomUID(), query: "", title: "Paid", value: "" },
+  { id: randomUID(), query: "status", title: "All", value: "" },
+  {
+    id: randomUID(),
+    query: "status",
+    title: "Pending",
+    value: OrderStatus.PENDING,
+  },
+  { id: randomUID(), query: "status", title: "Paid", value: OrderStatus.PAID },
 ];
 
 export const allOrderFilterItems = [
-  { query: "", id: randomUID(), title: "All", value: "" },
+  { query: "status", id: randomUID(), title: "All", value: "" },
   {
-    query: "",
+    query: "status",
     id: randomUID(),
     title: OrderStatus.PENDING,
     value: OrderStatus.PENDING,
   },
   {
-    query: "",
+    query: "status",
     id: randomUID(),
     title: OrderStatus.PAID,
     value: OrderStatus.PAID,
   },
   {
-    query: "",
+    query: "status",
     id: randomUID(),
     title: OrderStatus.PROCESSING,
     value: OrderStatus.PROCESSING,
   },
   {
-    query: "",
+    query: "status",
     id: randomUID(),
     title: OrderStatus.SHIPPED,
     value: OrderStatus.SHIPPED,
   },
   {
-    query: "",
+    query: "status",
     id: randomUID(),
     title: OrderStatus.DELIVERED,
     value: OrderStatus.DELIVERED,
   },
   {
-    query: "",
+    query: "status",
     id: randomUID(),
     title: OrderStatus.CANCELED,
     value: OrderStatus.CANCELED,
   },
   {
-    query: "",
+    query: "status",
     id: randomUID(),
     title: OrderStatus.RETURNED,
     value: OrderStatus.RETURNED,

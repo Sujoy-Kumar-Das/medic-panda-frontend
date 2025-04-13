@@ -1,5 +1,4 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
-import randomUID from "@/utils/randomId";
 import {
   allOrderFilterItems,
   shortcutOrderFilterOptions,
@@ -17,7 +16,10 @@ export default function OrderHeader() {
       mainHeaderOptions={mainHeaderOptions}
       shortcutFilterOptions={{ items: shortcutOrderFilterOptions }}
       allFilterOptions={{ items: allOrderFilterItems }}
-      searchbarOptions={{ query: "", placeholder: "Search By Name" }}
+      searchbarOptions={{
+        query: "searchTerm",
+        placeholder: "Search Your Order",
+      }}
     />
   );
 }

@@ -6,9 +6,11 @@ import { IOrder } from "@/types";
 import { Container, Stack } from "@mui/material";
 import OrderCard from "./Components/OrderCard";
 import OrderHeader from "./Components/OrderHeader";
+import { useQueryParams } from "@/hooks/useQueryParams";
 
 export default function OrdersPage() {
-  const query = useGetAllOrderQuery(undefined);
+  const queryParams = useQueryParams();
+  const query = useGetAllOrderQuery(queryParams);
 
   return (
     <Container>
