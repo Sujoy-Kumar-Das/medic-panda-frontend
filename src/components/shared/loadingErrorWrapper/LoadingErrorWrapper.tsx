@@ -24,12 +24,11 @@ export default function LoadingErrorWrapper<
   noDataText,
   children,
 }: LoadingErrorWrapperProps<T, QueryArg, BaseQuery>) {
-  const { data, isLoading, isError, error, isFetching, refetch } = query;
+  const { data, isLoading, isError, error, refetch } = query;
   // handle the loading and refetch state while fetching
-  const loading = isLoading || isFetching;
 
   // Handle loading state
-  if (loading) {
+  if (isLoading) {
     return <>{LoaderCompo ? <LoaderCompo /> : <Loader />}</>;
   }
 

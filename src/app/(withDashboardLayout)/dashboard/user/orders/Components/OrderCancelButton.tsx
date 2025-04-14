@@ -1,8 +1,6 @@
-import { useCancelOrderMutation } from "@/redux/api/order.api";
-import { IGenericErrorResponse, OrderStatus } from "@/types";
+import useCancelOrder from "@/hooks/useCancelOrder";
+import { OrderStatus } from "@/types";
 import { Chip, CircularProgress, Stack, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { toast } from "sonner";
 
 export default function OrderCancelButton({
   status,
@@ -11,23 +9,8 @@ export default function OrderCancelButton({
   status: OrderStatus;
   id: string;
 }) {
-  const [cancelOrder, { isLoading, isError, isSuccess, error }] =
-    useCancelOrderMutation();
-
-  // Handle Cancel Order Action
-  const handleCancelOrder = async () => {
-    await cancelOrder(id);
-  };
-
-  // Manage order cancellation feedback
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Order canceled successfully.");
-    } else if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-    }
-  }, [isSuccess, isError, error]);
-
+  // custom hook for handle the cancel order logic;
+  const { handlerFunc, isLoading } = useCancelOrder();
   return (
     <Stack
       direction={{ xs: "row", md: "column" }}
@@ -42,7 +25,8 @@ export default function OrderCancelButton({
           label={"Canceled"}
           color="error"
           variant="outlined"
-          clickable={true}
+          clickable={false}
+          disabled={true}
           sx={{
             fontWeight: 400,
             "&:hover": {
@@ -63,7 +47,7 @@ export default function OrderCancelButton({
           color="secondary"
           variant="outlined"
           clickable={!isLoading}
-          onClick={handleCancelOrder}
+          onClick={() => handlerFunc(id)}
           sx={{
             fontWeight: 400,
             "&:hover": {
