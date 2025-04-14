@@ -1,9 +1,6 @@
-import { usePaymentNowMutation } from "@/redux/api/payment.api";
-import { IGenericErrorResponse, OrderStatus } from "@/types";
+import usePayment from "@/hooks/usePayment";
+import { OrderStatus } from "@/types";
 import { Chip, CircularProgress, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { toast } from "sonner";
 
 export default function OrderPaymentButton({
   status,
@@ -12,25 +9,7 @@ export default function OrderPaymentButton({
   status: OrderStatus;
   id: string;
 }) {
-  const [paymentNow, { isLoading, isError, error, isSuccess, data }] =
-    usePaymentNowMutation();
-
-  const router = useRouter();
-
-  // Handle Payment Action
-  const handlePaymentNow = async (id: string) => {
-    await paymentNow(id);
-  };
-
-  // Manage payment redirection or error
-  useEffect(() => {
-    if (isSuccess) {
-      router.replace(data.paymentUrl);
-    } else if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-    }
-  }, [data, isSuccess, isError, error, router]);
-
+  const { handlerFunc, isLoading } = usePayment();
   return (
     <Stack
       direction={{ xs: "row", md: "column" }}
@@ -52,9 +31,11 @@ export default function OrderPaymentButton({
           color="primary"
           variant="outlined"
           clickable={!isLoading}
-          onClick={() => handlePaymentNow(id)}
+          disabled={isLoading}
+          onClick={() => handlerFunc(id)}
           sx={{
             fontWeight: 400,
+            padding: 0,
             "&:hover": {
               color: "secondary.main",
               borderColor: "secondary.main",
@@ -68,6 +49,7 @@ export default function OrderPaymentButton({
           sx={{
             bgcolor: "primary.main",
             color: "text.disabled",
+            padding: 0,
             "&:hover": {
               bgcolor: "secondary.main",
             },
