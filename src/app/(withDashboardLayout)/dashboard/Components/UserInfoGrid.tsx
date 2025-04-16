@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnyZodObject } from "zod";
 import UpdateUserInfoModal from "./UpdateUserInfoModal";
 import UserInfoCard from "./UserInfoCard";
+import useToggleState from "@/hooks/useToggleState";
 interface Field {
   label: string;
   value: string;
@@ -14,12 +15,13 @@ export default function UserInfoGrid({ user }: { user: any }) {
   const { userFields } = useUserFieldsData(user);
 
   // state for handle modal
-  const [openModal, setOpenModal] = useState(false);
+  const userModal = useToggleState(false);
+
   const [currentField, setCurrentField] = useState<Field | null>(null);
 
   const handleOpenModal = (field: Field) => {
     setCurrentField(field);
-    setOpenModal(true);
+    userModal.onOpen();
   };
 
   return (
@@ -45,8 +47,8 @@ export default function UserInfoGrid({ user }: { user: any }) {
 
       {currentField && (
         <UpdateUserInfoModal
-          open={openModal}
-          setOpen={setOpenModal}
+          open={userModal.state}
+          onClose={userModal.onClose}
           label={currentField.label}
           name={currentField.value}
           schema={currentField.schema}

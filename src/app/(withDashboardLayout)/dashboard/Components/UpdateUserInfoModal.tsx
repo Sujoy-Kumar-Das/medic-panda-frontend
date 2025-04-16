@@ -1,17 +1,16 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useUpdateUserInfo from "@/hooks/useUpdateUserInfo";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Typography } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import { AnyZodObject } from "zod";
 
 interface IUpdateUserInfo {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
   label: string;
   name: string;
   schema: AnyZodObject;
@@ -20,25 +19,20 @@ interface IUpdateUserInfo {
 
 export default function UpdateUserInfoModal({
   open,
-  setOpen,
+  onClose,
   label,
   name,
   schema,
   type,
 }: IUpdateUserInfo) {
-  // close the modal;
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
-
-  const { handlerFunc, isLoading } = useUpdateUserInfo(handleCloseModal);
+  const { handlerFunc, isLoading } = useUpdateUserInfo(onClose);
 
   const handleUpdateInformation = async (value: FieldValues) => {
     await handlerFunc(value);
   };
 
   return (
-    <CustomModal open={open} setOpen={setOpen}>
+    <CustomModal open={open} onClose={onClose}>
       <Box>
         <Typography
           variant="h6"
@@ -69,12 +63,16 @@ export default function UpdateUserInfoModal({
             }}
           />
 
-          <LoaderButton
-            isLoading={isLoading}
-            loadingText={`Updating ${label} info`}
-            type="submit"
-            fullWidth
-          >{`Update ${label} info`}</LoaderButton>
+          <Stack direction={"row"} justifyContent={"flex-end"} gap={1}>
+            <Button variant="outlined" onClick={onClose}>
+              Cancel
+            </Button>
+            <LoadingButton
+              loading={isLoading}
+              loadingIndicator={`Updating ${label} info`}
+              type="submit"
+            >{`Update ${label} info`}</LoadingButton>
+          </Stack>
         </PandaForm>
       </Box>
     </CustomModal>
