@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/(withDashboardLayout)/dashboard/admin/all-products/Components/hooks/useGetAllCategro"
+    "src/app/(withDashboardLayout)/dashboard/admin/all-products/Components/hooks/useGetAllCategro",
+    "src/utils/test.order.stet.js"
   ],
   "exclude": ["node_modules"]
 }

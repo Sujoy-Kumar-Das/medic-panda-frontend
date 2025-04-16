@@ -45,3 +45,40 @@ export interface IOrderDetails {
     price: number;
   };
 }
+
+interface IModifiedShippingInfo {
+  name?: string;
+  email?: string;
+  contact?: string;
+  address: string;
+}
+
+interface IModifiedOrderInfo {
+  orderId?: string;
+  shippingInfo: IModifiedShippingInfo;
+  quantity?: number;
+  totalAmount: string;
+  orderDate?: string;
+  status?: string;
+}
+
+interface IModifiedProductInfo {
+  name?: string;
+  image: string;
+  quantity?: number;
+  originalPrice?: number;
+  orderPrice: string;
+}
+
+export interface IModifiedUserInfo {
+  name?: string;
+  email?: string;
+  contact?: string;
+  address: string;
+}
+
+export interface IModifiedOrderDetailsData {
+  orderInfo: IModifiedOrderInfo;
+  productInfo: IModifiedProductInfo;
+  userInfo: IModifiedUserInfo;
+}

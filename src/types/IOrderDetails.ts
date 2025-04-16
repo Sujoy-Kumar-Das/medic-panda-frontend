@@ -28,3 +28,20 @@ export interface IModifiedOrderData {
   user: UserInfo;
   product: ProductInfo;
 }
+
+export interface IOrderInvoicePDF {
+  orderDetails: {
+    quantity: number | undefined;
+    totalAmount: number | undefined;
+    orderPrice: number | undefined;
+    originalPrice: number | undefined;
+    customerName: string | undefined;
+    email: string | undefined;
+    id: string | undefined;
+    shippingAddress: string | undefined;
+    orderDate: string | undefined;
+    productName: string | undefined;
+    status: string | undefined;
+    image: string;
+  };
+}

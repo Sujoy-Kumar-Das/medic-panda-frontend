@@ -39,7 +39,7 @@ export default function NoDataFound({
   return (
     <Container
       sx={{
-        minHeight: "100vh",
+        minHeight: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

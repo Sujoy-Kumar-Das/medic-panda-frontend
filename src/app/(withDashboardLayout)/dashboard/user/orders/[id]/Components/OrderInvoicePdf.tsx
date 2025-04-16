@@ -1,152 +1,306 @@
-import { IOrderDetails } from "@/types";
-import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
+import { OrderStatus } from "@/types";
+import { IOrderInvoicePDF } from "@/types/IOrderDetails";
+import calculateTotalSavings from "@/utils/calculateTotalSavings";
+import getStatusColor from "@/utils/getStatusColor";
+import {
+  Document,
+  Font,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
 
-// Define styles for the invoice
+// Register fonts
+Font.register({
+  family: "Helvetica",
+  src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf",
+});
+
+Font.register({
+  family: "Helvetica-Bold",
+  src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf",
+});
+
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
-    padding: 30,
+    padding: 40,
     fontSize: 12,
+    lineHeight: 1.4,
+    color: "#333",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    marginBottom: 30,
+  },
+  invoiceTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#2c3e50",
+    marginBottom: 5,
+  },
+  invoiceSubtitle: {
+    fontSize: 10,
+    color: "#7f8c8d",
     marginBottom: 20,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-  },
-  companyInfo: {
-    textAlign: "right",
   },
   section: {
     marginBottom: 20,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-    borderBottomStyle: "solid",
   },
-  title: {
-    fontSize: 22,
-    marginBottom: 20,
-    textAlign: "center",
+  sectionTitle: {
+    fontSize: 14,
     fontWeight: "bold",
-    color: "#333",
+    marginBottom: 10,
+    color: "#2c3e50",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ecf0f1",
+    paddingBottom: 5,
   },
-  info: {
-    marginBottom: 5,
+  gridContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+  gridColumn: {
+    width: "48%",
+  },
+  infoLabel: {
+    fontSize: 10,
+    color: "#7f8c8d",
+    marginBottom: 2,
+  },
+  infoValue: {
     fontSize: 12,
-    lineHeight: 1.5,
+    marginBottom: 8,
   },
   table: {
-    display: "flex",
-    width: "auto",
-    margin: "10px 0",
+    width: "100%",
+    marginTop: 15,
+  },
+  tableHeader: {
+    flexDirection: "row",
+    backgroundColor: "#f8f9fa",
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
   },
   tableRow: {
     flexDirection: "row",
-  },
-  tableColHeader: {
-    width: "25%",
-    padding: 5,
-    backgroundColor: "#f0f0f0",
-    fontWeight: "bold",
+    paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    borderBottomStyle: "solid",
-    textAlign: "left",
+    borderBottomColor: "#eee",
   },
   tableCol: {
-    width: "25%",
-    padding: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    borderBottomStyle: "solid",
-    textAlign: "left",
+    paddingHorizontal: 5,
+    fontSize: 10,
   },
-  tableCell: {
+  colName: {
+    width: "40%",
+  },
+  colQty: {
+    width: "15%",
+    textAlign: "right",
+  },
+  colPrice: {
+    width: "20%",
+    textAlign: "right",
+  },
+  colTotal: {
+    width: "25%",
+    textAlign: "right",
+  },
+  totals: {
+    marginTop: 20,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#ecf0f1",
+  },
+  totalRow: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginBottom: 5,
+  },
+  totalLabel: {
+    width: "30%",
+    textAlign: "right",
+    fontSize: 10,
+    color: "#7f8c8d",
+  },
+  totalValue: {
+    width: "20%",
+    textAlign: "right",
     fontSize: 12,
   },
-  totalAmount: {
+  grandTotal: {
     fontWeight: "bold",
     fontSize: 14,
-    marginTop: 10,
-    textAlign: "right",
-    color: "#333",
+    color: "#2c3e50",
   },
   footer: {
-    marginTop: 30,
+    position: "absolute",
+    bottom: 30,
+    left: 40,
+    right: 40,
     fontSize: 10,
     textAlign: "center",
-    color: "#666",
+    color: "#95a5a6",
+    borderTopWidth: 1,
+    borderTopColor: "#ecf0f1",
+    paddingTop: 10,
+  },
+  savingsText: {
+    fontSize: 8,
+    color: "#e74c3c",
   },
 });
 
-// Invoice PDF Document Component
-const OrderInvoicePdf = ({ orderDetails }: { orderDetails: IOrderDetails }) => {
-  const {
-    customerName,
-    shippingAddress,
-    orderDate,
-    status,
-    product,
-    totalAmount,
-  } = orderDetails;
+const OrderInvoicePdf = ({ orderDetails }: IOrderInvoicePDF) => {
+  const subtotal =
+    Number(orderDetails.orderPrice) * Number(orderDetails.quantity);
+  const { hasSavings, savings, totalSavings } = calculateTotalSavings(
+    Number(orderDetails.originalPrice),
+    Number(orderDetails.orderPrice),
+    Number(orderDetails.quantity)
+  );
 
   return (
     <Document>
-      <Page style={styles.page}>
-        {/* Title */}
-        <Text style={styles.title}>Invoice</Text>
-
-        {/* Order Information */}
-        <View style={styles.section}>
-          <Text style={styles.info}>Invoice ID: #{orderDetails.id}</Text>
-          <Text style={styles.info}>Order Date: {orderDate}</Text>
-          <Text style={styles.info}>Order Status: {status}</Text>
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.invoiceTitle}>MedicPanda</Text>
+            <Text style={styles.invoiceTitle}>INVOICE</Text>
+            <Text style={styles.invoiceSubtitle}>#{orderDetails.id}</Text>
+          </View>
+          <View>
+            <Text style={styles.infoLabel}>Date Issued</Text>
+            <Text style={styles.infoValue}>
+              {new Date(String(orderDetails.orderDate)).toLocaleDateString(
+                "en-US",
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }
+              )}
+            </Text>
+            <Text style={styles.infoLabel}>Status</Text>
+            <Text
+              style={{
+                color: getStatusColor(orderDetails.status as OrderStatus),
+                fontWeight: "bold",
+              }}
+            >
+              {orderDetails.status}
+            </Text>
+          </View>
         </View>
 
-        {/* Customer Information */}
-        <View style={styles.section}>
-          <Text style={styles.info}>Customer: {customerName}</Text>
-          <Text style={styles.info}>Shipping Address: {shippingAddress}</Text>
+        {/* Bill To & Ship To */}
+        <View style={styles.gridContainer}>
+          <View style={styles.gridColumn}>
+            <Text style={styles.sectionTitle}>Bill To</Text>
+            <Text style={styles.infoLabel}>Customer Name</Text>
+            <Text style={styles.infoValue}>{orderDetails.customerName}</Text>
+            <Text style={styles.infoLabel}>Email</Text>
+            <Text style={styles.infoValue}>{orderDetails.email}</Text>
+            <Text style={styles.infoLabel}>Contact</Text>
+          </View>
+          <View style={styles.gridColumn}>
+            <Text style={styles.sectionTitle}>Ship To</Text>
+            <Text style={styles.infoLabel}>Shipping Address</Text>
+            <Text style={styles.infoValue}>{orderDetails.shippingAddress}</Text>
+            <Text style={styles.infoLabel}>Order Date</Text>
+            <Text style={styles.infoValue}>
+              {new Date(String(orderDetails.orderDate)).toLocaleDateString(
+                "en-US",
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }
+              )}
+            </Text>
+          </View>
         </View>
 
-        {/* Product Information */}
+        {/* Product Table */}
         <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Order Details</Text>
           <View style={styles.table}>
-            {/* Table Header */}
-            <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>Product Name</Text>
-              <Text style={styles.tableColHeader}>Quantity</Text>
-              <Text style={styles.tableColHeader}>Price</Text>
-              <Text style={styles.tableColHeader}>Total</Text>
+            <View style={styles.tableHeader}>
+              <Text style={[styles.tableCol, styles.colName]}>ITEM</Text>
+              <Text style={[styles.tableCol, styles.colQty]}>QTY</Text>
+              <Text style={[styles.tableCol, styles.colPrice]}>UNIT PRICE</Text>
+              <Text style={[styles.tableCol, styles.colTotal]}>TOTAL</Text>
             </View>
-
-            {/* Product Row */}
             <View style={styles.tableRow}>
-              <Text style={styles.tableCol}>{product?.name}</Text>
-              <Text style={styles.tableCol}>{product?.quantity}</Text>
-              <Text style={styles.tableCol}>${product?.price.toFixed(2)}</Text>
-              <Text style={styles.tableCol}>
-                ${(product?.quantity * product?.price).toFixed(2)}
+              <Text style={[styles.tableCol, styles.colName]}>
+                {orderDetails.productName}
+              </Text>
+              <Text style={[styles.tableCol, styles.colQty]}>
+                {orderDetails.quantity}
+              </Text>
+              <Text style={[styles.tableCol, styles.colPrice]}>
+                ${Number(orderDetails.orderPrice).toFixed(2)}
+                {hasSavings && (
+                  <Text style={styles.savingsText}>
+                    {" "}
+                    (Save ${savings.toFixed(2)})
+                  </Text>
+                )}
+              </Text>
+              <Text style={[styles.tableCol, styles.colTotal]}>
+                ${subtotal.toFixed(2)}
               </Text>
             </View>
           </View>
         </View>
 
-        {/* Total Amount */}
-        <Text style={styles.totalAmount}>
-          Total: ${Number(totalAmount).toFixed(2)}
-        </Text>
+        {/* Totals */}
+        <View style={styles.totals}>
+          <View style={styles.totalRow}>
+            <Text style={styles.totalLabel}>Subtotal:</Text>
+            <Text style={styles.totalValue}>${subtotal.toFixed(2)}</Text>
+          </View>
+          {hasSavings && (
+            <>
+              <View style={styles.totalRow}>
+                <Text style={styles.totalLabel}>Discount:</Text>
+                <Text style={[styles.totalValue, { color: "#e74c3c" }]}>
+                  -${totalSavings.toFixed(2)}
+                </Text>
+              </View>
+              <View style={styles.totalRow}>
+                <Text style={styles.totalLabel}>You Saved:</Text>
+                <Text style={[styles.totalValue, { color: "#2ecc71" }]}>
+                  ${totalSavings.toFixed(2)}
+                </Text>
+              </View>
+            </>
+          )}
+          <View style={[styles.totalRow, { marginTop: 10 }]}>
+            <Text style={[styles.totalLabel, styles.grandTotal]}>Total:</Text>
+            <Text style={[styles.totalValue, styles.grandTotal]}>
+              ${Number(orderDetails.totalAmount).toFixed(2)}
+            </Text>
+          </View>
+        </View>
 
         {/* Footer */}
-        <Text style={styles.footer}>
-          Thank you for your business! Please contact us if you have any
-          questions.
-        </Text>
+        <View style={styles.footer} fixed>
+          <Text>Thank you for shopping with MedicPanda!</Text>
+          <Text>
+            If you have any questions, please contact us at
+            support@medicpanda.com
+          </Text>
+          <Text style={{ marginTop: 5 }}>
+            Invoice generated on {new Date().toLocaleDateString()}
+          </Text>
+        </View>
       </Page>
     </Document>
   );

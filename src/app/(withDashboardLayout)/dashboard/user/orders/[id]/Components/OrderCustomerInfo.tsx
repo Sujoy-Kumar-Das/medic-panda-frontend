@@ -1,53 +1,62 @@
-import { OrderStatus } from "@/types";
-import { Card, CardContent, Chip, Divider, Typography } from "@mui/material";
+import { IModifiedUserInfo, OrderStatus } from "@/types";
+import getStatusColor from "@/utils/getStatusColor";
+import {
+  Box,
+  Card,
+  CardContent,
+  Chip,
+  Divider,
+  Typography,
+} from "@mui/material";
+import { OrderInfoRow } from "./OrderInfoRow";
 
 interface IOrderCustomerInfoProps {
-  customerName: string;
-  orderDate: string;
-  shippingAddress: string;
-  status: OrderStatus;
+  customerInfo: {
+    status: string;
+    orderDate: string;
+  } & IModifiedUserInfo;
 }
 
 export default function OrderCustomerInfo({
-  customerName,
-  orderDate,
-  shippingAddress,
-  status,
+  customerInfo: { name, email, contact, address, status, orderDate },
 }: IOrderCustomerInfoProps) {
   return (
-    <Card sx={{ flex: 1, flexGrow: 1 }}>
-      {" "}
-      {/* Ensure card takes available space */}
+    <Card sx={{ flex: 1 }}>
       <CardContent>
-        <Typography variant="h6" fontWeight="bold" color="text.primary">
+        <Typography variant="h6" fontWeight="bold" color="text.primary" mb={2}>
           Customer Information
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Name: {customerName}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Order Date: {orderDate}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Shipping Address: {shippingAddress}
-        </Typography>
-        <Divider sx={{ my: 2 }} />
-        <Typography variant="body1" color="text.secondary">
-          Status:{" "}
-          <Chip
-            label={status}
-            color={
-              status === OrderStatus.DELIVERED
-                ? "success"
-                : status === OrderStatus.CANCELED ||
-                  status === OrderStatus.RETURNED
-                ? "error"
-                : "warning"
-            }
-            size="small"
-            sx={{ color: "white" }}
+
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+          <OrderInfoRow label="Name" value={name || "N/A"} />
+          <OrderInfoRow label="Email" value={email || "N/A"} />
+          <OrderInfoRow label="Contact" value={contact || "N/A"} />
+          <OrderInfoRow label="Order Date" value={orderDate || "N/A"} />
+          <OrderInfoRow
+            label="Shipping Address"
+            value={address || "N/A"}
+            valueProps={{ textAlign: "right" }}
           />
-        </Typography>
+
+          <Divider sx={{ my: 1.5 }} />
+
+          <OrderInfoRow
+            label="Status"
+            value={
+              <Chip
+                label={status}
+                color={getStatusColor(status as OrderStatus)}
+                size="small"
+                sx={{
+                  color: "white",
+                  fontWeight: 500,
+                  minWidth: 80,
+                  justifyContent: "center",
+                }}
+              />
+            }
+          />
+        </Box>
       </CardContent>
     </Card>
   );
