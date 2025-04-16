@@ -1,16 +1,13 @@
 "use client";
 import { useGetAllWishListProductsQuery } from "@/redux/api/wish-listApi";
-import { IGenericErrorResponse } from "@/types";
 import WishListProductWithHOC from "./Components/WishListHOC";
 
 export default function WishListPage() {
-  const { data, isLoading, error } = useGetAllWishListProductsQuery(undefined);
+  const query = useGetAllWishListProductsQuery(undefined);
 
   return (
     <WishListProductWithHOC
-      data={data}
-      isLoading={isLoading}
-      error={error as IGenericErrorResponse}
+      query={query}
       noDataLink="/product"
       noDataText="Start Shopping"
       noDataMessage="Your wishlist is empty. Add items to view."

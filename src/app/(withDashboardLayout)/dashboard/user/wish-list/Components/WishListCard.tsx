@@ -98,8 +98,14 @@ export default function WishListCard({ product }: ProductCardProps) {
           </Typography>
         )}
 
-        <Box display="flex" justifyContent="space-between" mt={3}>
-          <WishListBuyNowButton id={product._id} />
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems={"center"}
+          gap={3}
+          mt={3}
+        >
+          <WishListBuyNowButton productData={product} />
           <RemoveFromWIshListButton id={product._id} />
         </Box>
       </CardContent>

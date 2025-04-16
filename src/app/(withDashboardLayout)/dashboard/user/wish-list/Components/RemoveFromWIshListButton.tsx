@@ -1,55 +1,19 @@
-import { useRemoveWishListProductMutation } from "@/redux/api/wish-listApi";
-import { IGenericErrorResponse } from "@/types";
-import { Button, CircularProgress } from "@mui/material";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import useRemoveFromWishList from "@/hooks/useRemoveFromWishList";
+import { LoadingButton } from "@mui/lab";
+import { CircularProgress } from "@mui/material";
 
 export default function RemoveFromWishListButton({ id }: { id: string }) {
-  const [removeFromWishList, { isLoading, isError, error, isSuccess }] =
-    useRemoveWishListProductMutation();
-
-  // handle remove from wishlist
-  const handleRemoveFromWishList = async (id: string) => {
-    await removeFromWishList(id).unwrap();
-  };
-
-  // manage remove from wishlist state
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Product removed from your wish list.");
-    } else if (isError && error) {
-      const errorMessage =
-        (error as IGenericErrorResponse)?.message || "An error occurred";
-      toast.error(errorMessage);
-    }
-  }, [isSuccess, isError, error]);
-
+  const { handlerFunc, isLoading } = useRemoveFromWishList();
   return (
-    <Button
-      variant="outlined"
-      color="secondary"
-      size="small"
+    <LoadingButton
       disabled={isLoading}
-      sx={{
-        flex: 1,
-        position: "relative", // To properly position the loader
-        "&:hover": {
-          borderColor: "#6c757d",
-        },
-      }}
-      onClick={() => handleRemoveFromWishList(id)}
+      loadingIndicator={
+        <CircularProgress size={24} sx={{ color: "text.primary" }} />
+      }
+      loading={isLoading}
+      onClick={() => handlerFunc(id)}
     >
-      {isLoading ? (
-        <CircularProgress
-          size={24}
-          sx={{
-            color: "inherit",
-            position: "absolute",
-          }}
-        />
-      ) : (
-        "Remove"
-      )}
-    </Button>
+      Remove
+    </LoadingButton>
   );
 }

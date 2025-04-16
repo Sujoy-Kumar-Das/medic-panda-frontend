@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 import { useAuth } from "./useAuth";
 
-export default function useAddToCart() {
+export default function useAddToCart(onClose?: () => void) {
   const { user } = useAuth();
   const [addToCartInDB, apiResponse] = useAddToCartMutation();
 
@@ -29,6 +29,7 @@ export default function useAddToCart() {
   useApiMutationResponseHandler({
     successMessage: "Product added to cart.",
     apiResponse,
+    ...(onClose && { onClose }),
   });
   return { handlerFunc, ...apiResponse };
 }
