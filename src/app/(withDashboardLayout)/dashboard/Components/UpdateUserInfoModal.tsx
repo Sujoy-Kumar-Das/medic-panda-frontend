@@ -5,7 +5,6 @@ import useUpdateUserInfo from "@/hooks/useUpdateUserInfo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { FieldValues } from "react-hook-form";
 import { AnyZodObject } from "zod";
 
 interface IUpdateUserInfo {
@@ -27,10 +26,6 @@ export default function UpdateUserInfoModal({
 }: IUpdateUserInfo) {
   const { handlerFunc, isLoading } = useUpdateUserInfo(onClose);
 
-  const handleUpdateInformation = async (value: FieldValues) => {
-    await handlerFunc(value);
-  };
-
   return (
     <CustomModal open={open} onClose={onClose}>
       <Box>
@@ -43,10 +38,7 @@ export default function UpdateUserInfoModal({
           Update Your {label}
         </Typography>
 
-        <PandaForm
-          onSubmit={handleUpdateInformation}
-          resolver={zodResolver(schema)}
-        >
+        <PandaForm onSubmit={handlerFunc} resolver={zodResolver(schema)}>
           <PandaInputField
             type={type}
             name={name}

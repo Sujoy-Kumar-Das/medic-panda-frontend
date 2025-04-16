@@ -1,44 +1,36 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { useUpdateUserEmailMutation } from "@/redux/api/user.api";
-import { IGenericErrorResponse } from "@/types";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import React, { SetStateAction, useEffect } from "react";
-import { FieldValue } from "react-hook-form";
-import { toast } from "sonner";
+import useUpdateEmail from "@/hooks/useUpdateEmail";
+import updateEmailValidationSchema from "@/schemas/updateEmailValidationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 interface IUpdateEmailModalProps {
   open: boolean;
-  setOpen: React.Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
+  email: string;
 }
-
-const defaultValues = {
-  email: "",
-};
 
 export default function UpdateEmailModal({
   open,
-  setOpen,
+  onClose,
+  email,
 }: IUpdateEmailModalProps) {
-  const [updateEmail, { isLoading, isError, error, isSuccess }] =
-    useUpdateUserEmailMutation();
+  const { handlerFunc, isLoading } = useUpdateEmail(onClose);
 
-  const handleUpdateEmail = async (value: FieldValue<{ email: string }>) => {
-    await updateEmail(value).unwrap();
+  const defaultValues = {
+    email,
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Email changed successfully");
-      setOpen((prev) => !prev);
-    } else if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-    }
-  }, [isSuccess, isError, error, setOpen]);
-
   return (
-    <CustomModal open={open} setOpen={setOpen} closeBtn={false}>
+    <CustomModal open={open} onClose={onClose}>
       <Box>
         <Typography
           variant="h6"
@@ -49,36 +41,45 @@ export default function UpdateEmailModal({
           Update Your Email
         </Typography>
 
-        <PandaForm
-          onSubmit={handleUpdateEmail}
-          //   resolver={zodResolver(updatePasswordValidationSchema)}
-          defaultValues={defaultValues}
-        >
-          <PandaInputField
-            type="email"
-            label="Email"
-            name={"email"}
-            fullWidth
-            sx={{
-              mb: 3,
-              "& input": {
-                borderColor: "primary.main",
-                transition: "border-color 0.3s ease",
-                "&:hover": {
-                  borderColor: "primary.dark",
+        {email && (
+          <PandaForm
+            onSubmit={handlerFunc}
+            resolver={zodResolver(updateEmailValidationSchema)}
+            defaultValues={defaultValues}
+          >
+            <PandaInputField
+              type="email"
+              label="Email"
+              name={"email"}
+              fullWidth
+              sx={{
+                mb: 3,
+                "& input": {
+                  borderColor: "primary.main",
+                  transition: "border-color 0.3s ease",
+                  "&:hover": {
+                    borderColor: "primary.dark",
+                  },
                 },
-              },
-            }}
-          />
-
-          <Button type="submit" fullWidth disabled={isLoading}>
-            {isLoading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Update Email  "
-            )}
-          </Button>
-        </PandaForm>
+              }}
+            />
+            <Stack direction={"row"} justifyContent={"flex-end"} gap={1}>
+              <Button type="button" onClick={onClose}>
+                Cancel
+              </Button>
+              <LoadingButton
+                type="submit"
+                disabled={isLoading}
+                loading={isLoading}
+                loadingIndicator={
+                  <CircularProgress size={24} color="inherit" />
+                }
+              >
+                Update Email
+              </LoadingButton>
+            </Stack>
+          </PandaForm>
+        )}
       </Box>
     </CustomModal>
   );

@@ -1,18 +1,21 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { useChangePasswordMutation } from "@/redux/api/auth.api";
+import useChangePassword from "@/hooks/useChangePassword";
 import updatePasswordValidationSchema from "@/schemas/updatePasswordValidationSchema";
-import { IGenericErrorResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import React, { SetStateAction, useEffect } from "react";
-import { FieldValues } from "react-hook-form";
-import { toast } from "sonner";
+import { LoadingButton } from "@mui/lab";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 interface IUpdatePasswordModalProps {
   open: boolean;
-  setOpen: React.Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 const defaultValues = {
@@ -22,26 +25,11 @@ const defaultValues = {
 
 export default function UpdatePasswordModal({
   open,
-  setOpen,
+  onClose,
 }: IUpdatePasswordModalProps) {
-  const [changePassword, { isLoading, isError, error, isSuccess }] =
-    useChangePasswordMutation();
-
-  const handleUpdateInfo = async (value: FieldValues) => {
-    await changePassword(value).unwrap();
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Password changed successfully");
-      setOpen((prev) => !prev);
-    } else if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-    }
-  }, [isSuccess, isError, error, setOpen]);
-
+  const { handlerFunc, isLoading } = useChangePassword(onClose);
   return (
-    <CustomModal open={open} setOpen={setOpen} closeBtn={false}>
+    <CustomModal open={open} onClose={onClose}>
       <Box>
         <Typography
           variant="h6"
@@ -53,7 +41,7 @@ export default function UpdatePasswordModal({
         </Typography>
 
         <PandaForm
-          onSubmit={handleUpdateInfo}
+          onSubmit={handlerFunc}
           resolver={zodResolver(updatePasswordValidationSchema)}
           defaultValues={defaultValues}
         >
@@ -91,13 +79,19 @@ export default function UpdatePasswordModal({
             }}
           />
 
-          <Button type="submit" fullWidth disabled={isLoading}>
-            {isLoading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Change Password"
-            )}
-          </Button>
+          <Stack direction={"row"} justifyContent={"flex-end"} gap={1}>
+            <Button type="button" onClick={onClose}>
+              Cancel
+            </Button>
+            <LoadingButton
+              type="submit"
+              disabled={isLoading}
+              loading={isLoading}
+              loadingIndicator={<CircularProgress size={24} color="inherit" />}
+            >
+              Update Password
+            </LoadingButton>
+          </Stack>
         </PandaForm>
       </Box>
     </CustomModal>

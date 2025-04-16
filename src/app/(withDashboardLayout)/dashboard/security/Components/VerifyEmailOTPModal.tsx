@@ -1,13 +1,10 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { useConfirmUserOTPMutation } from "@/redux/api/user.api";
-import { IGenericErrorResponse } from "@/types";
+import useConfirmVerificationWithOTP from "@/hooks/useConfirmVerificationWithOTP";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import React, { SetStateAction, useEffect } from "react";
-import { FieldValues } from "react-hook-form";
-import { toast } from "sonner";
+import { LoadingButton } from "@mui/lab";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { z } from "zod";
 
 const verifyOTPSchema = z.object({
@@ -18,7 +15,7 @@ const verifyOTPSchema = z.object({
 
 interface IVerifyEmailOTPModalProps {
   open: boolean;
-  setOpen: React.Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 interface OTPFormValues {
@@ -31,27 +28,11 @@ const defaultValues: OTPFormValues = {
 
 export default function VerifyEmailOTPModal({
   open,
-  setOpen,
+  onClose,
 }: IVerifyEmailOTPModalProps) {
-  const [verifyUserOtp, { isLoading, isError, error, isSuccess }] =
-    useConfirmUserOTPMutation();
-
-  const handleConfirmOTP = async (value: FieldValues) => {
-    const data = { otp: Number(value.otp) };
-    await verifyUserOtp(data);
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Account verified successfully.");
-      setOpen((prev) => !prev);
-    } else if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-    }
-  }, [isSuccess, isError, error, setOpen]);
-
+  const { handlerFunc, isLoading } = useConfirmVerificationWithOTP(onClose);
   return (
-    <CustomModal open={open} setOpen={setOpen} closeBtn={false}>
+    <CustomModal open={open} onClose={onClose}>
       <Box>
         <Typography
           variant="h6"
@@ -62,8 +43,18 @@ export default function VerifyEmailOTPModal({
           Confirm your OTP and verify
         </Typography>
 
+        <Typography
+          variant="body1"
+          textAlign="center"
+          mb={2}
+          sx={{ fontWeight: 500, color: "text.secondary" }}
+        >
+          <strong>[NOTE]</strong> Please do not close this modal. If you close
+          it, you won't be able to reopen it for the next 2 minutes.
+        </Typography>
+
         <PandaForm
-          onSubmit={handleConfirmOTP}
+          onSubmit={handlerFunc}
           resolver={zodResolver(verifyOTPSchema)}
           defaultValues={defaultValues}
         >
@@ -81,13 +72,14 @@ export default function VerifyEmailOTPModal({
             }}
           />
 
-          <Button type="submit" fullWidth disabled={isLoading}>
-            {isLoading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Submit Code"
-            )}
-          </Button>
+          <LoadingButton
+            type="submit"
+            fullWidth
+            disabled={isLoading}
+            loadingIndicator={<CircularProgress size={24} color="inherit" />}
+          >
+            Submit Code
+          </LoadingButton>
         </PandaForm>
       </Box>
     </CustomModal>

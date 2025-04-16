@@ -52,7 +52,7 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [TTagTypes.user],
     }),
-    verifyUser: builder.mutation({
+    emailVerificationOTPSent: builder.mutation({
       query: () => ({
         url: "/user/verify-email",
         method: "PATCH",
@@ -115,7 +115,7 @@ export const {
   useGetAllUsersQuery,
   useGetSingleUserQuery,
   useGetAllBlockedUsersQuery,
-  useVerifyUserMutation,
+  useEmailVerificationOTPSentMutation,
   useConfirmUserOTPMutation,
   useBlockUserMutation,
   useUnblockUserMutation,
