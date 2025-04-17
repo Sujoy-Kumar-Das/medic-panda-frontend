@@ -3,17 +3,16 @@ import { Card, CardContent, Typography } from "@mui/material";
 export default function UserDashboardCard({
   title,
   value,
-  gradient,
+  background,
 }: {
   title: string;
   value: number;
-  gradient: string;
+  background: string;
 }) {
   return (
     <Card
       sx={{
-        // background: gradient,
-        background: gradient,
+        background: background,
         height: 150,
         width: "100%",
         display: "flex",

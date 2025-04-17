@@ -1,67 +1,38 @@
-import { authKey } from "@/constants/auth.key";
 import AuthContext from "@/context/AuthContext";
-import { deleteCookies } from "@/utils/deleteCookies";
-import getTokenFromCookie from "@/utils/getTokenFromCookie";
+import useUser from "@/hooks/useUser";
 import logoutFunc from "@/utils/logoutUser";
-import { jwtDecode, JwtPayload } from "jwt-decode";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { ReactElement, useEffect, useState } from "react";
-interface IUser {
-  userId: string;
-  role: string;
-}
+import { ReactElement } from "react";
 
 const AuthContextProvider = ({ children }: { children: ReactElement }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const { user, setUser, refetch } = useUser();
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      const authToken = await getTokenFromCookie(authKey);
+  const loginUser = async () => {
+    const newData = await refetch();
 
-      if (!authToken) {
-        setUser(null);
-        return;
-      }
-
-      try {
-        const userData = jwtDecode(authToken) as JwtPayload & {
-          userId: string;
-          role: string;
-        };
-        setUser({ userId: userData.userId, role: userData.role });
-      } catch (error) {
-        setUser(null);
-        deleteCookies(authKey);
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
-
-  const loginUser = (token: string) => {
-    if (!token) setUser(null);
-
-    const decodedData = jwtDecode(token) as JwtPayload & {
-      userId: string;
-      role: string;
-    };
-
-    setUser({ userId: decodedData.userId, role: decodedData.role });
+    if (newData.data) {
+      setUser({
+        id: newData?.data?._id,
+        name: newData?.data?.name,
+        photo: newData?.data?.photo,
+        isVerified: newData?.data?.user?.isVerified,
+        email: newData?.data?.user?.email,
+        role: newData?.data?.user?.role,
+        address: newData?.data?.address,
+        contact: newData?.data?.contact,
+      });
+    }
   };
 
-  const logoutUser = (router: AppRouterInstance) => {
-    setUser(null);
+  const logoutUser = async (router: AppRouterInstance) => {
     logoutFunc(router);
-  };
-
-  const authValues = {
-    user,
-    loginUser,
-    logoutUser,
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={authValues}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

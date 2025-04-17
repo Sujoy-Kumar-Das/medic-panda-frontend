@@ -1,4 +1,3 @@
-import { dashboardBgColor } from "@/style";
 import { IDashboardStats } from "@/types";
 import { useEffect, useState } from "react";
 
@@ -7,8 +6,9 @@ interface useAdminDashboardDataProps {
   value: number;
 }
 
-export default function useAdminDashboardData(
-  dashboardStats: useAdminDashboardDataProps[]
+export default function useDashboardStatsData(
+  dashboardStats: useAdminDashboardDataProps[],
+  backgroundColors: string[]
 ) {
   const [dashboardData, setDashboardData] = useState<
     IDashboardStats[] | undefined
@@ -17,7 +17,7 @@ export default function useAdminDashboardData(
   useEffect(() => {
     if (dashboardStats) {
       const modifiedData = dashboardStats.map((item, index) => {
-        return { ...item, background: dashboardBgColor[index] };
+        return { ...item, background: backgroundColors[index] };
       });
 
       setDashboardData(modifiedData);

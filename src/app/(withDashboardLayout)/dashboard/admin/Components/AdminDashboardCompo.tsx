@@ -1,6 +1,7 @@
 import Header from "@/components/shared/header/Header";
-import useAdminDashboardData from "@/hooks/useAdminDashboardData";
+import { adminDashboardBgColor } from "@/style";
 import { IDashboardStats } from "@/types";
+import dashboardStatsDataBGGenerator from "@/utils/dashboard-stats-data-bg-generator";
 import { Container } from "@mui/material";
 import AdminDashboardStatsCompo from "./AdminDashboardStatsCompo";
 
@@ -13,7 +14,10 @@ export default function AdminDashboardCompo({
 }: {
   data: AdminDashboardCompoProps;
 }) {
-  const dashboardStatsData = useAdminDashboardData(data.dashboardStats);
+  const dashboardStatsData = dashboardStatsDataBGGenerator(
+    data.dashboardStats,
+    adminDashboardBgColor
+  );
 
   return (
     <Container sx={{ pb: 4 }}>

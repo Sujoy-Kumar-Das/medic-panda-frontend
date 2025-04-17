@@ -1,4 +1,5 @@
 "use client";
+import { IModifiedUserData } from "@/types/user.type";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { createContext } from "react";
 
@@ -8,8 +9,8 @@ interface IUser {
 }
 
 interface IAuthContext {
-  user: IUser | null;
-  loginUser: (token: string) => void;
+  user: IModifiedUserData | null;
+  loginUser: () => void;
   logoutUser: (router: AppRouterInstance) => void;
 }
 

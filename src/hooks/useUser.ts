@@ -2,14 +2,18 @@ import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import { IModifiedUserData } from "@/types/user.type";
 import { useEffect, useState } from "react";
 
-export default function useGetMe() {
+export default function useUser() {
   const { data, ...apiResponse } = useGetMeQuery(undefined);
-
   const [user, setUser] = useState<IModifiedUserData | null>(null);
 
   useEffect(() => {
-    const modifiedData = {
-      id: data?.user?._id,
+    if (!data) {
+      setUser(null);
+      return;
+    }
+
+    const modifiedData: IModifiedUserData = {
+      id: data?._id,
       name: data?.name,
       photo: data?.photo,
       isVerified: data?.user?.isVerified,
@@ -22,5 +26,7 @@ export default function useGetMe() {
     setUser(modifiedData);
   }, [data]);
 
-  return { user, ...apiResponse };
+  console.log({ data });
+
+  return { user, setUser, ...apiResponse };
 }

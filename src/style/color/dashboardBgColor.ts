@@ -1,4 +1,4 @@
-export const dashboardBgColor = [
+export const adminDashboardBgColor = [
   "linear-gradient(135deg, #4CAF50, #2E7D32)",
   "linear-gradient(135deg, #FF9800, #E65100)",
   "linear-gradient(135deg, #03A9F4, #0277BD)",
@@ -14,4 +14,17 @@ export const dashboardBgColor = [
   "linear-gradient(135deg, #8BC34A, #558B2F)",
   "linear-gradient(135deg, #FF9800, #F57C00)",
   "linear-gradient(135deg, #F44336, #D32F2F)",
+];
+
+export const userDashboardBGColors = [
+  "linear-gradient(135deg, #42a5f5, #1e88e5)",
+  "linear-gradient(135deg, #66bb6a, #388e3c)",
+  "linear-gradient(135deg, #ffca28, #fbc02d)",
+  "linear-gradient(135deg, #26c6da, #0097a7)",
+  "linear-gradient(135deg, #ffa726, #fb8c00)",
+  "linear-gradient(135deg, #ab47bc, #8e24aa)",
+  "linear-gradient(135deg, #ef5350, #c62828)",
+  "linear-gradient(135deg, #5c6bc0, #3949ab)",
+  "linear-gradient(135deg, #8d6e63, #6d4c41)",
+  "linear-gradient(135deg, #78909c, #546e7a)",
 ];

@@ -45,7 +45,7 @@ export const useLogin = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       handleCartSync({ isLoginSuccess });
-      loginUser(loginData);
+      loginUser();
       router.push(redirect);
     }
 

@@ -1,5 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
-import useGetMe from "@/hooks/useGetMe";
+import useUser from "@/hooks/useUser";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import NavbarUserMenuCard from "./NavbarUserMenuCard";
@@ -14,7 +14,7 @@ function NavUserMenu() {
 
   const { user } = useAuth();
 
-  const { user: userDetails, isLoading } = useGetMe();
+  const { user: userDetails, isLoading } = useUser();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
