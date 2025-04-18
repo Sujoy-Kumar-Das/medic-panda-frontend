@@ -1,6 +1,5 @@
-export interface IUserInfo {
-  email: string;
-  userId: string;
+export interface IUser {
+  _id: string;
   photo: string;
   name: string;
 }
@@ -11,5 +10,5 @@ export interface IReview {
   comment: string;
   rating: number;
   createdAt: string;
-  userInfo: IUserInfo;
+  user: IUser;
 }

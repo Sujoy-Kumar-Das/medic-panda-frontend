@@ -1,19 +1,18 @@
 "use client";
 import { useGetAllReviewQuery } from "@/redux/api/review.api";
-import { IGenericErrorResponse } from "@/types";
+import NoReviewFound from "./NoReviewFound";
 import ProductReviewHOC from "./ProductReviewHOC";
 import ReviewSkeletons from "./ReviewCardSkeletons";
 
-const ProductReviewTab = () => {
-  const { data, isLoading, error } = useGetAllReviewQuery(undefined);
+const ProductReviewTab = ({ productId }: { productId: string }) => {
+  const query = useGetAllReviewQuery(productId);
 
   return (
     <ProductReviewHOC
-      data={data}
-      isLoading={isLoading}
-      error={error as IGenericErrorResponse}
+      query={query}
       noDataMessage="This item had no review."
       LoaderCompo={ReviewSkeletons}
+      NoDataCompo={NoReviewFound}
     />
   );
 };

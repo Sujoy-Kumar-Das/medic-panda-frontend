@@ -1,11 +1,11 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CancelButton from "@/components/ui/buttons/CancelButton";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useEditProduct from "@/hooks/useEditProduct.hook";
 import useEditProductDefaultValue from "@/hooks/useEditProductDefaultValue.hook";
 import { updateProductValidationSchema } from "@/schemas/product-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import DiscountForm from "./DiscountForm";
@@ -19,7 +19,7 @@ export default function EditProductForm({
   productId: string;
   onClose: () => void;
 }) {
-  // todo -> make the create and update zod schema correct
+  // get the default value of product;
   const { defaultValues, isLoading } = useEditProductDefaultValue({
     id: productId,
   });
@@ -97,13 +97,14 @@ export default function EditProductForm({
             >
               <CancelButton onClose={onClose}>Cancel</CancelButton>
 
-              <LoaderButton
-                isLoading={updatingLoader}
+              <LoadingButton
+                loading={updatingLoader}
                 type="submit"
-                loadingText="Updating..."
+                loadingIndicator="Updating..."
+                disabled={isLoading}
               >
                 Update
-              </LoaderButton>
+              </LoadingButton>
             </Grid>
           </Grid>
         </PandaForm>

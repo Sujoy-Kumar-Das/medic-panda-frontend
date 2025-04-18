@@ -12,7 +12,7 @@ import useSyncCart from "./useSyncCart";
 
 export const useCreateUser = () => {
   // RTK hook for create the user;
-  const [createUser, { isSuccess, data, error, isLoading, isError }] =
+  const [createUser, { isSuccess, error, isLoading, isError }] =
     useCreateUserMutation();
 
   // custom hook for sync the cart with DB
@@ -49,9 +49,9 @@ export const useCreateUser = () => {
 
   // managing the api state based on RTK state status;
   useEffect(() => {
-    if (isSuccess && data) {
+    if (isSuccess) {
       handleCartSync({ isLoginSuccess: true });
-      loginUser(data);
+      loginUser();
       toast.success("Account Created Successfully.");
       router.push(redirect);
     }
@@ -62,7 +62,7 @@ export const useCreateUser = () => {
         "Something went wrong.";
       toast.error(message);
     }
-  }, [isSuccess, data, finalIsError, finalError]);
+  }, [isSuccess, finalIsError, finalError]);
 
   return {
     handlerFunc,

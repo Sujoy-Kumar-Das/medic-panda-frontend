@@ -7,16 +7,12 @@ import { createCategorySchema } from "@/schemas/category.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Grid, Stack } from "@mui/material";
-import { FieldValues } from "react-hook-form";
 export default function AddCategoryForm({ onClose }: { onClose: () => void }) {
   const { handleFunc, isLoading } = useAddCategory(onClose);
 
-  const handleCreateCategory = async (data: FieldValues) => {
-    await handleFunc(data);
-  };
   return (
     <PandaForm
-      onSubmit={handleCreateCategory}
+      onSubmit={handleFunc}
       resolver={zodResolver(createCategorySchema)}
     >
       {/* Input Fields */}

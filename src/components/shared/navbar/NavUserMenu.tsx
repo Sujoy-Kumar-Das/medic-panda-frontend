@@ -1,5 +1,4 @@
 import { useAuth } from "@/hooks/useAuth";
-import useUser from "@/hooks/useUser";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import NavbarUserMenuCard from "./NavbarUserMenuCard";
@@ -14,8 +13,6 @@ function NavUserMenu() {
 
   const { user } = useAuth();
 
-  const { user: userDetails, isLoading } = useUser();
-
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -26,24 +23,24 @@ function NavUserMenu() {
 
   return (
     <>
-      {user && userDetails && (
+      {user && (
         <DynamicNavUserMenu
           onOpen={handleOpenUserMenu}
-          isVerified={userDetails?.isVerified}
-          photoUrl={userDetails?.photo}
+          isVerified={user?.isVerified}
+          photoUrl={user?.photo}
         />
       )}
 
-      {user && userDetails && (
+      {user && (
         <NavbarUserMenuCard
           onClose={handleCloseUserMenu}
           anchorEl={anchorElUser}
-          name={userDetails.name}
-          photoUrl={userDetails.photo}
-          email={userDetails.email}
-          isVerified={userDetails.isVerified}
-          isLoading={isLoading}
-          role={userDetails.role}
+          name={user.name}
+          photoUrl={user.photo}
+          email={user.email}
+          isVerified={user.isVerified}
+          isLoading={!user ? true : false}
+          role={user.role}
         />
       )}
     </>

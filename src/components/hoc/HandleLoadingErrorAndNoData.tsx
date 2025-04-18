@@ -25,6 +25,7 @@ function HandleLoadingErrorAndNoData<
     noDataText = "Go back",
     LoaderCompo,
     ErrorCompo,
+    NoDataCompo,
   }: IWithLoadingAndErrorProps<T, QueryArg, BaseQuery>) {
     const { data, isLoading, isError, error, isFetching, refetch } = query;
 
@@ -53,11 +54,17 @@ function HandleLoadingErrorAndNoData<
     // Handle no data state
     if (!data || (Array.isArray(data) && data.length === 0)) {
       return (
-        <NoDataFound
-          link={noDataLink || path}
-          message={noDataMessage}
-          text={noDataText}
-        />
+        <>
+          {NoDataCompo ? (
+            <NoDataCompo />
+          ) : (
+            <NoDataFound
+              link={noDataLink || path}
+              message={noDataMessage}
+              text={noDataText}
+            />
+          )}
+        </>
       );
     }
 

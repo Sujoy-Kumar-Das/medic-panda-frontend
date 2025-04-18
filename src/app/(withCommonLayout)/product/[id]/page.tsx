@@ -16,10 +16,9 @@ export default async function ProductDetailsPage({
 
   const {
     images,
-    product: { name, price, discount, category, manufacturer },
+    product: { _id, name, price, discount, category, manufacturer },
     description,
   } = data;
-  console.log(data);
 
   return (
     <>
@@ -88,7 +87,11 @@ export default async function ProductDetailsPage({
             </Stack>
 
             {/* product details tab */}
-            <ProductDetailsTab category={category} manufacture={manufacturer} />
+            <ProductDetailsTab
+              category={category}
+              manufacture={manufacturer}
+              productId={_id}
+            />
           </Container>
         </Box>
       )}

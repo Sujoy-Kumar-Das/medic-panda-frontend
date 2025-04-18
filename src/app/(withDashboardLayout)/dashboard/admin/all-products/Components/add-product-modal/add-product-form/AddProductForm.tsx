@@ -2,12 +2,11 @@ import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CancelButton from "@/components/ui/buttons/CancelButton";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useCreateProductHook from "@/hooks/useCreateProductHook";
 import { createProductValidationSchema } from "@/schemas/product-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
-import { FieldValues } from "react-hook-form";
 import AddProductManufacturer from "./AddProductManufacturer";
 import AddProductSelectCategory from "./AddProductSelectCategory";
 import DiscountForm from "./DiscountForm";
@@ -15,13 +14,9 @@ import DiscountForm from "./DiscountForm";
 export default function AddProductForm({ onClose }: { onClose: () => void }) {
   const { handlerFunc, isLoading } = useCreateProductHook(onClose);
 
-  const handleAddProduct = async (values: FieldValues) => {
-    await handlerFunc(values);
-  };
-
   return (
     <PandaForm
-      onSubmit={handleAddProduct}
+      onSubmit={handlerFunc}
       resolver={zodResolver(createProductValidationSchema)}
     >
       <Grid container spacing={2} mt={2}>
@@ -86,13 +81,14 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
         >
           <CancelButton onClose={onClose}>Cancel</CancelButton>
 
-          <LoaderButton
+          <LoadingButton
             type="submit"
-            isLoading={isLoading}
-            loadingText="Creating Product..."
+            loading={isLoading}
+            loadingIndicator="Creating Product..."
+            disabled={isLoading}
           >
             Create Product
-          </LoaderButton>
+          </LoadingButton>
         </Grid>
       </Grid>
     </PandaForm>

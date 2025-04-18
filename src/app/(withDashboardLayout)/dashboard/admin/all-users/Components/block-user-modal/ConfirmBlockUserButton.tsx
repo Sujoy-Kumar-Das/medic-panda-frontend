@@ -1,5 +1,5 @@
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useBlockUser from "@/hooks/useBlockUser";
+import { LoadingButton } from "@mui/lab";
 
 interface BlockUserButtonProps {
   userId: string;
@@ -12,14 +12,14 @@ const ConfirmBlockUserButton = ({ userId, onClose }: BlockUserButtonProps) => {
   const handleBlockUser = async () => await handleFunc(userId);
 
   return (
-    <LoaderButton
-      loadingText="Blocking..."
-      isLoading={isLoading}
+    <LoadingButton
+      loadingIndicator="Blocking..."
+      loading={isLoading}
       disabled={isLoading}
       onClick={handleBlockUser}
     >
       Block User
-    </LoaderButton>
+    </LoadingButton>
   );
 };
 

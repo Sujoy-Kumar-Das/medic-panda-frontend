@@ -1,9 +1,9 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useAddManufacturer from "@/hooks/useAddManufacturer";
 import { createManufacturerValidationSchema } from "@/schemas/manufacture.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 
@@ -66,14 +66,15 @@ export default function AddManufacturerForm({
 
         {/* Submit Button */}
         <Grid item xs={12}>
-          <LoaderButton
-            isLoading={isLoading}
-            loadingText="Adding Manufacturer..."
+          <LoadingButton
+            loading={isLoading}
+            loadingIndicator="Adding Manufacturer..."
             fullWidth
             type="submit"
+            disabled={isLoading}
           >
             Add Manufacturer
-          </LoaderButton>
+          </LoadingButton>
         </Grid>
       </Grid>
     </PandaForm>

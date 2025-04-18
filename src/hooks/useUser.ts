@@ -13,7 +13,7 @@ export default function useUser() {
     }
 
     const modifiedData: IModifiedUserData = {
-      id: data?._id,
+      id: data?.user?._id,
       name: data?.name,
       photo: data?.photo,
       isVerified: data?.user?.isVerified,

@@ -2,8 +2,9 @@
 import image from "@/assets/checkout-image.png";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import { useAuth } from "@/hooks/useAuth";
 import usePlaceOrder from "@/hooks/usePlaceOrder";
-import useShippingAddressDefaultValue from "@/hooks/useShippingAddressDefaultValue";
+import useUserDefaultValue from "@/hooks/useUserDefaultValue";
 import { orderShippingAddressSchema } from "@/schemas/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -23,19 +24,19 @@ import {
 import Image from "next/image";
 import OrderSummeryCard from "./OrderSummeryCard";
 
-export default function PlaceOrderCompo({
-  data: { userInfo, orderItem },
-}: {
-  data: { userInfo: any; orderItem: any };
-}) {
+export default function PlaceOrderCompo({ data: orderItem }: { data: any }) {
   // place order custom hook
   const { handlerFunc, isLoading } = usePlaceOrder({ orderItem });
+
+  // get the user info
+  const { user } = useAuth();
+
   // get shipping address default values
-  const { defaultValues } = useShippingAddressDefaultValue(userInfo);
+  const { defaultValues } = useUserDefaultValue(user);
 
   return (
     <>
-      {userInfo && (
+      {user && (
         <Container maxWidth="lg" sx={{ mb: 6 }}>
           <Box py={3} textAlign="center">
             <Typography

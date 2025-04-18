@@ -1,10 +1,10 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useEditManufacturer from "@/hooks/useEditManufacturer";
 import { createManufacturerValidationSchema } from "@/schemas/manufacture.schema";
 import { IManufacturer } from "@/types/Imanufacturer.type";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 
@@ -86,14 +86,15 @@ export default function ManufacturerEditForm({
 
             {/* Submit Button */}
             <Grid item xs={12}>
-              <LoaderButton
-                isLoading={isLoading}
-                loadingText="Updating Manufacturer..."
+              <LoadingButton
+                loading={isLoading}
+                loadingIndicator="Updating Manufacturer..."
                 fullWidth
                 type="submit"
+                disabled={isLoading}
               >
                 Edit Manufacturer
-              </LoaderButton>
+              </LoadingButton>
             </Grid>
           </Grid>
         </PandaForm>

@@ -9,11 +9,13 @@ import MoreDetails from "./MoreDetails";
 import ProductReviewTab from "./ProductReviewTab";
 
 interface IProductDetailsTab {
+  productId: string;
   category: ICategory;
   manufacture: IManufacturer;
 }
 
 export default function ProductDetailsTab({
+  productId,
   category,
   manufacture,
 }: IProductDetailsTab) {
@@ -38,10 +40,10 @@ export default function ProductDetailsTab({
         <MoreDetails category={category} manufacture={manufacture} />
       </TabPanel>
       <TabPanel value="2" sx={{ px: 0 }}>
-        <ProductReviewTab />
+        <ProductReviewTab productId={productId} />
       </TabPanel>
       <TabPanel value="3" sx={{ px: 0 }}>
-        <AddReviewTab />
+        <AddReviewTab productId={productId} />
       </TabPanel>
     </TabContext>
   );

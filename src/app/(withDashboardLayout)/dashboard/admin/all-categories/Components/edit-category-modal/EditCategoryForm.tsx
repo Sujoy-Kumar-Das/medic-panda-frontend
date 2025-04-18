@@ -1,10 +1,10 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CancelButton from "@/components/ui/buttons/CancelButton";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useEditCategory from "@/hooks/useEditCategory";
 import { ICategory } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 import { Stack } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import { z } from "zod";
@@ -48,13 +48,14 @@ export default function EditCategoryForm({
         mt={3}
       >
         <CancelButton onClose={onClose}>Cancel</CancelButton>
-        <LoaderButton
-          loadingText="Updating..."
+        <LoadingButton
+          loadingIndicator="Updating..."
           type="submit"
-          isLoading={isLoading}
+          loading={isLoading}
+          disabled={isLoading}
         >
           Update
-        </LoaderButton>
+        </LoadingButton>
       </Stack>
     </PandaForm>
   );

@@ -22,7 +22,7 @@ export default function useGetCartItems() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user && user.userId && data?.length) {
+    if (user && user.id && data?.length) {
       setCartData(
         data.map((cart: ICart) => ({
           id: cart?.product?._id,

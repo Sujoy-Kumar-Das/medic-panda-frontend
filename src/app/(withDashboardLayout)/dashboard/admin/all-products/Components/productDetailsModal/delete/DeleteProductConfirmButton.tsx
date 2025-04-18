@@ -1,5 +1,5 @@
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useDeleteProduct from "@/hooks/useDeleteProduct.hook";
+import { LoadingButton } from "@mui/lab";
 
 export default function DeleteProductConfirmButton({
   id,
@@ -11,12 +11,13 @@ export default function DeleteProductConfirmButton({
   const { handlerFunc, isLoading } = useDeleteProduct(onClose);
 
   return (
-    <LoaderButton
-      isLoading={isLoading}
+    <LoadingButton
+      loading={isLoading}
       onClick={() => handlerFunc(id)}
-      loadingText="Deleting"
+      loadingIndicator="Deleting"
+      disabled={isLoading}
     >
       Delete
-    </LoaderButton>
+    </LoadingButton>
   );
 }

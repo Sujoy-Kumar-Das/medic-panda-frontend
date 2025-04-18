@@ -6,7 +6,7 @@ import OrderProductInfo from "./OrderProductInfo";
 import OrderStatusSteps from "./OrderStatusSteps";
 
 // order details components
-function UserOrderDetailsCompo({ data }) {
+function UserOrderDetailsCompo({ data }: { data: any }) {
   // const activeStep = getStatusStep(status);
 
   const { modifiedOrderData } = useModifiedUserOrderDetails({
@@ -30,7 +30,9 @@ function UserOrderDetailsCompo({ data }) {
           <Grid container spacing={3}>
             {/* Status Tracker */}
             <Grid item xs={12}>
-              <OrderStatusSteps status={modifiedOrderData.orderInfo.status} />
+              <OrderStatusSteps
+                status={modifiedOrderData.orderInfo.status as string}
+              />
             </Grid>
 
             {/* Customer & Pricing Info - Flexbox Implementation */}

@@ -22,7 +22,7 @@ export default function AdminDashboardCompo({
   return (
     <Container sx={{ pb: 4 }}>
       <Header
-        title="E-commerce Analytics Dashboard"
+        title="Admin Dashboard Overview"
         subtitle="View Key Metrics and Track Your Store’s Performance"
       />
       <AdminDashboardStatsCompo dashboardStats={dashboardStatsData} />

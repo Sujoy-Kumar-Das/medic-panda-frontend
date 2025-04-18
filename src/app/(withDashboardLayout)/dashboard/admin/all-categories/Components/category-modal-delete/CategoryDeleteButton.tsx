@@ -1,5 +1,5 @@
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useDeleteCategory from "@/hooks/useDeleteCategory";
+import { LoadingButton } from "@mui/lab";
 
 export default function CategoryDeleteButton({
   id,
@@ -10,16 +10,14 @@ export default function CategoryDeleteButton({
 }) {
   const { handlerFunc, isLoading } = useDeleteCategory(onClose);
 
-  const handleDeleteCategory = async (id: string) => {
-    await handlerFunc(id);
-  };
   return (
-    <LoaderButton
-      onClick={() => handleDeleteCategory(id)}
-      isLoading={isLoading}
-      loadingText="Deleting..."
+    <LoadingButton
+      onClick={() => handlerFunc(id)}
+      loading={isLoading}
+      loadingIndicator="Deleting..."
+      disabled={isLoading}
     >
       Delete
-    </LoaderButton>
+    </LoadingButton>
   );
 }

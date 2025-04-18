@@ -14,7 +14,7 @@ export default function useAddToCart(onClose?: () => void) {
 
   const handlerFunc = async (productData: IProduct) => {
     const { name, thumbnail, _id, price } = productData;
-    const userId = user?.userId;
+    const userId = user?.id;
 
     if (!userId) {
       // Local cart handling
@@ -23,7 +23,7 @@ export default function useAddToCart(onClose?: () => void) {
       return;
     }
 
-    await addToCartInDB({ product: _id, quantity: 1 }).unwrap();
+    await addToCartInDB({ product: _id, quantity: 1 });
   };
 
   useApiMutationResponseHandler({

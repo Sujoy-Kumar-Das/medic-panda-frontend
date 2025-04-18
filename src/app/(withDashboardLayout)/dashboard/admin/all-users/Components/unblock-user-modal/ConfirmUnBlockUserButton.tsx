@@ -1,5 +1,5 @@
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useUnblockUser from "@/hooks/useUnblockUser";
+import { LoadingButton } from "@mui/lab";
 
 interface UnBlockUserButtonProps {
   userId: string;
@@ -15,14 +15,15 @@ const ConfirmUnBlockUserButton = ({
   const handleUnblock = async () => await handlerFunc(userId);
 
   return (
-    <LoaderButton
+    <LoadingButton
       variant="contained"
       onClick={handleUnblock}
-      loadingText="Unblocking..."
+      loadingIndicator="Unblocking..."
       disabled={isLoading}
+      loading={isLoading}
     >
       Unblock User
-    </LoaderButton>
+    </LoadingButton>
   );
 };
 

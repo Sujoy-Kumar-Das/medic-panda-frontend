@@ -10,10 +10,8 @@ import useRedirect from "./useRedirect";
 import useSyncCart from "./useSyncCart";
 
 export const useLogin = () => {
-  const [
-    login,
-    { isSuccess: isLoginSuccess, data: loginData, ...apiResponse },
-  ] = useLoginMutation();
+  const [login, { isSuccess: isLoginSuccess, ...apiResponse }] =
+    useLoginMutation();
 
   // custom hook for sync the cart
   const {
@@ -44,9 +42,9 @@ export const useLogin = () => {
   // handling the cart synchronous, store user data and redirect user;
   useEffect(() => {
     if (isLoginSuccess) {
+      router.push(redirect);
       handleCartSync({ isLoginSuccess });
       loginUser();
-      router.push(redirect);
     }
 
     if (error && isError) {

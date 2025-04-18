@@ -12,8 +12,8 @@ const reviewApi = baseApi.injectEndpoints({
       invalidatesTags: [TTagTypes.review],
     }),
     getAllReview: builder.query({
-      query: () => ({
-        url: "/review",
+      query: (id) => ({
+        url: `/review/${id}`,
         method: "GET",
       }),
       providesTags: [TTagTypes.review],

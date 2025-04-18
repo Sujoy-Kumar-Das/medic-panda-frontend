@@ -36,8 +36,8 @@ export default function NavbarUserMenuCard({
 
   const handleLogout = () => {
     onClose();
-    logoutUser(router);
     toast.success("Logout successful");
+    logoutUser(router);
   };
 
   return (

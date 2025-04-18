@@ -1,5 +1,5 @@
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useDeleteUser from "@/hooks/useDeleteUser";
+import { LoadingButton } from "@mui/lab";
 
 interface DeleteUserButtonProps {
   userId: string;
@@ -15,15 +15,15 @@ const ConfirmDeleteUserButton = ({
   const handleConfirmDeleteUser = async () => await handlerFunc(userId);
 
   return (
-    <LoaderButton
+    <LoadingButton
       onClick={handleConfirmDeleteUser}
       variant="contained"
       disabled={isLoading}
-      loadingText="Deleting..."
-      isLoading={isLoading}
+      loadingIndicator="Deleting..."
+      loading={isLoading}
     >
       Delete
-    </LoaderButton>
+    </LoadingButton>
   );
 };
 

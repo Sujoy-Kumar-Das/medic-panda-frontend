@@ -12,7 +12,7 @@ const AuthContextProvider = ({ children }: { children: ReactElement }) => {
 
     if (newData.data) {
       setUser({
-        id: newData?.data?._id,
+        id: newData?.data?.user?._id,
         name: newData?.data?.name,
         photo: newData?.data?.photo,
         isVerified: newData?.data?.user?.isVerified,

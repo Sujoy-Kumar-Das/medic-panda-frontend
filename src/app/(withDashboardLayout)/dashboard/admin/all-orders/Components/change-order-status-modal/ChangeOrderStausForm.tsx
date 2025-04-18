@@ -1,9 +1,9 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaSelect from "@/components/form/PandaSelect";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useChangeOrderStatus from "@/hooks/useChangeOrderStatus";
 import { changeOrderStatusSchema } from "@/schemas/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 import { Box } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import { OrderStatusItems } from "./OrderStatusItems";
@@ -46,13 +46,14 @@ export default function ChangeOrderStatusForm({
 
         {/* Submit Button */}
 
-        <LoaderButton
-          isLoading={isLoading}
-          loadingText="Changing Status"
+        <LoadingButton
+          loading={isLoading}
+          loadingIndicator="Changing Status"
           type="submit"
+          disabled={isLoading}
         >
           Change
-        </LoaderButton>
+        </LoadingButton>
       </Box>
     </PandaForm>
   );

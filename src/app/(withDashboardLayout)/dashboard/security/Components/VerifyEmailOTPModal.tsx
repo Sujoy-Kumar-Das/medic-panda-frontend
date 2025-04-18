@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
@@ -31,6 +32,7 @@ export default function VerifyEmailOTPModal({
   onClose,
 }: IVerifyEmailOTPModalProps) {
   const { handlerFunc, isLoading } = useConfirmVerificationWithOTP(onClose);
+
   return (
     <CustomModal open={open} onClose={onClose}>
       <Box>
@@ -50,7 +52,7 @@ export default function VerifyEmailOTPModal({
           sx={{ fontWeight: 500, color: "text.secondary" }}
         >
           <strong>[NOTE]</strong> Please do not close this modal. If you close
-          it, you won't be able to reopen it for the next 2 minutes.
+          it, you wont be able to reopen it for the next 2 minutes.
         </Typography>
 
         <PandaForm

@@ -1,7 +1,7 @@
-export default function useShippingAddressDefaultValue(userInfo: any) {
+export default function useUserDefaultValue(userInfo: any) {
   const defaultValues = {
     name: userInfo?.name || "",
-    email: userInfo?.user?.email || "",
+    email: userInfo?.email || "",
     contact: userInfo?.contact || "",
     address: {
       street: userInfo?.address?.street || "",

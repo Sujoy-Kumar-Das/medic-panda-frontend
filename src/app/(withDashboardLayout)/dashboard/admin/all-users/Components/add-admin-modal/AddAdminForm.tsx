@@ -1,22 +1,17 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import useAddAdmin from "@/hooks/useAddAdmin";
 import { addAdminValidationSchema } from "@/schemas/admin.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 import { Stack } from "@mui/material";
-import { FieldValue } from "react-hook-form";
 
 export default function AddAdminForm({ onClose }: { onClose: () => void }) {
   const { handlerFunc, isLoading } = useAddAdmin(onClose);
 
-  const handleSubmit = async (value: FieldValue<{ email: string }>) => {
-    await handlerFunc(value);
-  };
-
   return (
     <PandaForm
-      onSubmit={handleSubmit}
+      onSubmit={handlerFunc}
       resolver={zodResolver(addAdminValidationSchema)}
     >
       <Stack spacing={2}>
@@ -28,13 +23,14 @@ export default function AddAdminForm({ onClose }: { onClose: () => void }) {
           placeholder="Enter email"
         />
 
-        <LoaderButton
+        <LoadingButton
           type="submit"
-          loadingText="Making Admin..."
-          isLoading={isLoading}
+          loadingIndicator="Making Admin..."
+          loading={isLoading}
+          disabled={isLoading}
         >
           Make Admin
-        </LoaderButton>
+        </LoadingButton>
       </Stack>
     </PandaForm>
   );
