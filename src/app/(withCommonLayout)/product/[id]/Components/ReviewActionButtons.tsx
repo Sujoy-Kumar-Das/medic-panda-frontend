@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import AddReplyButton from "./AddReplyButton";
 import ReviewDeleteButton from "./ReviewDeleteButton";
 import ReviewEditButton from "./ReviewEditButton";
 
@@ -13,9 +14,6 @@ export default function ReviewActionButtons({
   reviewId,
   reviewerId,
 }: ReviewActionButtonsProps) {
-  if (userId !== reviewerId) {
-    return null;
-  }
   return (
     <Box
       sx={{
@@ -24,8 +22,13 @@ export default function ReviewActionButtons({
         zIndex: 1,
       }}
     >
-      <ReviewEditButton reviewId={reviewId} />
-      <ReviewDeleteButton reviewId={reviewId} />
+      <AddReplyButton reviewId={reviewId} />
+      {userId === reviewerId && (
+        <>
+          <ReviewEditButton reviewId={reviewId} />
+          <ReviewDeleteButton reviewId={reviewId} />
+        </>
+      )}
     </Box>
   );
 }

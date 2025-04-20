@@ -1,15 +1,19 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
 import { IReview } from "@/types";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import ReviewCard from "./ReviewCard";
+import ReviewReplyContainer from "./ReviewReplyContainer";
 
 function ProductReviewCompo({ data: reviews }: { data: IReview[] }) {
   const { user } = useAuth();
   return (
     <Stack spacing={4}>
       {reviews.map((review) => (
-        <ReviewCard key={review._id} review={review} userId={user?.id} />
+        <Box key={review._id} sx={{ width: "100%" }}>
+          <ReviewCard review={review} userId={user?.id} />
+          <ReviewReplyContainer replies={review.replies} />
+        </Box>
       ))}
     </Stack>
   );
