@@ -43,7 +43,7 @@ function HandleLoadingErrorAndNoData<
       return (
         <>
           {ErrorCompo ? (
-            <ErrorCompo error={formattedError} />
+            <ErrorCompo error={formattedError} refetch={refetch} />
           ) : (
             <ErrorPage error={formattedError} refetch={refetch} />
           )}
