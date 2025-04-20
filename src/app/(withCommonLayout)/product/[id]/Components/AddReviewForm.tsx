@@ -19,16 +19,23 @@ const reviewSchemaValidation = z.object({
     .max(5, { message: "Rating cannot be more than 5" }),
 });
 
+const defaultValues = {
+  comment: "",
+  rating: 0,
+};
+
 export default function AddReviewForm({ productId }: { productId: string }) {
   const { handlerFunc, isLoading } = useCreateReview(productId);
   return (
     <PandaForm
       onSubmit={handlerFunc}
       resolver={zodResolver(reviewSchemaValidation)}
+      defaultValues={defaultValues}
     >
       <PandaInputField
         name="comment"
         label="Your Review"
+        type="text"
         multiline
         fullWidth
         rows={5}

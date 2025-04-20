@@ -35,9 +35,8 @@ const PandaForm = ({
   const methods = useForm(formConfig);
   const { handleSubmit, reset } = methods;
 
-  const submit: SubmitHandler<FieldValues> = (data) => {
-    // console.log(data);
-    onSubmit(data);
+  const submit: SubmitHandler<FieldValues> = async (data) => {
+    await onSubmit(data);
     reset();
   };
 
