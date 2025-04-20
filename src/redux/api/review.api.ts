@@ -11,12 +11,35 @@ const reviewApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TTagTypes.review],
     }),
+    addReply: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/review/${id}`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: [TTagTypes.review],
+    }),
     getAllReview: builder.query({
       query: (id) => ({
         url: `/review/${id}`,
         method: "GET",
       }),
       providesTags: [TTagTypes.review],
+    }),
+    getReviewDetails: builder.query({
+      query: (id) => ({
+        url: `/review-details/${id}`,
+        method: "GET",
+      }),
+      providesTags: [TTagTypes.review],
+    }),
+    editReview: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/review/${id}`,
+        method: "PATCH",
+        data,
+      }),
+      invalidatesTags: [TTagTypes.review],
     }),
     deleteReview: builder.mutation({
       query: (id) => ({
@@ -30,6 +53,9 @@ const reviewApi = baseApi.injectEndpoints({
 
 export const {
   useCreateReviewMutation,
+  useAddReplyMutation,
   useGetAllReviewQuery,
+  useGetReviewDetailsQuery,
+  useEditReviewMutation,
   useDeleteReviewMutation,
 } = reviewApi;

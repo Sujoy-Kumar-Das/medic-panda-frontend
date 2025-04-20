@@ -1,25 +1,23 @@
 import { IReview } from "@/types";
 import formatOrderDate from "@/utils/format.order.date";
-import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Card,
   CardContent,
   Divider,
-  IconButton,
   Rating,
   Stack,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import ReviewDeleteButton from "./ReviewDeleteButton";
+import ReviewActionButtons from "./ReviewActionButtons";
 
 interface ReviewCardProps {
   review: IReview;
+  userId: string | undefined;
 }
 
-export default function ReviewCard({ review }: ReviewCardProps) {
+export default function ReviewCard({ review, userId }: ReviewCardProps) {
   return (
     <Card
       key={review._id}
@@ -57,21 +55,11 @@ export default function ReviewCard({ review }: ReviewCardProps) {
             />
           </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              gap: 1,
-              zIndex: 1,
-            }}
-          >
-            <Tooltip title="Edit Review">
-              <IconButton size="small">
-                <EditIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-
-            <ReviewDeleteButton productId={review._id} />
-          </Box>
+          <ReviewActionButtons
+            userId={userId}
+            reviewId={review._id}
+            reviewerId={review?.user?._id}
+          />
         </Stack>
 
         <Divider

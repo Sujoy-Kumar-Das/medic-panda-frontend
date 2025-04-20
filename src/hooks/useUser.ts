@@ -26,7 +26,5 @@ export default function useUser() {
     setUser(modifiedData);
   }, [data]);
 
-  console.log({ data });
-
   return { user, setUser, ...apiResponse };
 }
