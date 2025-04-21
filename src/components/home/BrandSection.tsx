@@ -3,7 +3,7 @@ import { getAllManufactureService } from "@/services/actions/manufactures.servic
 import { Box, Container, Typography } from "@mui/material";
 
 export default async function BrandSection() {
-  const { data } = await getAllManufactureService(6);
+  const manufacturers = await getAllManufactureService(6);
 
   return (
     <Box>
@@ -30,7 +30,7 @@ export default async function BrandSection() {
           </Typography>
         </Box>
 
-        <ManufacturerSlider data={data} />
+        <ManufacturerSlider data={manufacturers?.data} />
       </Container>
     </Box>
   );

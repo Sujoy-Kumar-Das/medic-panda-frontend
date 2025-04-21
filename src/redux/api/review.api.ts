@@ -11,14 +11,7 @@ const reviewApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TTagTypes.review],
     }),
-    addReply: builder.mutation({
-      query: ({ data, id }) => ({
-        url: `/review/${id}`,
-        method: "POST",
-        data,
-      }),
-      invalidatesTags: [TTagTypes.review],
-    }),
+
     getAllReview: builder.query({
       query: (id) => ({
         url: `/review/${id}`,
@@ -53,7 +46,6 @@ const reviewApi = baseApi.injectEndpoints({
 
 export const {
   useCreateReviewMutation,
-  useAddReplyMutation,
   useGetAllReviewQuery,
   useGetReviewDetailsQuery,
   useEditReviewMutation,

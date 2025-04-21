@@ -1,4 +1,4 @@
-import { useAddReplyMutation } from "@/redux/api/review.api";
+import { useAddReplyMutation } from "@/redux/api/reply.api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

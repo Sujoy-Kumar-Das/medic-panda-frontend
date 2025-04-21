@@ -1,19 +1,35 @@
-import { IReply, IReview } from "@/types";
-import { Box } from "@mui/material";
-import ReviewReplyCard from "./ReviewReplyCard";
+"use client";
+import ErrorCard from "@/components/shared/error/ErrorCard";
+import NoDataFoundCard from "@/components/shared/notFound/NoDataFoundCard";
+import { useGetAllReplyQuery } from "@/redux/api/reply.api";
+import ReplySkeletons from "./ReplySkeletons";
+import ReviewReplyHOC from "./ReviewReplyHOC";
 
 interface ReviewReplyContainerProps {
-  replies: IReply[];
+  reviewId: string;
 }
 
 export default function ReviewReplyContainer({
-  replies,
+  reviewId,
 }: ReviewReplyContainerProps) {
+  const query = useGetAllReplyQuery(reviewId);
   return (
-    <Box width={"95%"} marginLeft={"auto"} marginTop={3}>
-      {replies.map((reply) => (
-        <ReviewReplyCard key={reply._id} reply={reply} />
-      ))}
-    </Box>
+    <ReviewReplyHOC
+      query={query}
+      noDataMessage="This item had no review."
+      LoaderCompo={ReplySkeletons}
+      NoDataCompo={() => (
+        <NoDataFoundCard
+          title="No Replies Yet"
+          subtitle="Be the first to respond and join the conversation."
+          sxProps={{
+            width: "95%",
+            marginLeft: "auto",
+            marginTop: 3,
+          }}
+        />
+      )}
+      ErrorCompo={ErrorCard}
+    />
   );
 }

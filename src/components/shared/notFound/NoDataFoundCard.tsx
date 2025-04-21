@@ -1,9 +1,19 @@
 "use client";
 
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import { Box, Typography } from "@mui/material";
+import { Box, SxProps, Typography } from "@mui/material";
 
-const NoReviewFound = () => {
+interface NoDataFoundCardProps {
+  title: string;
+  subtitle: string;
+  sxProps?: SxProps;
+}
+
+const NoDataFoundCard = ({
+  title,
+  subtitle,
+  sxProps,
+}: NoDataFoundCardProps) => {
   return (
     <Box
       display="flex"
@@ -14,18 +24,19 @@ const NoReviewFound = () => {
       p={4}
       borderRadius={4}
       bgcolor="#f9f9f9"
+      sx={{ ...sxProps }}
     >
       <SentimentDissatisfiedIcon
         sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
       />
       <Typography variant="h6" fontWeight={600} color="text.primary">
-        No Reviews Found
+        {title}
       </Typography>
       <Typography variant="body2" color="text.secondary" mt={1}>
-        Be the first to share your thoughts about this product.
+        {subtitle}
       </Typography>
     </Box>
   );
 };
 
-export default NoReviewFound;
+export default NoDataFoundCard;

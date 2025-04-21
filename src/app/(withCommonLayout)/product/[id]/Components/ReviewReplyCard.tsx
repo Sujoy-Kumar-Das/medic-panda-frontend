@@ -15,6 +15,7 @@ interface ReplyCardProps {
 }
 
 export default function ReviewReplyCard({ reply }: ReplyCardProps) {
+  console.log(reply);
   return (
     <Card
       sx={{
