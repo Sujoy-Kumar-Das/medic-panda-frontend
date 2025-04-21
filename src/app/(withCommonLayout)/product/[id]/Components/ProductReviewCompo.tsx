@@ -8,7 +8,6 @@ import ReviewReplyContainer from "./ReviewReplyContainer";
 
 function ProductReviewCompo({ data: reviews }: { data: IReview[] }) {
   const { user } = useAuth();
-
   // handle the reviews show with buttons;
   const { state, toggle } = useToggleState(false);
   return (

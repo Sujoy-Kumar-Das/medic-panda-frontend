@@ -1,24 +1,28 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CancelButton from "@/components/ui/buttons/CancelButton";
-import useAddReply from "@/hooks/useAddReply";
+import useEditReply from "@/hooks/useEditReply";
 import { replyValidationSchema } from "@/schemas/reply.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Stack } from "@mui/material";
 
-interface AddReplyFormProps {
-  reviewId: string;
+export default function EditReplyForm({
+  replyId,
+  onClose,
+  defaultValues,
+}: {
+  replyId: string;
   onClose: () => void;
-}
+  defaultValues: { reply: string };
+}) {
+  const { handlerFunc, isLoading } = useEditReply(replyId, onClose);
 
-export default function AddReplyForm({ reviewId, onClose }: AddReplyFormProps) {
-  const { handlerFunc, isLoading } = useAddReply(reviewId, onClose);
   return (
     <PandaForm
       onSubmit={handlerFunc}
       resolver={zodResolver(replyValidationSchema)}
-      defaultValues={{ reply: "" }}
+      defaultValues={defaultValues}
     >
       <PandaInputField
         name="reply"
@@ -42,12 +46,7 @@ export default function AddReplyForm({ reviewId, onClose }: AddReplyFormProps) {
         alignItems={"center"}
         gap={1}
       >
-        <CancelButton
-          cancelMessage="You Canceled Add Review."
-          onClose={onClose}
-        >
-          Cancel
-        </CancelButton>
+        <CancelButton onClose={onClose}>Cancel</CancelButton>
         <LoadingButton
           type="submit"
           variant="contained"
@@ -58,7 +57,7 @@ export default function AddReplyForm({ reviewId, onClose }: AddReplyFormProps) {
           }}
           loading={isLoading}
         >
-          Reply
+          Update Reply
         </LoadingButton>
       </Stack>
     </PandaForm>

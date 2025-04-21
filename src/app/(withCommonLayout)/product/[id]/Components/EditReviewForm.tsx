@@ -3,24 +3,11 @@ import PandaInputField from "@/components/form/PandaInputField";
 import PandaRatingField from "@/components/form/PandaReview";
 import CancelButton from "@/components/ui/buttons/CancelButton";
 import useEditReview from "@/hooks/useEditReview";
+import { reviewValidationSchema } from "@/schemas/review.schema";
 import { IReview } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Box, Stack, Typography } from "@mui/material";
-import { FieldValues } from "react-hook-form";
-import { z } from "zod";
-
-const reviewSchemaValidation = z.object({
-  comment: z
-    .string({ required_error: "Review cannot be empty" })
-    .min(10, { message: "Review should be at least 10 characters" })
-    .max(50, { message: "Review should not exceed 50 characters" }),
-
-  rating: z
-    .number({ required_error: "Rating is required" })
-    .min(1, { message: "Rating must be at least 1" })
-    .max(5, { message: "Rating cannot be more than 5" }),
-});
 
 interface EditReviewFormProps {
   reviewId: string;
@@ -33,15 +20,12 @@ export default function EditReviewForm({
   onClose,
   defaultValues,
 }: EditReviewFormProps) {
-  const { handlerFunc, isLoading } = useEditReview(onClose);
+  const { handlerFunc, isLoading } = useEditReview(reviewId, onClose);
 
-  const handleEditReview = async (data: FieldValues) => {
-    handlerFunc(data, reviewId);
-  };
   return (
     <PandaForm
-      onSubmit={handleEditReview}
-      resolver={zodResolver(reviewSchemaValidation)}
+      onSubmit={handlerFunc}
+      resolver={zodResolver(reviewValidationSchema)}
       defaultValues={defaultValues}
     >
       <PandaInputField

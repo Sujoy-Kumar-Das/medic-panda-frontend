@@ -9,13 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import ReviewReplyActionButton from "./ReviewReplyActionButton";
 
 interface ReplyCardProps {
   reply: IReply;
 }
 
 export default function ReviewReplyCard({ reply }: ReplyCardProps) {
-  console.log(reply);
   return (
     <Card
       sx={{
@@ -32,19 +32,22 @@ export default function ReviewReplyCard({ reply }: ReplyCardProps) {
           justifyContent={"space-between"}
           alignItems={"flex-start"}
         >
-          <Box>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                fontSize: "1rem",
-                lineHeight: 1.6,
-                marginBottom: 2,
-              }}
-            >
-              {reply.reply}
-            </Typography>
-          </Box>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              fontSize: "1rem",
+              lineHeight: 1.6,
+              marginBottom: 2,
+            }}
+          >
+            {reply.reply}
+          </Typography>
+
+          <ReviewReplyActionButton
+            replyId={reply._id}
+            replier={reply.user._id}
+          />
         </Stack>
 
         <Divider

@@ -2,22 +2,10 @@ import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import PandaRatingField from "@/components/form/PandaReview";
 import useCreateReview from "@/hooks/useCreateReview";
+import { reviewValidationSchema } from "@/schemas/review.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Box, Typography } from "@mui/material";
-import { z } from "zod";
-
-const reviewSchemaValidation = z.object({
-  comment: z
-    .string({ required_error: "Review cannot be empty" })
-    .min(10, { message: "Review should be at least 10 characters" })
-    .max(50, { message: "Review should not exceed 50 characters" }),
-
-  rating: z
-    .number({ required_error: "Rating is required" })
-    .min(1, { message: "Rating must be at least 1" })
-    .max(5, { message: "Rating cannot be more than 5" }),
-});
 
 const defaultValues = {
   comment: "",
@@ -29,7 +17,7 @@ export default function AddReviewForm({ productId }: { productId: string }) {
   return (
     <PandaForm
       onSubmit={handlerFunc}
-      resolver={zodResolver(reviewSchemaValidation)}
+      resolver={zodResolver(reviewValidationSchema)}
       defaultValues={defaultValues}
     >
       <PandaInputField

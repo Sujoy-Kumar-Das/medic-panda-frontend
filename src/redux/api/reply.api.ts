@@ -18,11 +18,25 @@ const replyApi = baseApi.injectEndpoints({
       }),
       providesTags: [TTagTypes.review],
     }),
-    deleteReply: builder.mutation({
+    getReplyDetails: builder.query({
+      query: (id) => ({
+        url: `/review/reply/details/${id}`,
+        method: "GET",
+      }),
+      providesTags: [TTagTypes.review],
+    }),
+    editReply: builder.mutation({
       query: ({ data, id }) => ({
         url: `/review/reply/${id}`,
-        method: "DELETE",
+        method: "PATCH",
         data,
+      }),
+      invalidatesTags: [TTagTypes.review],
+    }),
+    deleteReply: builder.mutation({
+      query: (id) => ({
+        url: `/review/reply/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: [TTagTypes.review],
     }),
@@ -32,5 +46,7 @@ const replyApi = baseApi.injectEndpoints({
 export const {
   useAddReplyMutation,
   useDeleteReplyMutation,
+  useGetReplyDetailsQuery,
+  useEditReplyMutation,
   useGetAllReplyQuery,
 } = replyApi;
