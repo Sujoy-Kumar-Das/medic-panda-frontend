@@ -1,5 +1,5 @@
 "use client";
-import { useAddToCartMutation } from "@/redux/api/addToCart.api";
+import { useAddToCartMutation } from "@/redux/api/cart/cart.api";
 import { ICartItemLocal, removeProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useCallback } from "react";

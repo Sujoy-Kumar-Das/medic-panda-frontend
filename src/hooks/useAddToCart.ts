@@ -1,4 +1,4 @@
-import { useAddToCartMutation } from "@/redux/api/addToCart.api";
+import { useAddToCartMutation } from "@/redux/api";
 import { addProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IProduct } from "@/types";

@@ -1,4 +1,4 @@
-import { useChangePasswordMutation } from "@/redux/api/auth.api";
+import { useChangePasswordMutation } from "@/redux/api/auth/auth.api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

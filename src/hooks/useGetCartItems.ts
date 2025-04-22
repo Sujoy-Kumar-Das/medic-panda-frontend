@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetAllCartProductsQuery } from "@/redux/api/addToCart.api";
+import { useGetAllCartsQuery } from "@/redux/api/cart/cart.api";
 import { ICartItemLocal } from "@/redux/features/cart.slice";
 import { useAppSelector } from "@/redux/hooks";
 import { ICart, IModifiedCartData } from "@/types";
@@ -16,7 +16,7 @@ export default function useGetCartItems() {
   const { carts } = useAppSelector((state) => state.cart);
 
   // get carts from server via rtk query
-  const { data, ...apiResponse } = useGetAllCartProductsQuery(undefined);
+  const { data, ...apiResponse } = useGetAllCartsQuery(undefined);
 
   // auth state from context api
   const { user } = useAuth();

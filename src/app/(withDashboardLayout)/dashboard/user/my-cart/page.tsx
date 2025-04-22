@@ -1,9 +1,9 @@
 "use client";
-import { useGetAllCartProductsQuery } from "@/redux/api/addToCart.api";
+import { useGetAllCartsQuery } from "@/redux/api/cart/cart.api";
 import MyCartWithHOC from "./Components/MyCartWithHOC";
 
 export default function MyCartPage() {
-  const query = useGetAllCartProductsQuery(undefined);
+  const query = useGetAllCartsQuery(undefined);
 
   return (
     <MyCartWithHOC

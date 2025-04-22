@@ -11,7 +11,6 @@ export default function NavCartButton({
 }) {
   const { user } = useAuth();
 
-  console.log("i am consoled,NavCartButton");
   return (
     <>
       {user ? (

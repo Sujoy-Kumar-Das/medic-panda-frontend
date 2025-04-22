@@ -1,8 +1,9 @@
 "use client";
+
 import {
-  useIncrementCartProductMutation,
-  useRemoveCartProductMutation,
-} from "@/redux/api/addToCart.api";
+  useIncrementCartItemMutation,
+  useRemoveCartItemMutation,
+} from "@/redux/api/cart/cart.api";
 import { ICart, IGenericErrorResponse } from "@/types";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -52,7 +53,7 @@ export default function MyCartCard({
 }) {
   // increment hook
   const [incrementQuantity, { isLoading, isError, error }] =
-    useIncrementCartProductMutation();
+    useIncrementCartItemMutation();
   // decrement hook
   const [
     decrementQuantity,
@@ -61,7 +62,7 @@ export default function MyCartCard({
       isError: isDecrementError,
       error: decrementError,
     },
-  ] = useRemoveCartProductMutation();
+  ] = useRemoveCartItemMutation();
 
   const handleIncrementQuantity = async (id: string) => {
     await incrementQuantity({ id });

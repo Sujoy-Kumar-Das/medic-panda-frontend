@@ -1,4 +1,4 @@
-import { useGetCartLengthQuery } from "@/redux/api/addToCart.api";
+import { useGetCartLengthQuery } from "@/redux/api/cart/cart.api";
 import { useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";

@@ -1,5 +1,6 @@
 "use client";
-import { useGetSingleCartProductsQuery } from "@/redux/api/addToCart.api";
+
+import { useGetSingleCartQuery } from "@/redux/api/cart/cart.api";
 import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import {
   BaseQueryFn,
@@ -8,7 +9,7 @@ import {
 
 export default function useOrderDataAndGetMeCombinedQuery(id: string) {
   const userQuery = useGetMeQuery(undefined);
-  const orderQuery = useGetSingleCartProductsQuery(id);
+  const orderQuery = useGetSingleCartQuery(id);
 
   const isLoading = userQuery.isLoading || orderQuery.isLoading;
   const isError = userQuery.isError || orderQuery.isError;

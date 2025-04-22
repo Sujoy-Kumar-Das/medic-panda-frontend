@@ -1,10 +1,11 @@
 "use client";
-import { useRemoveCartProductMutation } from "@/redux/api/addToCart.api";
+
 import { decreaseQuantity } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
 import { useState } from "react";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 import { useAuth } from "./useAuth";
+import { useRemoveCartItemMutation } from "@/redux/api/cart/cart.api";
 
 export default function useRemoveCartItem(onClose: () => void) {
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
@@ -15,10 +16,10 @@ export default function useRemoveCartItem(onClose: () => void) {
   const dispatch = useAppDispatch();
 
   // remove cart from server via rtk query
-  const [removeCartItemFromDB, apiResponse] = useRemoveCartProductMutation();
+  const [removeCartItemFromDB, apiResponse] = useRemoveCartItemMutation();
 
   const handlerFunc = async (id: string) => {
-    const userId = user?.userId;
+    const userId = user?.id;
 
     // Set loading state for the specific product
     setLoadingProductId(id);
