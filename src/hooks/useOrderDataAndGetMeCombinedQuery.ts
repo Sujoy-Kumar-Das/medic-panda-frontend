@@ -1,7 +1,7 @@
 "use client";
 
+import { useGetMeQuery } from "@/redux/api";
 import { useGetSingleCartQuery } from "@/redux/api/cart/cart.api";
-import { useGetMeQuery } from "@/redux/api/myProfile.api";
 import {
   BaseQueryFn,
   TypedUseQueryHookResult,

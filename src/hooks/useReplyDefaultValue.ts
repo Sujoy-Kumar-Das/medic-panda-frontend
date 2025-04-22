@@ -1,4 +1,5 @@
-import { useGetReplyDetailsQuery } from "@/redux/api/reply.api";
+"use client";
+import { useGetReplyDetailsQuery } from "@/redux/api";
 import { useEffect, useState } from "react";
 
 export default function useReplyDefaultValue(id: string) {

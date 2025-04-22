@@ -1,6 +1,5 @@
 "use client";
-
-import { usePaymentNowMutation } from "@/redux/api/payment.api";
+import { usePaymentNowMutation } from "@/redux/api";
 import { IGenericErrorResponse } from "@/types";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Box, Button, Container, Typography } from "@mui/material";

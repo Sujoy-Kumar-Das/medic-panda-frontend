@@ -1,4 +1,5 @@
-import { useEmailVerificationOTPSentMutation } from "@/redux/api/user.api";
+"use client";
+import { useEmailVerificationOTPSentMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useSentVerificationOTP() {

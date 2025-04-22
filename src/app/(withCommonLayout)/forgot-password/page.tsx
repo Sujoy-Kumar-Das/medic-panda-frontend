@@ -3,7 +3,7 @@
 
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { useForgotPasswordMutation } from "@/redux/api/auth/auth.api";
+import { useForgotPasswordMutation } from "@/redux/api";
 import { IGenericErrorResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

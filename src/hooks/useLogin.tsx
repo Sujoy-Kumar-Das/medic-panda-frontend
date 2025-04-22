@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useLoginMutation } from "@/redux/api/auth/auth.api";
+import { useLoginMutation } from "@/redux/api";
 import { IGenericErrorResponse } from "@/types";
 import { useEffect } from "react";
 import { FieldValues } from "react-hook-form";

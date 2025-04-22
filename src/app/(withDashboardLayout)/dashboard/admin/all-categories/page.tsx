@@ -1,6 +1,6 @@
 "use client";
 import { useQueryParams } from "@/hooks/useQueryParams";
-import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
+import { useGetAllCategoriesQuery } from "@/redux/api/category/category.api";
 import CategoryHOC from "./Components/CategoryHOC";
 
 export default function AllCategoriesPage() {

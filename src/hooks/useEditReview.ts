@@ -1,6 +1,7 @@
-import { useEditReviewMutation } from "@/redux/api/review.api";
+"use client";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
+import { useEditReviewMutation } from "@/redux/api";
 
 export default function useEditReview(id: string, onClose: () => void) {
   const [editReview, apiResponse] = useEditReviewMutation();

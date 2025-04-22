@@ -14,7 +14,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -173,7 +172,7 @@ export default function PlaceOrderCompo({ data: orderItem }: { data: any }) {
                     maxWidth: "300px",
                     borderRadius: "25px",
                   }}
-                  loadingIndicator={<CircularProgress size={24} />}
+                  loadingIndicator={"Placing Order..."}
                   type="submit"
                   loading={isLoading}
                   disabled={isLoading}

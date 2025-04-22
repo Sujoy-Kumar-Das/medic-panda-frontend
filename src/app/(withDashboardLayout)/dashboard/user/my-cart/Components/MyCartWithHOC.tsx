@@ -12,7 +12,7 @@ function MyCartCompo({ data: carts }: { data: ICart[] }) {
         subtitle="Review your cart before placing the order"
       />
 
-      <Stack direction={"column"} spacing={3}>
+      <Stack direction={"column"} spacing={3} pb={4}>
         {carts.map((cart: ICart, index: number) => (
           <MyCartCard key={cart._id} cart={cart} index={index} />
         ))}

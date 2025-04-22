@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCreateUserMutation } from "@/redux/api/user.api";
+import { useCreateCustomerMutation } from "@/redux/api";
 import { IGenericErrorResponse } from "@/types";
 import { imageUploader } from "@/utils/imageUploader";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ import useSyncCart from "./useSyncCart";
 export const useCreateUser = () => {
   // RTK hook for create the user;
   const [createUser, { isSuccess, error, isLoading, isError }] =
-    useCreateUserMutation();
+    useCreateCustomerMutation();
 
   // custom hook for sync the cart with DB
   const {

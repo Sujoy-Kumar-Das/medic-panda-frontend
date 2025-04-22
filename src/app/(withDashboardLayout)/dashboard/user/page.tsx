@@ -1,5 +1,5 @@
 "use client";
-import { useGetUserMetaQuery } from "@/redux/api/meta.api";
+import { useGetUserMetaQuery } from "@/redux/api";
 import UserDashboardWithHOC from "./Components/UserDashboardHOC";
 
 export default function UserDashboard() {

@@ -1,6 +1,8 @@
-import { usePaymentNowMutation } from "@/redux/api/payment.api";
+"use client";
+
 import { useRouter } from "next/navigation";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
+import { usePaymentNowMutation } from "@/redux/api";
 
 export default function usePayment() {
   const [paymentNow, apiResponse] = usePaymentNowMutation();

@@ -1,4 +1,5 @@
-import { useUpdateUserInfoMutation } from "@/redux/api/user.api";
+"use client";
+import { useUpdateUserInfoMutation } from "@/redux/api";
 import { imageUploader } from "@/utils/imageUploader";
 import React, { useState } from "react";
 import { toast } from "sonner";

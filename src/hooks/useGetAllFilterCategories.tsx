@@ -1,4 +1,4 @@
-import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
+import { useGetAllCategoriesQuery } from "@/redux/api/category/category.api";
 import { ICategory } from "@/types";
 import randomUID from "@/utils/randomId";
 

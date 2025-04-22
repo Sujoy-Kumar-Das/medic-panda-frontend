@@ -1,4 +1,5 @@
-import { useBlockUserMutation } from "@/redux/api/user.api";
+"use client";
+import { useBlockUserMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useBlockUser(onClose: () => void) {

@@ -1,5 +1,5 @@
 "use client";
-import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import { useGetMeQuery } from "@/redux/api";
 import UserInfoHOC from "./Components/UserInfoHOC";
 
 export default function MyProfilePage() {

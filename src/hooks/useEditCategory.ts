@@ -1,4 +1,4 @@
-import { useEditCategoryMutation } from "@/redux/api/category.api";
+import { useEditCategoryMutation } from "@/redux/api/category/category.api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

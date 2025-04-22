@@ -1,5 +1,5 @@
 "use client";
-import { useGetSingleOrderQuery } from "@/redux/api/order.api";
+import { useGetSingleOrderQuery } from "@/redux/api";
 import OrderDetailsWithHOC from "./Components/OrderDetailsHOC";
 
 export default function OrderDetailsPage({

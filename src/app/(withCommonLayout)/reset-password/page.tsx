@@ -1,7 +1,7 @@
 "use client";
-
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import { resetPasswordSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -15,37 +15,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
-
-// Validation schema for the reset password form
-const validateField = z
-  .object({
-    password: z
-      .string({ required_error: "New password is required." })
-      .min(8, { message: "Password should be at least 8 characters long." }),
-    confirmPassword: z
-      .string({ required_error: "Confirm password is required." })
-      .min(8, { message: "Password should be at least 8 characters long." })
-      .regex(/[A-Z]/, {
-        message: "Password must contain at least one uppercase letter.",
-      })
-      .regex(/[a-z]/, {
-        message: "Password must contain at least one lowercase letter.",
-      })
-      .regex(/[0-9]/, {
-        message: "Password must contain at least one number.",
-      })
-      .regex(/[@$!%*?&]/, {
-        message: "Password must contain at least one special character.",
-      })
-      .max(32, {
-        message: "Password should not be longer than 32 characters.",
-      }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"],
-  });
 
 export default function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -83,6 +52,7 @@ export default function ResetPasswordPage() {
         toast.error(data.message);
       }
     } catch (err) {
+      console.log({ err });
       const errorMessage =
         axios.isAxiosError(err) && err.response?.data?.message
           ? err.response.data.message
@@ -136,7 +106,7 @@ export default function ResetPasswordPage() {
         <PandaForm
           onSubmit={handleSubmit}
           defaultValues={{ password: "", confirmPassword: "" }}
-          resolver={zodResolver(validateField)}
+          resolver={zodResolver(resetPasswordSchema)}
         >
           <PandaInputField
             name="password"

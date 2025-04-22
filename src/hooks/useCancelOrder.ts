@@ -1,4 +1,5 @@
-import { useCancelOrderMutation } from "@/redux/api/order.api";
+"use client";
+import { useCancelOrderMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useCancelOrder() {

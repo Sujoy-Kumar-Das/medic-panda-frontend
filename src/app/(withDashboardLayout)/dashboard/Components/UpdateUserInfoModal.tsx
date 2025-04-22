@@ -4,10 +4,10 @@ import CustomModal from "@/components/modal/customModal/CustomModal";
 import useUpdateUserInfo from "@/hooks/useUpdateUserInfo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { AnyZodObject } from "zod";
 
-interface IUpdateUserInfo {
+interface UpdateUserInfoModalProps {
   open: boolean;
   onClose: () => void;
   label: string;
@@ -23,50 +23,48 @@ export default function UpdateUserInfoModal({
   name,
   schema,
   type,
-}: IUpdateUserInfo) {
+}: UpdateUserInfoModalProps) {
   const { handlerFunc, isLoading } = useUpdateUserInfo(onClose);
 
   return (
     <CustomModal open={open} onClose={onClose}>
-      <Box>
-        <Typography
-          variant="h6"
-          textAlign="center"
-          mb={2}
-          sx={{ fontWeight: "bold", color: "text.primary" }}
-        >
-          Update Your {label}
-        </Typography>
+      <Typography
+        variant="h6"
+        textAlign="center"
+        mb={2}
+        sx={{ fontWeight: "bold", color: "text.primary" }}
+      >
+        Update Your {label}
+      </Typography>
 
-        <PandaForm onSubmit={handlerFunc} resolver={zodResolver(schema)}>
-          <PandaInputField
-            type={type}
-            name={name}
-            fullWidth
-            sx={{
-              mb: 3,
-              "& input": {
-                borderColor: "primary.main",
-                transition: "border-color 0.3s ease",
-                "&:hover": {
-                  borderColor: "primary.dark",
-                },
+      <PandaForm onSubmit={handlerFunc} resolver={zodResolver(schema)}>
+        <PandaInputField
+          type={type}
+          name={name}
+          fullWidth
+          sx={{
+            mb: 3,
+            "& input": {
+              borderColor: "primary.main",
+              transition: "border-color 0.3s ease",
+              "&:hover": {
+                borderColor: "primary.dark",
               },
-            }}
-          />
+            },
+          }}
+        />
 
-          <Stack direction={"row"} justifyContent={"flex-end"} gap={1}>
-            <Button variant="outlined" onClick={onClose}>
-              Cancel
-            </Button>
-            <LoadingButton
-              loading={isLoading}
-              loadingIndicator={`Updating ${label} info`}
-              type="submit"
-            >{`Update ${label} info`}</LoadingButton>
-          </Stack>
-        </PandaForm>
-      </Box>
+        <Stack direction={"row"} justifyContent={"flex-end"} gap={1}>
+          <Button variant="outlined" onClick={onClose}>
+            Cancel
+          </Button>
+          <LoadingButton
+            loading={isLoading}
+            loadingIndicator={`Updating ${label}...`}
+            type="submit"
+          >{`Update ${label} info`}</LoadingButton>
+        </Stack>
+      </PandaForm>
     </CustomModal>
   );
 }

@@ -1,4 +1,5 @@
-import { useGetSingleOrderForAdminQuery } from "@/redux/api/order.api";
+"use client";
+import { useGetSingleOrderForAdminQuery } from "@/redux/api";
 import { IModifiedOrderData } from "@/types/IOrderDetails";
 import formatOrderDate from "@/utils/format.order.date";
 import { useEffect, useState } from "react";

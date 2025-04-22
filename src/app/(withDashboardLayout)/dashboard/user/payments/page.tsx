@@ -1,5 +1,6 @@
 "use client";
-import { useGetPaymentHistoryQuery } from "@/redux/api/payment.api";
+
+import { useGetPaymentHistoryQuery } from "@/redux/api";
 import PaymentInfoHOC from "./Components/PaymentInfoHOC";
 
 export default function PaymentHistoryPage() {

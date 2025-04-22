@@ -1,4 +1,5 @@
-import { useUpdateUserInfoMutation } from "@/redux/api/user.api";
+"use client";
+import { useUpdateUserInfoMutation } from "@/redux/api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

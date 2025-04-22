@@ -1,5 +1,6 @@
 "use client";
-import { useEditReplyMutation } from "@/redux/api/reply.api";
+
+import { useEditReplyMutation } from "@/redux/api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

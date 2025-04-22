@@ -1,7 +1,6 @@
-import { useGetSingleProductQuery } from "@/redux/api/product.api";
+"use client";
+import { useGetSingleProductQuery } from "@/redux/api";
 import dayjs from "dayjs";
-
-// todo fetch data with cancel and modal close button problem
 
 export default function useEditProductDefaultValue({ id }: { id: string }) {
   const { data, ...apiResponse } = useGetSingleProductQuery(id);

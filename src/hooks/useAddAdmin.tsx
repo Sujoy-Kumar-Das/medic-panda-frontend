@@ -1,4 +1,4 @@
-import { useCreateAdminMutation } from "@/redux/api/user.api";
+import { useCreateAdminMutation } from "@/redux/api";
 import { FieldValue } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

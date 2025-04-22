@@ -1,5 +1,5 @@
 import PandaSelect from "@/components/form/PandaSelect";
-import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
+import { useGetAllCategoriesQuery } from "@/redux/api/category/category.api";
 import { ICategory } from "@/types";
 
 export default function EditProductSelectCategory() {

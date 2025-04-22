@@ -1,4 +1,5 @@
-import { useEditManufactureMutation } from "@/redux/api/manufacture.api";
+"use client";
+import { useEditManufactureMutation } from "@/redux/api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

@@ -1,11 +1,12 @@
-import { useUnblockUserMutation } from "@/redux/api/user.api";
+"use client";
+import { useUnblockUserMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useUnblockUser(onClose: () => void) {
   const [unBlockUser, apiResponse] = useUnblockUserMutation();
 
   const handlerFunc = async (id: string) => {
-    await unBlockUser({ id }).unwrap();
+    await unBlockUser({ id });
   };
 
   useApiMutationResponseHandler({

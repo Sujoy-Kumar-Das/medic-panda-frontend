@@ -1,4 +1,5 @@
-import { useCreateCategoryMutation } from "@/redux/api/category.api";
+"use client";
+import { useCreateCategoryMutation } from "@/redux/api";
 import { imageUploader } from "@/utils/imageUploader";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";

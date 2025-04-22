@@ -1,5 +1,6 @@
 import PandaSelect from "@/components/form/PandaSelect";
-import { useGetAllManufactureQuery } from "@/redux/api/manufacture.api";
+import { useGetAllManufactureQuery } from "@/redux/api";
+
 import { IManufacturer } from "@/types/Imanufacturer.type";
 
 export default function EditProductManufacturer() {

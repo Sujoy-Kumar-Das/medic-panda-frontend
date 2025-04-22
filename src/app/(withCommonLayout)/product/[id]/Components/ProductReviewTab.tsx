@@ -1,7 +1,7 @@
 "use client";
 import ErrorCard from "@/components/shared/error/ErrorCard";
 import NoDataFoundCard from "@/components/shared/notFound/NoDataFoundCard";
-import { useGetAllReviewQuery } from "@/redux/api/review.api";
+import { useGetAllReviewQuery } from "@/redux/api";
 import ProductReviewHOC from "./ProductReviewHOC";
 import ReviewSkeletons from "./ReviewCardSkeletons";
 

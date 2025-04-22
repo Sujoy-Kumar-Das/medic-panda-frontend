@@ -1,5 +1,5 @@
 "use client";
-import { useAddToWishListMutation } from "@/redux/api/wish-listApi";
+import { useAddToWishListMutation } from "@/redux/api";
 import { toast } from "sonner";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 import { useAuth } from "./useAuth";

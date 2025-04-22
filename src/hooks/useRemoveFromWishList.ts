@@ -1,4 +1,5 @@
-import { useRemoveWishListProductMutation } from "@/redux/api/wish-listApi";
+"use client";
+import { useRemoveWishListProductMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useRemoveFromWishList() {

@@ -1,12 +1,12 @@
 "use client";
 
 import LoadingErrorWrapper from "@/components/shared/loadingErrorWrapper/LoadingErrorWrapper";
-import { useGetAllOrderQuery } from "@/redux/api/order.api";
+import { useQueryParams } from "@/hooks/useQueryParams";
+import { useGetAllOrderQuery } from "@/redux/api";
 import { IOrder } from "@/types";
 import { Container, Stack } from "@mui/material";
 import OrderCard from "./Components/OrderCard";
 import OrderHeader from "./Components/OrderHeader";
-import { useQueryParams } from "@/hooks/useQueryParams";
 
 export default function OrdersPage() {
   const queryParams = useQueryParams();

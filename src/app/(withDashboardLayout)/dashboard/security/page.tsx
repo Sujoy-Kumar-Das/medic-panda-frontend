@@ -1,5 +1,5 @@
 "use client";
-import { useGetMeQuery } from "@/redux/api/myProfile.api";
+import { useGetMeQuery } from "@/redux/api";
 import SecurityHOC from "./Components/SecurityHOC";
 
 export default function SecurityPage() {

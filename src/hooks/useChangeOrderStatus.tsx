@@ -1,4 +1,5 @@
-import { useChangeOrderStatusMutation } from "@/redux/api/order.api";
+"use client";
+import { useChangeOrderStatusMutation } from "@/redux/api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

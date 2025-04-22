@@ -1,6 +1,6 @@
-import { useUpdateUserEmailMutation } from "@/redux/api/user.api";
 import { FieldValue } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
+import { useUpdateUserEmailMutation } from "@/redux/api";
 
 export default function useUpdateEmail(onClose: () => void) {
   const [updateEmail, apiResponse] = useUpdateUserEmailMutation();

@@ -1,4 +1,4 @@
-import { useDeleteCategoryMutation } from "@/redux/api/category.api";
+import { useDeleteCategoryMutation } from "@/redux/api/category/category.api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useDeleteCategory(onClose: () => void) {

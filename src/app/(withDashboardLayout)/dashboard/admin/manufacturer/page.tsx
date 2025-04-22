@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryParams } from "@/hooks/useQueryParams";
-import { useGetAllManufactureQuery } from "@/redux/api/manufacture.api";
+import { useGetAllManufactureQuery } from "@/redux/api";
 import ManufacturerHOC from "./ManufacturerHOC";
 
 export default function ManufacturerPage() {

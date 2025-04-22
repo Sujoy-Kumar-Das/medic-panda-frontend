@@ -1,6 +1,6 @@
 "use client";
 import CategoriesSkeleton from "@/components/skeleton/CategoriesSkeleton";
-import { useGetAllCategoriesQuery } from "@/redux/api/category.api";
+import { useGetAllCategoriesQuery } from "@/redux/api/category/category.api";
 import { ICategory } from "@/types";
 import { Divider, Stack, Typography } from "@mui/material";
 import Link from "next/link";

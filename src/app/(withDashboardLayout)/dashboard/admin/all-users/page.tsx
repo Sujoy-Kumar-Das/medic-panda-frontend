@@ -1,6 +1,6 @@
 "use client";
 import { useQueryParams } from "@/hooks/useQueryParams";
-import { useGetAllUsersQuery } from "@/redux/api/user.api";
+import { useGetAllUsersQuery } from "@/redux/api";
 import HandleUserDataHOC from "./Components/handleUserDataHOC/HandleUserDataHOC";
 export default function AllUsersPage() {
   const queryParams = useQueryParams();

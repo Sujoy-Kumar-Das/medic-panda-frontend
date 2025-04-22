@@ -1,4 +1,5 @@
-import { useGetReviewDetailsQuery } from "@/redux/api/review.api";
+"use client";
+import { useGetReviewDetailsQuery } from "@/redux/api";
 import { IReview } from "@/types";
 import { useEffect, useState } from "react";
 

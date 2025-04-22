@@ -1,4 +1,5 @@
-import { useDeleteReviewMutation } from "@/redux/api/review.api";
+"use client";
+import { useDeleteReviewMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useDeleteReview() {

@@ -2,7 +2,6 @@ import { Box, Container, Stack } from "@mui/material";
 import UserInfoGrid from "./UserInfoGrid";
 import UserInfoHeader from "./UserInfoHeader";
 
-// todo define the user type any to user type;
 function UserInfoCompo({ data: user }: { data: any }) {
   return (
     <Container>

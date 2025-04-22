@@ -1,4 +1,5 @@
-import { useDeleteReplyMutation } from "@/redux/api/reply.api";
+"use client";
+import { useDeleteReplyMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useDeleteReply() {

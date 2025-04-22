@@ -1,5 +1,5 @@
 import { useApiMutationResponseHandler } from "@/hooks/useApiMutationResponseHandler";
-import { useDeleteProductMutation } from "@/redux/api/product.api";
+import { useDeleteProductMutation } from "@/redux/api";
 
 export default function useDeleteProduct(onClose: () => void) {
   const [deleteProduct, apiResponse] = useDeleteProductMutation();

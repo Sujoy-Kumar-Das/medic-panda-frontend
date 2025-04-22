@@ -1,5 +1,6 @@
+"use client";
 import { useApiMutationResponseHandler } from "@/hooks/useApiMutationResponseHandler";
-import { useCreateProductMutation } from "@/redux/api/product.api";
+import { useCreateProductMutation } from "@/redux/api";
 import { imageUploader } from "@/utils/imageUploader";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";

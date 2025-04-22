@@ -1,7 +1,7 @@
 import AuthContext from "@/context/AuthContext";
 import useUser from "@/hooks/useUser";
+import { ILogoutParams } from "@/types";
 import logoutFunc from "@/utils/logoutUser";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { ReactElement } from "react";
 
 const AuthContextProvider = ({ children }: { children: ReactElement }) => {
@@ -24,8 +24,8 @@ const AuthContextProvider = ({ children }: { children: ReactElement }) => {
     }
   };
 
-  const logoutUser = async (router: AppRouterInstance) => {
-    logoutFunc(router);
+  const logoutUser = async ({ router, path }: ILogoutParams) => {
+    logoutFunc({ router, path });
     setUser(null);
   };
 

@@ -1,5 +1,5 @@
 import { useApiMutationResponseHandler } from "@/hooks/useApiMutationResponseHandler";
-import { useEditProductMutation } from "@/redux/api/product.api";
+import { useEditProductMutation } from "@/redux/api";
 import { FieldValues } from "react-hook-form";
 
 export default function useEditProduct(onClose: () => void) {

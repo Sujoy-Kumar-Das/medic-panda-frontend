@@ -1,4 +1,5 @@
-import { useConfirmUserOTPMutation } from "@/redux/api/user.api";
+"use client";
+import { useConfirmUserOTPMutation } from "@/redux/api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 

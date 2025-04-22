@@ -3,7 +3,7 @@ import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { useCreateCategoryMutation } from "@/redux/api/category.api";
+import { useCreateCategoryMutation } from "@/redux/api";
 import { createCategorySchema } from "@/schemas/category.schema";
 import { imageUploader } from "@/utils/imageUploader";
 import { zodResolver } from "@hookform/resolvers/zod";

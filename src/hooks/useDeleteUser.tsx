@@ -1,4 +1,4 @@
-import { useDeleteUserMutation } from "@/redux/api/user.api";
+import { useDeleteUserMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useDeleteUser(onClose: () => void) {

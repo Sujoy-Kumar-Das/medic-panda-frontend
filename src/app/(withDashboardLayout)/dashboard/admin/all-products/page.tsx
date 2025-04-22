@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryParams } from "@/hooks/useQueryParams";
-import { useGetAllProductsQuery } from "@/redux/api/product.api";
+import { useGetAllProductsQuery } from "@/redux/api";
 import AllProductsHOC from "./Components/all-product-HOC/AllProductHOC";
 
 export default function AllProductsPage() {

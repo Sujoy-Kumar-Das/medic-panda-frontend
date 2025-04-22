@@ -1,5 +1,5 @@
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { useGetSingleUserQuery } from "@/redux/api/user.api";
+import { useGetSingleUserQuery } from "@/redux/api";
 import { Typography } from "@mui/material";
 import UserDetailCloseButton from "./UserDetailCloseButton";
 import UserDetailsCard from "./UserDetailsCard";

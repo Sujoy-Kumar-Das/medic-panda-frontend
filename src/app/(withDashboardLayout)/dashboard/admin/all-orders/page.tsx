@@ -1,6 +1,6 @@
 "use client";
 import { useQueryParams } from "@/hooks/useQueryParams";
-import { useGetAllOrdersForAdminQuery } from "@/redux/api/order.api";
+import { useGetAllOrdersForAdminQuery } from "@/redux/api";
 import OrdersHOC from "./Components/OrdersHOC";
 
 export default function AllOrdersPage() {

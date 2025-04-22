@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetAdminMetaQuery } from "@/redux/api/meta.api";
+import { useGetAdminMetaQuery } from "@/redux/api";
 import AdminDashboardHOC from "./Components/AdminDashboardHOC";
 
 export default function AdminDashboardPage() {

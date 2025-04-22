@@ -1,4 +1,5 @@
-import { useDeleteManufactureMutation } from "@/redux/api/manufacture.api";
+"use client";
+import { useDeleteManufactureMutation } from "@/redux/api";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
 export default function useDeleteManufacturer(onClose: () => void) {

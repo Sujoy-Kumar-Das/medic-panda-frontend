@@ -1,35 +1,25 @@
 import { baseApi } from "../base.api";
+import {
+  changePasswordMutation,
+  forgotPasswordMutation,
+  loginMutation,
+  resetPasswordMutation,
+} from "./mutations";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (data) => ({
-        url: "/auth/login",
-        method: "POST",
-        data,
-      }),
+      query: loginMutation,
     }),
     changePassword: builder.mutation({
-      query: (data) => ({
-        url: "/auth/change-password",
-        method: "POST",
-        data,
-      }),
+      query: changePasswordMutation,
     }),
     forgotPassword: builder.mutation({
-      query: (data) => ({
-        url: "/auth/forgot-password",
-        method: "POST",
-        data,
-      }),
+      query: forgotPasswordMutation,
     }),
 
     resetPassword: builder.mutation({
-      query: (data) => ({
-        url: "/auth/reset-password",
-        method: "POST",
-        data,
-      }),
+      query: resetPasswordMutation,
     }),
   }),
 });

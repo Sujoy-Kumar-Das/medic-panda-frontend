@@ -1,4 +1,5 @@
-import { useGetMeQuery } from "@/redux/api/myProfile.api";
+"use client";
+import { useGetMeQuery } from "@/redux/api";
 import { IModifiedUserData } from "@/types/user.type";
 import { useEffect, useState } from "react";
 

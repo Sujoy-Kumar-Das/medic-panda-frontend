@@ -1,5 +1,5 @@
 "use client";
-import { useGetAllWishListProductsQuery } from "@/redux/api/wish-listApi";
+import { useGetAllWishListProductsQuery } from "@/redux/api";
 import WishListProductWithHOC from "./Components/WishListHOC";
 
 export default function WishListPage() {
