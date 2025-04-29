@@ -17,7 +17,7 @@ export default function useResetPassword() {
   };
 
   useApiMutationResponseHandler({
-    successMessage: "Password Reset Successfully",
+    successMessage: "Password Reset Successfully.Please Login Now.",
     apiResponse,
     onClose: () => router.push("/register/login"),
   });

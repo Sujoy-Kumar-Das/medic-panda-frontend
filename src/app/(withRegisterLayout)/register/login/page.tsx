@@ -7,72 +7,76 @@ import LoginForm from "./Components/LoginForm";
 
 export default function LoginPage() {
   return (
-    <Container>
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-          width: "100%",
-          p: { xs: 3, md: 5 },
-          display: "flex",
-          flexDirection: "column",
-          gap: 4,
-        }}
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        width: "100%",
+      }}
+    >
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={4}
+        alignItems="center"
+        justifyContent="space-between"
+        width={"100%"}
       >
-        <Typography
-          component="h1"
-          variant="h4"
-          textAlign="center"
-          fontWeight="bold"
-          color="text.primary"
+        {/* Image Section */}
+        <Box
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            textAlign: "center",
+          }}
         >
-          Welcome Back!
-        </Typography>
-
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={4}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          {/* Image Section */}
-          <Box
-            sx={{
-              width: { xs: "100%", md: "45%" },
-              textAlign: "center",
+          <Image
+            src={loginImage}
+            width={400}
+            height={400}
+            alt="Login image"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              borderRadius: "8px",
             }}
+          />
+        </Box>
+
+        {/* Form Section */}
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ color: "primary.main" }}
           >
-            <Image
-              src={loginImage}
-              width={400}
-              height={400}
-              alt="Login image"
-              style={{ maxWidth: "100%", height: "auto", borderRadius: "8px" }}
-            />
-          </Box>
+            Login
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
+            Enter your credentials to continue.
+          </Typography>
+          {/* login form */}
+          <LoginForm />
 
-          {/* Form Section */}
-          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-            {/* login form */}
-            <LoginForm />
-
-            <Typography component="p" textAlign="center" mt={3}>
-              Don't have an account?{" "}
-              <Typography
-                component={Link}
-                href="/register/create-account"
-                sx={{
-                  color: "primary.main",
-                  fontWeight: "bold",
-                  textDecoration: "none",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
-                Create Now
-              </Typography>
+          <Typography component="p" textAlign="center" mt={3}>
+            Don't have an account?{" "}
+            <Typography
+              component={Link}
+              href="/register/create-account"
+              sx={{
+                color: "primary.main",
+                fontWeight: "bold",
+                textDecoration: "none",
+                "&:hover": { textDecoration: "underline" },
+              }}
+            >
+              Create Now
             </Typography>
-          </Box>
-        </Stack>
-      </Box>
+          </Typography>
+        </Box>
+      </Stack>
     </Container>
   );
 }

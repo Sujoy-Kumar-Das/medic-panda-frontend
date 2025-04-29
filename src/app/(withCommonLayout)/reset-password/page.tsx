@@ -1,81 +1,59 @@
-"use client";
-import PandaForm from "@/components/form/PandaForm";
-import PandaInputField from "@/components/form/PandaInputField";
-import useResetPassword from "@/hooks/useResetPassword";
-import { resetPasswordSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import { Box, CircularProgress, Container, Typography } from "@mui/material";
+import resetPasswordImage from "@/assets/Reset password-bg.png";
+import { Box, Container, Stack, Typography } from "@mui/material";
+import Image from "next/image";
+import ResetPasswordForm from "./Components/ResetPasswordForm";
 
 export default function ResetPasswordPage() {
-  const { handlerFunc, isLoading } = useResetPassword();
   return (
     <Container
-      maxWidth="sm"
       sx={{
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
+        width: "100%",
       }}
     >
-      <Box
-        sx={{
-          width: "100%",
-          backgroundColor: "white",
-          borderRadius: 4,
-          boxShadow: 2,
-          p: 4,
-          textAlign: "center",
-        }}
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={4}
+        alignItems="center"
+        justifyContent="space-between"
+        width={"100%"}
       >
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          gutterBottom
-          sx={{ color: "primary.main" }}
+        {/* Image Section */}
+        <Box
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            textAlign: "center",
+          }}
         >
-          Reset Password
-        </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
-          Enter your new password below to reset your account password.
-        </Typography>
+          <Image
+            src={resetPasswordImage}
+            width={400}
+            height={400}
+            alt="reset password image"
+            style={{ maxWidth: "100%", height: "auto", borderRadius: "8px" }}
+          />
+        </Box>
 
-        <PandaForm
-          onSubmit={handlerFunc}
-          defaultValues={{ password: "", confirmPassword: "" }}
-          resolver={zodResolver(resetPasswordSchema)}
-        >
-          <PandaInputField
-            name="password"
-            label="New Password"
-            type="password"
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <PandaInputField
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            fullWidth
-          />
-          <LoadingButton
-            type="submit"
-            fullWidth
-            variant="contained"
-            size="large"
-            disabled={isLoading}
-            sx={{ mt: 3, mb: 2, borderRadius: 2 }}
-            loadingIndicator={
-              <CircularProgress size={24} sx={{ color: "white" }} />
-            }
-            loading={isLoading}
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ color: "primary.main" }}
           >
             Reset Password
-          </LoadingButton>
-        </PandaForm>
-      </Box>
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
+            Enter your new password below to reset your account password.
+          </Typography>
+
+          <ResetPasswordForm />
+        </Box>
+      </Stack>
     </Container>
   );
 }
