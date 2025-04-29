@@ -1,8 +1,8 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
 import {
-  allOrderFilterItems,
-  shortcutOrderFilterOptions,
-} from "./filter-items";
+  orderAllFilterOptions,
+  orderShortcutFilterItems,
+} from "../../../admin/all-orders/Components/filter-items/order.filter.filter.items";
 
 export default function OrderHeader() {
   const mainHeaderOptions = {
@@ -14,8 +14,8 @@ export default function OrderHeader() {
   return (
     <DashboardHeaderWithFIlterAndSearchBar
       mainHeaderOptions={mainHeaderOptions}
-      shortcutFilterOptions={{ items: shortcutOrderFilterOptions }}
-      allFilterOptions={{ items: allOrderFilterItems }}
+      shortcutFilterOptions={{ items: orderShortcutFilterItems }}
+      allFilterOptions={{ items: orderAllFilterOptions }}
       searchbarOptions={{
         query: "searchTerm",
         placeholder: "Search Your Order",

@@ -43,7 +43,6 @@ const OrderStepper = ({ status }: IOrderStepperProps) => {
           <OrderStep
             key={id}
             icon={icon}
-            id={id}
             color={color}
             label={label}
             isActive={isActive}

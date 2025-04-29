@@ -7,8 +7,6 @@ import OrderStatusSteps from "./OrderStatusSteps";
 
 // order details components
 function UserOrderDetailsCompo({ data }: { data: any }) {
-  // const activeStep = getStatusStep(status);
-
   const { modifiedOrderData } = useModifiedUserOrderDetails({
     orderDetails: data,
   });

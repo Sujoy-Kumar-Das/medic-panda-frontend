@@ -1,6 +1,6 @@
 import useCancelOrder from "@/hooks/useCancelOrder";
 import { OrderStatus } from "@/types";
-import { Chip, CircularProgress, Stack, Typography } from "@mui/material";
+import { Chip, Stack, Typography } from "@mui/material";
 
 export default function OrderCancelButton({
   status,
@@ -37,13 +37,7 @@ export default function OrderCancelButton({
         />
       ) : (
         <Chip
-          label={
-            isLoading ? (
-              <CircularProgress size={20} color="inherit" />
-            ) : (
-              "Cancel"
-            )
-          }
+          label={isLoading ? "Canceling" : "Cancel"}
           color="secondary"
           variant="outlined"
           clickable={!isLoading}

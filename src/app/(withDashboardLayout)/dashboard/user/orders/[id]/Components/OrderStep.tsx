@@ -6,7 +6,6 @@ interface OrderStepProps {
   isActive: boolean;
   color: string;
   label: string;
-  id: string;
   icon: ReactElement;
 }
 
@@ -14,7 +13,6 @@ export default function OrderStep({
   isActive,
   color,
   label,
-  id,
   icon,
 }: OrderStepProps) {
   return (

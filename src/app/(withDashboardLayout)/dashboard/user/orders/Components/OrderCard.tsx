@@ -20,11 +20,6 @@ export default function OrderCard({ order }: { order: IOrder }) {
       sx={{
         width: "100%",
         backgroundColor: "background.default",
-        transition: "0.3s ease",
-        "&:hover": {
-          transform: "translateY(-2px)",
-          boxShadow: 3,
-        },
       }}
       my={1}
     >
