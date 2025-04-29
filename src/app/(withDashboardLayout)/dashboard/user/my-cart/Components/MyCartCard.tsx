@@ -1,26 +1,10 @@
-"use client";
-
-import {
-  useIncrementCartItemMutation,
-  useRemoveCartItemMutation,
-} from "@/redux/api/cart/cart.api";
-import { ICart, IGenericErrorResponse } from "@/types";
-import AddIcon from "@mui/icons-material/Add";
+import { ICart } from "@/types";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import RemoveIcon from "@mui/icons-material/Remove";
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  keyframes,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, keyframes, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import DecrementCartItemButton from "./DecrementCartItemButton";
+import IncrementCartItemButton from "./IncrementCartItemButton";
 
 // Fade-in animation for card appearance
 const fadeInUp = keyframes`
@@ -51,37 +35,6 @@ export default function MyCartCard({
   cart: ICart;
   index: number;
 }) {
-  // increment hook
-  const [incrementQuantity, { isLoading, isError, error }] =
-    useIncrementCartItemMutation();
-  // decrement hook
-  const [
-    decrementQuantity,
-    {
-      isLoading: decrementLoader,
-      isError: isDecrementError,
-      error: decrementError,
-    },
-  ] = useRemoveCartItemMutation();
-
-  const handleIncrementQuantity = async (id: string) => {
-    await incrementQuantity({ id });
-  };
-
-  const handleDecrementQuantity = async (id: string) => {
-    await decrementQuantity({
-      product: id,
-    }).unwrap();
-  };
-
-  useEffect(() => {
-    if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-    } else if (isDecrementError) {
-      toast.error((decrementError as IGenericErrorResponse).message);
-    }
-  }, [isError, error, isDecrementError, decrementError]);
-
   return (
     <Box
       key={cart._id}
@@ -157,40 +110,8 @@ export default function MyCartCard({
 
         <Grid item xs={12} md={2}>
           <Stack direction="row" spacing={1} justifyContent="center">
-            <IconButton
-              color="primary"
-              sx={{
-                borderRadius: 1,
-                bgcolor: "primary.light",
-                color: "white",
-                transition: "transform 0.2s ease",
-                "&:hover": {
-                  transform: "scale(1.1)",
-                  bgcolor: "primary.dark",
-                },
-              }}
-              disabled={isLoading}
-              onClick={() => handleIncrementQuantity(cart._id)}
-            >
-              <AddIcon />
-            </IconButton>
-            <IconButton
-              color="secondary"
-              sx={{
-                borderRadius: 1,
-                bgcolor: "secondary.light",
-                color: "white",
-                transition: "transform 0.2s ease",
-                "&:hover": {
-                  transform: "scale(1.1)",
-                  bgcolor: "secondary.dark",
-                },
-              }}
-              disabled={decrementLoader}
-              onClick={() => handleDecrementQuantity(cart.product._id)}
-            >
-              <RemoveIcon />
-            </IconButton>
+            <IncrementCartItemButton id={cart?._id} />
+            <DecrementCartItemButton id={cart?._id} />
           </Stack>
         </Grid>
       </Grid>

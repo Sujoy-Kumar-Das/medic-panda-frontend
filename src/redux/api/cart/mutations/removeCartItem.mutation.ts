@@ -1,6 +1,12 @@
-export const removeCartItemMutation = (data: any) => {
+export const removeCartItemMutation = ({
+  data,
+  id,
+}: {
+  data?: any;
+  id: string;
+}) => {
   return {
-    url: `/cart/${data.product}`,
+    url: `/cart/${id}`,
     method: "DELETE",
     data,
   };
