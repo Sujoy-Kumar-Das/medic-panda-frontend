@@ -3,7 +3,6 @@ import {
   changePasswordMutation,
   forgotPasswordMutation,
   loginMutation,
-  resetPasswordMutation,
 } from "./mutations";
 
 const authApi = baseApi.injectEndpoints({
@@ -19,7 +18,14 @@ const authApi = baseApi.injectEndpoints({
     }),
 
     resetPassword: builder.mutation({
-      query: resetPasswordMutation,
+      query: ({ data, token }) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        data,
+        headers: {
+          Authorization: token,
+        },
+      }),
     }),
   }),
 });

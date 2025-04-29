@@ -1,69 +1,14 @@
 "use client";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import useResetPassword from "@/hooks/useResetPassword";
 import { resetPasswordSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Typography,
-} from "@mui/material";
-import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { FieldValues } from "react-hook-form";
-import { toast } from "sonner";
+import { LoadingButton } from "@mui/lab";
+import { Box, CircularProgress, Container, Typography } from "@mui/material";
 
 export default function ResetPasswordPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
-
-  const router = useRouter();
-
-  const handleSubmit = async (values: FieldValues) => {
-    setIsLoading(true);
-    setError(null);
-
-    const resetData = {
-      password: values.password,
-      newPassword: values.confirmPassword,
-    };
-    try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_base_url_local}${process.env.NEXT_PUBLIC_Reset_Password_API}`,
-        resetData,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = res.data;
-      if (data.success) {
-        toast.success(data.message);
-        router.push("/register/login");
-      } else {
-        toast.error(data.message);
-      }
-    } catch (err) {
-      console.log({ err });
-      const errorMessage =
-        axios.isAxiosError(err) && err.response?.data?.message
-          ? err.response.data.message
-          : "An error occurred while resetting the password.";
-      setError(errorMessage);
-      toast.error(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  const { handlerFunc, isLoading } = useResetPassword();
   return (
     <Container
       maxWidth="sm"
@@ -97,14 +42,8 @@ export default function ResetPasswordPage() {
           Enter your new password below to reset your account password.
         </Typography>
 
-        {error && (
-          <Typography variant="body2" color="error" sx={{ mb: 2 }}>
-            {error}
-          </Typography>
-        )}
-
         <PandaForm
-          onSubmit={handleSubmit}
+          onSubmit={handlerFunc}
           defaultValues={{ password: "", confirmPassword: "" }}
           resolver={zodResolver(resetPasswordSchema)}
         >
@@ -121,20 +60,20 @@ export default function ResetPasswordPage() {
             type="password"
             fullWidth
           />
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
             variant="contained"
             size="large"
             disabled={isLoading}
             sx={{ mt: 3, mb: 2, borderRadius: 2 }}
-          >
-            {isLoading ? (
+            loadingIndicator={
               <CircularProgress size={24} sx={{ color: "white" }} />
-            ) : (
-              "Reset Password"
-            )}
-          </Button>
+            }
+            loading={isLoading}
+          >
+            Reset Password
+          </LoadingButton>
         </PandaForm>
       </Box>
     </Container>
