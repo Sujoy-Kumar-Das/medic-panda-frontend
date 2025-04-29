@@ -14,7 +14,8 @@ export default function useUserFieldsData(user: any) {
       label: "Full Name",
       name: "name",
       icon: PersonOutlineOutlinedIcon,
-      value: user?.name,
+      value: user?.name || "",
+      defaultValue: { name: user?.name || "" },
       schema: z.object({
         name: z
           .string({ required_error: "Name is required." })
@@ -25,19 +26,23 @@ export default function useUserFieldsData(user: any) {
       label: "Contact",
       name: "contact",
       icon: CallOutlinedIcon,
-      value: user?.contact,
-      type: "number",
+      value: user?.contact || "",
+      defaultValue: { contact: user?.contact || "" },
+      type: "tel",
       schema: z.object({
-        contact: z.coerce
-          .number({ required_error: "Contact is required." })
-          .min(3, { message: "Contact is required." }),
+        contact: z
+          .string({ required_error: "Contact number is required." })
+          .regex(/^(\+?\d{1,3}[- ]?)?\d{10}$/, {
+            message: "Contact number is invalid.",
+          }),
       }),
     },
     {
       label: "City",
       icon: ApartmentIcon,
-      value: user?.address?.city,
+      value: user?.address?.city || "",
       name: "address.city",
+      defaultValue: { address: { city: user?.address?.city || "" } },
       schema: z.object({
         address: z.object({
           city: z
@@ -49,8 +54,9 @@ export default function useUserFieldsData(user: any) {
     {
       label: "Street",
       icon: HomeOutlinedIcon,
-      value: user?.address?.street,
+      value: user?.address?.street || "",
       name: "address.street",
+      defaultValue: { address: { street: user?.address?.street || "" } },
       schema: z.object({
         address: z.object({
           street: z
@@ -62,9 +68,12 @@ export default function useUserFieldsData(user: any) {
     {
       label: "Postal Code",
       icon: SignpostOutlinedIcon,
-      value: user?.address?.postalCode,
+      value: user?.address?.postalCode || "",
       name: "address.postalCode",
       type: "number",
+      defaultValue: {
+        address: { postalCode: user?.address?.postalCode || "" },
+      },
       schema: z.object({
         address: z.object({
           postalCode: z.coerce.number({
@@ -76,8 +85,9 @@ export default function useUserFieldsData(user: any) {
     {
       label: "Country",
       icon: PublicIcon,
-      value: user?.address?.country,
+      value: user?.address?.country || "",
       name: "address.country",
+      defaultValue: { address: { country: user?.address?.country || "" } },
       schema: z.object({
         address: z.object({
           country: z
@@ -87,5 +97,6 @@ export default function useUserFieldsData(user: any) {
       }),
     },
   ];
+
   return { userFields };
 }

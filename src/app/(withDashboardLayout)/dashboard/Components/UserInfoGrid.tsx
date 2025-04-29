@@ -1,15 +1,16 @@
+import useToggleState from "@/hooks/useToggleState";
 import useUserFieldsData from "@/hooks/useUserFieldsData";
 import { Grid } from "@mui/material";
 import { useState } from "react";
 import { AnyZodObject } from "zod";
 import UpdateUserInfoModal from "./UpdateUserInfoModal";
 import UserInfoCard from "./UserInfoCard";
-import useToggleState from "@/hooks/useToggleState";
 interface Field {
   label: string;
   value: string;
   schema: AnyZodObject;
   type?: string;
+  defaultValue: Object;
 }
 export default function UserInfoGrid({ user }: { user: any }) {
   const { userFields } = useUserFieldsData(user);
@@ -39,6 +40,7 @@ export default function UserInfoGrid({ user }: { user: any }) {
                 value: field.name || "",
                 schema: field.schema,
                 type: field.type || "text",
+                defaultValue: field.defaultValue,
               })
             }
           />
@@ -53,6 +55,7 @@ export default function UserInfoGrid({ user }: { user: any }) {
           name={currentField.value}
           schema={currentField.schema}
           type={currentField.type as string}
+          defaultValue={currentField.defaultValue}
         />
       )}
     </>

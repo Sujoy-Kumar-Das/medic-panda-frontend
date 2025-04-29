@@ -14,6 +14,7 @@ interface UpdateUserInfoModalProps {
   name: string;
   schema: AnyZodObject;
   type: string;
+  defaultValue: Object;
 }
 
 export default function UpdateUserInfoModal({
@@ -23,6 +24,7 @@ export default function UpdateUserInfoModal({
   name,
   schema,
   type,
+  defaultValue,
 }: UpdateUserInfoModalProps) {
   const { handlerFunc, isLoading } = useUpdateUserInfo(onClose);
 
@@ -37,7 +39,11 @@ export default function UpdateUserInfoModal({
         Update Your {label}
       </Typography>
 
-      <PandaForm onSubmit={handlerFunc} resolver={zodResolver(schema)}>
+      <PandaForm
+        onSubmit={handlerFunc}
+        resolver={zodResolver(schema)}
+        defaultValues={defaultValue}
+      >
         <PandaInputField
           type={type}
           name={name}
