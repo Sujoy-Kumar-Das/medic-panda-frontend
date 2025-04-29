@@ -1,43 +1,14 @@
 import { ICart } from "@/types";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Box, Button, Grid, keyframes, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import DecrementCartItemButton from "./DecrementCartItemButton";
 import IncrementCartItemButton from "./IncrementCartItemButton";
 
-// Fade-in animation for card appearance
-const fadeInUp = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-// Scale-up animation for hover effect
-const scaleUp = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.05);
-  }
-`;
-
-export default function MyCartCard({
-  cart,
-  index,
-}: {
-  cart: ICart;
-  index: number;
-}) {
+export default function MyCartCard({ cart }: { cart: ICart }) {
   return (
     <Box
-      key={cart._id}
       sx={{
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
@@ -47,14 +18,6 @@ export default function MyCartCard({
         p: 3,
         borderRadius: 4,
         boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-        animation: `${fadeInUp} 0.4s ease ${
-          index * 0.1
-        }s both, ${scaleUp} 0.3s ease-out`,
-        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-        "&:hover": {
-          transform: "scale(1.05)",
-          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-        },
         textAlign: "center",
       }}
     >
