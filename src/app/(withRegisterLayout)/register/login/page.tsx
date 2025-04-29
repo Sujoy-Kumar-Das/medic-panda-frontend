@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import loginImage from "@/assets/lgoInBg.jpg";
+import FormHeader from "@/components/shared/form-header/FormHeader";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,17 +47,10 @@ export default function LoginPage() {
 
         {/* Form Section */}
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ color: "primary.main" }}
-          >
-            Login
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
-            Enter your credentials to continue.
-          </Typography>
+          <FormHeader
+            title="Login"
+            subtitle="Enter your credentials to continue."
+          />
           {/* login form */}
           <LoginForm />
 

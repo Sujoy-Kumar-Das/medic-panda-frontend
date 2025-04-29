@@ -1,5 +1,6 @@
 import resetPasswordImage from "@/assets/Reset password-bg.png";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import FormHeader from "@/components/shared/form-header/FormHeader";
+import { Box, Container, Stack } from "@mui/material";
 import Image from "next/image";
 import ResetPasswordForm from "./Components/ResetPasswordForm";
 
@@ -39,17 +40,10 @@ export default function ResetPasswordPage() {
         </Box>
 
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ color: "primary.main" }}
-          >
-            Reset Password
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
-            Enter your new password below to reset your account password.
-          </Typography>
+          <FormHeader
+            title="Reset Password"
+            subtitle="Enter your new password below to reset your account password."
+          />
 
           <ResetPasswordForm />
         </Box>

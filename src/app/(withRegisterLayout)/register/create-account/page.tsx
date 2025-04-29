@@ -1,4 +1,5 @@
 import image from "@/assets/create-account.png";
+import FormHeader from "@/components/shared/form-header/FormHeader";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,17 +41,10 @@ export default function CreateAccountPage() {
 
         {/* Form Section */}
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ color: "primary.main" }}
-          >
-            Create Account
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
-            Sign up to get started.
-          </Typography>
+          <FormHeader
+            title="Create Account"
+            subtitle="Sign up to get started."
+          />
 
           <CreateAccountForm />
 

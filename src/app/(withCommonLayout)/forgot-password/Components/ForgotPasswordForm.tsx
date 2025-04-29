@@ -2,6 +2,7 @@
 "use client";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
+import FormHeader from "@/components/shared/form-header/FormHeader";
 import useForgotPassword from "@/hooks/useForgotPassword";
 import { useTimer } from "@/hooks/useTimer";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,17 +20,10 @@ export default function ForgotPasswordForm() {
 
   return (
     <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-      <Typography
-        variant="h4"
-        fontWeight="bold"
-        gutterBottom
-        sx={{ color: "primary.main" }}
-      >
-        Forgot Password?
-      </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
-        Enter your registered email to receive a password reset link.
-      </Typography>
+      <FormHeader
+        title="Forgot Password?"
+        subtitle="Enter your registered email to receive a password reset link."
+      />
       <PandaForm
         onSubmit={handlerFunc}
         defaultValues={{ email: "" }}
