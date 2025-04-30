@@ -20,7 +20,7 @@ export default function UserDashboardMetaCards({ data }: { data: any }) {
       initial="hidden"
       animate="visible"
     >
-      <Grid container spacing={3}>
+      <Grid container spacing={3} pb={3}>
         {userMetaData?.map((card: any, index: number) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
             <motion.div variants={dashboardStatsCardVariants}>

@@ -27,7 +27,7 @@ export default function UpdatePasswordModal({
   open,
   onClose,
 }: IUpdatePasswordModalProps) {
-  const { handlerFunc, isLoading } = useChangePassword(onClose);
+  const { handlerFunc, isLoading } = useChangePassword();
   return (
     <CustomModal open={open} onClose={onClose}>
       <Box>

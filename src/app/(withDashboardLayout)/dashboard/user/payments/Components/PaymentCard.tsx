@@ -26,12 +26,7 @@ const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
         borderRadius: "12px",
         boxShadow: "0px 8px 40px rgba(0, 0, 0, 0.1)",
         marginBottom: "20px",
-        backgroundColor: "#FFFFFF",
-        transition: "transform 0.2s, box-shadow 0.2s",
-        "&:hover": {
-          transform: "scale(1.02)",
-          boxShadow: "0px 12px 50px rgba(0, 0, 0, 0.2)",
-        },
+        backgroundColor: "background.main",
       }}
     >
       <CardContent>

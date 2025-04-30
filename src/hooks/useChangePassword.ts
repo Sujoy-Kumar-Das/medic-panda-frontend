@@ -5,7 +5,7 @@ import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 import { useAuth } from "./useAuth";
 
-export default function useChangePassword(onClose: () => void) {
+export default function useChangePassword() {
   const [changePassword, apiResponse] = useChangePasswordMutation();
 
   const { logoutUser } = useAuth();

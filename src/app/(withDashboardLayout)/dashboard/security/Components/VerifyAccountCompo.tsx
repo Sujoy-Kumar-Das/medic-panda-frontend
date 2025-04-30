@@ -1,10 +1,12 @@
 "use client";
 import useSentVerificationOTP from "@/hooks/useSentVerificationOTP";
+import { useTimer } from "@/hooks/useTimer";
 import useToggleState from "@/hooks/useToggleState";
 import { AppRegistrationOutlined as AppRegistrationOutlinedIcon } from "@mui/icons-material";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Grid, IconButton, Stack, Typography } from "@mui/material";
+import { toast } from "sonner";
 import VerifyEmailOTPModal from "./VerifyEmailOTPModal";
 
 export default function VerifyAccountCompo({
@@ -12,12 +14,23 @@ export default function VerifyAccountCompo({
 }: {
   isVerified: boolean;
 }) {
+  const { startTimer, canRetry, timer } = useTimer({
+    storageKey: "verify-timer",
+  });
+
   const verifyAccountModalState = useToggleState(false);
 
   const { handlerFunc, isLoading } = useSentVerificationOTP();
 
   const handleEmailVerification = async () => {
+    if (!canRetry) {
+      console.log({ canRetry });
+      toast.error(`Please Wait ${timer} seconds.`);
+      return;
+    }
+
     await handlerFunc();
+    startTimer();
     verifyAccountModalState.onOpen();
   };
 
@@ -62,7 +75,7 @@ export default function VerifyAccountCompo({
                 },
               }}
               onClick={handleEmailVerification}
-              disabled={isLoading}
+              disabled={isLoading || !canRetry}
             >
               <AppRegistrationOutlinedIcon />
             </IconButton>
@@ -74,6 +87,7 @@ export default function VerifyAccountCompo({
         <VerifyEmailOTPModal
           open={verifyAccountModalState.state}
           onClose={verifyAccountModalState.onClose}
+          reOpenTime={timer}
         />
       )}
     </>

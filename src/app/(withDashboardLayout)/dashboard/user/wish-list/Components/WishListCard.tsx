@@ -14,11 +14,6 @@ export default function WishListCard({ product }: ProductCardProps) {
       sx={{
         borderRadius: 4,
         boxShadow: 4,
-        transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
-        "&:hover": {
-          transform: "scale(1.05)",
-          boxShadow: 6,
-        },
       }}
     >
       <Box

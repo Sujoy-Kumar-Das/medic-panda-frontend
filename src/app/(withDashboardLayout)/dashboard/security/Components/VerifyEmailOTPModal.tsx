@@ -17,6 +17,7 @@ const verifyOTPSchema = z.object({
 interface IVerifyEmailOTPModalProps {
   open: boolean;
   onClose: () => void;
+  reOpenTime: number;
 }
 
 interface OTPFormValues {
@@ -30,8 +31,15 @@ const defaultValues: OTPFormValues = {
 export default function VerifyEmailOTPModal({
   open,
   onClose,
+  reOpenTime,
 }: IVerifyEmailOTPModalProps) {
-  const { handlerFunc, isLoading } = useConfirmVerificationWithOTP(onClose);
+  const onCloseHandler = () => {
+    onClose();
+    localStorage.removeItem("verify-timer");
+  };
+
+  const { handlerFunc, isLoading } =
+    useConfirmVerificationWithOTP(onCloseHandler);
 
   return (
     <CustomModal open={open} onClose={onClose}>
@@ -52,7 +60,8 @@ export default function VerifyEmailOTPModal({
           sx={{ fontWeight: 500, color: "text.secondary" }}
         >
           <strong>[NOTE]</strong> Please do not close this modal. If you close
-          it, you wont be able to reopen it for the next 2 minutes.
+          it, you wont be able to reopen it for the next{" "}
+          <strong>{reOpenTime}</strong> Seconds.
         </Typography>
 
         <PandaForm
