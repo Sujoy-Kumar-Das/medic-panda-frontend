@@ -6,14 +6,18 @@ import { toast } from "sonner";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 import { useAuth } from "./useAuth";
 
+interface IAddToCartProductItem extends IProduct {
+  quantity?: number;
+}
+
 export default function useAddToCart(onClose?: () => void) {
   const { user } = useAuth();
   const [addToCartInDB, apiResponse] = useAddToCartMutation();
 
   const dispatch = useAppDispatch();
 
-  const handlerFunc = async (productData: IProduct) => {
-    const { name, thumbnail, _id, price } = productData;
+  const handlerFunc = async (productData: IAddToCartProductItem) => {
+    const { name, thumbnail, _id, price, quantity = 1 } = productData;
     const userId = user?.id;
 
     if (!userId) {
@@ -23,7 +27,7 @@ export default function useAddToCart(onClose?: () => void) {
       return;
     }
 
-    await addToCartInDB({ product: _id, quantity: 1 });
+    await addToCartInDB({ product: _id, quantity });
   };
 
   useApiMutationResponseHandler({

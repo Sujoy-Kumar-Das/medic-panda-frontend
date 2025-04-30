@@ -1,74 +1,20 @@
 "use client";
 
-import useUserInfo from "@/hooks/useUserInfo";
-import { useAddToCartMutation } from "@/redux/api/cart/cart.api";
-import { addProduct } from "@/redux/features/cart.slice";
-import { useAppDispatch } from "@/redux/hooks";
-import { IGenericErrorResponse, IProduct } from "@/types";
+import useAddToCart from "@/hooks/useAddToCart";
+import useUpdateCartQuantity from "@/hooks/useUpdateCartQuantity";
+import { IProduct } from "@/types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
-import { ChangeEvent, useEffect, useState } from "react";
-import { toast } from "sonner";
+import { LoadingButton } from "@mui/lab";
+import { Box, IconButton, Stack, TextField } from "@mui/material";
 
 export default function ProductQuantity({ product }: { product: IProduct }) {
-  const [quantity, setQuantity] = useState(0);
-  const { userInfo: user } = useUserInfo();
-  const [addToCartInDB, { isLoading, isSuccess, isError, error }] =
-    useAddToCartMutation();
-  const dispatch = useAppDispatch();
+  const { handlerFunc, isLoading } = useAddToCart();
 
-  const handleAddToCart = async (product: IProduct) => {
-    const { name, thumbnail, _id, price } = product;
-    const userId = user?.userId;
-    const productQuantity = quantity || 1;
-
-    if (!userId) {
-      dispatch(
-        addProduct({
-          name,
-          thumbnail,
-          id: _id,
-          price,
-          quantity: productQuantity,
-        })
-      );
-      toast.success("Product added to cart locally.");
-      setQuantity(0);
-      return;
-    }
-
-    try {
-      await addToCartInDB({ product: _id, quantity: productQuantity }).unwrap();
-    } catch (err) {
-      console.error("Add to cart failed", err);
-    }
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Product added to cart.");
-      setQuantity(0);
-    } else if (isError) {
-      const errorMessage = (error as IGenericErrorResponse).message;
-      toast.error(errorMessage || "Failed to add product to cart.");
-    }
-  }, [isSuccess, isError, error]);
-
-  const handleDecrease = () => {
-    if (quantity > 0) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
-
-  const handleIncrease = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    setQuantity(isNaN(newQuantity) ? 0 : newQuantity);
-  };
+  const { quantity, handleDecrease, handleIncrease, handleInputChange } =
+    useUpdateCartQuantity({
+      initialValue: 1,
+    });
 
   return (
     <Stack direction="row" alignItems="center" spacing={2} mt={1}>
@@ -113,14 +59,22 @@ export default function ProductQuantity({ product }: { product: IProduct }) {
           <ArrowForwardIosIcon fontSize="small" />
         </IconButton>
       </Box>
-      <Button
+      <LoadingButton
         size="small"
         color="primary"
         variant="contained"
-        onClick={() => handleAddToCart(product)}
+        loading={isLoading}
+        disabled={isLoading}
+        loadingIndicator="Adding to cart..."
+        onClick={() =>
+          handlerFunc({
+            ...product,
+            quantity,
+          })
+        }
       >
         Add to cart
-      </Button>
+      </LoadingButton>
     </Stack>
   );
 }
