@@ -1,12 +1,24 @@
+import useUpdateCartQuantity from "@/hooks/useUpdateCartQuantity";
 import { ICart } from "@/types";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import DecrementCartItemButton from "./DecrementCartItemButton";
+import DeleteCartButton from "./DeleteCartButton";
 import IncrementCartItemButton from "./IncrementCartItemButton";
 
 export default function MyCartCard({ cart }: { cart: ICart }) {
+  const originalQuantity = Number(cart.quantity);
+
+  const { handleDecrease, handleIncrease, quantity } = useUpdateCartQuantity({
+    initialValue: originalQuantity,
+  });
+
+  const productPrice = Number(cart?.totalPrice) / originalQuantity;
+
+  const totalPrice = (productPrice * quantity).toFixed(2);
+
   return (
     <Box
       sx={{
@@ -53,12 +65,12 @@ export default function MyCartCard({ cart }: { cart: ICart }) {
           </Typography>
         </Grid>
 
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={1}>
           <Typography fontWeight={600} fontSize="1rem" color="text.primary">
             Quantity
           </Typography>
           <Typography fontSize="0.9rem" color="text.secondary">
-            {cart.quantity}
+            {quantity}
           </Typography>
         </Grid>
 
@@ -67,14 +79,15 @@ export default function MyCartCard({ cart }: { cart: ICart }) {
             Total
           </Typography>
           <Typography fontSize="0.9rem" color="text.secondary">
-            ${cart.totalPrice}
+            ${totalPrice}
           </Typography>
         </Grid>
 
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <Stack direction="row" spacing={1} justifyContent="center">
-            <IncrementCartItemButton id={cart?._id} />
-            <DecrementCartItemButton id={cart?._id} />
+            <IncrementCartItemButton onChange={handleIncrease} />
+            <DecrementCartItemButton onChange={handleDecrease} />
+            <DeleteCartButton id={cart._id} />
           </Stack>
         </Grid>
       </Grid>

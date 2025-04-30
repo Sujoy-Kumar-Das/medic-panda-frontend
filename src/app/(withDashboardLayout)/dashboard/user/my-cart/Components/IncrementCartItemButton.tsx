@@ -1,10 +1,12 @@
 "use client";
-import useIncrementCartItem from "@/hooks/useIncrementCartItem";
 import AddIcon from "@mui/icons-material/Add";
 import { IconButton } from "@mui/material";
 
-export default function IncrementCartItemButton({ id }: { id: string }) {
-  const { handlerFunc, isLoading } = useIncrementCartItem();
+export default function IncrementCartItemButton({
+  onChange,
+}: {
+  onChange: () => void;
+}) {
   return (
     <IconButton
       color="primary"
@@ -18,8 +20,7 @@ export default function IncrementCartItemButton({ id }: { id: string }) {
           bgcolor: "primary.dark",
         },
       }}
-      disabled={isLoading}
-      onClick={() => handlerFunc(id)}
+      onClick={onChange}
     >
       <AddIcon />
     </IconButton>

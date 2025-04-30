@@ -1,7 +1,7 @@
+import useCartMessage from "@/hooks/useCartMessage";
 import useGetCartItems from "@/hooks/useGetCartItems";
 import { Box, Button, Divider, Menu, Typography } from "@mui/material";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import NavCartCard from "./NavCartCard";
 
 interface ICartItemsProps {
@@ -16,17 +16,10 @@ export default function NavCartCards({
   // load the carts data from custom hook;
   const { cartData: carts, isLoading } = useGetCartItems();
 
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    if (isLoading) {
-      setMessage("Loading Carts...");
-    } else if (!carts?.length) {
-      setMessage("Your Cart Is Empty.");
-    } else {
-      setMessage("");
-    }
-  }, [isLoading, carts]);
+  const { message } = useCartMessage({
+    isLoading,
+    length: Number(carts?.length),
+  });
 
   return (
     <Menu

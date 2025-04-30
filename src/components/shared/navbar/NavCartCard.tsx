@@ -9,6 +9,7 @@ interface NavCartCardProps {
 
 export default function NavCartCard({ cart, onClose }: NavCartCardProps) {
   const { name, thumbnail, total, id, quantity } = cart;
+
   return (
     <Stack
       direction="row"

@@ -1,8 +1,9 @@
 "use client";
 import useAddToWishlist from "@/hooks/useAddToWishlist";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { CircularProgress, IconButton, SxProps, Tooltip } from "@mui/material";
+import { IconButton, SxProps, Tooltip } from "@mui/material";
 import { ReactNode } from "react";
+import AnimateLoadingButton from "./AnimateLoadingButton";
 
 interface IWishListButtonProps {
   id: string;
@@ -28,7 +29,9 @@ export default function WishListButton({
         disabled={isLoading}
         sx={{ ...sx }}
       >
-        {isLoading ? <CircularProgress size={24} /> : icon}
+        <AnimateLoadingButton isLoading={isLoading}>
+          {icon}
+        </AnimateLoadingButton>
       </IconButton>
     </Tooltip>
   );

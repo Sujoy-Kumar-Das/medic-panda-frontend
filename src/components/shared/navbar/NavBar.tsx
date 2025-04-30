@@ -1,19 +1,16 @@
 "use client";
+import useToggleState from "@/hooks/useToggleState";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
 import NavBarCart from "./NavBarCart";
 import NavItems from "./NavItems";
 import NavUserMenu from "./NavUserMenu";
 
 export default function NavBar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
-  };
+  // state for handle mobile responsiveness
+  const { state, toggle } = useToggleState(false);
 
   return (
     <Box position={"relative"} bgcolor="background.default">
@@ -69,9 +66,9 @@ export default function NavBar() {
             sx={{
               display: { xs: "block", md: "none" },
               transition: "transform 0.3s ease",
-              transform: `${mobileOpen ? "rotate(90deg)" : "rotate(0deg)"}`,
+              transform: `${state ? "rotate(90deg)" : "rotate(0deg)"}`,
             }}
-            onClick={handleDrawerToggle}
+            onClick={toggle}
           >
             <MenuIcon />
           </IconButton>
@@ -88,7 +85,7 @@ export default function NavBar() {
             top: 0,
             left: 0,
             zIndex: 1000,
-            transform: `${mobileOpen ? "translateY(0)" : "translateY(-100vh)"}`,
+            transform: `${state ? "translateY(0)" : "translateY(-100vh)"}`,
             transition: "transform 0.5s ease-in-out",
             display: { xs: "block", md: "none" },
           }}
@@ -116,10 +113,7 @@ export default function NavBar() {
                 Panda
               </Typography>
             </Box>
-            <IconButton
-              onClick={handleDrawerToggle}
-              sx={{ color: "primary.main" }}
-            >
+            <IconButton onClick={toggle} sx={{ color: "primary.main" }}>
               <CloseIcon />
             </IconButton>
           </Stack>
@@ -134,11 +128,7 @@ export default function NavBar() {
             <NavUserMenu />
 
             {/* navigation items for small devices */}
-            <Stack
-              spacing={1}
-              sx={{ textAlign: "center" }}
-              onClick={handleDrawerToggle}
-            >
+            <Stack spacing={1} sx={{ textAlign: "center" }} onClick={toggle}>
               <NavItems />
             </Stack>
 

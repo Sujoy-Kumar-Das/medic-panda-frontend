@@ -40,7 +40,7 @@ export default function OrderSummeryCard({ orderItem }) {
           sx={{ fontWeight: 500 }}
           color={"secondary"}
         >
-          Price: ${orderItem?.product?.price}
+          Price: ${Number(orderItem?.product?.price).toFixed(2)}
         </Typography>
         <Divider sx={{ my: 2 }} />
         <Typography
@@ -48,7 +48,7 @@ export default function OrderSummeryCard({ orderItem }) {
           sx={{ fontWeight: "bold" }}
           color={"secondary"}
         >
-          Total: ${orderItem?.totalPrice}
+          Total: ${Number(orderItem?.totalPrice).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

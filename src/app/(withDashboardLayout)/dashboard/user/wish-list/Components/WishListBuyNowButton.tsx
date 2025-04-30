@@ -19,7 +19,7 @@ export default function WishListBuyNowButton({
 
   return (
     <LoadingButton
-      onClick={() => handlerFunc(productData)}
+      onClick={() => handlerFunc({ ...productData })}
       disabled={isLoading}
       loadingIndicator={<CircularProgress size={24} color="inherit" />}
       loading={isLoading}

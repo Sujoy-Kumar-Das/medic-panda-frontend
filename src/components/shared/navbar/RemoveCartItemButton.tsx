@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+import AnimateLoadingButton from "@/components/ui/buttons/AnimateLoadingButton";
 import useRemoveCartItem from "@/hooks/useRemoveCartItem";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { CircularProgress, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 interface IRemoveCartItemButtonProps {
   id: string;
@@ -14,11 +14,12 @@ export default function RemoveCartItemButton({
   onClose,
 }: IRemoveCartItemButtonProps) {
   const { handlerFunc, loadingProductId } = useRemoveCartItem(onClose);
+  const isLoading = loadingProductId === id;
 
   return (
     <IconButton
       onClick={() => handlerFunc(id)}
-      disabled={loadingProductId === id}
+      disabled={isLoading}
       color="error"
       sx={{
         transition: "background-color 0.3s ease",
@@ -27,11 +28,9 @@ export default function RemoveCartItemButton({
         },
       }}
     >
-      {loadingProductId === id ? (
-        <CircularProgress size={24} color="inherit" />
-      ) : (
+      <AnimateLoadingButton isLoading={isLoading}>
         <DeleteIcon />
-      )}
+      </AnimateLoadingButton>
     </IconButton>
   );
 }

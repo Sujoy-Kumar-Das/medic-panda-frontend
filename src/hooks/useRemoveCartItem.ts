@@ -1,11 +1,11 @@
 "use client";
 
+import { useDecrementCartItemMutation } from "@/redux/api";
 import { decreaseQuantity } from "@/redux/features/cart.slice";
 import { useAppDispatch } from "@/redux/hooks";
 import { useState } from "react";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 import { useAuth } from "./useAuth";
-import { useRemoveCartItemMutation } from "@/redux/api/cart/cart.api";
 
 export default function useRemoveCartItem(onClose: () => void) {
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
@@ -16,7 +16,7 @@ export default function useRemoveCartItem(onClose: () => void) {
   const dispatch = useAppDispatch();
 
   // remove cart from server via rtk query
-  const [removeCartItemFromDB, apiResponse] = useRemoveCartItemMutation();
+  const [decrementCartItemFromDB, apiResponse] = useDecrementCartItemMutation();
 
   const handlerFunc = async (id: string) => {
     const userId = user?.id;
@@ -32,8 +32,8 @@ export default function useRemoveCartItem(onClose: () => void) {
     }
 
     // remove cart item from local storage if user not exists;
-    await removeCartItemFromDB({
-      product: id,
+    await decrementCartItemFromDB({
+      id,
     });
 
     setLoadingProductId(null);

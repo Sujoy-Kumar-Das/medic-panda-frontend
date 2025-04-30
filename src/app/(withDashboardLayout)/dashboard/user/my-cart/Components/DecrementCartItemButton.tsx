@@ -1,9 +1,11 @@
 "use client";
-import useDecrementCartItem from "@/hooks/useDecrementCartItem";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { IconButton } from "@mui/material";
-export default function DecrementCartItemButton({ id }: { id: string }) {
-  const { handlerFunc, isLoading } = useDecrementCartItem();
+export default function DecrementCartItemButton({
+  onChange,
+}: {
+  onChange: () => void;
+}) {
   return (
     <IconButton
       color="secondary"
@@ -17,8 +19,7 @@ export default function DecrementCartItemButton({ id }: { id: string }) {
           bgcolor: "secondary.dark",
         },
       }}
-      disabled={isLoading}
-      onClick={() => handlerFunc(id)}
+      onClick={onChange}
     >
       <RemoveIcon />
     </IconButton>

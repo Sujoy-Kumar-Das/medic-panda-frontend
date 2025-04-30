@@ -15,7 +15,7 @@ export default function useAddToWishlist() {
       return;
     }
 
-    await addToWishList({ product: id }).unwrap();
+    await addToWishList({ product: id });
   };
 
   useApiMutationResponseHandler({

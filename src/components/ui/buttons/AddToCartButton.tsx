@@ -2,14 +2,9 @@
 import useAddToCart from "@/hooks/useAddToCart";
 import { IProduct } from "@/types";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import {
-  Button,
-  CircularProgress,
-  IconButton,
-  SxProps,
-  Tooltip,
-} from "@mui/material";
+import { Button, IconButton, SxProps, Tooltip } from "@mui/material";
 import { ReactNode } from "react";
+import AnimateLoadingButton from "./AnimateLoadingButton";
 
 interface IAddToCartButtonProps {
   product: IProduct;
@@ -38,29 +33,30 @@ export default function AddToCartButton({
           sx={{
             ...sx,
           }}
-          onClick={() => handlerFunc(product)}
+          onClick={() => handlerFunc({ ...product })}
           disabled={isLoading}
         >
-          {isLoading ? <CircularProgress size={24} /> : <ShoppingCartIcon />}
+          <AnimateLoadingButton isLoading={isLoading}>
+            <ShoppingCartIcon />
+          </AnimateLoadingButton>
         </IconButton>
       ) : (
-        <Button
-          sx={{
-            ...sx,
-          }}
-          onClick={() => handlerFunc(product)}
-          disabled={isLoading}
-          endIcon={endIcon}
-          startIcon={startIcon}
+        <AnimateLoadingButton
+          isLoading={isLoading}
+          loadingScalePattern={[1, 1.1, 1]}
         >
-          {isLoading ? (
-            <CircularProgress size={24} />
-          ) : children ? (
-            children
-          ) : (
-            <ShoppingCartIcon />
-          )}
-        </Button>
+          <Button
+            sx={{
+              ...sx,
+            }}
+            onClick={() => handlerFunc({ ...product })}
+            disabled={isLoading}
+            endIcon={endIcon}
+            startIcon={startIcon}
+          >
+            {children ? children : <ShoppingCartIcon />}
+          </Button>
+        </AnimateLoadingButton>
       )}
     </Tooltip>
   );

@@ -2,8 +2,9 @@ import { TTagTypes } from "@/redux/tag-types";
 import { baseApi } from "../base.api";
 import {
   addToCartMutation,
+  decrementCartItemMutation,
+  deleteCartMutation,
   incrementCartItemMutation,
-  removeCartItemMutation,
 } from "./mutations";
 import {
   getAllCartsQuery,
@@ -34,8 +35,12 @@ export const cartApi = baseApi.injectEndpoints({
       query: incrementCartItemMutation,
       invalidatesTags: [TTagTypes.cart],
     }),
-    removeCartItem: builder.mutation({
-      query: removeCartItemMutation,
+    decrementCartItem: builder.mutation({
+      query: decrementCartItemMutation,
+      invalidatesTags: [TTagTypes.cart],
+    }),
+    deleteCart: builder.mutation({
+      query: deleteCartMutation,
       invalidatesTags: [TTagTypes.cart],
     }),
   }),
@@ -46,6 +51,7 @@ export const {
   useGetAllCartsQuery,
   useGetSingleCartQuery,
   useIncrementCartItemMutation,
-  useRemoveCartItemMutation,
+  useDecrementCartItemMutation,
   useGetCartLengthQuery,
+  useDeleteCartMutation,
 } = cartApi;

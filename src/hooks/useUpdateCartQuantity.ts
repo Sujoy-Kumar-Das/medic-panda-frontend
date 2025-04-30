@@ -1,16 +1,17 @@
+"use client";
 import { ChangeEvent, useState } from "react";
 
 interface useUpdateCartQuantityProps {
-  initialValue: number;
+  initialValue?: number;
 }
 
 export default function useUpdateCartQuantity({
-  initialValue,
+  initialValue = 1,
 }: useUpdateCartQuantityProps) {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(initialValue);
 
   const handleDecrease = () => {
-    if (quantity > 0) {
+    if (quantity > 1) {
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };

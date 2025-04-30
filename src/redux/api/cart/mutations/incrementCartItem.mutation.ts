@@ -1,8 +1,7 @@
 export const incrementCartItemMutation = (data: any) => {
   return {
-    url: `/cart/${data.id}`,
+    url: `/cart/decrement/${data.id}`,
     method: "PATCH",
     data,
   };
 };
-
