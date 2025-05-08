@@ -44,6 +44,7 @@ export default function OrderCancelButton({
           onClick={() => handlerFunc(id)}
           sx={{
             fontWeight: 400,
+            minWidth: 40,
             "&:hover": {
               color: "secondary.main",
               borderColor: "secondary.main",

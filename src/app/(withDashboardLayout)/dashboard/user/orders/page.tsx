@@ -20,7 +20,7 @@ export default function OrdersPage() {
       {/* handle Orders List with loading and error wrapper component */}
       <LoadingErrorWrapper query={query}>
         <Stack spacing={2} sx={{ py: 3 }}>
-          {query?.data?.map((orderItem: IOrder) => (
+          {query?.data?.result?.map((orderItem: IOrder) => (
             <OrderCard key={orderItem._id} order={orderItem} />
           ))}
         </Stack>

@@ -1,3 +1,4 @@
+"use client";
 import Header from "@/components/shared/header/Header";
 import { IProduct } from "@/types";
 import { Container, Grid } from "@mui/material";

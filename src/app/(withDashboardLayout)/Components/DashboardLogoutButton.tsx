@@ -11,7 +11,7 @@ export default function DashboardLogoutButton() {
   const router = useRouter();
 
   const handleLogout = () => {
-    logoutUser(router);
+    logoutUser({ router, path: "/" });
     toast.success("Logout successfully");
   };
   return (

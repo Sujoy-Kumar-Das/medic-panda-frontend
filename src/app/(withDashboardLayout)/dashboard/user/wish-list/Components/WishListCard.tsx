@@ -51,7 +51,7 @@ export default function WishListCard({ product }: ProductCardProps) {
           {product.name}
         </Typography>
 
-        {product.discount?.discountStatus ? (
+        {product.discount?.discountPrice ? (
           <Box mb={2}>
             <Typography
               variant="body2"

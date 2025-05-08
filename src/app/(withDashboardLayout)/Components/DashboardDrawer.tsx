@@ -26,8 +26,6 @@ export const DashboardDrawer = () => {
   const items = routeGenerator(dashboardRoutes, role);
   const pathname = usePathname(); // Get current pathname
 
-  const router = useRouter();
-
   return (
     <Box
       sx={{

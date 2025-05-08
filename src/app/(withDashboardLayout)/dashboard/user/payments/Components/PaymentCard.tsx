@@ -20,6 +20,9 @@ interface IPaymentCardProps {
 
 const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
   const { order, transactionId, createdAt } = paymentHistory;
+
+  console.log({ order });
+
   return (
     <Card
       sx={{
@@ -51,7 +54,7 @@ const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
         >
           Product:
           <span style={{ fontWeight: "bold" }}>
-            {paymentHistory?.order?.product?.name}
+            {order?.product?.name}
           </span>
         </Typography>
         <Box
@@ -67,7 +70,7 @@ const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
           <Typography variant="body2" sx={{ color: "#4A5568" }}>
             Order Date:
             <span style={{ fontWeight: "500" }}>
-              {dateFormatter(order.createdAt)}
+              {dateFormatter(order?.createdAt)}
             </span>
           </Typography>
           {order?.completedDate && (

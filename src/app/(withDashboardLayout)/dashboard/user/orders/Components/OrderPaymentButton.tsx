@@ -23,7 +23,7 @@ export default function OrderPaymentButton({
         <Chip
           label={
             isLoading ? (
-              <CircularProgress size={16} color="inherit" />
+              <CircularProgress size={20} color="inherit" />
             ) : (
               "Pay Now"
             )
@@ -36,6 +36,7 @@ export default function OrderPaymentButton({
           sx={{
             fontWeight: 400,
             padding: 0,
+            minWidth: 40,
             "&:hover": {
               color: "secondary.main",
               borderColor: "secondary.main",
@@ -44,7 +45,7 @@ export default function OrderPaymentButton({
         />
       ) : (
         <Chip
-          label="Paid"
+          label={status}
           color="primary"
           sx={{
             bgcolor: "primary.main",
