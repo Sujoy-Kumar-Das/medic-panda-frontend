@@ -14,10 +14,12 @@ interface IAddToCartButtonProps {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   iconBtn?: boolean;
+  quantity?: number;
 }
 
 export default function AddToCartButton({
   product,
+  quantity = 1,
   children,
   sx,
   startIcon,
@@ -33,7 +35,7 @@ export default function AddToCartButton({
           sx={{
             ...sx,
           }}
-          onClick={() => handlerFunc({ ...product })}
+          onClick={() => handlerFunc({ ...product, quantity })}
           disabled={isLoading}
         >
           <AnimateLoadingButton isLoading={isLoading}>

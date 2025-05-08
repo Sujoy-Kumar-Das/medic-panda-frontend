@@ -26,7 +26,7 @@ export default function NavCartCards({
       sx={{
         mt: "45px",
         "& .MuiMenu-paper": {
-          width: 350,
+          width: { xs: "90%", md: "30%" },
           borderRadius: 2,
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         },

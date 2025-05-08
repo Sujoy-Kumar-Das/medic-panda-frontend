@@ -12,6 +12,5 @@ export interface IModifiedCartData {
   id: string;
   name: string;
   thumbnail: string;
-  total: number;
-  quantity: number;
+  price: string;
 }

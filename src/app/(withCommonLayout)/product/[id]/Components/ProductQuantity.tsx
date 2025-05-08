@@ -1,11 +1,11 @@
 "use client";
 
+import AddToCartButton from "@/components/ui/buttons/AddToCartButton";
 import useAddToCart from "@/hooks/useAddToCart";
-import useUpdateCartQuantity from "@/hooks/useUpdateCartQuantity";
+import useUpdateCartQuantity from "@/hooks/useUpdateFieldQuantityValue";
 import { IProduct } from "@/types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { LoadingButton } from "@mui/lab";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
 
 export default function ProductQuantity({ product }: { product: IProduct }) {
@@ -59,7 +59,7 @@ export default function ProductQuantity({ product }: { product: IProduct }) {
           <ArrowForwardIosIcon fontSize="small" />
         </IconButton>
       </Box>
-      <LoadingButton
+      {/* <LoadingButton
         size="small"
         color="primary"
         variant="contained"
@@ -74,7 +74,11 @@ export default function ProductQuantity({ product }: { product: IProduct }) {
         }
       >
         Add to cart
-      </LoadingButton>
+      </LoadingButton> */}
+
+      <AddToCartButton product={product} quantity={quantity} iconBtn={false}>
+        Add To Cart
+      </AddToCartButton>
     </Stack>
   );
 }

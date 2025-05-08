@@ -5,10 +5,18 @@ const generateStepperArray = (status: string) => {
     (item) => item.status === status
   );
 
-  return orderStatusArray.map((item, index) => ({
+  const orderStatusUpdatedArray = orderStatusArray.map((item, index) => ({
     ...item,
     isActive: index <= currentStepIndex,
   }));
+
+  const orderCurrentStatus = orderStatusArray[currentStepIndex];
+
+  return {
+    orderStatusUpdatedArray,
+    orderCurrentStatus,
+    currentIndex: currentStepIndex,
+  };
 };
 
 export default generateStepperArray;

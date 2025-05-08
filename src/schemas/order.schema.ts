@@ -17,6 +17,9 @@ export const orderShippingAddressSchema = z.object({
       message: "Contact number must be valid (10 to 15 digits).",
     }),
 
+  quantity: z.coerce
+    .number({ required_error: "Order product quantity is required." })
+    .min(1, { message: "Quantity Can not be a empty." }),
   address: z.object({
     street: z
       .string({ required_error: "Street address is required." })

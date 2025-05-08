@@ -18,16 +18,14 @@ export default function useGetCartItems() {
         id: cart?._id,
         name: cart?.product?.name,
         thumbnail: cart?.product?.thumbnail,
-        total: cart.totalPrice,
-        quantity: cart.quantity,
+        price: cart?.product?.discount?.discountPrice || cart?.product?.price,
       }));
     } else if (!user && carts.length) {
       return carts.map((cart: ICartItemLocal) => ({
         id: cart.id,
         name: cart?.name,
         thumbnail: cart.thumbnail,
-        total: cart.totalPrice,
-        quantity: cart.quantity,
+        price: cart.price,
       }));
     } else {
       return undefined;

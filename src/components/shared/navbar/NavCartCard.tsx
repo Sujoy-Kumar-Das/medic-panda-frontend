@@ -1,6 +1,7 @@
 import { IModifiedCartData } from "@/types";
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
 import RemoveCartItemButton from "./RemoveCartItemButton";
+import NavCheckoutButton from "./NavCheckoutButton";
 
 interface NavCartCardProps {
   cart: IModifiedCartData;
@@ -8,8 +9,7 @@ interface NavCartCardProps {
 }
 
 export default function NavCartCard({ cart, onClose }: NavCartCardProps) {
-  const { name, thumbnail, total, id, quantity } = cart;
-
+  const { name, thumbnail, id, price } = cart;
   return (
     <Stack
       direction="row"
@@ -28,15 +28,22 @@ export default function NavCartCard({ cart, onClose }: NavCartCardProps) {
           <Typography variant="subtitle1" fontWeight={500} sx={{ mb: 0.5 }}>
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-            ${total.toFixed(2)}
-          </Typography>
+
           <Typography variant="body2" color="text.secondary">
-            Quantity: {quantity}
+            Price: ${Number(price).toFixed(2)}
           </Typography>
         </Box>
       </Stack>
-      <RemoveCartItemButton id={id} onClose={onClose} />
+
+      <Stack
+        direction={"row"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        gap={1}
+      >
+        <RemoveCartItemButton id={id} onClose={onClose} />
+        <NavCheckoutButton id={id} onClose={onClose} />
+      </Stack>
     </Stack>
   );
 }

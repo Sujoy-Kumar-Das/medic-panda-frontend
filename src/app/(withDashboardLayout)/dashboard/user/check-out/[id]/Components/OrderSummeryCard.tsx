@@ -1,21 +1,21 @@
 "use client";
+import useUpdateFieldQuantityValue from "@/hooks/useUpdateFieldQuantityValue";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, CardHeader, Divider } from "@mui/material";
+import OrderItemPerUnitPrice from "./OrderItemPerUnitPrice";
+import OrderProductTotalPrice from "./OrderProductTotalPrice";
+import OrderQuantity from "./OrderQuantity";
+
 export default function OrderSummeryCard({ orderItem }) {
+  const { value, handleDecrease, handleIncrease, handleChange } =
+    useUpdateFieldQuantityValue({ fieldName: "quantity" });
+
+  const discountPrice = orderItem?.product?.discount?.discountPrice;
+  const price = orderItem?.product?.price;
+
   return (
     <Card
-      sx={{
-        p: 3,
-        mb: 4,
-        boxShadow: 0,
-        backgroundColor: "background.default",
-      }}
+      sx={{ p: 3, mb: 4, boxShadow: 0, backgroundColor: "background.default" }}
     >
       <CardHeader
         avatar={<ShoppingCartIcon color="secondary" />}
@@ -27,29 +27,24 @@ export default function OrderSummeryCard({ orderItem }) {
         }}
       />
       <CardContent>
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: 500 }}
-          color={"secondary"}
-        >
-          Quantity:{" "}
-          {`${orderItem?.quantity} pice${orderItem?.quantity > 1 ? "'s" : ""}`}
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: 500 }}
-          color={"secondary"}
-        >
-          Price: ${Number(orderItem?.product?.price).toFixed(2)}
-        </Typography>
+        {/* order quantity input field */}
+        <OrderQuantity
+          onChange={handleChange}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+          quantity={value}
+        />
+
+        {/* order product per unit price */}
+        <OrderItemPerUnitPrice price={price} discountPrice={discountPrice} />
         <Divider sx={{ my: 2 }} />
-        <Typography
-          variant="h6"
-          sx={{ fontWeight: "bold" }}
-          color={"secondary"}
-        >
-          Total: ${Number(orderItem?.totalPrice).toFixed(2)}
-        </Typography>
+
+        {/* total price  */}
+        <OrderProductTotalPrice
+          price={price}
+          discountPrice={discountPrice}
+          quantity={value}
+        />
       </CardContent>
     </Card>
   );

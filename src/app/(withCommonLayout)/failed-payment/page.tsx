@@ -1,40 +1,16 @@
 "use client";
-import { usePaymentNowMutation } from "@/redux/api";
-import { IGenericErrorResponse } from "@/types";
+import usePayment from "@/hooks/usePayment";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Container, Typography } from "@mui/material";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function PaymentFailed() {
-  const [
-    paymentNow,
-    { isLoading, isError, error, isSuccess, data: paymentData },
-  ] = usePaymentNowMutation();
+  const { handlerFunc, isLoading } = usePayment();
 
-  const router = useRouter();
   const params = useSearchParams();
   const id = params.get("id") || "";
-
-  const handleRetryPayment = async () => {
-    if (id) {
-      await paymentNow(id);
-    }
-  };
-
-  const handleContactSupport = () => {
-    router.push("/contact");
-  };
-
-  // manage payment handler state;
-  useEffect(() => {
-    if (isSuccess) {
-      router.replace(paymentData.paymentUrl);
-    } else if (isError) {
-      toast.error((error as IGenericErrorResponse).message);
-    }
-  }, [paymentData, isSuccess, isError, error, router]);
 
   return (
     <Box>
@@ -50,10 +26,16 @@ export default function PaymentFailed() {
           </Typography>
 
           <Box display="flex" gap={2} mt={3}>
-            <Button
+            <LoadingButton
               variant="contained"
               color="primary"
-              onClick={handleRetryPayment}
+              onClick={() => handlerFunc(id)}
+              loadingIndicator={
+                <Typography fontSize="0.875rem" fontWeight={500}>
+                  Retrying Your Payment
+                </Typography>
+              }
+              loading={isLoading}
               sx={{
                 textTransform: "none",
                 borderRadius: 2,
@@ -62,11 +44,12 @@ export default function PaymentFailed() {
               }}
             >
               Retry Payment
-            </Button>
+            </LoadingButton>
             <Button
               variant="outlined"
               color="primary"
-              onClick={handleContactSupport}
+              component={Link}
+              href="/dashboard/user/orders"
               sx={{
                 textTransform: "none",
                 borderRadius: 2,
@@ -74,7 +57,7 @@ export default function PaymentFailed() {
                 py: 1,
               }}
             >
-              Contact Support
+              Back To Order
             </Button>
           </Box>
         </Box>

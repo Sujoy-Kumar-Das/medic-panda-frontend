@@ -1,6 +1,6 @@
 "use client";
 import AnimateLoadingButton from "@/components/ui/buttons/AnimateLoadingButton";
-import useRemoveCartItem from "@/hooks/useRemoveCartItem";
+import useDeleteCart from "@/hooks/useDeleteCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 
@@ -13,7 +13,7 @@ export default function RemoveCartItemButton({
   id,
   onClose,
 }: IRemoveCartItemButtonProps) {
-  const { handlerFunc, loadingProductId } = useRemoveCartItem(onClose);
+  const { handlerFunc, loadingProductId } = useDeleteCart(onClose);
   const isLoading = loadingProductId === id;
 
   return (

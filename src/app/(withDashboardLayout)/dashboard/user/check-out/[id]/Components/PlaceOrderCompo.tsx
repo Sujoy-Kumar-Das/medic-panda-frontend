@@ -2,7 +2,6 @@
 import image from "@/assets/checkout-image.png";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { useAuth } from "@/hooks/useAuth";
 import usePlaceOrder from "@/hooks/usePlaceOrder";
 import useUserDefaultValue from "@/hooks/useUserDefaultValue";
 import { orderShippingAddressSchema } from "@/schemas/order.schema";
@@ -25,17 +24,21 @@ import OrderSummeryCard from "./OrderSummeryCard";
 
 export default function PlaceOrderCompo({ data: orderItem }: { data: any }) {
   // place order custom hook
-  const { handlerFunc, isLoading } = usePlaceOrder({ orderItem });
-
-  // get the user info
-  const { user } = useAuth();
+  const { handlerFunc, isLoading } = usePlaceOrder({
+    productId: orderItem?.product._id,
+  });
 
   // get shipping address default values
-  const { defaultValues } = useUserDefaultValue(user);
+  const { defaultValues } = useUserDefaultValue();
+
+  const orderDefaultValues = {
+    ...defaultValues,
+    quantity: 1,
+  };
 
   return (
     <>
-      {user && (
+      {defaultValues && (
         <Container maxWidth="lg" sx={{ mb: 6 }}>
           <Box py={3} textAlign="center">
             <Typography
@@ -60,7 +63,7 @@ export default function PlaceOrderCompo({ data: orderItem }: { data: any }) {
 
           <PandaForm
             resolver={zodResolver(orderShippingAddressSchema)}
-            defaultValues={defaultValues}
+            defaultValues={orderDefaultValues}
             onSubmit={handlerFunc}
           >
             <Stack

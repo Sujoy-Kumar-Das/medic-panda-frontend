@@ -1,6 +1,6 @@
 "use client";
 import { useAddToCartMutation } from "@/redux/api/cart/cart.api";
-import { ICartItemLocal, removeProduct } from "@/redux/features/cart.slice";
+import { ICartItemLocal, removeCartProduct } from "@/redux/features/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useCallback } from "react";
 
@@ -24,7 +24,6 @@ export default function useSyncCart() {
         carts.map(async (item: ICartItemLocal) => {
           const cartItem = {
             product: item.id,
-            quantity: item.quantity,
           };
 
           const response = await addToCart(cartItem);
@@ -37,7 +36,7 @@ export default function useSyncCart() {
 
       // remove all id's from the redux store;
       if (removeProductIds.length) {
-        removeProductIds.forEach((id) => dispatch(removeProduct({ id })));
+        removeProductIds.forEach((id) => dispatch(removeCartProduct({ id })));
       }
     },
     [addToCart, carts, dispatch]

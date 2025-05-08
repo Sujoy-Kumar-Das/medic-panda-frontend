@@ -16,7 +16,7 @@ const orderStatusArray = [
     status: OrderStatus.PENDING,
     label: "Pending",
     icon: <PendingIcon />,
-    color: "#F59E0B", // Amber-500
+    color: "#F59E0B",
     message: "Waiting for payment confirmation",
     isActive: false,
   },

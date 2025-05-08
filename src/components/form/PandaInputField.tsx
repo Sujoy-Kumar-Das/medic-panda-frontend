@@ -1,4 +1,5 @@
 import { SxProps, TextField } from "@mui/material";
+import { ChangeEvent } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 type TInputProps = {
@@ -12,6 +13,8 @@ type TInputProps = {
   required?: boolean;
   multiline?: boolean;
   rows?: number;
+  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  value?: string;
 };
 
 const PandaInputField = ({
@@ -25,29 +28,42 @@ const PandaInputField = ({
   placeholder,
   multiline = false,
   rows = 1,
+  onChange,
+  value,
 }: TInputProps) => {
   const { control } = useFormContext();
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field, fieldState: { error } }) => (
-        <TextField
-          {...field}
-          sx={{ ...sx }}
-          label={label}
-          type={type}
-          variant="outlined"
-          size={size}
-          fullWidth={fullWidth}
-          placeholder={placeholder}
-          required={required}
-          error={!!error?.message}
-          helperText={error?.message}
-          multiline={multiline && multiline}
-          rows={rows && rows}
-        />
-      )}
+      render={({ field, fieldState: { error } }) => {
+        const handleChange = (
+          e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          field.onChange(e);
+          onChange?.(e);
+        };
+
+        return (
+          <TextField
+            {...field}
+            onChange={handleChange}
+            value={value ?? field.value}
+            sx={{ ...sx }}
+            label={label}
+            type={type}
+            variant="outlined"
+            size={size}
+            fullWidth={fullWidth}
+            placeholder={placeholder}
+            required={required}
+            error={!!error?.message}
+            helperText={error?.message}
+            multiline={multiline}
+            rows={rows}
+          />
+        );
+      }}
     />
   );
 };

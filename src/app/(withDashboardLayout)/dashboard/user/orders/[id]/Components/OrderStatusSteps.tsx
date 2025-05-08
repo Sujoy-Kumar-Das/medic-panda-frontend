@@ -1,6 +1,4 @@
-import { OrderStatus } from "@/types";
 import generateStepperArray from "@/utils/generateStepperArray";
-import getCurrentOrderStep from "@/utils/getCurrentOrderStep";
 import { Card, Stepper, Typography } from "@mui/material";
 import OrderStep from "./OrderStep";
 import OrderStepMessage from "./OrderStepMessage";
@@ -10,13 +8,11 @@ interface IOrderStepperProps {
 }
 
 const OrderStepper = ({ status }: IOrderStepperProps) => {
-  const ordersStepsArray = generateStepperArray(status);
+  // get the order status details for step card;
+  const { orderStatusUpdatedArray, orderCurrentStatus, currentIndex } =
+    generateStepperArray(status);
 
-  const {
-    index: currentStep,
-    message,
-    color,
-  } = getCurrentOrderStep(status as OrderStatus);
+  const { message, color } = orderCurrentStatus;
 
   return (
     <Card
@@ -35,11 +31,11 @@ const OrderStepper = ({ status }: IOrderStepperProps) => {
 
       {/* Stepper Component */}
       <Stepper
-        activeStep={currentStep}
+        activeStep={currentIndex}
         alternativeLabel
         style={{ marginTop: "20px", marginBottom: "20px" }}
       >
-        {ordersStepsArray.map(({ icon, id, color, label, isActive }) => (
+        {orderStatusUpdatedArray.map(({ icon, id, color, label, isActive }) => (
           <OrderStep
             key={id}
             icon={icon}
