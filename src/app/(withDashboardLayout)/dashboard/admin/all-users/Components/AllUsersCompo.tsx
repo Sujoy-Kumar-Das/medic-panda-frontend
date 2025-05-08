@@ -1,3 +1,4 @@
+import { useAuth } from "@/hooks/useAuth";
 import { IMeta } from "@/types";
 import { IUserData } from "@/types/user.type";
 import { Container } from "@mui/material";
@@ -14,9 +15,10 @@ const AllUsersCompo = ({
   isLoading: boolean;
   isError: boolean;
 }) => {
+  const { user } = useAuth();
   return (
     <Container>
-      <AllUsersHeader />
+      <AllUsersHeader role={user?.role} />
       <AllUsersSearchResultHeader />
       <AllUsersDataGrid
         users={data?.data}

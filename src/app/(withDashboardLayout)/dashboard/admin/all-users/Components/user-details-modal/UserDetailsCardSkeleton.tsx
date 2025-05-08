@@ -10,7 +10,7 @@ const UserDetailsCardSkeleton = () => {
         width: "100%",
         maxWidth: 500,
         borderRadius: 2,
-        boxShadow: 3,
+        boxShadow: 0,
         backgroundColor: "#f9f9f9",
         height: "auto",
       }}

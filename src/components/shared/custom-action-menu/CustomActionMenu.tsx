@@ -4,7 +4,7 @@ import { IconButton, Menu, Stack } from "@mui/material";
 import { Dispatch, MouseEvent, ReactElement, SetStateAction } from "react";
 import CustomActionMenuItem from "./CustomActionMenuItem";
 
-interface IMenuItem {
+export interface IMenuItem {
   label: string;
   icon: ReactElement;
   onClick: () => void;

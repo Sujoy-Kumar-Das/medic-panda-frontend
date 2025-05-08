@@ -12,7 +12,7 @@ const commonPrivateRoutes = ["/dashboard", "/dashboard/security"];
 const roleBasedPrivateRoutes = {
   USER: [/^\/dashboard\/user/],
   ADMIN: [/^\/dashboard\/admin/],
-  SUPER_ADMIN: [/^\/dashboard\/admin/],
+  SUPERADMIN: [/^\/dashboard\/admin/],
 };
 
 // This function can be marked `async` if using `await` inside
@@ -48,8 +48,20 @@ export function middleware(request: NextRequest) {
     ? (decodedData.role as string).toUpperCase()
     : null;
 
+  console.log({ role, pathname });
+
+  if (pathname.startsWith("/dashboard/superAdmin")) {
+    if (role === "SUPERADMIN") {
+      const redirectUrl = new URL("/dashboard/admin", request.url);
+      return NextResponse.redirect(redirectUrl);
+    } else {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
   if (role && roleBasedPrivateRoutes[role as Role]) {
     const routes = roleBasedPrivateRoutes[role as Role];
+
     if (routes.some((route) => pathname.match(route))) {
       return NextResponse.next();
     }

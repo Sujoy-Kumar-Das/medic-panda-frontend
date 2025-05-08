@@ -1,5 +1,4 @@
 import CustomDataGrid from "@/components/CustomDataGrid/CustomDataGrid";
-import { IUserData } from "@/types/user.type";
 import { UsersColumns } from "./users.columns";
 
 export default function AllUsersDataGrid({
@@ -7,7 +6,7 @@ export default function AllUsersDataGrid({
   isLoading,
   isError,
 }: {
-  users: IUserData[];
+  users: any[];
   isLoading: boolean;
   isError: boolean;
 }) {

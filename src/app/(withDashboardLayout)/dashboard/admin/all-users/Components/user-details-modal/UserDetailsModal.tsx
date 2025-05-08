@@ -1,6 +1,5 @@
 import CustomModal from "@/components/modal/customModal/CustomModal";
 import { useGetSingleUserQuery } from "@/redux/api";
-import { Typography } from "@mui/material";
 import UserDetailCloseButton from "./UserDetailCloseButton";
 import UserDetailsCard from "./UserDetailsCard";
 import UserDetailsCardSkeleton from "./UserDetailsCardSkeleton";
@@ -27,17 +26,6 @@ export default function UserDetailsModal({
 
   return (
     <CustomModal open={open} onClose={onModalClose}>
-      {/* Modal Title */}
-      <Typography
-        variant="h5"
-        color="text.primary"
-        fontWeight="bold"
-        textAlign={"center"}
-        sx={{ mb: 2 }}
-      >
-        User Details
-      </Typography>
-
       {/* UserDetailsCard */}
       {isLoading ? (
         <UserDetailsCardSkeleton />

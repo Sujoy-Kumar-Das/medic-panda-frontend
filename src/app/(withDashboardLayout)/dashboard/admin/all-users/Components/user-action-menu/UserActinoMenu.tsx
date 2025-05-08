@@ -1,4 +1,8 @@
-import CustomActionMenu from "@/components/shared/custom-action-menu/CustomActionMenu";
+import CustomActionMenu, {
+  IMenuItem,
+} from "@/components/shared/custom-action-menu/CustomActionMenu";
+import { USER_ROLE } from "@/constants/user.role";
+import { useAuth } from "@/hooks/useAuth";
 import useToggleState from "@/hooks/useToggleState";
 import { KeyOff } from "@mui/icons-material";
 import BlockIcon from "@mui/icons-material/Block";
@@ -31,28 +35,35 @@ const UserActionMenu = ({
     isBlocked ? unblockUserModal.onOpen() : blockUserModal.onOpen();
   };
 
+  const { user } = useAuth();
+
+  const isAccessible =
+    user?.role.toUpperCase() === USER_ROLE.superAdmin.toUpperCase();
+
   return (
     <>
       <CustomActionMenu
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
-        items={[
-          {
-            icon: <VisibilityIcon />,
-            label: "Details",
-            onClick: userDetailModal.onOpen,
-          },
-          {
-            icon: isBlocked ? <KeyOff /> : <BlockIcon />,
-            label: isBlocked ? `Unblock` : `Block`,
-            onClick: blockHandler,
-          },
-          {
-            icon: <DeleteIcon />,
-            label: "Delete",
-            onClick: deleteUserModal.onOpen,
-          },
-        ]}
+        items={
+          [
+            {
+              icon: <VisibilityIcon />,
+              label: "Details",
+              onClick: userDetailModal.onOpen,
+            },
+            isAccessible && {
+              icon: isBlocked ? <KeyOff /> : <BlockIcon />,
+              label: isBlocked ? `Unblock` : `Block`,
+              onClick: blockHandler,
+            },
+            isAccessible && {
+              icon: <DeleteIcon />,
+              label: "Delete",
+              onClick: deleteUserModal.onOpen,
+            },
+          ].filter(Boolean) as IMenuItem[]
+        }
       />
 
       {/* Modals using useToggleState */}

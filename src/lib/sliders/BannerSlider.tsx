@@ -1,5 +1,6 @@
 "use client";
 import BannerSliderCard from "@/components/home/BannerSliderCard";
+import { useAuth } from "@/hooks/useAuth";
 import { IProduct } from "@/types";
 import { useState } from "react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";

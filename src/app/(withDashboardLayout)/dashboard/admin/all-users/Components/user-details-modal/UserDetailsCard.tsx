@@ -25,8 +25,8 @@ const UserDetailsCard = ({ user }: UserDetailsCardProps) => {
         p: 3,
         width: "100%",
         maxWidth: 500,
-        borderRadius: 2,
         height: "auto",
+        boxShadow: 0,
       }}
     >
       {/* User Image */}
