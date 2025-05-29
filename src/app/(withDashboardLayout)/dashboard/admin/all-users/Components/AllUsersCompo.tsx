@@ -1,25 +1,23 @@
 import { useAuth } from "@/hooks/useAuth";
 import { IMeta } from "@/types";
-import { IUserData } from "@/types/user.type";
+import { IUserRoles } from "@/types/user.role.type";
 import { Container } from "@mui/material";
 import AllUsersDataGrid from "./AllUsersDataGrid";
 import AllUsersHeader from "./AllUsersHeader";
-import AllUsersSearchResultHeader from "./AllUsersSearchResultHeader";
 
 const AllUsersCompo = ({
   data,
   isLoading,
   isError,
 }: {
-  data: { meta: IMeta; data: IUserData[] };
+  data: { meta: IMeta; data: any[] };
   isLoading: boolean;
   isError: boolean;
 }) => {
   const { user } = useAuth();
   return (
     <Container>
-      <AllUsersHeader role={user?.role} />
-      <AllUsersSearchResultHeader />
+      <AllUsersHeader role={user?.role as IUserRoles} />
       <AllUsersDataGrid
         users={data?.data}
         isLoading={isLoading}

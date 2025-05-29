@@ -1,4 +1,4 @@
-import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
+import DeleteModal from "@/components/modal/warning-modal/WarningModal";
 import CancelButton from "@/components/ui/buttons/CancelButton";
 import CategoryDeleteButton from "./CategoryDeleteButton";
 

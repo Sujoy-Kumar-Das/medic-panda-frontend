@@ -24,7 +24,7 @@ export default function CancelButton({
   return (
     <Button
       variant="outlined"
-      color="secondary"
+      color="warning"
       onClick={handleCancel}
       sx={{
         width: fullWidth ? "100%" : "auto",

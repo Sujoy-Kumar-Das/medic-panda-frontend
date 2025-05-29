@@ -16,7 +16,6 @@ export default function CategoryDataGrid({
       rows={categories}
       columns={CategoryColumns}
       loading={isLoading}
-      noDataMessage="No Category Found."
       error={isError}
     />
   );

@@ -15,6 +15,7 @@ export default function CategoryCompo({
   return (
     <Container sx={{ pb: 4 }}>
       <CategoryHeader />
+
       <CategoryDataGrid
         categories={data}
         isLoading={isLoading}

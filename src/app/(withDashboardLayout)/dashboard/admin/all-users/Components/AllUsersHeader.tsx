@@ -1,7 +1,7 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
 import { IUserRoles } from "@/types/user.role.type";
 import { Box } from "@mui/material";
-import OpenAddAdminModalButton from "./add-admin-modal/OpenAddAdminModalButton";
+import OpenAddAdminModalButton from "./modals/add-admin-modal/OpenAddAdminModalButton";
 import {
   allUsersFilterItems,
   allUsersShortcutFilterItems,

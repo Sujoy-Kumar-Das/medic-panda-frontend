@@ -1,4 +1,4 @@
-import DeleteModal from "@/components/modal/delete-modal/DeleteModal";
+import DeleteModal from "@/components/modal/warning-modal/WarningModal";
 import DeleteProductConfirmButton from "./DeleteProductConfirmButton";
 import ProductDeleteCancelButton from "./ProductDeleteCancelButton";
 

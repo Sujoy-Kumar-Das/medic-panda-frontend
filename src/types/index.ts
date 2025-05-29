@@ -5,6 +5,7 @@ export * from "./ICategory.type";
 export * from "./IDashboardItem";
 export * from "./IWithLoadingAndErrorProps";
 export * from "./logout.type";
+export * from "./modal.action.type";
 export * from "./order.type";
 export * from "./product.type";
 export * from "./review.type";

@@ -7,22 +7,15 @@ import UserDetailsCardSkeleton from "./UserDetailsCardSkeleton";
 interface UserDetailsModalProps {
   open: boolean;
   onModalClose: () => void;
-  onClose: () => void;
   userId: string;
 }
 
 export default function UserDetailsModal({
   open,
   onModalClose,
-  onClose,
   userId,
 }: UserDetailsModalProps) {
   const { data, isLoading } = useGetSingleUserQuery({ id: userId });
-
-  const handleClose = () => {
-    onModalClose();
-    onClose();
-  };
 
   return (
     <CustomModal open={open} onClose={onModalClose}>
@@ -35,7 +28,7 @@ export default function UserDetailsModal({
 
       {/* Close Button  */}
 
-      <UserDetailCloseButton onClose={handleClose} />
+      <UserDetailCloseButton onClose={onModalClose} />
     </CustomModal>
   );
 }

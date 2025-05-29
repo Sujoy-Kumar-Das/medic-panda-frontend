@@ -11,7 +11,7 @@ export const CategoryColumns: GridColDef[] = [
     headerAlign: "center",
     align: "center",
     renderCell: (params) => (
-      <Typography fontWeight={600} color="primary" py={1}>
+      <Typography py={1}>
         {params.api.getAllRowIds().indexOf(params.id) + 1}
       </Typography>
     ),
