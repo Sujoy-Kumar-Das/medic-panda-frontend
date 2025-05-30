@@ -10,10 +10,7 @@ export default function AddProductModalButton() {
       <Button onClick={addProductModal.onOpen}>Add Product</Button>
 
       {addProductModal.state && (
-        <AddProductModal
-          open={addProductModal.state}
-          onClose={addProductModal.onClose}
-        />
+        <AddProductModal onClose={addProductModal.onClose} />
       )}
     </>
   );

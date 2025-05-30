@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-export default function useCreateProductHook(onClose: () => void) {
+export default function useCreateProduct(onClose: () => void) {
   const [uploading, setUploading] = useState(false);
   const [createProduct, apiResponse] = useCreateProductMutation();
 

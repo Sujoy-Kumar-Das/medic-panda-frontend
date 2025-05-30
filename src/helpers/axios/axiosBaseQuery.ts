@@ -16,11 +16,12 @@ export const axiosBaseQuery =
       headers?: AxiosRequestConfig["headers"];
       meta?: IMeta;
       contentType?: string;
+      signal?: AbortSignal;
     },
     unknown,
     unknown
   > =>
-  async ({ url, method, data, params, headers, contentType }) => {
+  async ({ url, method, data, params, headers, contentType, signal }) => {
     try {
       const result = await axiosInstance({
         url: baseUrl + url,
@@ -31,6 +32,7 @@ export const axiosBaseQuery =
           ...headers,
           "Content-Type": contentType || "application/json",
         },
+        signal,
       });
       return result;
     } catch (axiosError) {

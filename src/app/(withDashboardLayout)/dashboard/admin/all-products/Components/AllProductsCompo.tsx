@@ -2,7 +2,7 @@ import PaginationCompo from "@/components/shared/PaginationCompo/PaginationCompo
 import { IMeta, IProduct } from "@/types";
 import { Container, Stack } from "@mui/material";
 import ProductsHeader from "./all-product-header/ProductsHeader";
-import ProductsDataGrid from "./product-data-grid/ProductsDataGrid";
+import ProductsDataGrid from "./ProductsDataGrid";
 
 interface IProductsWithMetaData {
   result: IProduct[];
@@ -21,7 +21,7 @@ export default function AllProductsCompo({
   isError,
 }: AllProductsCompoProps) {
   return (
-    <Container sx={{ pb: 2 }}>
+    <Container sx={{ pb: 5 }}>
       {/* Header Section */}
       <ProductsHeader />
 

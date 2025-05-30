@@ -2,7 +2,7 @@
 
 import { useQueryParams } from "@/hooks/useQueryParams";
 import { useGetAllProductsQuery } from "@/redux/api";
-import AllProductsHOC from "./Components/all-product-HOC/AllProductHOC";
+import AllProductsHOC from "./Components/AllProductHOC";
 
 export default function AllProductsPage() {
   const queryParams = useQueryParams();

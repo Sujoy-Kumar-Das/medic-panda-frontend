@@ -1,5 +1,5 @@
 import HandleLoadingErrorAndNoData from "@/components/hoc/HandleLoadingErrorAndNoData";
-import AllProductsCompo from "../AllProductsCompo";
+import AllProductsCompo from "./AllProductsCompo";
 
 const AllProductsHOC = HandleLoadingErrorAndNoData(AllProductsCompo);
 

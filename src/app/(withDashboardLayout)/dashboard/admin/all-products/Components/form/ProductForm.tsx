@@ -1,23 +1,30 @@
+"use client";
 import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import CancelButton from "@/components/ui/buttons/CancelButton";
-import useCreateProductHook from "@/hooks/useCreateProductHook";
-import { createProductValidationSchema } from "@/schemas/product-schema";
+import PandaSelect from "@/components/form/PandaSelect";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import { IProductFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import { Grid } from "@mui/material";
-import AddProductManufacturer from "./AddProductManufacturer";
-import AddProductSelectCategory from "./AddProductSelectCategory";
+import { Button, Grid } from "@mui/material";
 import DiscountForm from "./DiscountForm";
 
-export default function AddProductForm({ onClose }: { onClose: () => void }) {
-  const { handlerFunc, isLoading } = useCreateProductHook(onClose);
-
+export default function ProductForm({
+  onSubmit,
+  onClose,
+  validationSchema,
+  isLoading,
+  type,
+  defaultValues,
+  manufacturer,
+  categories,
+  isDiscountAvailable,
+}: IProductFormProps) {
   return (
     <PandaForm
-      onSubmit={handlerFunc}
-      resolver={zodResolver(createProductValidationSchema)}
+      onSubmit={onSubmit}
+      resolver={zodResolver(validationSchema)}
+      defaultValues={defaultValues}
     >
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12}>
@@ -45,20 +52,31 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
           />
         </Grid>
         <Grid item xs={12}>
-          <AddProductSelectCategory />
+          <PandaSelect
+            name="product.category"
+            items={categories}
+            label="Category"
+          />
         </Grid>
         <Grid item xs={12}>
-          <AddProductManufacturer />
-        </Grid>
-        <Grid item xs={12}>
-          <PandaFileUploader
-            name="product.thumbnail"
-            label="Upload Product Image"
+          <PandaSelect
+            items={manufacturer}
+            label="Manufacturer"
+            name="product.manufacturer"
           />
         </Grid>
 
+        {type === "create" && (
+          <Grid item xs={12}>
+            <PandaFileUploader
+              name="product.thumbnail"
+              label="Upload Product Image"
+            />
+          </Grid>
+        )}
+
         {/* discount form */}
-        <DiscountForm />
+        <DiscountForm isDiscountAvailable={isDiscountAvailable} />
 
         <Grid item xs={12}>
           <PandaInputField
@@ -79,16 +97,17 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
             flexWrap: "wrap",
           }}
         >
-          <CancelButton onClose={onClose}>Cancel</CancelButton>
+          <Button color="warning" onClick={onClose}>
+            Close
+          </Button>
 
-          <LoadingButton
+          <LoaderButton
             type="submit"
-            loading={isLoading}
-            loadingIndicator="Creating Product..."
-            disabled={isLoading}
+            isLoading={isLoading}
+            sxProps={{ minWidth: 200 }}
           >
-            Create Product
-          </LoadingButton>
+            {type === "create" ? "Create" : "Edit"} Product
+          </LoaderButton>
         </Grid>
       </Grid>
     </PandaForm>

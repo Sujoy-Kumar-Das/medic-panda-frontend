@@ -5,7 +5,7 @@ import { Pagination } from "@mui/material";
 export default function PaginationCompo({
   totalPageCount,
 }: {
-  totalPageCount: number;
+  totalPageCount: number | undefined;
 }) {
   const { handlerFunc, currentPage } = usePagination();
 
