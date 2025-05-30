@@ -37,10 +37,9 @@ export default function useAddCategory(onClose: () => void) {
     onClose,
   });
 
-  apiResponse.isLoading = uploading || apiResponse.isLoading;
-
   return {
     handleFunc,
     ...apiResponse,
+    isLoading: apiResponse.isLoading || uploading,
   };
 }

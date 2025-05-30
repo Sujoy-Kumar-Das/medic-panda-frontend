@@ -10,10 +10,7 @@ export default function CategoryModalButton() {
       <Button onClick={addCategoryModal.onOpen}>Add Category</Button>
 
       {addCategoryModal.state && (
-        <AddCategoryModal
-          open={addCategoryModal.state}
-          onClose={addCategoryModal.onClose}
-        />
+        <AddCategoryModal onClose={addCategoryModal.onClose} />
       )}
     </>
   );

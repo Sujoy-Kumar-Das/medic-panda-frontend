@@ -1,5 +1,5 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
-import CategoryModalButton from "./add-category-modal/CategoryModalButton";
+import CategoryModalButton from "./modals/add-category-modal/CategoryModalButton";
 import {
   categoryAllFilterOptions,
   categoryShortcutFilterOptions,

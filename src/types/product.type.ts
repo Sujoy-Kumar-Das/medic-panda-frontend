@@ -1,7 +1,6 @@
-import { FieldValues } from "react-hook-form";
+import { IAddAndEditFormProps } from "./addAndEditFormProps.type";
 import { ICategory } from "./ICategory.type";
 import { IManufacturer } from "./Imanufacturer.type";
-import { AnyZodObject } from "zod";
 
 export interface IDiscount {
   percentage: number;
@@ -45,13 +44,7 @@ interface ISelectItem {
   value: string;
 }
 
-export interface IProductFormProps {
-  onSubmit: (data: FieldValues) => Promise<void>;
-  onClose: () => void;
-  validationSchema: AnyZodObject;
-  isLoading: boolean;
-  type: "create" | "edit";
-  defaultValues: object;
+export interface IProductFormProps extends IAddAndEditFormProps {
   manufacturer: ISelectItem[];
   categories: ISelectItem[];
   isDiscountAvailable: boolean;

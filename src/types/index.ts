@@ -1,3 +1,4 @@
+export * from "./addAndEditFormProps.type";
 export * from "./axios.type";
 export * from "./dashboardStats.type";
 export * from "./ICart.type";

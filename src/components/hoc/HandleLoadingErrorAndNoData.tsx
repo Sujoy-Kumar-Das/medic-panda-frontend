@@ -68,13 +68,7 @@ function HandleLoadingErrorAndNoData<
       );
     }
 
-    return (
-      <Component
-        data={data}
-        isLoading={isLoading || isFetching}
-        isError={isError}
-      />
-    );
+    return <Component data={data} isLoading={isFetching} isError={isError} />;
   };
 }
 

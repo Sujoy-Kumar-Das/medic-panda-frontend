@@ -4,25 +4,16 @@ import { Avatar, Box, Chip, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 
 interface CategoryDetailsModalProps {
-  open: boolean;
-  onModalClose: () => void;
   onClose: () => void;
   category: ICategory;
 }
 
 export default function CategoryDetailsModal({
-  open,
-  onModalClose,
   onClose,
   category,
 }: CategoryDetailsModalProps) {
-  const handleCloseModal = () => {
-    onModalClose();
-    onClose();
-  };
-
   return (
-    <CustomModal open={open} onClose={handleCloseModal}>
+    <CustomModal open onClose={onClose}>
       {/* Centered Box */}
       <Box
         sx={{
@@ -52,7 +43,7 @@ export default function CategoryDetailsModal({
 
           {/* Close Button */}
           <CustomModal.CloseButton
-            onClose={handleCloseModal}
+            onClose={onClose}
             sxProps={{ marginLeft: "auto" }}
           />
         </Box>
