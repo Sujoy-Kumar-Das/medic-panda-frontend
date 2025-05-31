@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import ChangeOrderStatusModalButton from "../change-order-status-modal/ChangeOrderStatusModalButton";
-import OrderDetailsModalButton from "../order-details-modal/OrderDetailsModalButton";
+import ChangeOrderStatusModalButton from "../modals/change-order-status-modal/ChangeOrderStatusModalButton";
+import OrderDetailsModalButton from "../modals/order-details-modal/OrderDetailsModalButton";
 import OrderStatusChip from "./OrderStatusChip";
 
 export const AdminOrderDataColumn: GridColDef<any>[] = [

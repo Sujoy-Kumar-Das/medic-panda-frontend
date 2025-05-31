@@ -16,7 +16,10 @@ export default function OrderHeader() {
         mainHeaderOptions={mainHeaderProps}
         shortcutFilterOptions={{ items: orderShortcutFilterItems }}
         allFilterOptions={{ items: orderAllFilterOptions }}
-        searchbarOptions={{ query: "title", placeholder: "Search By Order ID" }}
+        searchbarOptions={{
+          query: "searchTerm",
+          placeholder: "Search By Order ID",
+        }}
       />
     </Box>
   );

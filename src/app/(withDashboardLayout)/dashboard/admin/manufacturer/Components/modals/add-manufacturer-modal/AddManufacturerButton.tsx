@@ -10,10 +10,7 @@ export default function AddManufacturerButton() {
       <Button onClick={addManufacturerModal.onOpen}>Add Manufacturer</Button>
 
       {addManufacturerModal.state && (
-        <AddManufacturerModal
-          open={addManufacturerModal.state}
-          onClose={addManufacturerModal.onClose}
-        />
+        <AddManufacturerModal onClose={addManufacturerModal.onClose} />
       )}
     </>
   );

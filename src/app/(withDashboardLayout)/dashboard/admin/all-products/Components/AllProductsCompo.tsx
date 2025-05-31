@@ -2,7 +2,7 @@ import PaginationCompo from "@/components/shared/PaginationCompo/PaginationCompo
 import { IMeta, IProduct } from "@/types";
 import { Container, Stack } from "@mui/material";
 import ProductsHeader from "./all-product-header/ProductsHeader";
-import ProductsDataGrid from "./ProductsDataGrid";
+import ProductsDataGrid from "./data-grid/ProductsDataGrid";
 
 interface IProductsWithMetaData {
   result: IProduct[];

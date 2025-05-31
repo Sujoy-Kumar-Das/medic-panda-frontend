@@ -21,7 +21,6 @@ export default function ChangeOrderStatusModalButton({
 
       {changeOrderStatusModal.state && (
         <ChangeOrderStatusModal
-          open={changeOrderStatusModal.state}
           onClose={changeOrderStatusModal.onClose}
           orderId={orderId}
         />

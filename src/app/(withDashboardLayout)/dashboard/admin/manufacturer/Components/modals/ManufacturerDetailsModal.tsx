@@ -3,27 +3,18 @@ import { IManufacturer } from "@/types/Imanufacturer.type";
 import { Grid, Typography } from "@mui/material";
 
 interface ManufacturerDetailsModalProps {
-  open: boolean;
-  onModalClose: () => void;
   onClose: () => void;
   manufacturer: IManufacturer;
 }
 
 export default function ManufacturerDetailsModal({
-  open,
-  onModalClose,
   onClose,
   manufacturer,
 }: ManufacturerDetailsModalProps) {
-  const handleCloseModal = () => {
-    onModalClose();
-    onClose();
-  };
-
   return (
     <FormModal
-      open={open}
-      onClose={handleCloseModal}
+      open
+      onClose={onClose}
       title="Manufacturer Profile"
       subtitle="Overview of the manufacturer’s details and associated products"
     >

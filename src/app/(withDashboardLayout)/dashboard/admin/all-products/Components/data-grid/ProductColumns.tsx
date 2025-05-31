@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import ManufacturerActionMenu from "./manufacturer-action-menu/ManufacturerActionMenu";
-export const ManufacturerColumns: GridColDef<any>[] = [
+import ActionMenu from "./ProductActionMenu";
+export const productColumns: GridColDef<any>[] = [
   {
     field: "index",
     headerName: "Index",
@@ -14,7 +14,7 @@ export const ManufacturerColumns: GridColDef<any>[] = [
   },
   {
     field: "name",
-    headerName: "Company Name",
+    headerName: "Title",
     headerAlign: "center",
     flex: 1,
     minWidth: 150,
@@ -26,27 +26,50 @@ export const ManufacturerColumns: GridColDef<any>[] = [
   },
 
   {
-    field: "contact_number",
-    headerName: "Contact Number",
+    field: "category",
+    headerName: "Category",
     headerAlign: "center",
     flex: 1,
     minWidth: 150,
     renderCell: ({ row }) => (
       <Typography align="center" py={2}>
-        {row.contact}
+        {row.category.name}
       </Typography>
     ),
   },
   {
-    field: "address",
-    headerName: "Address",
+    field: "price",
+    headerName: "Original Price",
     headerAlign: "center",
     flex: 1,
     minWidth: 150,
     renderCell: ({ row }) => (
-      <Typography align="center" py={2} textTransform={"capitalize"}>
-        {row.address.city}-{row.address.zipCode} {row.address.state}
-        {row.address.country}
+      <Typography align="center" py={2}>
+        ${row.price}
+      </Typography>
+    ),
+  },
+  {
+    field: "current price",
+    headerName: "Current Price",
+    headerAlign: "center",
+    flex: 1,
+    minWidth: 150,
+    renderCell: ({ row }) => (
+      <Typography align="center" py={2}>
+        ${row.discount ? row.discount.discountPrice : row.price}
+      </Typography>
+    ),
+  },
+  {
+    field: "discount",
+    headerName: "Discount",
+    headerAlign: "center",
+    flex: 1,
+    minWidth: 150,
+    renderCell: ({ row }) => (
+      <Typography align="center" py={2}>
+        {row.discount ? row.discount.percentage : 0}%
       </Typography>
     ),
   },
@@ -56,6 +79,6 @@ export const ManufacturerColumns: GridColDef<any>[] = [
     flex: 1,
     minWidth: 100,
     headerAlign: "center",
-    renderCell: ({ row }) => <ManufacturerActionMenu manufacturer={row} />,
+    renderCell: ({ row }) => <ActionMenu id={row._id} />,
   },
 ];

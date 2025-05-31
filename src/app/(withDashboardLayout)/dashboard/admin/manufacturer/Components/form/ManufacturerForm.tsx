@@ -1,27 +1,22 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import useAddManufacturer from "@/hooks/useAddManufacturer";
-import { createManufacturerValidationSchema } from "@/schemas/manufacture.schema";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import { IAddAndEditFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import { Grid } from "@mui/material";
-import { FieldValues } from "react-hook-form";
-
-export default function AddManufacturerForm({
+import { Button, Grid } from "@mui/material";
+export default function ManufacturerForm({
+  defaultValues,
+  isLoading,
   onClose,
-}: {
-  onClose: () => void;
-}) {
-  const { handlerFunc, isLoading } = useAddManufacturer(onClose);
-
-  const handleCreateManufacturer = async (data: FieldValues) => {
-    await handlerFunc(data);
-  };
-
+  onSubmit,
+  type,
+  validationSchema,
+}: IAddAndEditFormProps) {
   return (
     <PandaForm
-      onSubmit={handleCreateManufacturer}
-      resolver={zodResolver(createManufacturerValidationSchema)}
+      onSubmit={onSubmit}
+      resolver={zodResolver(validationSchema)}
+      defaultValues={defaultValues}
     >
       <Grid container spacing={3}>
         {/* Manufacturer Name */}
@@ -65,16 +60,17 @@ export default function AddManufacturerForm({
         </Grid>
 
         {/* Submit Button */}
-        <Grid item xs={12}>
-          <LoadingButton
-            loading={isLoading}
-            loadingIndicator="Adding Manufacturer..."
-            fullWidth
-            type="submit"
-            disabled={isLoading}
-          >
-            Add Manufacturer
-          </LoadingButton>
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}
+        >
+          <Button color="warning" onClick={onClose}>
+            Close
+          </Button>
+          <LoaderButton isLoading={isLoading} type="submit">
+            {type === "create" ? "Create" : "Edit"} Manufacturer
+          </LoaderButton>
         </Grid>
       </Grid>
     </PandaForm>

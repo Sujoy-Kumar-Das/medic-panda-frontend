@@ -1,34 +1,29 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaSelect from "@/components/form/PandaSelect";
-import useChangeOrderStatus from "@/hooks/useChangeOrderStatus";
-import { changeOrderStatusSchema } from "@/schemas/order.schema";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
 import { Box } from "@mui/material";
-import { FieldValues } from "react-hook-form";
+import { AnyZodObject } from "zod";
 import { OrderStatusItems } from "./OrderStatusItems";
+import { FieldValues } from "react-hook-form";
 
 interface ChangeOrderStatusFormProps {
   orderId: string;
+  isLoading: boolean;
   onClose: () => void;
+  onSubmit: (data: FieldValues) => Promise<void>;
+  validationSchema: AnyZodObject;
 }
 
 export default function ChangeOrderStatusForm({
   orderId,
   onClose,
+  onSubmit,
+  validationSchema,
+  isLoading,
 }: ChangeOrderStatusFormProps) {
-  const { handlerFunc, isLoading } = useChangeOrderStatus(onClose);
-
-  // Handle form submission
-  const handleSubmit = async (value: FieldValues) => {
-    await handlerFunc(orderId, value);
-  };
-
   return (
-    <PandaForm
-      onSubmit={handleSubmit}
-      resolver={zodResolver(changeOrderStatusSchema)}
-    >
+    <PandaForm onSubmit={onSubmit} resolver={zodResolver(validationSchema)}>
       <Box
         sx={{
           display: "flex",
@@ -46,14 +41,9 @@ export default function ChangeOrderStatusForm({
 
         {/* Submit Button */}
 
-        <LoadingButton
-          loading={isLoading}
-          loadingIndicator="Changing Status"
-          type="submit"
-          disabled={isLoading}
-        >
+        <LoaderButton isLoading={isLoading} type="submit">
           Change
-        </LoadingButton>
+        </LoaderButton>
       </Box>
     </PandaForm>
   );

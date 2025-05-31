@@ -6,7 +6,7 @@ export default async function CategorySection() {
   const { data } = await getAllCategoriesService(6, true);
   return (
     <Container sx={{ py: 10 }}>
-      <CategorySlider categories={data} />
+      <CategorySlider categories={data.result} />
     </Container>
   );
 }

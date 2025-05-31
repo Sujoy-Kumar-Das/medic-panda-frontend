@@ -1,6 +1,6 @@
 import DashboardHeaderWithFIlterAndSearchBar from "@/components/shared/dashboard-hearder-with-filter-and-searchbar/DashboardHeaderWithFIlterAndSearchBar";
 import randomUID from "@/utils/randomId";
-import AddManufacturerButton from "./add-manufacturer-modal/AddManufacturerButton";
+import AddManufacturerButton from "./modals/add-manufacturer-modal/AddManufacturerButton";
 
 export default function ManufacturerHeader() {
   const mainHeaderOptions = {
@@ -20,7 +20,7 @@ export default function ManufacturerHeader() {
       mainHeaderOptions={mainHeaderOptions}
       shortcutFilterOptions={{ items: shortcutFilterOptions }}
       allFilterOptions={{ items: shortcutFilterOptions }}
-      searchbarOptions={{ query: "" }}
+      searchbarOptions={{ query: "searchTerm" }}
     />
   );
 }

@@ -24,7 +24,6 @@ export default function OrderDetailsModalButton({
 
       {orderDetailsModal.state && (
         <OrderDetailsModal
-          open={orderDetailsModal.state}
           onClose={orderDetailsModal.onClose}
           orderId={orderId}
         />

@@ -1,16 +1,14 @@
 "use client";
 import { useGetSingleOrderForAdminQuery } from "@/redux/api";
-import { IModifiedOrderData } from "@/types/IOrderDetails";
 import formatOrderDate from "@/utils/format.order.date";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
 export default function useOrderDataByAdmin(id: string) {
   const { data, isLoading } = useGetSingleOrderForAdminQuery(id);
-  const [orderData, setOrderData] = useState<IModifiedOrderData | null>(null);
 
-  useEffect(() => {
+  const orderData = useMemo(() => {
     if (data?.order) {
-      setOrderData({
+      return {
         orderId: data.order._id ?? "N/A",
         status: data.order.status ?? "N/A",
         createdAt: formatOrderDate(data.order.createdAt) ?? "N/A",
@@ -46,7 +44,7 @@ export default function useOrderDataByAdmin(id: string) {
           quantity: data?.order?.quantity ?? 0,
           thumbnail: data?.order?.product.thumbnail ?? "",
         },
-      });
+      };
     }
   }, [data]);
 
