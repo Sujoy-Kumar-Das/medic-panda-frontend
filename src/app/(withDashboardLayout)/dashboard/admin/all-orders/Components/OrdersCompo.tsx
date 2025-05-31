@@ -1,5 +1,5 @@
 import { IOrder } from "@/types";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import OrderHeader from "./OrderHeader";
 import AdminOrderDataGrid from "./admin-order-data-grid/AdminOrderDataGrid";
 
@@ -17,11 +17,14 @@ export default function OrdersCompo({
   return (
     <Container>
       <OrderHeader />
-      <AdminOrderDataGrid
-        orders={data}
-        isLoading={isLoading}
-        isError={isError}
-      />
+
+      <Box sx={{ mt: 3, overflow: "auto" }}>
+        <AdminOrderDataGrid
+          orders={data}
+          isLoading={isLoading}
+          isError={isError}
+        />
+      </Box>
     </Container>
   );
 }

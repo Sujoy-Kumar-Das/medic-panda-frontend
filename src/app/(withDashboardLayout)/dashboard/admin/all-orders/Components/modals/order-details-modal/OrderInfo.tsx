@@ -1,28 +1,38 @@
-import { IModifiedOrderData } from "@/types/IOrderDetails";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import Image from "next/image";
 
-export default function OrderInfo({
-  orderData,
-}: {
-  orderData: IModifiedOrderData;
-}) {
+interface OrderInfoProps {
+  title: string;
+  items: {
+    id: string;
+    title: string;
+    value: String;
+  }[];
+}
+
+export default function OrderInfo({ title, items }: OrderInfoProps) {
   return (
-    <>
+    <Box>
       <Typography variant="h6" fontWeight="bold" gutterBottom>
-        Order Details
+        {title}
       </Typography>
-      <Typography variant="body2">
-        <strong>Order ID:</strong> {orderData?.orderId ?? "N/A"}
-      </Typography>
-      <Typography variant="body2">
-        <strong>Status:</strong> {orderData?.status ?? "N/A"}
-      </Typography>
-      <Typography variant="body2">
-        <strong>Order Date:</strong> {orderData?.createdAt ?? "N/A"}
-      </Typography>
-      <Typography variant="body2">
-        <strong>Shifting Address:</strong> {orderData?.shiftingAddress ?? "N/A"}
-      </Typography>
-    </>
+
+      {items.map((item) => (
+        <>
+          {item.title === "thumbnail" ? (
+            <Image
+              src={item.value as string}
+              alt={item.title}
+              height={50}
+              width={50}
+            />
+          ) : (
+            <Typography key={item.id} variant="body2">
+              <strong>{item.title}:</strong> {item.value ?? "N/A"}
+            </Typography>
+          )}
+        </>
+      ))}
+    </Box>
   );
 }

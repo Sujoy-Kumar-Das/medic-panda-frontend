@@ -1,17 +1,20 @@
 "use client";
 import CategoriesSkeleton from "@/components/skeleton/CategoriesSkeleton";
-import { useGetAllCategoriesQuery } from "@/redux/api/category/category.api";
 import { ICategory } from "@/types";
 import { Divider, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
-const ProductCategory = ({
-  handleCloseCategoryModal,
-}: {
-  handleCloseCategoryModal?: () => void;
-}) => {
-  const { data: categories, isLoading } = useGetAllCategoriesQuery(undefined);
+interface ProductCategoryProps {
+  onClose?: () => void;
+  categories: ICategory[];
+  isLoading: boolean;
+}
 
+const ProductCategory = ({
+  onClose,
+  categories,
+  isLoading,
+}: ProductCategoryProps) => {
   return (
     <>
       {" "}
@@ -38,11 +41,11 @@ const ProductCategory = ({
                   color: "primary.main",
                 },
               }}
-              onClick={handleCloseCategoryModal}
+              onClick={onClose}
             >
               All
             </Typography>
-            {categories?.map((item: ICategory) => (
+            {categories.map((item: ICategory) => (
               <Typography
                 key={item._id}
                 component={Link}
@@ -58,7 +61,7 @@ const ProductCategory = ({
                     color: "primary.main",
                   },
                 }}
-                onClick={handleCloseCategoryModal}
+                onClick={onClose && onClose}
               >
                 {item.name}
               </Typography>

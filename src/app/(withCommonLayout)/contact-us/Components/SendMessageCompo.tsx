@@ -14,47 +14,70 @@ export default function SendMessageCompo() {
     <Card
       sx={{
         backgroundColor: "background.paper",
-        boxShadow: 3,
-        p: 4,
-        flexGrow: 1,
-        borderRadius: 2,
+        p: { xs: 3, md: 4 },
+        height: "100%",
+        "&:hover": {},
+        transition: "all 0.3s ease",
       }}
     >
       <Typography
         variant="h5"
-        sx={{ mb: 3, color: "text.primary", fontWeight: "bold" }}
+        sx={{
+          mb: 3,
+          color: "text.primary",
+          fontWeight: 700,
+          fontSize: { xs: "1.5rem", md: "1.75rem" },
+        }}
       >
         Send Us a Message
       </Typography>
       <PandaForm onSubmit={handleContactUs}>
-        <Stack direction={"column"} gap={3}>
-          <PandaInputField name="name" fullWidth type="text" label="Name" />
-          <PandaInputField name="email" type="email" fullWidth label="Email" />
+        <Stack direction={"column"} spacing={3}>
+          <PandaInputField
+            name="name"
+            fullWidth
+            type="text"
+            label="Full Name"
+            size="small"
+          />
+          <PandaInputField
+            name="email"
+            type="email"
+            fullWidth
+            label="Email Address"
+            size="small"
+          />
           <PandaInputField
             name="subject"
             fullWidth
             label="Subject"
             type="text"
+            size="small"
           />
           <PandaInputField
             name="message"
             fullWidth
-            label="Message"
+            label="Your Message"
             type="text"
             multiline
-            rows={4}
+            rows={5}
+            size="small"
           />
           <Button
             variant="contained"
             endIcon={<SendIcon />}
-            type="submit" // Ensure the button submits the form
+            type="submit"
             sx={{
-              backgroundColor: "primary.main",
+              py: 1.5,
+              px: 4,
+              fontWeight: 600,
+              fontSize: "1rem",
+              textTransform: "capitalize",
+              alignSelf: { xs: "stretch", sm: "flex-start" },
               "&:hover": {
-                backgroundColor: "primary.dark",
+                transform: "translateY(-2px)",
               },
-              color: "#fff",
-              borderRadius: 2,
+              transition: "all 0.3s ease",
             }}
           >
             Send Message

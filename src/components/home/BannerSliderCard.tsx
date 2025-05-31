@@ -2,30 +2,17 @@ import AddToCartButton from "@/components/ui/buttons/AddToCartButton";
 import { title, titleChildren } from "@/lib/framer-motion/homeAnimation";
 import { IProduct } from "@/types";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function BannerSliderCard({
   item,
-  index,
-  sliderIndex,
+  isActive,
 }: {
   item: IProduct;
-  index: number;
-  sliderIndex: number;
+  isActive: boolean;
 }) {
-  const controls = useAnimation();
-
-  useEffect(() => {
-    if (sliderIndex === index) {
-      controls.start("visible");
-    } else {
-      controls.start("hidden");
-    }
-  }, [sliderIndex, index, controls]);
-
   return (
     <Container sx={{ height: "90vh" }}>
       <Box
@@ -52,7 +39,7 @@ export default function BannerSliderCard({
           component={motion.div}
           variants={title}
           initial="hidden"
-          animate={controls}
+          animate={isActive ? "visible" : "hidden"}
         >
           <Typography
             variant="h3"
@@ -66,7 +53,9 @@ export default function BannerSliderCard({
           </Typography>
 
           <Stack
-            direction="row"
+            direction={"row"}
+            alignItems={"center"}
+            justifyContent={{ xs: "center", md: "flex-start" }}
             gap={1}
             component={motion.div}
             variants={titleChildren}
@@ -80,6 +69,7 @@ export default function BannerSliderCard({
                   ? "line-through"
                   : "none",
                 fontSize: 20,
+                textAlign: { xs: "center", md: "start" },
               }}
             >
               ${item.price}
@@ -91,7 +81,7 @@ export default function BannerSliderCard({
                 sx={{
                   fontWeight: "bold",
                   color: "primary.main",
-                  textAlign: "center",
+                  textAlign: { xs: "center", md: "start" },
                   fontSize: 20,
                 }}
               >
@@ -154,32 +144,55 @@ export default function BannerSliderCard({
         <Box
           component={motion.div}
           initial="hidden"
-          animate={controls}
+          animate={isActive ? "visible" : "hidden"}
           variants={{
-            hidden: { opacity: 0, scale: 1.3, rotate: 5 },
-            visible: { opacity: 1, scale: 1, rotate: 0 },
+            hidden: { opacity: 0, scale: 1.1, rotate: 5 },
+            visible: {
+              opacity: 1,
+              scale: 1,
+              rotate: 0,
+              transition: {
+                duration: 0.7,
+                ease: [0.16, 1, 0.3, 1],
+                delay: 0.1,
+              },
+            },
           }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          sx={{
+            width: { xs: "100%", lg: "50%" },
+            maxWidth: 600,
+            height: { xs: 300, sm: 400, md: 500 },
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
           <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              width: { xs: "100%", md: "50%" },
-              maxWidth: 500,
-              height: 500,
-            }}
             component={motion.div}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            animate={{
+              opacity: 1,
+              transition: { duration: 0.5, delay: 0.3 },
+            }}
+            sx={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+              borderRadius: { xs: 2, md: 4 },
+              overflow: "hidden",
+            }}
           >
             <Image
               src={item.thumbnail}
-              width={500}
-              height={500}
-              style={{ objectFit: "cover" }}
+              fill
+              style={{
+                objectFit: "contain",
+                objectPosition: "center",
+              }}
               alt={`${item.name} image`}
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
             />
           </Box>
         </Box>

@@ -1,15 +1,13 @@
 import { IModifiedOrderData } from "@/types/IOrderDetails";
 import transformObjectToArrayOfObject from "@/utils/transformObjectToArrayOfObject";
 import { Box, Divider } from "@mui/material";
-import OrderInfo from "../../OrderInfo";
+import OrderInfo from "./OrderInfo";
 
 export default function OrderDetailsCompo({
   orderData,
 }: {
   orderData: IModifiedOrderData;
 }) {
-  // console.log(orderData);
-
   const orderDetails = [
     { id: crypto.randomUUID(), title: "Order ID", value: orderData.orderId },
     { id: crypto.randomUUID(), title: "Order Status", value: orderData.status },

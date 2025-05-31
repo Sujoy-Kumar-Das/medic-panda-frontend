@@ -2,8 +2,8 @@ import { IModifiedOrderData } from "@/types/IOrderDetails";
 
 import FormModal from "@/components/modal/FormModal/FormModal";
 import useOrderDataByAdmin from "@/hooks/useOrderDataByAdmin";
-import OrderDetailsCompo from "./OrderDetailsCompo";
 import OrderDetailsSkeleton from "./OrderDetailsSkeleton";
+import OrderDetailsCompo from "./OrderDetailsCompo";
 
 interface OrderDetailsModalProps {
   onClose: () => void;

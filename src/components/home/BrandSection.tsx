@@ -5,6 +5,8 @@ import { Box, Container, Typography } from "@mui/material";
 export default async function BrandSection() {
   const manufacturers = await getAllManufactureService(6);
 
+  console.log({ manufacturers });
+
   return (
     <Box>
       <Container sx={{ py: 10 }}>
@@ -30,7 +32,7 @@ export default async function BrandSection() {
           </Typography>
         </Box>
 
-        <ManufacturerSlider data={manufacturers?.data} />
+        <ManufacturerSlider data={manufacturers?.data?.result} />
       </Container>
     </Box>
   );

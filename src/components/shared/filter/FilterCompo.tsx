@@ -31,6 +31,13 @@ export default function FilterCompo({
     <Select
       value={selectedItem?.id || ""}
       onChange={filteredDataHandler}
+      fullWidth
+      displayEmpty
+      renderValue={(selected) => {
+        if (!selected) return placeholder || "Select A Item";
+        const selectedItem = items.find((item) => item.id === selected);
+        return selectedItem ? selectedItem.title : "Select a filter";
+      }}
       sx={{
         ...sx,
         "& .MuiOutlinedInput-notchedOutline": {
@@ -43,15 +50,9 @@ export default function FilterCompo({
           border: "none",
         },
       }}
-      displayEmpty
-      renderValue={(selected) => {
-        if (!selected) return placeholder || "Select A Item";
-        const selectedItem = items.find((item) => item.id === selected);
-        return selectedItem ? selectedItem.title : "Select a filter";
-      }}
     >
       {items.map((item) => (
-        <MenuItem key={item.id} value={item.id} sx={{ bgcolor: "inherit" }}>
+        <MenuItem key={item.id} value={item.id}>
           {item.title}
         </MenuItem>
       ))}

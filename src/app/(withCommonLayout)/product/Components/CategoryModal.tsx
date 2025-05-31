@@ -1,41 +1,29 @@
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { Box } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { useGetAllCategoriesQuery } from "@/redux/api";
+import { Close } from "@mui/icons-material";
+import { Box, IconButton } from "@mui/material";
 import ProductCategory from "./ProductCategory";
 
 interface ICategoryModalProps {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
-export default function CategoryModal({ open, setOpen }: ICategoryModalProps) {
-  const handleCloseCategoryModal = () => {
-    setOpen((prev) => !prev);
-  };
+export default function CategoryModal({ onClose }: ICategoryModalProps) {
+  const { data, isLoading } = useGetAllCategoriesQuery(undefined);
   return (
-    <CustomModal open={open} setOpen={setOpen} closeBtn={false}>
-      <Box
-        sx={{
-          display: { xs: "flex", md: "none" },
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
+    <CustomModal open onClose={onClose} sxProps={{ textAlign: "center" }}>
+      <Box sx={{ display: { xs: "block", md: "none" } }}>
+        <IconButton
+          onClick={onClose}
+          sx={{ position: "absolute", top: 8, right: 8 }}
         >
-          <ProductCategory
-            handleCloseCategoryModal={handleCloseCategoryModal}
-          />
-        </Box>
+          <Close />
+        </IconButton>
+        <ProductCategory
+          categories={data?.result}
+          isLoading={isLoading}
+          onClose={onClose}
+        />
       </Box>
     </CustomModal>
   );

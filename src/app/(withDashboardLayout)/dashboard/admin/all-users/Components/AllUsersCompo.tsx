@@ -1,9 +1,9 @@
 import { useAuth } from "@/hooks/useAuth";
 import { IMeta } from "@/types";
 import { IUserRoles } from "@/types/user.role.type";
-import { Container } from "@mui/material";
-import AllUsersDataGrid from "./AllUsersDataGrid";
+import { Box, Container } from "@mui/material";
 import AllUsersHeader from "./AllUsersHeader";
+import AllUsersDataGrid from "./data-grid/AllUsersDataGrid";
 
 const AllUsersCompo = ({
   data,
@@ -18,11 +18,14 @@ const AllUsersCompo = ({
   return (
     <Container>
       <AllUsersHeader role={user?.role as IUserRoles} />
-      <AllUsersDataGrid
-        users={data?.data}
-        isLoading={isLoading}
-        isError={isError}
-      />
+
+      <Box sx={{ mt: 3, overflow: "auto" }}>
+        <AllUsersDataGrid
+          users={data?.data}
+          isLoading={isLoading}
+          isError={isError}
+        />
+      </Box>
     </Container>
   );
 };

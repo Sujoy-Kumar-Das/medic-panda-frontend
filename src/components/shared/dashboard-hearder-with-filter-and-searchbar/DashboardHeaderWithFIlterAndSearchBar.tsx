@@ -14,7 +14,13 @@ export default function DashboardHeaderWithFIlterAndSearchBar({
     <>
       <DashboardMainHeader {...mainHeaderOptions} />
 
-      <Stack direction={"row"} justifyContent={"space-between"}>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent="space-between"
+        alignItems={{ xs: "stretch", sm: "center" }}
+        spacing={{ xs: 2, sm: 3 }}
+        sx={{ width: "100%", mt: 2 }}
+      >
         <DashboardShortcutFilter items={shortcutFilterOptions.items} />
 
         <DashboardSearchFilter

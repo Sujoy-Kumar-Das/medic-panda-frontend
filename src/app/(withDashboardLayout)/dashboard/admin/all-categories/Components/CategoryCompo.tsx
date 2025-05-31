@@ -1,5 +1,5 @@
 import { ICategory, IMeta } from "@/types";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import CategoryHeader from "./CategoryHeader";
 import CategoryDataGrid from "./category-data-grid/CategoryDataGrid";
 
@@ -18,11 +18,13 @@ export default function CategoryCompo({
     <Container sx={{ pb: 4 }}>
       <CategoryHeader />
 
-      <CategoryDataGrid
-        categories={data?.result}
-        isLoading={isLoading}
-        isError={isError}
-      />
+      <Box sx={{ mt: 3, overflow: "auto" }}>
+        <CategoryDataGrid
+          categories={data?.result}
+          isLoading={isLoading}
+          isError={isError}
+        />
+      </Box>
     </Container>
   );
 }

@@ -6,7 +6,7 @@ export default function useGetAllFilterCategories() {
   const { data, ...apiResponse } = useGetAllCategoriesQuery(undefined);
 
   const items =
-    data?.map((item: ICategory) => ({
+    data?.result?.map((item: ICategory) => ({
       id: item._id,
       title: item.name,
       query: "category",

@@ -1,6 +1,6 @@
 import { IMeta } from "@/types";
 import { IManufacturer } from "@/types/Imanufacturer.type";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import ManufacturerDataGrid from "./ManufacturerDataGrid/ManufacturerDataGrid";
 import ManufacturerHeader from "./ManufacturerHeader";
 
@@ -21,11 +21,14 @@ export default function ManufacturerCompo({
   return (
     <Container sx={{ pb: 3 }}>
       <ManufacturerHeader />
-      <ManufacturerDataGrid
-        manufacturers={data.result}
-        isLoading={isLoading}
-        isError={isError}
-      />
+
+      <Box sx={{ mt: 3, overflow: "auto" }}>
+        <ManufacturerDataGrid
+          manufacturers={data.result}
+          isLoading={isLoading}
+          isError={isError}
+        />
+      </Box>
     </Container>
   );
 }

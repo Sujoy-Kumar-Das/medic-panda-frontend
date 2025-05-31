@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
 export default function JoinUsSection() {
@@ -28,37 +28,45 @@ export default function JoinUsSection() {
           how we can support your healthcare needs. Your health is our top
           priority.
         </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            borderRadius: "50px",
-            px: 4,
-            py: 1.5,
-            fontWeight: "bold",
-            textTransform: "none",
-          }}
-          component={Link}
-          href="/contact"
+
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          gap={1}
+          justifyContent={"center"}
+          alignItems={"center"}
         >
-          Contact Us
-        </Button>
-        <Button
-          variant="outlined"
-          size="large"
-          sx={{
-            marginLeft: 2,
-            borderRadius: "50px",
-            px: 4,
-            py: 1.5,
-            fontWeight: "bold",
-            textTransform: "none",
-          }}
-          component={Link}
-          href="/product"
-        >
-          Explore Products
-        </Button>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              borderRadius: "50px",
+              px: 4,
+              py: 1.5,
+              fontWeight: "bold",
+              textTransform: "none",
+            }}
+            component={Link}
+            href="/contact"
+          >
+            Contact Us
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            sx={{
+              marginLeft: 2,
+              borderRadius: "50px",
+              px: 4,
+              py: 1.5,
+              fontWeight: "bold",
+              textTransform: "none",
+            }}
+            component={Link}
+            href="/product"
+          >
+            Explore Products
+          </Button>
+        </Stack>
       </Container>
     </Box>
   );

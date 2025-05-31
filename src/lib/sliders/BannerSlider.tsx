@@ -1,6 +1,5 @@
 "use client";
 import BannerSliderCard from "@/components/home/BannerSliderCard";
-import { useAuth } from "@/hooks/useAuth";
 import { IProduct } from "@/types";
 import { useState } from "react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
@@ -29,7 +28,7 @@ export default function BannerSlider({ data }: { data: IProduct[] }) {
     >
       {data?.map((item, index) => (
         <SwiperSlide key={item._id}>
-          <BannerSliderCard item={item} sliderIndex={swiper} index={index} />
+          <BannerSliderCard item={item} isActive={index === swiper} />
         </SwiperSlide>
       ))}
     </Swiper>

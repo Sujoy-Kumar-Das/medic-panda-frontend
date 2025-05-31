@@ -1,9 +1,9 @@
+import AddToCartButton from "@/components/ui/buttons/AddToCartButton";
 import { getProductDetailsService } from "@/services/actions/product.service";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { Box, Container, Rating, Stack, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import ProductDetailsTab from "./Components/ProductDetailsTab";
-import ProductQuantity from "./Components/ProductQuantity";
-
 const ProductDetailsSlider = dynamic(
   () => import("./Components/ProductDetailsSlider")
 );
@@ -36,7 +36,12 @@ export default async function ProductDetailsPage({
               </Box>
               <Box
                 width={{ xs: "100%", md: "50%" }}
-                sx={{ display: "flex", flexDirection: "column", gap: 1 }}
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  flexDirection: "column",
+                  gap: 1,
+                }}
               >
                 <Typography
                   color={"text.primary"}
@@ -82,7 +87,10 @@ export default async function ProductDetailsPage({
                 >
                   {description}
                 </Typography>
-                <ProductQuantity product={data?.product} />
+
+                <AddToCartButton product={data?.product} iconBtn={false}>
+                  Add To Cart <ShoppingCartCheckoutIcon />
+                </AddToCartButton>
               </Box>
             </Stack>
 

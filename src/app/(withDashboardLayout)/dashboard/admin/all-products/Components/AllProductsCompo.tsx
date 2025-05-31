@@ -1,6 +1,6 @@
 import PaginationCompo from "@/components/shared/PaginationCompo/PaginationCompo";
 import { IMeta, IProduct } from "@/types";
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import ProductsHeader from "./all-product-header/ProductsHeader";
 import ProductsDataGrid from "./data-grid/ProductsDataGrid";
 
@@ -26,11 +26,13 @@ export default function AllProductsCompo({
       <ProductsHeader />
 
       {/* Product Grid Section */}
-      <ProductsDataGrid
-        products={data?.result}
-        isLoading={isLoading}
-        isError={isError}
-      />
+      <Box sx={{ mt: 3, overflow: "auto" }}>
+        <ProductsDataGrid
+          products={data?.result}
+          isLoading={isLoading}
+          isError={isError}
+        />
+      </Box>
 
       {/* Pagination Section */}
       <Stack direction="row" justifyContent="flex-end" mt={6}>

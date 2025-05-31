@@ -23,10 +23,15 @@ export default function AboutSection() {
             borderRadius: 2,
           }}
         >
-          <Stack direction={"row"} justifyContent={"space-around"}>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            justifyContent={{ xs: "center", md: "space-around" }}
+            alignItems={"center"}
+            gap={{ xs: 3, md: 0 }}
+          >
             <Box
               sx={{
-                width: "45%",
+                width: { xs: "90%", md: "45%" },
                 backgroundColor: "rgba(255, 255, 255, 0.2)",
                 borderRadius: 2,
                 backdropFilter: "blur(6px)",
@@ -77,9 +82,10 @@ export default function AboutSection() {
                 Refill Here
               </Typography>
             </Box>
+
             <Box
               sx={{
-                width: "45%",
+                width: { xs: "90%", md: "45%" },
                 backgroundColor: "rgba(255, 255, 255, 0.2)",
                 borderRadius: 2,
                 backdropFilter: "blur(6px)",
@@ -132,6 +138,7 @@ export default function AboutSection() {
             </Box>
           </Stack>
         </Box>
+
         <Box
           sx={{
             bgcolor: "background.default",

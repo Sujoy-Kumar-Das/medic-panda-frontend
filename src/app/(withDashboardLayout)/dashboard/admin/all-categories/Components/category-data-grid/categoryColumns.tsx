@@ -1,7 +1,7 @@
 import formatOrderDate from "@/utils/format.order.date";
 import { Chip, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import CategoryActionMenu from "../category-action-menu/CategoryActionMenu";
+import CategoryActionMenu from "./CategoryActionMenu";
 
 export const CategoryColumns: GridColDef[] = [
   {

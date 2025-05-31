@@ -6,7 +6,9 @@ import CategoryCard from "./Components/CategoryCard";
 export default async function CategoriesPage() {
   const { data } = await getAllCategoriesService();
 
-  const categories = data?.data;
+  const categories = data?.result;
+
+  console.log({ categories });
 
   return (
     <Box sx={{ py: 4 }}>

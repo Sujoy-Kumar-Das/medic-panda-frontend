@@ -1,11 +1,12 @@
 "use client";
+import useToggleState from "@/hooks/useToggleState";
+import { useGetAllCategoriesQuery } from "@/redux/api";
 import { IProduct } from "@/types";
 import { Box, Grid } from "@mui/material";
-import { useState } from "react";
 import CategoryModal from "./CategoryModal";
 import ProductCategory from "./ProductCategory";
-import ProductSearch from "./ProductSearch";
 import Products from "./Products";
+import ProductSearchWithCategoryModalButton from "./ProductSearchWithCategoryModalButton";
 
 interface IProductProps {
   products: IProduct[];
@@ -13,7 +14,8 @@ interface IProductProps {
 }
 
 export default function ProductDrawer({ products, meta }: IProductProps) {
-  const [openCategoryModal, setOpenCategoryModal] = useState(false);
+  const { data, isLoading } = useGetAllCategoriesQuery(undefined);
+  const categoryModal = useToggleState();
 
   return (
     <>
@@ -30,14 +32,21 @@ export default function ProductDrawer({ products, meta }: IProductProps) {
               width: "100%",
             }}
           >
-            <ProductSearch setOpenCategoryModal={setOpenCategoryModal} />
+            {/* product search and category modal */}
+            <ProductSearchWithCategoryModalButton
+              onOpenModal={categoryModal.onOpen}
+            />
 
+            {/* product category for medium devices */}
             <Box
               sx={{
                 display: { xs: "none", md: "block" },
               }}
             >
-              <ProductCategory />
+              <ProductCategory
+                categories={data?.result}
+                isLoading={isLoading}
+              />
             </Box>
           </Box>
         </Grid>
@@ -48,7 +57,7 @@ export default function ProductDrawer({ products, meta }: IProductProps) {
       </Grid>
 
       {/* category modal for mobile */}
-      <CategoryModal open={openCategoryModal} setOpen={setOpenCategoryModal} />
+      {categoryModal.state && <CategoryModal onClose={categoryModal.onClose} />}
     </>
   );
 }

@@ -10,7 +10,6 @@ interface IProductProps {
 }
 
 const Products = ({ products, meta }: IProductProps) => {
-  console.log({ meta, products });
   return (
     <>
       {products?.length ? (

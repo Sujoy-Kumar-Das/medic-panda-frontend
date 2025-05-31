@@ -1,6 +1,6 @@
 "use client";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button, InputBase, Stack, SxProps } from "@mui/material";
+import { IconButton, InputBase, Stack, SxProps } from "@mui/material";
 import { FormEvent } from "react";
 import useSearch from "../../../hooks/useSearch";
 
@@ -25,45 +25,30 @@ export default function SearchBar({
   };
 
   return (
-    <form onSubmit={handleSearch}>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{
-          alignItems: "center",
-          padding: "4px",
-          borderRadius: 1,
-          border: "1px solid #ffff",
-          backgroundColor: "background.default",
-          boxShadow: "none",
-          ...sxProps,
-        }}
-      >
-        <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
-          <InputBase
-            placeholder={placeholder || "Search..."}
-            inputProps={{ "aria-label": query }}
-            sx={{ marginLeft: 1, flex: 1, boxShadow: "none" }}
-            name={query}
-          />
-        </Box>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            backgroundColor: "transparent",
-            boxShadow: "none",
-            color: "text.primary",
-            "&:hover": {
-              bgcolor: "transparent",
-              boxShadow: "none",
-            },
-          }}
-          type="submit"
-        >
-          <SearchIcon />
-        </Button>
-      </Stack>
-    </form>
+    <Stack
+      component="form"
+      onSubmit={handleSearch}
+      direction="row"
+      alignItems="center"
+      spacing={1}
+      sx={{
+        borderRadius: 1,
+        border: "1px solid",
+        borderColor: "divider",
+        backgroundColor: "background.default",
+        px: 1,
+        ...sxProps,
+      }}
+    >
+      <InputBase
+        placeholder={placeholder || "Search..."}
+        inputProps={{ "aria-label": query }}
+        sx={{ flex: 1 }}
+        name={query}
+      />
+      <IconButton type="submit" color="inherit" sx={{ minWidth: 40 }}>
+        <SearchIcon />
+      </IconButton>
+    </Stack>
   );
 }

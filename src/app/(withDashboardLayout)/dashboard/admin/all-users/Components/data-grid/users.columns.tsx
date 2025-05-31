@@ -2,7 +2,7 @@ import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import UserActinMenu from "./user-action-menu/UserActinoMenu";
+import UserActionMenu from "./UserActinoMenu";
 
 export const UsersColumns: GridColDef<any>[] = [
   {
@@ -88,7 +88,7 @@ export const UsersColumns: GridColDef<any>[] = [
     flex: 1,
     minWidth: 120,
     renderCell: ({ row }) => (
-      <UserActinMenu isBlocked={row.isBlocked} id={row._id} />
+      <UserActionMenu isBlocked={row.isBlocked} id={row._id} />
     ),
   },
 ];

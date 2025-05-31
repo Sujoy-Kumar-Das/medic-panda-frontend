@@ -14,9 +14,15 @@ export default function ShortcutFIlterButtons({
     filterItems,
   });
 
-  // todo opurtunity for optimize performance with decrease the event handler using one event handler
   return (
-    <Stack direction="row" alignItems="center" gap={2}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      flexWrap="wrap"
+      rowGap={1}
+      columnGap={1}
+      sx={{ width: "100%", flex: 1 }}
+    >
       {filterItems.map((item) => (
         <Button
           size="small"
@@ -28,14 +34,15 @@ export default function ShortcutFIlterButtons({
             color: isActivePath({ item, searchParams })
               ? "white"
               : "text.primary",
-            boxShadow: "none",
             borderRadius: 2,
+            textTransform: "none",
             transition: "all 0.3s ease",
+            whiteSpace: "nowrap",
+            px: 2,
             "&:hover": {
               bgcolor: isActivePath({ item, searchParams })
                 ? "primary.dark"
                 : "background.paper",
-              boxShadow: "none",
             },
           }}
           onClick={() => applyFilter(item)}

@@ -20,8 +20,6 @@ export default function ChangeOrderStatusModal({
         onSubmit={(data) => handlerFunc(orderId, data)}
         isLoading={isLoading}
         validationSchema={changeOrderStatusSchema}
-        orderId={orderId}
-        onClose={onClose}
       />
     </FormModal>
   );

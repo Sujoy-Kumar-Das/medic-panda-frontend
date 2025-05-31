@@ -8,16 +8,12 @@ import { OrderStatusItems } from "./OrderStatusItems";
 import { FieldValues } from "react-hook-form";
 
 interface ChangeOrderStatusFormProps {
-  orderId: string;
   isLoading: boolean;
-  onClose: () => void;
   onSubmit: (data: FieldValues) => Promise<void>;
   validationSchema: AnyZodObject;
 }
 
 export default function ChangeOrderStatusForm({
-  orderId,
-  onClose,
   onSubmit,
   validationSchema,
   isLoading,

@@ -15,16 +15,23 @@ export default async function PersonalCareSection() {
   return (
     <>
       {products?.length && (
-        <Box height={"100%"} width={"100%"} bgcolor={"background.default"}>
-          <Container sx={{ py: 10 }}>
-            <Box>
+        <Box
+          width={"100%"}
+          bgcolor={"background.default"}
+          py={{ xs: 6, md: 10 }}
+          px={{ xs: 2, sm: 0 }}
+        >
+          <Container>
+            <Box textAlign="center" mb={{ xs: 4, md: 6 }}>
               <Typography
                 color={"primary.light"}
                 fontWeight={500}
                 component={"h1"}
                 variant="h5"
-                textAlign={"center"}
                 mb={1}
+                sx={{
+                  fontSize: { xs: "1.25rem", sm: "1.5rem" },
+                }}
               >
                 A Fresh Start Every Day
               </Typography>
@@ -33,51 +40,63 @@ export default async function PersonalCareSection() {
                 fontWeight={"bold"}
                 component={"h2"}
                 variant="h3"
-                textAlign={"center"}
+                sx={{
+                  fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+                  lineHeight: 1.2,
+                }}
               >
                 Personal Care
               </Typography>
             </Box>
 
             <Stack
-              sx={{ marginTop: 5 }}
-              direction={{ xs: "column", md: "row" }}
+              direction={{ xs: "column", lg: "row" }}
               justifyContent={"space-between"}
-              alignItems={"stretch"}
-              spacing={3}
+              alignItems={{ xs: "center", lg: "stretch" }}
+              spacing={{ xs: 3, md: 4 }}
             >
+              {/* Promo Banner */}
               <Box
                 sx={{
-                  width: { xs: "100%", md: "40%" },
+                  width: { xs: "100%", lg: "38%" },
+                  minHeight: { xs: 300, sm: 400, lg: "auto" },
                   position: "relative",
                   backgroundImage: `url(${summerCollectionBg.src})`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
-                  borderRadius: "8px",
+                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
                 }}
               >
                 <Box
                   sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    p: 3,
+                    p: { xs: 2, sm: 3 },
+                    backgroundColor: "rgba(0,0,0,0.4)",
+                    backdropFilter: "blur(2px)",
                   }}
                 >
                   <Typography
                     variant="h5"
                     component={"p"}
-                    color={"text.disabled"}
+                    color={"common.white"}
+                    sx={{
+                      fontSize: { xs: "1rem", sm: "1.25rem" },
+                    }}
                   >
                     Everything you may need
                   </Typography>
                   <Typography
                     variant="h3"
                     component={"h1"}
-                    color={"text.disabled"}
+                    color={"common.white"}
                     fontWeight={"bold"}
+                    sx={{
+                      fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+                      lineHeight: 1.2,
+                    }}
                   >
                     SUMMER <br /> TIME
                   </Typography>
@@ -85,39 +104,45 @@ export default async function PersonalCareSection() {
 
                 <Box
                   sx={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    p: 3,
+                    p: { xs: 2, sm: 3 },
+                    backgroundColor: "rgba(0,0,0,0.4)",
+                    backdropFilter: "blur(2px)",
                   }}
                 >
                   <Stack
                     direction={"row"}
                     justifyContent={"space-between"}
                     alignItems={"flex-end"}
+                    spacing={1}
                   >
                     <Typography
                       variant="h6"
                       component={"p"}
-                      color={"text.disabled"}
-                      width={{ xs: "100%", md: "50%" }}
+                      color={"common.white"}
+                      sx={{
+                        fontSize: { xs: "0.875rem", sm: "1rem" },
+                        width: { xs: "60%", sm: "50%" },
+                      }}
                     >
                       Natural spiraling pills daily dose
                     </Typography>
-                    <Box>
+                    <Box textAlign="right">
                       <Typography
                         variant="body1"
                         component={"p"}
                         color={"text.disabled"}
+                        sx={{ textDecoration: "line-through" }}
                       >
                         Before $76
                       </Typography>
                       <Typography
                         variant="h3"
                         component={"h1"}
-                        color={"text.disabled"}
+                        color={"common.white"}
                         fontWeight={"bold"}
+                        sx={{
+                          fontSize: { xs: "1.75rem", sm: "2.25rem" },
+                        }}
                       >
                         $37
                       </Typography>
@@ -126,9 +151,14 @@ export default async function PersonalCareSection() {
                 </Box>
               </Box>
 
-              <Box sx={{ flex: 1, width: { xs: "100%", md: "auto" } }}>
-                <Grid container spacing={2}>
-                  {/* Increased spacing for better visuals */}
+              {/* Products Grid */}
+              <Box
+                sx={{
+                  width: { xs: "100%", lg: "60%" },
+                  pl: { lg: 4 },
+                }}
+              >
+                <Grid container spacing={{ xs: 2, md: 3 }}>
                   {products.map((product: IProduct) => (
                     <Grid item xs={12} sm={6} md={4} key={product._id}>
                       <ProductSimpleAnimatedCard product={product} />
