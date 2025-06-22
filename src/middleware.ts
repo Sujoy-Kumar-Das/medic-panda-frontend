@@ -48,8 +48,6 @@ export function middleware(request: NextRequest) {
     ? (decodedData.role as string).toUpperCase()
     : null;
 
-  console.log({ role, pathname });
-
   if (pathname.startsWith("/dashboard/superAdmin")) {
     if (role === "SUPERADMIN") {
       const redirectUrl = new URL("/dashboard/admin", request.url);

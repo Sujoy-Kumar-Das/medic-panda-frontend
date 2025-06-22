@@ -2,28 +2,38 @@
 import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import { useCreateUser } from "@/hooks/useCreateUser";
-import createAccountSchema from "@/schemas/create-account.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Stack } from "@mui/material";
+import { FieldValues } from "react-hook-form";
+import { AnyZodObject } from "zod";
 
-export default function CreateAccountForm() {
-  const { handlerFunc, isLoading } = useCreateUser();
+interface RegistrationFormProps {
+  onSubmit: (formData: FieldValues) => Promise<void>;
+  validationSchema: AnyZodObject;
+  isLoading: boolean;
+  type: "create" | "login";
+}
 
+export default function RegistrationForm({
+  onSubmit,
+  validationSchema,
+  isLoading,
+  type,
+}: RegistrationFormProps) {
+  const isCreate = type === "create";
   return (
-    <PandaForm
-      onSubmit={handlerFunc}
-      resolver={zodResolver(createAccountSchema)}
-    >
+    <PandaForm onSubmit={onSubmit} resolver={zodResolver(validationSchema)}>
       <Stack direction="column" spacing={3}>
-        <PandaInputField
-          name="name"
-          label="Name"
-          placeholder="John Doe"
-          type="text"
-          fullWidth
-        />
+        {isCreate && (
+          <PandaInputField
+            name="name"
+            label="Name"
+            placeholder="John Doe"
+            type="text"
+            fullWidth
+          />
+        )}
         <PandaInputField
           name="email"
           label="Email"
@@ -38,12 +48,13 @@ export default function CreateAccountForm() {
           type="password"
           fullWidth
         />
-        <PandaFileUploader name="photo" label="Your Image" />
+
+        {isCreate && <PandaFileUploader name="photo" label="Your Image" />}
 
         <LoadingButton
           loading={isLoading}
           disabled={isLoading}
-          loadingIndicator="Creating..."
+          loadingIndicator={isCreate ? "Creating..." : " Logging..."}
           variant="contained"
           fullWidth
           type="submit"
@@ -61,7 +72,7 @@ export default function CreateAccountForm() {
             },
           }}
         >
-          Create Account
+          {isCreate ? "Create Account" : "Login"}
         </LoadingButton>
       </Stack>
     </PandaForm>

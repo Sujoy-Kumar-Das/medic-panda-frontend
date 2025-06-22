@@ -4,9 +4,17 @@ import { Box, Button } from "@mui/material";
 import Link from "next/link";
 import MyCartCardGrid from "./MyCartCardGrid";
 
-export default function MyCartCard({ cart }: { cart: ICart }) {
-  console.log({ cart });
+interface MyCartCardProps {
+  cart: ICart;
+  onDeleteCartItem: (id: string) => Promise<void>;
+  isLoading: boolean;
+}
 
+export default function MyCartCard({
+  cart,
+  onDeleteCartItem,
+  isLoading,
+}: MyCartCardProps) {
   return (
     <Box
       sx={{
@@ -21,7 +29,11 @@ export default function MyCartCard({ cart }: { cart: ICart }) {
         textAlign: "center",
       }}
     >
-      <MyCartCardGrid cart={cart} />
+      <MyCartCardGrid
+        cart={cart}
+        onDeleteCart={onDeleteCartItem}
+        isLoading={isLoading}
+      />
 
       <Button
         variant="contained"

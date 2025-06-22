@@ -39,8 +39,8 @@ const ContactUsPage = () => {
             fontSize: { xs: "1rem", md: "1.125rem" },
           }}
         >
-          We'd love to hear from you! Please fill out the form below or use our
-          contact information to reach us.
+          We would love to hear from you! Please fill out the form below or use
+          our contact information to reach us.
         </Typography>
         <Divider
           sx={{

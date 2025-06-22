@@ -1,4 +1,5 @@
 "use client";
+import useChangePassword from "@/hooks/useChangePassword";
 import useToggleState from "@/hooks/useToggleState";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
@@ -6,8 +7,15 @@ import {
 } from "@mui/icons-material";
 import { Grid, IconButton, Stack, Typography } from "@mui/material";
 import UpdatePasswordModal from "./UpdatePasswordModal";
+import updatePasswordValidationSchema from "@/schemas/updatePasswordValidationSchema";
 export default function UpdatePasswordCompo() {
   const updatePasswordModalState = useToggleState(false);
+  const { handlerFunc, isLoading } = useChangePassword();
+
+  const defaultValues = {
+    oldPassword: "",
+    newPassword: "",
+  };
   return (
     <>
       <Grid item xs={12} md={6}>
@@ -51,8 +59,11 @@ export default function UpdatePasswordCompo() {
 
       {updatePasswordModalState.state && (
         <UpdatePasswordModal
-          open={updatePasswordModalState.state}
           onClose={updatePasswordModalState.onClose}
+          defaultValues={defaultValues}
+          isLoading={isLoading}
+          onUpdatePassword={handlerFunc}
+          validationSchema={updatePasswordValidationSchema}
         />
       )}
     </>

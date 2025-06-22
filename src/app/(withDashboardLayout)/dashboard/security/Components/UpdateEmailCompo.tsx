@@ -1,5 +1,6 @@
 "use client";
 import useToggleState from "@/hooks/useToggleState";
+import useUpdateEmail from "@/hooks/useUpdateEmail";
 import {
   AppRegistrationOutlined as AppRegistrationOutlinedIcon,
   EmailOutlined as EmailOutlinedIcon,
@@ -9,6 +10,10 @@ import UpdateEmailModal from "./UpdateEmailModal";
 
 export default function UpdateEmailCompo({ email }: { email: string }) {
   const updateEmailModalState = useToggleState(false);
+  const { handlerFunc, isLoading } = useUpdateEmail(
+    updateEmailModalState.onClose
+  );
+
   return (
     <>
       <Grid item xs={12} md={6}>
@@ -53,9 +58,10 @@ export default function UpdateEmailCompo({ email }: { email: string }) {
       </Grid>
       {updateEmailModalState.state && (
         <UpdateEmailModal
-          open={updateEmailModalState.state}
           onClose={updateEmailModalState.onClose}
           email={email}
+          onUpdateEmail={handlerFunc}
+          isLoading={isLoading}
         />
       )}
     </>

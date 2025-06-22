@@ -21,8 +21,6 @@ interface IPaymentCardProps {
 const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
   const { order, transactionId, createdAt } = paymentHistory;
 
-  console.log({ order });
-
   return (
     <Card
       sx={{
@@ -53,9 +51,7 @@ const PaymentCard = ({ paymentHistory }: IPaymentCardProps) => {
           }}
         >
           Product:
-          <span style={{ fontWeight: "bold" }}>
-            {order?.product?.name}
-          </span>
+          <span style={{ fontWeight: "bold" }}>{order?.product?.name}</span>
         </Typography>
         <Box
           sx={{

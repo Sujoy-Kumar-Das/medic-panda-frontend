@@ -1,31 +1,25 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import useUpdateEmail from "@/hooks/useUpdateEmail";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import updateEmailValidationSchema from "@/schemas/updateEmailValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { FieldValue } from "react-hook-form";
 
 interface IUpdateEmailModalProps {
-  open: boolean;
   onClose: () => void;
   email: string;
+  onUpdateEmail: (value: FieldValue<{ email: string }>) => Promise<void>;
+  isLoading: boolean;
 }
 
 export default function UpdateEmailModal({
-  open,
   onClose,
   email,
+  onUpdateEmail,
+  isLoading,
 }: IUpdateEmailModalProps) {
-  const { handlerFunc, isLoading } = useUpdateEmail(onClose);
-
   const defaultValues = {
     email,
   };
@@ -43,7 +37,7 @@ export default function UpdateEmailModal({
 
         {email && (
           <PandaForm
-            onSubmit={handlerFunc}
+            onSubmit={onUpdateEmail}
             resolver={zodResolver(updateEmailValidationSchema)}
             defaultValues={defaultValues}
           >
@@ -67,16 +61,13 @@ export default function UpdateEmailModal({
               <Button type="button" onClick={onClose}>
                 Cancel
               </Button>
-              <LoadingButton
+              <LoaderButton
+                loadingText="Updating Email..."
+                isLoading={isLoading}
                 type="submit"
-                disabled={isLoading}
-                loading={isLoading}
-                loadingIndicator={
-                  <CircularProgress size={24} color="inherit" />
-                }
               >
                 Update Email
-              </LoadingButton>
+              </LoaderButton>
             </Stack>
           </PandaForm>
         )}

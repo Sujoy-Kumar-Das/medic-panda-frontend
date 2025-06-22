@@ -1,12 +1,17 @@
+"use client";
 /* eslint-disable react/no-unescaped-entities */
 import loginImage from "@/assets/lgoInBg.jpg";
 import FormHeader from "@/components/shared/form-header/FormHeader";
+import { useLogin } from "@/hooks/useLogin";
+import loginSchema from "@/schemas/login.schema";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import LoginForm from "./Components/LoginForm";
+import RegistrationForm from "../Components/RegistrationForm";
 
 export default function LoginPage() {
+  const { handlerFunc, isLoading } = useLogin();
+
   return (
     <Container
       sx={{
@@ -51,8 +56,14 @@ export default function LoginPage() {
             title="Login"
             subtitle="Enter your credentials to continue."
           />
+
           {/* login form */}
-          <LoginForm />
+          <RegistrationForm
+            onSubmit={handlerFunc}
+            isLoading={isLoading}
+            type="login"
+            validationSchema={loginSchema}
+          />
 
           <Typography component="p" textAlign="center" mt={3}>
             Don't have an account?{" "}

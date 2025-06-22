@@ -1,35 +1,35 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import useUpdateUserInfo from "@/hooks/useUpdateUserInfo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Button, Stack, Typography } from "@mui/material";
+import { FieldValues } from "react-hook-form";
 import { AnyZodObject } from "zod";
 
 interface UpdateUserInfoModalProps {
-  open: boolean;
   onClose: () => void;
   label: string;
   name: string;
   schema: AnyZodObject;
   type: string;
   defaultValue: Object;
+  onUpdateUserInfo: (filedValues: FieldValues) => Promise<void>;
+  isLoading: boolean;
 }
 
 export default function UpdateUserInfoModal({
-  open,
   onClose,
   label,
   name,
   schema,
   type,
   defaultValue,
+  onUpdateUserInfo,
+  isLoading,
 }: UpdateUserInfoModalProps) {
-  const { handlerFunc, isLoading } = useUpdateUserInfo(onClose);
-
   return (
-    <CustomModal open={open} onClose={onClose}>
+    <CustomModal open onClose={onClose}>
       <Typography
         variant="h6"
         textAlign="center"
@@ -40,7 +40,7 @@ export default function UpdateUserInfoModal({
       </Typography>
 
       <PandaForm
-        onSubmit={handlerFunc}
+        onSubmit={onUpdateUserInfo}
         resolver={zodResolver(schema)}
         defaultValues={defaultValue}
       >
@@ -62,7 +62,7 @@ export default function UpdateUserInfoModal({
 
         <Stack direction={"row"} justifyContent={"flex-end"} gap={1}>
           <Button variant="outlined" onClick={onClose}>
-            Cancel
+            Close
           </Button>
           <LoadingButton
             loading={isLoading}

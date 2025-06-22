@@ -23,7 +23,6 @@ export default function OrderDetailsCompo({
     },
   ];
 
-  console.log(transformObjectToArrayOfObject(orderData.payment));
   return (
     <Box
       sx={{

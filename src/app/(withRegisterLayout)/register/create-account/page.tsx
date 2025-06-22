@@ -1,11 +1,16 @@
+"use client";
 import image from "@/assets/create-account.png";
 import FormHeader from "@/components/shared/form-header/FormHeader";
+import { useCreateUser } from "@/hooks/useCreateUser";
+import createAccountSchema from "@/schemas/create-account.schema";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import CreateAccountForm from "./Components/CreateAccountForm";
+import RegistrationForm from "../Components/RegistrationForm";
 
 export default function CreateAccountPage() {
+  const { handlerFunc, isLoading } = useCreateUser();
+
   return (
     <Container
       sx={{
@@ -46,7 +51,12 @@ export default function CreateAccountPage() {
             subtitle="Sign up to get started."
           />
 
-          <CreateAccountForm />
+          <RegistrationForm
+            isLoading={isLoading}
+            onSubmit={handlerFunc}
+            validationSchema={createAccountSchema}
+            type="create"
+          />
 
           <Typography component="p" textAlign="center" mt={3}>
             Already have an account?{" "}

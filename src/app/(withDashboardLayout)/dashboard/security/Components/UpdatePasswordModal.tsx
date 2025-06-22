@@ -1,35 +1,29 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import useChangePassword from "@/hooks/useChangePassword";
-import updatePasswordValidationSchema from "@/schemas/updatePasswordValidationSchema";
+import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { FieldValues } from "react-hook-form";
+import { AnyZodObject } from "zod";
 
 interface IUpdatePasswordModalProps {
-  open: boolean;
   onClose: () => void;
+  onUpdatePassword: (value: FieldValues) => Promise<void>;
+  isLoading: boolean;
+  validationSchema: AnyZodObject;
+  defaultValues: { oldPassword: string; newPassword: string };
 }
 
-const defaultValues = {
-  oldPassword: "",
-  newPassword: "",
-};
-
 export default function UpdatePasswordModal({
-  open,
   onClose,
+  onUpdatePassword,
+  isLoading,
+  defaultValues,
+  validationSchema,
 }: IUpdatePasswordModalProps) {
-  const { handlerFunc, isLoading } = useChangePassword();
   return (
-    <CustomModal open={open} onClose={onClose}>
+    <CustomModal open onClose={onClose}>
       <Box>
         <Typography
           variant="h6"
@@ -41,8 +35,8 @@ export default function UpdatePasswordModal({
         </Typography>
 
         <PandaForm
-          onSubmit={handlerFunc}
-          resolver={zodResolver(updatePasswordValidationSchema)}
+          onSubmit={onUpdatePassword}
+          resolver={zodResolver(validationSchema)}
           defaultValues={defaultValues}
         >
           <PandaInputField
@@ -81,16 +75,15 @@ export default function UpdatePasswordModal({
 
           <Stack direction={"row"} justifyContent={"flex-end"} gap={1}>
             <Button type="button" onClick={onClose}>
-              Cancel
+              Close
             </Button>
-            <LoadingButton
+            <LoaderButton
               type="submit"
-              disabled={isLoading}
-              loading={isLoading}
-              loadingIndicator={<CircularProgress size={24} color="inherit" />}
+              isLoading={isLoading}
+              loadingText="Updating Password..."
             >
               Update Password
-            </LoadingButton>
+            </LoaderButton>
           </Stack>
         </PandaForm>
       </Box>

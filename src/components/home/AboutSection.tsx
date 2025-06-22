@@ -2,7 +2,6 @@ import image from "@/assets/buy_medicine.jpg";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 export default function AboutSection() {
-  console.log(image.src);
   return (
     <Container component="section" sx={{ py: 10 }}>
       <Stack

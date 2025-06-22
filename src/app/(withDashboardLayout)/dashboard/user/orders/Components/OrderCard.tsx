@@ -7,7 +7,21 @@ import OrderCancelButton from "./OrderCancelButton";
 import OrderInfo from "./OrderInfo";
 import OrderPaymentButton from "./OrderPaymentButton";
 
-export default function OrderCard({ order }: { order: IOrder }) {
+interface OrderCardProps {
+  order: IOrder;
+  onCancelOrder: () => Promise<void>;
+  onPayment: () => Promise<void>;
+  isLoading: boolean;
+  isPaymentLoading: boolean;
+}
+
+export default function OrderCard({
+  order,
+  onCancelOrder,
+  isLoading,
+  onPayment,
+  isPaymentLoading,
+}: OrderCardProps) {
   const { quantity, product, total, createdAt, status, _id } = order;
 
   return (
@@ -37,12 +51,20 @@ export default function OrderCard({ order }: { order: IOrder }) {
         <OrderInfo label="Total" value={`$${total.toFixed(2)}`} />
 
         {/* Payment Status */}
-        <OrderPaymentButton status={status} id={_id} />
+        <OrderPaymentButton
+          status={status}
+          onPayment={onPayment}
+          isPaymentLoading={isPaymentLoading}
+        />
         {/* Order Status */}
         <OrderInfo label="Order Status" value={status} />
 
         {/* Cancel Order Action */}
-        <OrderCancelButton id={_id} status={status} />
+        <OrderCancelButton
+          onCancelOrder={onCancelOrder}
+          isLoading={isLoading}
+          status={status}
+        />
 
         {/* View Order Link */}
         <Stack

@@ -39,7 +39,7 @@ const LoaderButton: React.FC<LoaderButtonProps> = ({
       fullWidth={fullWidth}
       startIcon={!isLoading ? startIcon : undefined}
       endIcon={!isLoading ? endIcon : undefined}
-      sx={{ ...sxProps, minWidth: 200 }}
+      sx={{ ...sxProps }}
       type={type}
     >
       {isLoading

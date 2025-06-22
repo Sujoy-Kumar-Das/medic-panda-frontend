@@ -1,17 +1,11 @@
 import calculateTotalSavings from "@/utils/calculateTotalSavings";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import InvoiceDownloadButton from "./InvoiceDownloadButton";
 import { OrderInfoRow } from "./OrderInfoRow";
 import OrderInvoicePdf from "./OrderInvoicePdf";
 
-interface IOrderPricingSummaryInfoProps {
+export interface IOrderPricingSummaryInfoProps {
   orderDetails: {
     quantity: number | undefined;
     totalAmount: number | undefined;
@@ -97,16 +91,11 @@ export default function OrderPricingSummaryInfo({
             document={<OrderInvoicePdf orderDetails={orderDetails} />}
             fileName={`invoice_${orderDetails.id}.pdf`}
           >
-            {({ loading }) => (
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                disabled={loading}
-              >
-                {loading ? "Generating Invoice..." : "Download Invoice"}
-              </Button>
-            )}
+            {
+              (({ loading }: { loading: boolean }) => (
+                <InvoiceDownloadButton loading={loading} />
+              )) as unknown as React.ReactNode
+            }
           </PDFDownloadLink>
         </Box>
       </CardContent>

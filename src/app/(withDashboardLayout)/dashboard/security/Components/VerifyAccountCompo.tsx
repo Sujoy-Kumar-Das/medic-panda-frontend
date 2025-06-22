@@ -1,4 +1,5 @@
 "use client";
+import useConfirmVerificationWithOTP from "@/hooks/useConfirmVerificationWithOTP";
 import useSentVerificationOTP from "@/hooks/useSentVerificationOTP";
 import { useTimer } from "@/hooks/useTimer";
 import useToggleState from "@/hooks/useToggleState";
@@ -7,7 +8,21 @@ import DangerousIcon from "@mui/icons-material/Dangerous";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Grid, IconButton, Stack, Typography } from "@mui/material";
 import { toast } from "sonner";
+import { z } from "zod";
 import VerifyEmailOTPModal from "./VerifyEmailOTPModal";
+
+const verifyOTPSchema = z.object({
+  otp: z.string().refine((value) => !isNaN(Number(value)), {
+    message: "OTP must be a number.",
+  }),
+});
+
+interface OTPFormValues {
+  otp: string;
+}
+const defaultValues: OTPFormValues = {
+  otp: "",
+};
 
 export default function VerifyAccountCompo({
   isVerified,
@@ -24,7 +39,6 @@ export default function VerifyAccountCompo({
 
   const handleEmailVerification = async () => {
     if (!canRetry) {
-      console.log({ canRetry });
       toast.error(`Please Wait ${timer} seconds.`);
       return;
     }
@@ -33,6 +47,14 @@ export default function VerifyAccountCompo({
     startTimer();
     verifyAccountModalState.onOpen();
   };
+
+  const handleCloseConfirmOTPModal = () => {
+    verifyAccountModalState.onClose();
+    localStorage.removeItem("verify-timer");
+  };
+
+  const { handlerFunc: confirmOtpHandler, isLoading: confirmOTPLoading } =
+    useConfirmVerificationWithOTP(handleCloseConfirmOTPModal);
 
   return (
     <>
@@ -85,9 +107,12 @@ export default function VerifyAccountCompo({
 
       {verifyAccountModalState.state && (
         <VerifyEmailOTPModal
-          open={verifyAccountModalState.state}
           onClose={verifyAccountModalState.onClose}
           reOpenTime={timer}
+          isLoading={confirmOTPLoading}
+          onConfirmOtp={confirmOtpHandler}
+          validationSchema={verifyOTPSchema}
+          defaultValues={defaultValues}
         />
       )}
     </>

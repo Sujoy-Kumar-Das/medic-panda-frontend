@@ -5,7 +5,7 @@ import UpdateEmailCompo from "./UpdateEmailCompo";
 import UpdatePasswordCompo from "./UpdatePasswordCompo";
 import VerifyAccountCompo from "./VerifyAccountCompo";
 
-export default function SecurityCompo({ data }) {
+export default function SecurityCompo({ data }: { data: any }) {
   return (
     <Container>
       {/* Page Header */}

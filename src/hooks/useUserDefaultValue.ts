@@ -15,7 +15,7 @@ export default function useUserDefaultValue() {
         address: {
           street: user?.address?.street || "",
           city: user?.address?.city || "",
-          postalCode: String(user?.address?.postalCode) || "",
+          postalCode: user?.address?.postalCode || "",
           country: user?.address?.country || "",
         },
       };

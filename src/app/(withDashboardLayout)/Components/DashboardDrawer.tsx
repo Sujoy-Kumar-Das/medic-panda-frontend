@@ -4,18 +4,10 @@ import { IUserRoles } from "@/types/user.role.type";
 import routeGenerator from "@/utils/route.generator";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, List, ListItem, Typography } from "@mui/material";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import DashboardLink from "./DashboardLink";
 import DashboardLogoutButton from "./DashboardLogoutButton";
 export const DashboardDrawer = () => {
   const { user } = useAuth();
@@ -76,148 +68,34 @@ export const DashboardDrawer = () => {
       {/* Navigation Links */}
       <List sx={{ px: { xs: 1, md: 1.5 } }}>
         {items.map((item) => (
-          <ListItem
-            component={Link}
-            href={item.link}
+          <DashboardLink
             key={item.link}
-            disablePadding
-            sx={{
-              justifyContent: "center",
-              borderRadius: "12px",
-              color:
-                pathname === item.link ? "text.disabled" : "text.secondary",
-              backgroundColor:
-                pathname === item.link ? "primary.light" : "transparent",
-              my: 0.5,
-              transition: "background-color 0.3s ease",
-              "&:hover": {
-                backgroundColor: "primary.light",
-                color: "text.disabled",
-              },
-            }}
-          >
-            <ListItemButton
-              sx={{
-                justifyContent: "flex-start",
-                textAlign: "left",
-                width: "100%",
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  color: pathname === item.link ? "text.disabled" : "inherit",
-                  minWidth: 40,
-                }}
-              >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.text}
-                primaryTypographyProps={{
-                  fontWeight: pathname === item.link ? "bold" : "normal",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  textAlign: "left",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
+            href={item.link}
+            icon={item.icon}
+            pathname={pathname}
+            text={item.text}
+          />
         ))}
 
         <Divider sx={{ my: 1 }} />
-        <ListItem
-          component={Link}
+
+        <DashboardLink
           href={"/"}
-          disablePadding
-          sx={{
-            justifyContent: "center",
-            borderRadius: "12px",
-            color: pathname === "/" ? "text.disabled" : "text.secondary",
-            backgroundColor: pathname === "/" ? "primary.light" : "transparent",
-            my: 0.5,
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "primary.light",
-              color: "text.disabled",
-            },
-          }}
-        >
-          <ListItemButton
-            sx={{
-              justifyContent: "flex-start",
-              textAlign: "left",
-              width: "100%",
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                color: pathname === "/" ? "text.disabled" : "inherit",
-                minWidth: 40,
-              }}
-            >
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Back To Home"}
-              primaryTypographyProps={{
-                fontWeight: pathname === "/" ? "bold" : "normal",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                textAlign: "left",
-              }}
-            />
-          </ListItemButton>
-        </ListItem>
+          icon={<HomeIcon />}
+          text={"Back to Home"}
+          pathname={pathname}
+        />
 
-        <ListItem
-          component={Link}
-          href={"/product"}
-          disablePadding
-          sx={{
-            justifyContent: "center",
-            borderRadius: "12px",
-            color: pathname === "/product" ? "text.disabled" : "text.secondary",
-            backgroundColor:
-              pathname === "/product" ? "primary.light" : "transparent",
-            my: 0.5,
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "primary.light",
-              color: "text.disabled",
-            },
-          }}
-        >
-          <ListItemButton
-            sx={{
-              justifyContent: "flex-start",
-              textAlign: "left",
-              width: "100%",
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                color: pathname === "/product" ? "text.disabled" : "inherit",
-                minWidth: 40,
-              }}
-            >
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Shop"}
-              primaryTypographyProps={{
-                fontWeight: pathname === "/product" ? "bold" : "normal",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                textAlign: "left",
-              }}
-            />
-          </ListItemButton>
-        </ListItem>
+        {user?.role === "user" && (
+          <DashboardLink
+            href={"/product"}
+            icon={<LocalMallIcon />}
+            text={"Shop"}
+            pathname={pathname}
+          />
+        )}
 
-        <ListItem disablePadding>
+        <ListItem disablePadding sx={{ mt: 2 }}>
           <DashboardLogoutButton />
         </ListItem>
       </List>

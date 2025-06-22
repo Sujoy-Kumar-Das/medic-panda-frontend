@@ -8,8 +8,6 @@ export default async function CategoriesPage() {
 
   const categories = data?.result;
 
-  console.log({ categories });
-
   return (
     <Box sx={{ py: 4 }}>
       <Container>

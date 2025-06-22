@@ -1,11 +1,33 @@
 import AuthContext from "@/context/AuthContext";
-import useUser from "@/hooks/useUser";
+import { useGetMeQuery } from "@/redux/api";
 import { ILogoutParams } from "@/types";
+import { IModifiedUserData } from "@/types/user.type";
 import logoutFunc from "@/utils/logoutUser";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
 const AuthContextProvider = ({ children }: { children: ReactElement }) => {
-  const { user, setUser, refetch } = useUser();
+  const { data, refetch } = useGetMeQuery(undefined);
+  const [user, setUser] = useState<IModifiedUserData | null>(null);
+
+  useEffect(() => {
+    if (!data) {
+      setUser(null);
+      return;
+    }
+
+    const modifiedData: IModifiedUserData = {
+      id: data?.user?._id,
+      name: data?.name,
+      photo: data?.photo,
+      isVerified: data?.user?.isVerified,
+      email: data?.user?.email,
+      role: data?.user?.role,
+      address: data?.address,
+      contact: data?.contact,
+    };
+
+    setUser(modifiedData);
+  }, [data]);
 
   const loginUser = async () => {
     const newData = await refetch();

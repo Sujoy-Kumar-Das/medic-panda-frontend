@@ -1,10 +1,20 @@
 import { ICart } from "@/types";
-import { Grid } from "@mui/material";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
+import { Grid, IconButton } from "@mui/material";
 import Image from "next/image";
-import DeleteCartButton from "./DeleteCartButton";
 import MyCartGridCardItem from "./MyCartGridCardItem";
 
-export default function MyCartCardGrid({ cart }: { cart: ICart }) {
+interface MyCartCardGridProps {
+  cart: ICart;
+  onDeleteCart: (id: string) => Promise<void>;
+  isLoading: boolean;
+}
+
+export default function MyCartCardGrid({
+  cart,
+  onDeleteCart,
+  isLoading,
+}: MyCartCardGridProps) {
   return (
     <Grid container spacing={3} alignItems="center" justifyContent="center">
       <Grid item xs={12} md={2}>
@@ -45,7 +55,23 @@ export default function MyCartCardGrid({ cart }: { cart: ICart }) {
       />
 
       <Grid item xs={12} md={2}>
-        <DeleteCartButton id={cart._id} />
+        <IconButton
+          color="error"
+          sx={{
+            borderRadius: 1,
+            bgcolor: "error.main",
+            color: "white",
+            transition: "all 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.1)",
+              bgcolor: "error.dark",
+            },
+          }}
+          disabled={isLoading}
+          onClick={onDeleteCart}
+        >
+          <DeleteOutlineOutlined />
+        </IconButton>
       </Grid>
     </Grid>
   );

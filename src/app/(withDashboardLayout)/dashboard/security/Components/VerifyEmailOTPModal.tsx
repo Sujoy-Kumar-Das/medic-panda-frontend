@@ -2,47 +2,31 @@
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import useConfirmVerificationWithOTP from "@/hooks/useConfirmVerificationWithOTP";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { z } from "zod";
-
-const verifyOTPSchema = z.object({
-  otp: z.string().refine((value) => !isNaN(Number(value)), {
-    message: "OTP must be a number.",
-  }),
-});
+import { FieldValues } from "react-hook-form";
+import { AnyZodObject } from "zod";
 
 interface IVerifyEmailOTPModalProps {
-  open: boolean;
   onClose: () => void;
   reOpenTime: number;
+  defaultValues: { otp: string };
+  validationSchema: AnyZodObject;
+  onConfirmOtp: (values: FieldValues) => Promise<void>;
+  isLoading: boolean;
 }
-
-interface OTPFormValues {
-  otp: string;
-}
-
-const defaultValues: OTPFormValues = {
-  otp: "",
-};
 
 export default function VerifyEmailOTPModal({
-  open,
   onClose,
   reOpenTime,
+  defaultValues,
+  validationSchema,
+  onConfirmOtp,
+  isLoading,
 }: IVerifyEmailOTPModalProps) {
-  const onCloseHandler = () => {
-    onClose();
-    localStorage.removeItem("verify-timer");
-  };
-
-  const { handlerFunc, isLoading } =
-    useConfirmVerificationWithOTP(onCloseHandler);
-
   return (
-    <CustomModal open={open} onClose={onClose}>
+    <CustomModal open onClose={onClose}>
       <Box>
         <Typography
           variant="h6"
@@ -65,8 +49,8 @@ export default function VerifyEmailOTPModal({
         </Typography>
 
         <PandaForm
-          onSubmit={handlerFunc}
-          resolver={zodResolver(verifyOTPSchema)}
+          onSubmit={onConfirmOtp}
+          resolver={zodResolver(validationSchema)}
           defaultValues={defaultValues}
         >
           <PandaInputField
