@@ -1,5 +1,6 @@
 import { IProduct } from "@/types/product.type";
 import { Visibility } from "@mui/icons-material";
+
 import {
   Box,
   Chip,
@@ -134,7 +135,7 @@ const ProductCard = ({ product }: IProductCardProps) => {
         className="cardHover"
       >
         {/* wish list button */}
-        <WishListButton id={_id} />
+        <WishListButton id={_id} isWishList={product.isWishList} />
 
         {/* add to cart button */}
         <AddToCartButton

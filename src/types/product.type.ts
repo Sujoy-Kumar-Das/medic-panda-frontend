@@ -22,6 +22,7 @@ export interface IProduct {
   category: ICategory;
   manufacturer: IManufacturer;
   rating: number;
+  isWishList: boolean;
 }
 
 export interface IProductDetail {
@@ -38,7 +39,7 @@ export interface IProductData {
   productDetail: IProductDetail;
 }
 
-interface ISelectItem {
+export interface ISelectItem {
   id: string;
   title: string;
   value: string;

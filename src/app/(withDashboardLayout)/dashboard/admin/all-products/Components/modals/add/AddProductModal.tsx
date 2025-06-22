@@ -20,6 +20,8 @@ export default function AddProductModal({ onClose }: AddProductModalProps) {
     id: null,
   });
 
+  if (!categories || !manufacturer) return null;
+
   return (
     <FormModal
       title="Add New Product"

@@ -5,6 +5,5 @@ export default async function BannerSection() {
   const data = await getAllProductService({
     category: "671dedca1853a24619a9f991",
   });
-
   return <BannerSlider data={data?.data?.result} />;
 }

@@ -24,7 +24,7 @@ export default function UpdateEmailModal({
     email,
   };
   return (
-    <CustomModal open={open} onClose={onClose}>
+    <CustomModal open onClose={onClose}>
       <Box>
         <Typography
           variant="h6"

@@ -14,7 +14,7 @@ export default async function SkinCareProductSection() {
 
   return (
     <>
-      {products.length && (
+      {products?.length && (
         <Box sx={{ backgroundColor: "background.paper" }}>
           <Container sx={{ py: 10 }}>
             <ProductSlider title="Simple Skin Care Solutions">

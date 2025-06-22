@@ -1,3 +1,4 @@
+"use client";
 import {
   skinCareProductButtonContainerVariants,
   skinCareProductButtonVariants,
@@ -21,6 +22,7 @@ import WishListButton from "../buttons/WishListButton";
 
 export default function SimpleAnimatedCard({ product }: { product: IProduct }) {
   const { thumbnail, name, price, _id, discount } = product;
+  console.log("Rendering skin care....");
 
   return (
     <motion.div
@@ -143,7 +145,7 @@ export default function SimpleAnimatedCard({ product }: { product: IProduct }) {
           }}
         >
           <motion.div variants={skinCareProductButtonVariants}>
-            <WishListButton id={_id} />
+            <WishListButton id={_id} isWishList={product.isWishList} />
           </motion.div>
 
           <motion.div variants={skinCareProductButtonVariants}>

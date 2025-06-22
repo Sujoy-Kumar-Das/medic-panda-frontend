@@ -81,7 +81,7 @@ export default function PlaceOrderCompo({ data: orderItem }: { data: any }) {
                   width={500}
                   style={{
                     borderRadius: "8px",
-                    objectFit: "cover",
+                    objectFit: "fill",
                     width: "100%",
                     height: "100%",
                   }}

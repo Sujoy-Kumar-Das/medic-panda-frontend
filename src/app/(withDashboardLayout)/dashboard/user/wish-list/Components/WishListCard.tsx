@@ -1,32 +1,31 @@
 import LoaderButton from "@/components/ui/buttons/LoaderButton";
+import useAddToCart from "@/hooks/useAddToCart";
+import useRemoveFromWishList from "@/hooks/useRemoveFromWishList";
 import { IProduct } from "@/types";
-import {
-  Box,
-  Card,
-  CardContent,
-  Chip,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: IProduct;
-  onAddToCart: () => Promise<void>;
-  isLoading: boolean;
-  onRemoveWishListItem: () => Promise<void>;
-  isRemoveItemLoading: boolean;
 }
 
-export default function WishListCard({
-  product,
-  isLoading,
-  isRemoveItemLoading,
-  onAddToCart,
-  onRemoveWishListItem,
-}: ProductCardProps) {
-  const theme = useTheme();
+export default function WishListCard({ product }: ProductCardProps) {
+  const {
+    handlerFunc,
+    isLoading,
+    data: cartData,
+  } = useAddToCart(redirectAddToCart);
+
+  const { handlerFunc: handleRemoveItem, isLoading: removeItemLoader } =
+    useRemoveFromWishList();
+
+  const router = useRouter();
+
+  function redirectAddToCart() {
+    router.push(`/dashboard/user/check-out/${cartData._id}`);
+  }
 
   return (
     <Card
@@ -34,10 +33,10 @@ export default function WishListCard({
       whileHover={{ y: -5 }}
       sx={{
         borderRadius: 4,
-        boxShadow: theme.shadows[4],
+        boxShadow: 4,
         transition: "all 0.3s ease",
         "&:hover": {
-          boxShadow: theme.shadows[8],
+          boxShadow: 8,
         },
         height: "100%",
         display: "flex",
@@ -49,7 +48,7 @@ export default function WishListCard({
           position: "relative",
           width: "100%",
           height: 250,
-          background: theme.palette.background.default,
+          background: "background.default",
           borderRadius: "12px 12px 0 0",
           overflow: "hidden",
         }}
@@ -59,7 +58,7 @@ export default function WishListCard({
           alt={product.name}
           fill
           style={{
-            objectFit: "contain",
+            objectFit: "fill",
             padding: 16,
           }}
           sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -153,7 +152,7 @@ export default function WishListCard({
             }}
           >
             <LoaderButton
-              onClick={onAddToCart}
+              onClick={() => handlerFunc(product)}
               isLoading={isLoading}
               variant="contained"
               color="primary"
@@ -165,8 +164,8 @@ export default function WishListCard({
             </LoaderButton>
 
             <LoaderButton
-              onClick={onRemoveWishListItem}
-              isLoading={isRemoveItemLoading}
+              onClick={() => handleRemoveItem(product._id)}
+              isLoading={removeItemLoader}
               variant="outlined"
               color="error"
               sxProps={{

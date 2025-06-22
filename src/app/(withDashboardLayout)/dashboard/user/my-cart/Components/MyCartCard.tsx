@@ -6,7 +6,7 @@ import MyCartCardGrid from "./MyCartCardGrid";
 
 interface MyCartCardProps {
   cart: ICart;
-  onDeleteCartItem: (id: string) => Promise<void>;
+  onDeleteCartItem: () => Promise<void>;
   isLoading: boolean;
 }
 

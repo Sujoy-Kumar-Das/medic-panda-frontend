@@ -8,7 +8,7 @@ export default function useSelectCategory() {
 
   const items = useMemo(
     () =>
-      data?.map((item: ICategory) => ({
+      data?.result?.map((item: ICategory) => ({
         id: item._id,
         title: item.name,
         value: item._id,

@@ -14,7 +14,7 @@ export default async function BabyCareSection() {
 
   return (
     <>
-      {products.length && (
+      {products?.length && (
         <Box sx={{ backgroundColor: "background.paper" }}>
           <Container sx={{ py: 10 }}>
             <ProductSlider title="Quality Products for Happy Babies">

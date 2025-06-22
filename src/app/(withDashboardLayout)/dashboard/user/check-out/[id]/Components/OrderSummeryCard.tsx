@@ -6,7 +6,7 @@ import OrderItemPerUnitPrice from "./OrderItemPerUnitPrice";
 import OrderProductTotalPrice from "./OrderProductTotalPrice";
 import OrderQuantity from "./OrderQuantity";
 
-export default function OrderSummeryCard({ orderItem }) {
+export default function OrderSummeryCard({ orderItem }: { orderItem: any }) {
   const { value, handleDecrease, handleIncrease, handleChange } =
     useUpdateFieldQuantityValue({ fieldName: "quantity" });
 

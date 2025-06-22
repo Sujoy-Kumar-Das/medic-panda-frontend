@@ -119,9 +119,8 @@ export default function SummerCard({ product }: { product: IProduct }) {
         spacing={1}
         overflow={"hidden"}
       >
-        <WishListButton id={product._id} btnType="Summer" />
+        <WishListButton id={product._id}  />
         <AddToCartButton
-          className="button"
           sx={{
             transform: "translateY(500px)",
             color: "primary.main",
