@@ -1,17 +1,16 @@
+import useCancelOrder from "@/hooks/useCancelOrder";
 import { OrderStatus } from "@/types";
 import { Chip, Stack, Typography } from "@mui/material";
 
 export default function OrderCancelButton({
   status,
-  onCancelOrder,
-  isLoading,
+  id,
 }: {
   status: OrderStatus;
-  onCancelOrder: () => Promise<void>;
-  isLoading: boolean;
+  id: string;
 }) {
   // custom hook for handle the cancel order logic;
-
+  const { handlerFunc, isLoading } = useCancelOrder();
   return (
     <Stack
       direction={{ xs: "row", md: "column" }}
@@ -42,7 +41,7 @@ export default function OrderCancelButton({
           color="secondary"
           variant="outlined"
           clickable={!isLoading}
-          onClick={onCancelOrder}
+          onClick={() => handlerFunc(id)}
           sx={{
             fontWeight: 400,
             minWidth: 40,

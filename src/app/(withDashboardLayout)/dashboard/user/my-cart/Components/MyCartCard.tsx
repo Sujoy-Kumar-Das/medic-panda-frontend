@@ -1,3 +1,4 @@
+import useDeleteCart from "@/hooks/useDeleteCart";
 import { ICart } from "@/types";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button } from "@mui/material";
@@ -6,15 +7,10 @@ import MyCartCardGrid from "./MyCartCardGrid";
 
 interface MyCartCardProps {
   cart: ICart;
-  onDeleteCartItem: () => Promise<void>;
-  isLoading: boolean;
 }
 
-export default function MyCartCard({
-  cart,
-  onDeleteCartItem,
-  isLoading,
-}: MyCartCardProps) {
+export default function MyCartCard({ cart }: MyCartCardProps) {
+  const { handlerFunc, isLoading } = useDeleteCart();
   return (
     <Box
       sx={{
@@ -31,7 +27,7 @@ export default function MyCartCard({
     >
       <MyCartCardGrid
         cart={cart}
-        onDeleteCart={onDeleteCartItem}
+        onDeleteCart={() => handlerFunc(cart._id)}
         isLoading={isLoading}
       />
 

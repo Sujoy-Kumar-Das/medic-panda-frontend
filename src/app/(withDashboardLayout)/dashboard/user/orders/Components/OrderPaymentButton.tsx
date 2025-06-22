@@ -1,17 +1,15 @@
+import usePayment from "@/hooks/usePayment";
 import { OrderStatus } from "@/types";
 import { Chip, CircularProgress, Stack, Typography } from "@mui/material";
 
-interface OrderPaymentButtonProps {
-  status: OrderStatus;
-  onPayment: () => Promise<void>;
-  isPaymentLoading: boolean;
-}
-
 export default function OrderPaymentButton({
   status,
-  onPayment,
-  isPaymentLoading,
-}: OrderPaymentButtonProps) {
+  id,
+}: {
+  status: OrderStatus;
+  id: string;
+}) {
+  const { handlerFunc, isLoading } = usePayment();
   return (
     <Stack
       direction={{ xs: "row", md: "column" }}
@@ -24,7 +22,7 @@ export default function OrderPaymentButton({
       {status === OrderStatus.PENDING ? (
         <Chip
           label={
-            isPaymentLoading ? (
+            isLoading ? (
               <CircularProgress size={20} color="inherit" />
             ) : (
               "Pay Now"
@@ -32,9 +30,9 @@ export default function OrderPaymentButton({
           }
           color="primary"
           variant="outlined"
-          clickable={!isPaymentLoading}
-          disabled={isPaymentLoading}
-          onClick={onPayment}
+          clickable={!isLoading}
+          disabled={isLoading}
+          onClick={() => handlerFunc(id)}
           sx={{
             fontWeight: 400,
             padding: 0,
