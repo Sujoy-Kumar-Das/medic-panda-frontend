@@ -6,7 +6,7 @@ import { createContext } from "react";
 interface IAuthContext {
   user: IModifiedUserData | null;
   loginUser: () => void;
-  logoutUser: ({ router, path }: ILogoutParams) => void;
+  logoutUser: ({ redirectPath }: ILogoutParams) => void;
 }
 
 const AuthContext = createContext<IAuthContext | null>(null);

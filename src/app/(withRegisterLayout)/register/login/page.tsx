@@ -7,10 +7,13 @@ import loginSchema from "@/schemas/login.schema";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "sonner";
 import RegistrationForm from "../Components/RegistrationForm";
 
 export default function LoginPage() {
-  const { handlerFunc, isLoading } = useLogin();
+  const onSuccessMessage = () => toast.success("Login Successful...");
+
+  const { handlerFunc, isLoading } = useLogin(onSuccessMessage);
 
   return (
     <Container

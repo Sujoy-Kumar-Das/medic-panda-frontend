@@ -1,7 +1,7 @@
 import Header from "@/components/shared/header/Header";
+import DashboardStatsGrid from "@/components/ui/card/DashboardStatsGrid";
 import { useAuth } from "@/hooks/useAuth";
 import { Container } from "@mui/material";
-import UserDashboardMetaCards from "./UserDashboardMetaCards";
 
 function UserDashboardCompo({ data }: { data: any }) {
   const { user } = useAuth();
@@ -13,7 +13,7 @@ function UserDashboardCompo({ data }: { data: any }) {
       dashboard to get more insights about your account."
       />
 
-      <UserDashboardMetaCards data={data} />
+      <DashboardStatsGrid data={data} />
     </Container>
   );
 }

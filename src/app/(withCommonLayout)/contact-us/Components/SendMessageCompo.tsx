@@ -4,10 +4,11 @@ import PandaInputField from "@/components/form/PandaInputField";
 import SendIcon from "@mui/icons-material/Send";
 import { Button, Card, Stack, Typography } from "@mui/material";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function SendMessageCompo() {
   const handleContactUs = (values: FieldValues) => {
-    console.log(values);
+    toast.success("This feature will coming soon...");
   };
 
   return (

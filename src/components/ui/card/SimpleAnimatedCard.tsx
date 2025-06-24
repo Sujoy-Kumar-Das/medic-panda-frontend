@@ -22,7 +22,6 @@ import WishListButton from "../buttons/WishListButton";
 
 export default function SimpleAnimatedCard({ product }: { product: IProduct }) {
   const { thumbnail, name, price, _id, discount } = product;
-  console.log("Rendering skin care....");
 
   return (
     <motion.div

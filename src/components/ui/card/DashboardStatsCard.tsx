@@ -1,37 +1,73 @@
-import { IDashboardStats } from "@/types";
-import { Card, CardContent, Typography } from "@mui/material";
+import { dashboardStatsCardVariants } from "@/lib/framer-motion/card-animation";
+import { Box, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 
-interface DashboardStatsCardProps {
-  stats: IDashboardStats;
-}
-
-export default function DashboardStatsCard({ stats }: DashboardStatsCardProps) {
+export default function DashboardStatsCard({
+  title,
+  value,
+}: {
+  title: string;
+  value: number;
+}) {
   return (
-    <Card
+    <Box
+      component={motion.div}
+      variants={dashboardStatsCardVariants}
+      whileHover={{ scale: 1.03 }}
       sx={{
-        background: stats.background,
-        height: 150,
-        width: "100%",
+        background: "linear-gradient(135deg, #007bff, #00c8ff)",
+        p: 3,
+        borderRadius: 4,
+        boxShadow: 3,
+        color: "white",
+        minHeight: "180px",
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
-        "&:hover": {
-          transform: "translateY(-10px)",
-          boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        position: "relative",
+        overflow: "hidden",
+        "&:before": {
+          content: '""',
+          position: "absolute",
+          top: "-50%",
+          right: "-50%",
+          width: "200%",
+          height: "200%",
+          transform: "rotate(30deg)",
+          transition: "all 0.5s ease",
         },
-        flex: 1,
-        minWidth: "200px",
+        "&:hover:before": {
+          transform: "rotate(30deg) translate(20px, 20px)",
+        },
       }}
     >
-      <CardContent>
-        <Typography variant="h6" align="center" color="white">
-          {stats.title}
+      <Box>
+        <Typography
+          variant="subtitle1"
+          textAlign={"left"}
+          sx={{
+            textTransform: "uppercase",
+            letterSpacing: "1px",
+            fontWeight: 500,
+            opacity: 0.9,
+            mb: 1,
+            fontSize: "0.85rem",
+          }}
+        >
+          {title}
         </Typography>
-        <Typography variant="h4" fontWeight="bold" align="center" color="white">
-          {stats.value}
+        <Typography
+          variant="h4"
+          textAlign={"left"}
+          sx={{
+            fontWeight: 700,
+            lineHeight: 1.2,
+            mb: 1,
+          }}
+        >
+          {value}
         </Typography>
-      </CardContent>
-    </Card>
+      </Box>
+    </Box>
   );
 }

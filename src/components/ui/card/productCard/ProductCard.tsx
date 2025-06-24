@@ -61,7 +61,7 @@ const ProductCard = ({ product }: IProductCardProps) => {
         <Image
           src={thumbnail}
           layout="responsive"
-          objectFit="cover"
+          objectFit="fill"
           objectPosition="center"
           alt={name}
           width={200}

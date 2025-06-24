@@ -40,5 +40,22 @@ export const getAllProductService = async ({
   );
 
   const data = await res.json();
+
+  console.log({ url: `${process.env.NEXT_PUBLIC_base_url_local}` });
+  return data;
+};
+
+export const getProductDetailsService = async (id: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_base_url_local}/product/${id}`,
+    {
+      next: {
+        tags: [`${TTagTypes.product}${id}`],
+        revalidate: 60,
+      },
+    }
+  );
+
+  const data = await res.json();
   return data;
 };

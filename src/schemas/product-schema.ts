@@ -1,34 +1,34 @@
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/common/image.config";
-import dayjs from "dayjs";
 import { z } from "zod";
 
-const discountValidationSchema = z.object({
+const dateOnlyRegex = /^\d{4}-\d{2}-\d{2}$/;
+const timeOnlyRegex = /^([0-1]\d|2[0-3]):[0-5]\d$/;
+
+export const discountValidationSchema = z.object({
   percentage: z.coerce
-    .number({ required_error: "Discount percentage is required." })
+    .number({ required_error: "Product discount percentage is required." })
     .min(0, { message: "Product discount percentage must be at least 0." })
     .max(100, { message: "Product discount percentage must be at most 100." }),
 
-  startDate: z.string().refine((val) => dayjs(val).isValid(), {
-    message: "Invalid start date.",
-  }),
+  startDate: z
+    .string({ required_error: "Discount start date is required." })
+    .regex(dateOnlyRegex, {
+      message: "Start date must be in YYYY-MM-DD format.",
+    }), // ← Remove .transform((val) => new Date(val))
 
-  endDate: z.string().refine((val) => dayjs(val).isValid(), {
-    message: "Invalid end date.",
-  }),
+  endDate: z
+    .string({ required_error: "Discount end date is required." })
+    .regex(dateOnlyRegex, {
+      message: "End date must be in YYYY-MM-DD format.",
+    }), // ← Remove .transform((val) => new Date(val))
 
   startTime: z
-    .any()
-    .transform((val) => (dayjs.isDayjs(val) ? val.format("HH:mm") : val))
-    .refine((val) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(val), {
-      message: "Invalid start time format. Expected HH:mm.",
-    }),
+    .string({ required_error: "Discount start time is required." })
+    .regex(timeOnlyRegex, { message: "Start time must be in HH:mm format." }),
 
   endTime: z
-    .any()
-    .transform((val) => (dayjs.isDayjs(val) ? val.format("HH:mm") : val))
-    .refine((val) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(val), {
-      message: "Invalid end time format. Expected HH:mm.",
-    }),
+    .string({ required_error: "Discount end time is required." })
+    .regex(timeOnlyRegex, { message: "End time must be in HH:mm format." }),
 });
 
 export const createProductValidationSchema = z.object({

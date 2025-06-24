@@ -49,6 +49,7 @@ export default function UpdateUserImage({ photoLink }: { photoLink: string }) {
               boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.15)",
               border: "2px solid #ffffff",
               transition: "transform 0.3s ease-in-out",
+              objectFit: "fill",
             }}
           />
         )}

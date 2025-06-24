@@ -107,6 +107,7 @@ export default function BestSellerCard({ product }: { product: IProduct }) {
         >
           <WishListButton
             id={product._id}
+            isWishList={product.isWishList}
             sx={{
               color: "primary.main",
               border: "1px solid #cccccc",

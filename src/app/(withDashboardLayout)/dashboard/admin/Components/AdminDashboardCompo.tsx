@@ -1,9 +1,7 @@
 import Header from "@/components/shared/header/Header";
-import { adminDashboardBgColor } from "@/style";
+import DashboardStatsGrid from "@/components/ui/card/DashboardStatsGrid";
 import { IDashboardStats } from "@/types";
-import dashboardStatsDataBGGenerator from "@/utils/dashboard-stats-data-bg-generator";
 import { Container } from "@mui/material";
-import AdminDashboardStatsCompo from "./AdminDashboardStatsCompo";
 
 interface AdminDashboardCompoProps {
   dashboardStats: IDashboardStats[];
@@ -14,18 +12,14 @@ export default function AdminDashboardCompo({
 }: {
   data: AdminDashboardCompoProps;
 }) {
-  const dashboardStatsData = dashboardStatsDataBGGenerator(
-    data.dashboardStats,
-    adminDashboardBgColor
-  );
-
   return (
     <Container sx={{ pb: 4 }}>
       <Header
         title="Admin Dashboard Overview"
         subtitle="View Key Metrics and Track Your Store’s Performance"
       />
-      <AdminDashboardStatsCompo dashboardStats={dashboardStatsData} />
+
+      <DashboardStatsGrid data={data.dashboardStats} />
     </Container>
   );
 }

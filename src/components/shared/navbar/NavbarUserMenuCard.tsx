@@ -3,7 +3,6 @@ import navbarUserMenu from "@/routes/navbar-user-munu";
 import { Box, Divider, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface NavbarUserMenuCardProps {
@@ -32,12 +31,10 @@ export default function NavbarUserMenuCard({
 
   const { logoutUser } = useAuth();
 
-  const router = useRouter();
-
   const handleLogout = () => {
     onClose();
     toast.success("Logout successful");
-    logoutUser({ router });
+    logoutUser({ redirectPath: "/" });
   };
 
   return (

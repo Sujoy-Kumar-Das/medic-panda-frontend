@@ -2,16 +2,13 @@
 import { useAuth } from "@/hooks/useAuth";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Button } from "@mui/material";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function DashboardLogoutButton() {
   const { logoutUser } = useAuth();
 
-  const router = useRouter();
-
   const handleLogout = () => {
-    logoutUser({ router, path: "/" });
+    logoutUser({ redirectPath: "/" });
     toast.success("Logout successfully");
   };
   return (

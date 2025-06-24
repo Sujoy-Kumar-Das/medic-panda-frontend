@@ -1,7 +1,6 @@
 "use client";
 import useToggleState from "@/hooks/useToggleState";
-import { useGetAllCategoriesQuery } from "@/redux/api";
-import { IProduct } from "@/types";
+import { ICategory, IProduct } from "@/types";
 import { Box, Grid } from "@mui/material";
 import CategoryModal from "./CategoryModal";
 import ProductCategory from "./ProductCategory";
@@ -10,11 +9,15 @@ import ProductSearchWithCategoryModalButton from "./ProductSearchWithCategoryMod
 
 interface IProductProps {
   products: IProduct[];
+  categories: ICategory[];
   meta: any;
 }
 
-export default function ProductDrawer({ products, meta }: IProductProps) {
-  const { data, isLoading } = useGetAllCategoriesQuery(undefined);
+export default function ProductDrawer({
+  products,
+  categories,
+  meta,
+}: IProductProps) {
   const categoryModal = useToggleState();
 
   return (
@@ -43,10 +46,7 @@ export default function ProductDrawer({ products, meta }: IProductProps) {
                 display: { xs: "none", md: "block" },
               }}
             >
-              <ProductCategory
-                categories={data?.result}
-                isLoading={isLoading}
-              />
+              <ProductCategory categories={categories} />
             </Box>
           </Box>
         </Grid>
@@ -57,7 +57,12 @@ export default function ProductDrawer({ products, meta }: IProductProps) {
       </Grid>
 
       {/* category modal for mobile */}
-      {categoryModal.state && <CategoryModal onClose={categoryModal.onClose} />}
+      {categoryModal.state && (
+        <CategoryModal
+          categories={categories}
+          onClose={categoryModal.onClose}
+        />
+      )}
     </>
   );
 }

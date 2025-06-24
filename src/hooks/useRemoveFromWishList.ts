@@ -7,7 +7,6 @@ export default function useRemoveFromWishList() {
 
   // handle remove from wishlist
   const handlerFunc = async (id: string) => {
-    console.log({ id });
     await removeFromWishList(id);
   };
 

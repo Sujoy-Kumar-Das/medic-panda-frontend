@@ -10,8 +10,6 @@ export default function useChangePassword() {
 
   const { logoutUser } = useAuth();
 
-  const router = useRouter();
-
   const handlerFunc = async (value: FieldValues) => {
     await changePassword(value);
   };
@@ -19,7 +17,7 @@ export default function useChangePassword() {
   useApiMutationResponseHandler({
     successMessage: "Password updated. Sign in to continue.",
     apiResponse,
-    onClose: () => logoutUser({ router, path: "/register/login" }),
+    onClose: () => logoutUser({ redirectPath: "/register/login" }),
   });
 
   return { handlerFunc, ...apiResponse };

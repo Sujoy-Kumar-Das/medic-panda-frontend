@@ -1,15 +1,24 @@
-import { authKey } from "@/constants/auth.key";
-import { ILogoutParams } from "@/types";
-import { deleteCookies } from "@/utils/deleteCookies";
-import { removeFromLocalStorage } from "./local-storage";
+"use client";
 
-const logoutUser = ({ router, path }: ILogoutParams) => {
-  deleteCookies(authKey, "refreshToken");
-  removeFromLocalStorage(authKey);
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-  if (router) {
-    router.push(path || "/");
+export const logoutUserFunc = async (
+  router: AppRouterInstance,
+  redirectPath: string = "/"
+) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_base_url_local}/auth/logout`,
+    {
+      method: "POST",
+      credentials: "include",
+    }
+  );
+
+  if (!res.ok) {
+    const error = await res.json();
+    console.error("Logout failed:", error);
+    return;
   }
-};
 
-export default logoutUser;
+  router.push(redirectPath);
+};

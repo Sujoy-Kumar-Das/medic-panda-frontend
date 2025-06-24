@@ -9,7 +9,7 @@ import { useAuth } from "./useAuth";
 import useRedirect from "./useRedirect";
 import useSyncCart from "./useSyncCart";
 
-export const useLogin = () => {
+export const useLogin = (onSuccess?: () => void) => {
   const [login, { isSuccess: isLoginSuccess, ...apiResponse }] =
     useLoginMutation();
 
@@ -45,10 +45,10 @@ export const useLogin = () => {
       router.push(redirect);
       handleCartSync({ isLoginSuccess });
       loginUser();
+      onSuccess && onSuccess();
     }
 
     if (error && isError) {
-      console.log({ error });
       const errorMessage = (error as IGenericErrorResponse).message;
       toast.error(errorMessage);
     }

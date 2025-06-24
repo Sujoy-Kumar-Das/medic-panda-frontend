@@ -27,7 +27,7 @@ const PandaDatePicker = ({
     <Controller
       name={name}
       control={control}
-      defaultValue={null}
+      defaultValue=""
       render={({ field: { onChange, value, ...field } }) => {
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -36,19 +36,20 @@ const PandaDatePicker = ({
               timezone="system"
               disablePast
               {...field}
-              value={value ? dayjs(value) : null}
-              onChange={(newValue) =>
-                onChange(newValue ? newValue.toISOString() : "")
-              }
+              value={value ? dayjs(value, "YYYY-MM-DD") : null}
+              onChange={(newValue) => {
+                const formatted = newValue
+                  ? dayjs(newValue).format("YYYY-MM-DD")
+                  : "";
+                onChange(formatted);
+              }}
               slotProps={{
                 textField: {
-                  required: required,
-                  size: size,
-                  sx: {
-                    ...sx,
-                  },
+                  required,
+                  size,
+                  sx: { ...sx },
                   variant: "outlined",
-                  fullWidth: fullWidth,
+                  fullWidth,
                 },
               }}
             />

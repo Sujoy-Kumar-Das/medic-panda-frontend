@@ -1,15 +1,18 @@
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import { useGetAllCategoriesQuery } from "@/redux/api";
+import { ICategory } from "@/types";
 import { Close } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import ProductCategory from "./ProductCategory";
 
 interface ICategoryModalProps {
   onClose: () => void;
+  categories: ICategory[];
 }
 
-export default function CategoryModal({ onClose }: ICategoryModalProps) {
-  const { data, isLoading } = useGetAllCategoriesQuery(undefined);
+export default function CategoryModal({
+  onClose,
+  categories,
+}: ICategoryModalProps) {
   return (
     <CustomModal open onClose={onClose} sxProps={{ textAlign: "center" }}>
       <Box sx={{ display: { xs: "block", md: "none" } }}>
@@ -19,11 +22,7 @@ export default function CategoryModal({ onClose }: ICategoryModalProps) {
         >
           <Close />
         </IconButton>
-        <ProductCategory
-          categories={data?.result}
-          isLoading={isLoading}
-          onClose={onClose}
-        />
+        <ProductCategory categories={categories} onClose={onClose} />
       </Box>
     </CustomModal>
   );
