@@ -1,5 +1,6 @@
 export const loginMutation = (data: any) => ({
-  url: "/auth/login",
+  url: "/api/proxy/auth/login",
   method: "POST",
   data,
+  withCredentials: true,
 });

@@ -1,4 +1,6 @@
 import { IGenericErrorResponse } from "@/types";
+import getNewAccessToken from "@/utils/get-access-token";
+import { logoutUserFunc } from "@/utils/logoutUser";
 import axios, { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({ withCredentials: true });
@@ -21,7 +23,33 @@ axiosInstance.interceptors.response.use(
   function (response: AxiosResponse) {
     return { data: response?.data?.data };
   },
-  function (error) {
+
+  async function (error) {
+    const config = error.config;
+
+    if (error?.response?.status === 500 && !config._retry) {
+      config._retry = true;
+
+      const res = await getNewAccessToken();
+
+      if (!res.ok) {
+        await logoutUserFunc();
+        return Promise.reject({
+          success: false,
+          statusCode: 401,
+          message: "Session expired. Please log in again.",
+          errorMessages: [
+            {
+              path: "auth",
+              message: "Your session has expired. Please log in again.",
+            },
+          ],
+        });
+      }
+
+      return axiosInstance(config);
+    }
+
     const errorResponseData = error?.response?.data || {};
 
     const responseObject: IGenericErrorResponse = {

@@ -1,5 +1,5 @@
 export const updateUserEmailMutation = (data: any) => ({
-  url: "/user/email/",
+  url: "/api/proxy/user/email/",
   method: "PATCH",
   data,
 });

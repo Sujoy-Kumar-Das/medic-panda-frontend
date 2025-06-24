@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 
 const AuthContextProvider = ({ children }: { children: ReactElement }) => {
-  const { data, refetch } = useGetMeQuery(undefined);
+  const { data, refetch, error } = useGetMeQuery(undefined);
   const [user, setUser] = useState<IModifiedUserData | null>(null);
 
   const router = useRouter();
@@ -19,6 +19,9 @@ const AuthContextProvider = ({ children }: { children: ReactElement }) => {
 
   const loginUser = useCallback(async () => {
     const newData = await refetch();
+
+    console.log({ newData });
+
     setUser(newData.data ? modifyUserData(newData.data) : null);
   }, [refetch]);
 

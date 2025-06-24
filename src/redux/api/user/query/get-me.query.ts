@@ -1,4 +1,5 @@
 export const getMeQuery = () => ({
-  url: "/user/get-me",
+  url: "/api/proxy/user/get-me",
   method: "GET",
+  withCredentials: true,
 });

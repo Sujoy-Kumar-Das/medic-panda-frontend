@@ -22,9 +22,13 @@ export const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params, headers, contentType, signal }) => {
+    // check is it next js api or not
+    const isNextApi = url.startsWith("/api");
+    const targetUrl = isNextApi ? url : baseUrl + url;
+
     try {
       const result = await axiosInstance({
-        url: baseUrl + url,
+        url: targetUrl,
         method,
         data,
         params,
@@ -33,6 +37,7 @@ export const axiosBaseQuery =
           "Content-Type": contentType || "application/json",
         },
         signal,
+        withCredentials: true,
       });
       return result;
     } catch (axiosError) {

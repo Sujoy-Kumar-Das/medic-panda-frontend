@@ -3,7 +3,7 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const logoutUserFunc = async (
-  router: AppRouterInstance,
+  router?: AppRouterInstance,
   redirectPath: string = "/"
 ) => {
   const res = await fetch(
@@ -20,5 +20,5 @@ export const logoutUserFunc = async (
     return;
   }
 
-  router.push(redirectPath);
+  router ? router.push(redirectPath) : (window.location.href = redirectPath);
 };
