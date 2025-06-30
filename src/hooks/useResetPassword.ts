@@ -13,7 +13,7 @@ export default function useResetPassword() {
   const [resetPassword, apiResponse] = useResetPasswordMutation();
 
   const handlerFunc = async (values: FieldValues) => {
-    await resetPassword({ data: values, token });
+    await resetPassword({ data: values, token: token as string });
   };
 
   useApiMutationResponseHandler({

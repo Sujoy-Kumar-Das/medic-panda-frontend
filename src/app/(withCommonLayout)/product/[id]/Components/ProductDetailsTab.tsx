@@ -14,12 +14,26 @@ interface IProductDetailsTab {
   manufacture: IManufacturer;
 }
 
+const reviewTabItems = {
+  tabs: [
+    { title: "More Information", value: "1" },
+    { title: "Reviews", value: "2" },
+    { title: "Add Review", value: "3" },
+  ],
+
+  panels: [
+    { Component: MoreDetails, value: "1" },
+    { Component: ProductReviewTab, value: "2" },
+    { Component: AddReviewTab, value: "3" },
+  ],
+};
+
 export default function ProductDetailsTab({
   productId,
   category,
   manufacture,
 }: IProductDetailsTab) {
-  const [value, setValue] = useState<string>("1");
+  const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -31,20 +45,21 @@ export default function ProductDetailsTab({
         sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
         <TabList onChange={handleChange}>
-          <Tab label="More Information" value="1" sx={{ p: 0 }} />
-          <Tab label="Reviews" value="2" />
-          <Tab label="Add Review" value="3" />
+          {reviewTabItems.tabs.map((item) => (
+            <Tab key={item.value} label={item.title} value={item.value} />
+          ))}
         </TabList>
       </Box>
-      <TabPanel value="1" sx={{ px: 0 }}>
-        <MoreDetails category={category} manufacture={manufacture} />
-      </TabPanel>
-      <TabPanel value="2" sx={{ px: 0 }}>
-        <ProductReviewTab productId={productId} />
-      </TabPanel>
-      <TabPanel value="3" sx={{ px: 0 }}>
-        <AddReviewTab productId={productId} />
-      </TabPanel>
+
+      {reviewTabItems.panels.map(({ value: panelValue, Component }) => (
+        <TabPanel key={panelValue} value={panelValue} sx={{ px: 0 }}>
+          <Component
+            productId={productId}
+            category={category}
+            manufacture={manufacture}
+          />
+        </TabPanel>
+      ))}
     </TabContext>
   );
 }

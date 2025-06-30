@@ -1,4 +1,5 @@
 export const getSingleOrderByAdminQuery = (id: string) => ({
-  url: `/order/${id}/admin`,
+  url: `/api/proxy/order/${id}/admin`,
   method: "GET",
+  withCredentials: true,
 });

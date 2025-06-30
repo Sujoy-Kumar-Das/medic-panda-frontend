@@ -1,7 +1,8 @@
 export const addToCartMutation = (data: any) => {
   return {
-    url: "/cart",
+    url: "/api/proxy/cart",
     method: "POST",
     data,
+    withCredentials: true,
   };
 };

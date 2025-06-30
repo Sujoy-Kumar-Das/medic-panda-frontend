@@ -3,6 +3,7 @@ import {
   changePasswordMutation,
   forgotPasswordMutation,
   loginMutation,
+  resetPasswordMutation,
 } from "./mutations";
 
 const authApi = baseApi.injectEndpoints({
@@ -10,21 +11,23 @@ const authApi = baseApi.injectEndpoints({
     login: builder.mutation({
       query: loginMutation,
     }),
+
     changePassword: builder.mutation({
       query: changePasswordMutation,
     }),
+
     forgotPassword: builder.mutation({
       query: forgotPasswordMutation,
     }),
 
     resetPassword: builder.mutation({
-      query: ({ data, token }) => ({
-        url: "/auth/reset-password",
+      query: resetPasswordMutation,
+    }),
+
+    getAccessToken: builder.mutation({
+      query: () => ({
+        url: "/api/proxy/auth/refresh-token",
         method: "POST",
-        data,
-        headers: {
-          Authorization: token,
-        },
       }),
     }),
   }),
@@ -35,4 +38,5 @@ export const {
   useChangePasswordMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useGetAccessTokenMutation,
 } = authApi;

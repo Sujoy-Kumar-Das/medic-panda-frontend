@@ -1,28 +1,60 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
-import useToggleState from "@/hooks/useToggleState";
-import { IReview } from "@/types";
-import { Box, Stack } from "@mui/material";
-import ReviewCard from "./ReviewCard";
-import ReviewReplyContainer from "./ReviewReplyContainer";
+import useDeleteReply from "@/hooks/useDeleteReply";
+import useDeleteReview from "@/hooks/useDeleteReview";
+import useProductReviewAndReplyContext from "@/hooks/useProductReviewAndReplyContext";
+import { IReply, IReview } from "@/types";
+import { Stack } from "@mui/material";
+import { useState } from "react";
+import ReviewHeader from "./ReviewHeader";
+import ReviewList from "./ReviewList";
+import ReviewModals from "./ReviewModal";
 
 function ProductReviewCompo({ data: reviews }: { data: IReview[] }) {
   const { user } = useAuth();
-  // handle the reviews show with buttons;
-  const { state, toggle } = useToggleState(false);
+
+  const [activeReply, setActiveReply] = useState<IReply | undefined>(undefined);
+
+  const { add, edit, handleChangeAction, activeReview } =
+    useProductReviewAndReplyContext();
+
+  const { handlerDeleteReview, reviewLoadingIds } = useDeleteReview();
+  const { handleReplyDelete, loadingIds } = useDeleteReply();
+
+  const handleEditReply = (reply: IReply) => {
+    setActiveReply(reply);
+  };
+
+  const handleCloseReplyModal: () => void = () => {
+    setActiveReply(undefined);
+  };
+
   return (
     <Stack spacing={4}>
-      {reviews.map((review) => (
-        <Box key={review._id} sx={{ width: "100%" }}>
-          <ReviewCard
-            review={review}
-            userId={user?.id}
-            state={state}
-            onToggle={toggle}
-          />
-          {state && <ReviewReplyContainer reviewId={review._id} />}
-        </Box>
-      ))}
+      <ReviewHeader reviewCount={reviews.length} />
+
+      <ReviewList
+        reviews={reviews}
+        user={user}
+        activeReview={activeReview}
+        add={add}
+        edit={edit}
+        reviewLoadingIds={reviewLoadingIds}
+        loadingIds={loadingIds}
+        onChangeAction={handleChangeAction}
+        onDeleteReview={handlerDeleteReview}
+        onEditReply={handleEditReply}
+        onDeleteReply={handleReplyDelete}
+      />
+
+      <ReviewModals
+        add={add}
+        edit={edit}
+        activeReview={activeReview}
+        activeReply={activeReply}
+        onChangeAction={handleChangeAction}
+        onCloseReplyModal={handleCloseReplyModal}
+      />
     </Stack>
   );
 }

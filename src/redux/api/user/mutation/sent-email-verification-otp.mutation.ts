@@ -1,4 +1,5 @@
 export const sentEmailVerificationOTP = () => ({
-  url: "/user/verify-email",
+  url: "/api/proxy/user/verify-email",
   method: "PATCH",
+  withCredentials: true,
 });

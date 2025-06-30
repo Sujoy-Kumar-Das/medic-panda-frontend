@@ -1,7 +1,8 @@
 export const unblockUserMutation = (data: any) => {
   return {
-    url: "/user/unblock-user",
+    url: "/api/proxy/user/unblock-user",
     method: "PATCH",
     data,
+    withCredentials: true,
   };
 };

@@ -1,4 +1,4 @@
-interface IUser {
+export interface IReviewUser {
   _id: string;
   photo: string;
   name: string;
@@ -6,8 +6,8 @@ interface IUser {
 
 export interface IReply {
   _id: string;
-  user: IUser;
-  reply: string;
+  user: IReviewUser;
+  comment: string;
   createdAt: string;
 }
 
@@ -17,6 +17,6 @@ export interface IReview {
   comment: string;
   rating: number;
   createdAt: string;
-  user: IUser;
+  user: IReviewUser;
   replies: IReply[];
 }

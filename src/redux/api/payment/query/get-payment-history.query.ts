@@ -1,4 +1,5 @@
 export const getPaymentHistoryQuery = () => ({
-  url: "/payment",
+  url: "/api/proxy/payment",
   method: "GET",
+  withCredentials: true,
 });

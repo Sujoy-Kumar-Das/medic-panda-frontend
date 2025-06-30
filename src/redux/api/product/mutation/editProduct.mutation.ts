@@ -6,8 +6,9 @@ export const editProductMutation = ({
   data: any;
 }) => {
   return {
-    url: `/product/${id}`,
+    url: `/api/proxy/product/${id}`,
     method: "PATCH",
     data,
+    withCredentials: true,
   };
 };

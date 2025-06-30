@@ -6,8 +6,9 @@ export const getAllOrdersQuery = (query: any) => {
     });
   }
   return {
-    url: `/order`,
+    url: `/api/proxy/order`,
     method: "GET",
     params,
+    withCredentials: true,
   };
 };

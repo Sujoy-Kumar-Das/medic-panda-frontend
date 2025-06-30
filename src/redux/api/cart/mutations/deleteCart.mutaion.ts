@@ -1,6 +1,7 @@
 export const deleteCartMutation = (id: string) => {
   return {
-    url: `/cart/${id}`,
+    url: `/api/proxy/cart/${id}`,
     method: "DELETE",
+    withCredentials: true,
   };
 };

@@ -1,4 +1,5 @@
 export const getSingleCartQuery = (id: string) => ({
-  url: `/cart/${id}`,
+  url: `/api/proxy/cart/${id}`,
   method: "GET",
+  withCredentials: true,
 });

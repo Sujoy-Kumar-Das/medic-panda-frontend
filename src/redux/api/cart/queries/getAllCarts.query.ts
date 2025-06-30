@@ -1,4 +1,5 @@
 export const getAllCartsQuery = () => ({
-  url: "/cart",
+  url: "/api/proxy/cart",
   method: "GET",
+  withCredentials: true,
 });

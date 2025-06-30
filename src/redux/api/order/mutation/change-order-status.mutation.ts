@@ -5,7 +5,8 @@ export const changeOrderStatusMutation = ({
   id: string;
   data: any;
 }) => ({
-  url: `/order/change-status/${id}`,
+  url: `/api/proxy/order/change-status/${id}`,
   method: "PATCH",
   data,
+  withCredentials: true,
 });

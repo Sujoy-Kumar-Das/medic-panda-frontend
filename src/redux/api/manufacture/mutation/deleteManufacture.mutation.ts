@@ -1,4 +1,5 @@
 export const deleteManufactureMutation = (id: string) => ({
-  url: `/manufacturer/${id}`,
+  url: `/api/proxy/manufacturer/${id}`,
   method: "DELETE",
+  withCredentials: true,
 });

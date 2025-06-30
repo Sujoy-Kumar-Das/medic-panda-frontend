@@ -1,4 +1,5 @@
 export const paymentNowMutation = (id: string) => ({
-  url: `/pay-now/${id}`,
+  url: `/api/proxy/pay-now/${id}`,
   method: "POST",
+  withCredentials: true,
 });

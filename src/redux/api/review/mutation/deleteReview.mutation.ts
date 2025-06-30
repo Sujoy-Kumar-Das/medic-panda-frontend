@@ -1,4 +1,5 @@
 export const deleteReviewMutation = (id: string) => ({
-  url: `/review/${id}`,
+  url: `/api/proxy/review/${id}`,
   method: "DELETE",
+  withCredentials: true,
 });

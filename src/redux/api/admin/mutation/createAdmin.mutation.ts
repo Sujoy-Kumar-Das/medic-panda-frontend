@@ -1,7 +1,8 @@
 export const createAdminMutation = (data: any) => {
   return {
-    url: "/user/admin",
+    url: "/api/proxy/user/admin",
     method: "POST",
     data,
+    withCredentials: true,
   };
 };

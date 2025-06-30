@@ -20,8 +20,6 @@ const AuthContextProvider = ({ children }: { children: ReactElement }) => {
   const loginUser = useCallback(async () => {
     const newData = await refetch();
 
-    console.log({ newData });
-
     setUser(newData.data ? modifyUserData(newData.data) : null);
   }, [refetch]);
 

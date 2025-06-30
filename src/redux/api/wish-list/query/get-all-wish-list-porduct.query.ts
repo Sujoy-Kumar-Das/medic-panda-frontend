@@ -1,5 +1,5 @@
 export const getAllWishListProductsQuery = (params: any) => ({
-  url: "/wish-list",
+  url: "/api/proxy/wish-list",
   method: "GET",
   params,
 });

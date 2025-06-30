@@ -1,29 +1,39 @@
 "use client";
 import ErrorCard from "@/components/shared/error/ErrorCard";
 import NoDataFoundCard from "@/components/shared/notFound/NoDataFoundCard";
+import ProductReviewAndReplyContextProvider from "@/lib/providers/ProductReviewAndReplyContextProvider";
 import { useGetAllReviewQuery } from "@/redux/api";
-import ProductReviewHOC from "./ProductReviewHOC";
+import { IGenericErrorResponse } from "@/types";
+import ProductReviewCompo from "./ProductReviewCompo";
 import ReviewSkeletons from "./ReviewCardSkeletons";
 
 const ProductReviewTab = ({ productId }: { productId: string }) => {
-  const query = useGetAllReviewQuery(productId);
+  const { data, isLoading, error } = useGetAllReviewQuery(productId);
+
+  if (isLoading) {
+    return <ReviewSkeletons />;
+  }
+
+  if (error) {
+    return <ErrorCard error={error as IGenericErrorResponse} />;
+  }
+
+  if (!data.length) {
+    return (
+      <NoDataFoundCard
+        title="No Reviews Found"
+        subtitle="Be the first to share your thoughts about this product."
+        sxProps={{
+          marginTop: 3,
+        }}
+      />
+    );
+  }
 
   return (
-    <ProductReviewHOC
-      query={query}
-      noDataMessage="This item had no review."
-      LoaderCompo={ReviewSkeletons}
-      NoDataCompo={() => (
-        <NoDataFoundCard
-          title="No Reviews Found"
-          subtitle="Be the first to share your thoughts about this product."
-          sxProps={{
-            marginTop: 3,
-          }}
-        />
-      )}
-      ErrorCompo={ErrorCard}
-    />
+    <ProductReviewAndReplyContextProvider>
+      <ProductReviewCompo data={data} />
+    </ProductReviewAndReplyContextProvider>
   );
 };
 

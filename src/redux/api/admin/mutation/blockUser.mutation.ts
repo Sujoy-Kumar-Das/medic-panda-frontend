@@ -1,7 +1,8 @@
 export const blockUserMutation = (data: any) => {
   return {
-    url: "/user/block-user",
+    url: "/api/proxy/user/block-user",
     method: "PATCH",
     data,
+    withCredentials: true,
   };
 };

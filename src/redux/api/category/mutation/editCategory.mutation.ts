@@ -6,8 +6,9 @@ export const editCategoryMutation = ({
   data: any;
 }) => {
   return {
-    url: `/category/${id}`,
+    url: `/api/proxy/category/${id}`,
     method: "PATCH",
     data,
+    withCredentials: true,
   };
 };

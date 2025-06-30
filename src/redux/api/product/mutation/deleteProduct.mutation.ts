@@ -1,4 +1,5 @@
 export const deleteProductMutation = (id: string) => ({
-  url: `/product/${id}`,
+  url: `/api/proxy/product/${id}`,
   method: "DELETE",
+  withCredentials: true,
 });

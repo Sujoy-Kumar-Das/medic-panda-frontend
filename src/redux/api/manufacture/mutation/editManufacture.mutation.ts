@@ -5,7 +5,8 @@ export const editManufactureMutation = ({
   id: string;
   data: any;
 }) => ({
-  url: `/manufacturer/${id}`,
+  url: `/api/proxy/manufacturer/${id}`,
   method: "PATCH",
   data,
+  withCredentials: true,
 });

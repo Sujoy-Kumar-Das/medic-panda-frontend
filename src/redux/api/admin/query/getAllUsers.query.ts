@@ -1,5 +1,6 @@
 export const getAllUsersQuery = (params: any) => ({
-  url: "/user",
+  url: "/api/proxy//user",
   method: "GET",
   params,
+  withCredentials: true,
 });

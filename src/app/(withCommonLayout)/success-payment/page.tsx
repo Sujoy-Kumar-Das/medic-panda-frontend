@@ -1,8 +1,12 @@
 "use client";
+import getNewAccessToken from "@/utils/get-access-token";
+import { logoutUserFunc } from "@/utils/logoutUser";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { keyframes } from "@mui/system";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const bounceAnimation = keyframes`
   0% { transform: scale(1); }
@@ -11,6 +15,20 @@ const bounceAnimation = keyframes`
 `;
 
 export default function PaymentSuccessPage() {
+  const router = useRouter();
+
+  const handleGetAccessToken = async () => {
+    const res = await getNewAccessToken();
+
+    if (!res.ok) {
+      toast.error("Your session is expired please login.");
+      await logoutUserFunc(router, "/register/login");
+      return;
+    }
+
+    router.push("/dashboard/user/orders");
+  };
+
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", my: 10 }}>
       <CheckCircleIcon
@@ -43,8 +61,9 @@ export default function PaymentSuccessPage() {
             textTransform: "none",
             fontSize: "1rem",
           }}
-          component={Link}
-          href="/dashboard/user/orders"
+          // component={Link}
+          // href="/dashboard/user/orders"
+          onClick={handleGetAccessToken}
         >
           View My Orders
         </Button>

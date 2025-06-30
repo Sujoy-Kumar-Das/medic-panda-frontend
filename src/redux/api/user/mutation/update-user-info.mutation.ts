@@ -1,5 +1,6 @@
 export const updateUserInfoMutation = (data: any) => ({
-  url: `/user`,
+  url: `/api/proxy/user`,
   method: "PATCH",
   data,
+  withCredentials: true,
 });

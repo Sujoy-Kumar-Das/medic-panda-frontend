@@ -1,5 +1,6 @@
 export const placeOrderMutation = (data: any) => ({
-  url: "/order",
+  url: "/api/proxy/order",
   method: "POST",
   data,
+  withCredentials: true,
 });

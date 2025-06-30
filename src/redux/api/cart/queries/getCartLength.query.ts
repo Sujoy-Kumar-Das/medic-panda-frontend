@@ -1,4 +1,5 @@
 export const getCartLengthQuery = () => ({
-  url: `/cart-length`,
+  url: `/api/proxy/cart-length`,
   method: "GET",
+  withCredentials: true,
 });

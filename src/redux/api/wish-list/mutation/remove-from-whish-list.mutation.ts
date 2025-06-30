@@ -1,4 +1,5 @@
 export const removeWishListProductMutation = (id: string) => ({
-  url: `/wish-list/${id}`,
+  url: `/api/proxy/wish-list/${id}`,
   method: "DELETE",
+  withCredentials: true,
 });

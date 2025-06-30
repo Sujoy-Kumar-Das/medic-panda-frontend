@@ -1,8 +1,21 @@
 "use client";
+import useCreateReview from "@/hooks/useCreateReview";
+import { reviewValidationSchema } from "@/schemas/review.schema";
 import { Box, Typography } from "@mui/material";
-import AddReviewForm from "./AddReviewForm";
+import { FieldValues } from "react-hook-form";
+import ReviewForm from "./ReviewForm";
+
+const defaultValues = {
+  comment: "",
+  rating: 0,
+};
 
 export default function AddReviewTab({ productId }: { productId: string }) {
+  const { handlerFunc, isLoading } = useCreateReview();
+
+  const handleAddReview = async (values: FieldValues) => {
+    await handlerFunc(values, productId);
+  };
   return (
     <Box>
       <Typography
@@ -18,7 +31,15 @@ export default function AddReviewTab({ productId }: { productId: string }) {
         Add a Review
       </Typography>
 
-      <AddReviewForm productId={productId} />
+      <ReviewForm
+        onSubmit={handleAddReview}
+        isLoading={isLoading}
+        defaultValues={defaultValues}
+        validationSchema={reviewValidationSchema}
+        isReply={false}
+        btnText="Add Comment"
+        loadingIndicator="Adding Comment..."
+      />
     </Box>
   );
 }

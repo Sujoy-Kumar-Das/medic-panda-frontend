@@ -1,4 +1,5 @@
 export const getSingleOrderQuery = (id: string) => ({
-  url: `/order/${id}`,
+  url: `/api/proxy/order/${id}`,
   method: "GET",
+  withCredentials: true,
 });

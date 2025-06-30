@@ -41,7 +41,6 @@ export const getAllProductService = async ({
 
   const data = await res.json();
 
-  console.log({ url: `${process.env.NEXT_PUBLIC_base_url_local}` });
   return data;
 };
 

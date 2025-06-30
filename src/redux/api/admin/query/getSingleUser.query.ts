@@ -1,4 +1,5 @@
 export const getSingleUserQuery = ({ id }: { id: string }) => ({
-  url: `/user/${id}`,
+  url: `/api/proxy/user/${id}`,
   method: "GET",
+  withCredentials: true,
 });

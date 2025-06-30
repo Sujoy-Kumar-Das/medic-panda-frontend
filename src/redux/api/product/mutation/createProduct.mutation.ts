@@ -1,5 +1,6 @@
 export const createProductMutation = (data: any) => ({
-  url: "/product",
+  url: "/api/proxy/product",
   method: "POST",
   data,
+  withCredentials: true,
 });

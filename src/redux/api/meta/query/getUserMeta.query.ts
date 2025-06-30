@@ -1,4 +1,5 @@
 export const getUserMetaQuery = () => ({
-  url: "/meta/user",
+  url: "/api/proxy/meta/user",
   method: "GET",
+  withCredentials: true,
 });

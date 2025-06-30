@@ -1,4 +1,5 @@
 export const deleteCategoryMutation = (id: string) => ({
-  url: `/category/${id}`,
+  url: `/api/proxy/category/${id}`,
   method: "DELETE",
+  withCredentials: true,
 });

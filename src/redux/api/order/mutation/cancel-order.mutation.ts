@@ -1,4 +1,5 @@
 export const cancelOrderMutation = (id: string) => ({
-  url: `/order/cancel/${id}`,
+  url: `/api/proxy/order/cancel/${id}`,
   method: "PATCH",
+  withCredentials: true,
 });

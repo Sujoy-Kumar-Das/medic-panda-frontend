@@ -1,31 +1,37 @@
 import CustomModal from "@/components/modal/customModal/CustomModal";
-import useReplyDefaultValue from "@/hooks/useReplyDefaultValue";
-import EditModalFormSkeleton from "./EditModalFormSkeleton";
-import EditReplyForm from "./EditReplyForm";
+import useEditReply from "@/hooks/useEditReply";
+import { replyValidationSchema } from "@/schemas/reply.schema";
+import { IReply } from "@/types";
+import { FieldValues } from "react-hook-form";
+import ReviewForm from "./ReviewForm";
 
 interface EditReplyModalProps {
-  open: boolean;
   onClose: () => void;
-  replyId: string;
+  reply: IReply | null;
 }
 
 export default function EditReplyModal({
-  open,
   onClose,
-  replyId,
+  reply,
 }: EditReplyModalProps) {
-  const { defaultValue } = useReplyDefaultValue(replyId);
+  const { handleEditReply, isLoading } = useEditReply(onClose);
+
+  const handleEditReplyWithValues = async (values: FieldValues) => {
+    await handleEditReply(values, reply?._id as string);
+  };
+
   return (
-    <CustomModal open={open} onClose={onClose}>
-      {defaultValue ? (
-        <EditReplyForm
-          replyId={replyId}
-          onClose={onClose}
-          defaultValues={defaultValue}
-        />
-      ) : (
-        <EditModalFormSkeleton />
-      )}
+    <CustomModal open onClose={onClose}>
+      <ReviewForm
+        onSubmit={handleEditReplyWithValues}
+        defaultValues={{ comment: reply?.comment }}
+        isLoading={isLoading}
+        validationSchema={replyValidationSchema}
+        btnText="Edit Reply"
+        loadingIndicator="Editing Reply..."
+        isReply={true}
+        onClose={onClose}
+      />
     </CustomModal>
   );
 }

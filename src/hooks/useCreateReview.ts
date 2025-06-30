@@ -5,11 +5,11 @@ import { toast } from "sonner";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 import { useAuth } from "./useAuth";
 
-export default function useCreateReview(id: string) {
+export default function useCreateReview() {
   const [createReview, apiResponse] = useCreateReviewMutation();
   const { user } = useAuth();
 
-  const handlerFunc = async (values: FieldValues) => {
+  const handlerFunc = async (values: FieldValues, id: string) => {
     if (!user) {
       toast.error("Please, login to add a review.");
       return;

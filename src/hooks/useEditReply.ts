@@ -4,10 +4,10 @@ import { useEditReplyMutation } from "@/redux/api";
 import { FieldValues } from "react-hook-form";
 import { useApiMutationResponseHandler } from "./useApiMutationResponseHandler";
 
-export default function useEditReply(id: string, onClose: () => void) {
+export default function useEditReply(onClose: () => void) {
   const [edit, apiResponse] = useEditReplyMutation();
 
-  const handlerFunc = async (data: FieldValues) => {
+  const handleEditReply = async (data: FieldValues, id: string) => {
     await edit({ data, id });
   };
 
@@ -17,5 +17,5 @@ export default function useEditReply(id: string, onClose: () => void) {
     onClose,
   });
 
-  return { handlerFunc, ...apiResponse };
+  return { handleEditReply, ...apiResponse };
 }

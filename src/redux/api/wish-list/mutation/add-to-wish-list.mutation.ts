@@ -1,7 +1,8 @@
 export const addToWishListMutation = (data: any) => {
   return {
-    url: "/wish-list",
+    url: "/api/proxy/wish-list",
     method: "POST",
     data,
+    withCredentials: true,
   };
 };

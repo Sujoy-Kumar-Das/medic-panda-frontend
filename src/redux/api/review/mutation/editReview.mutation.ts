@@ -5,7 +5,8 @@ export const editReviewMutation = ({
   data: any;
   id: string;
 }) => ({
-  url: `/review/${id}`,
+  url: `/api/proxy/review/${id}`,
   method: "PATCH",
   data,
+  withCredentials: true,
 });

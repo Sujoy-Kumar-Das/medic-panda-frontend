@@ -1,6 +1,7 @@
 export const getAdminMetaQuery = () => {
   return {
-    url: "/meta/admin",
+    url: "/api/proxy/meta/admin",
     method: "GET",
+    withCredentials: true,
   };
 };

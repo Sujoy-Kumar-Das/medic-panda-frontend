@@ -1,5 +1,6 @@
 export const createCategoryMutation = (data: any) => ({
-  url: "/category",
+  url: "/api/proxy/category",
   method: "POST",
   data,
+  withCredentials: true,
 });
