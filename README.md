@@ -204,3 +204,13 @@ Visit the app at: http://localhost:3000
 ### 👤 Admin Dashboard (Users)
 
 ![Admin Users](https://github.com/user-attachments/assets/3394bb91-ae62-4740-901a-422929822352)
+
+## 🙋‍♂️ Author
+
+**Sujoy Kumar Das**
+
+Frontend Developer | React Developer | MERN Stack Enthusiast
+
+- GitHub: [@Sujoy-Kumar-Das](https://github.com/Sujoy-Kumar-Das)
+- LinkedIn: [devsujoykumardas](https://dev-sujoy.vercel.app/)
+- Portfolio: [portfolio.com](https://dev-sujoy.vercel.app/)
