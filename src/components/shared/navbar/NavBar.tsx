@@ -13,8 +13,8 @@ export default function NavBar() {
   const { state, toggle } = useToggleState(false);
 
   return (
-    <Box position={"relative"} bgcolor="background.default">
-      <Container sx={{ py: 2 }}>
+    <Box position={"sticky"} top={0} zIndex={1000} bgcolor="background.default">
+      <Container sx={{ py: 4 }}>
         <Stack
           direction={"row"}
           justifyContent={"space-between"}

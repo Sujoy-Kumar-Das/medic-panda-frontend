@@ -47,6 +47,7 @@ export default function NavbarUserMenuCard({
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
           p: 2,
         },
+        zIndex: 1200,
       }}
       anchorEl={anchorEl}
       anchorOrigin={{

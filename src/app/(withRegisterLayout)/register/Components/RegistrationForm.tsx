@@ -13,6 +13,7 @@ interface RegistrationFormProps {
   validationSchema: AnyZodObject;
   isLoading: boolean;
   type: "create" | "login";
+  defaultValues?: any;
 }
 
 export default function RegistrationForm({
@@ -20,10 +21,15 @@ export default function RegistrationForm({
   validationSchema,
   isLoading,
   type,
+  defaultValues,
 }: RegistrationFormProps) {
   const isCreate = type === "create";
   return (
-    <PandaForm onSubmit={onSubmit} resolver={zodResolver(validationSchema)}>
+    <PandaForm
+      onSubmit={onSubmit}
+      resolver={zodResolver(validationSchema)}
+      defaultValues={defaultValues && defaultValues}
+    >
       <Stack direction="column" spacing={3}>
         {isCreate && (
           <PandaInputField

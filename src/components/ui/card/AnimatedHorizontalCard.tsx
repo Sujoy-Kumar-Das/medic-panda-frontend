@@ -17,6 +17,7 @@ interface AnimatedHorizontalCardProps {
 export default function AnimatedHorizontalCard({
   product,
 }: AnimatedHorizontalCardProps) {
+  console.log({ product });
   return (
     <motion.div
       initial="initial"
@@ -39,14 +40,16 @@ export default function AnimatedHorizontalCard({
         py={1}
       >
         <Stack direction={"column"} spacing={1}>
-          <Stack direction={"row"} alignItems={"center"} spacing={1}>
-            <Chip label="Discount" size="small" color="primary" />
-            <Chip
-              label={`${product.discount?.percentage} off`}
-              size="small"
-              color="secondary"
-            />
-          </Stack>
+          {product.discount && (
+            <Stack direction={"row"} alignItems={"center"} spacing={1}>
+              <Chip label="Discount" size="small" color="primary" />
+              <Chip
+                label={`${product.discount?.percentage} off`}
+                size="small"
+                color="secondary"
+              />
+            </Stack>
+          )}
           <Typography
             fontWeight={400}
             variant="h5"

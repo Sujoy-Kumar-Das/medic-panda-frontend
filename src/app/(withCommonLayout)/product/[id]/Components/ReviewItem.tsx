@@ -5,7 +5,7 @@ import { IModifiedUserData } from "@/types/user.type";
 
 interface ReviewItemProps {
   review: IReview;
-  user?: IModifiedUserData | null;
+  user: IModifiedUserData | null;
   activeReview: IReview | undefined;
   add: string | undefined;
   edit: string | undefined;

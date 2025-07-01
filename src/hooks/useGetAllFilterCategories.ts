@@ -3,7 +3,7 @@ import { ICategory } from "@/types";
 import randomUID from "@/utils/randomId";
 
 export default function useGetAllFilterCategories() {
-  const { data, ...apiResponse } = useGetAllCategoriesQuery(undefined);
+  const { data, ...apiResponse } = useGetAllCategoriesQuery({ limit: 10 });
 
   const items =
     data?.result?.map((item: ICategory) => ({
