@@ -12,6 +12,13 @@ export interface IDiscount {
   endTime: string;
 }
 
+interface IRating {
+  average: number;
+  count: number;
+  lastUpdated: string;
+  updatedAt: string;
+}
+
 export interface IProduct {
   _id: string;
   name: string;
@@ -21,7 +28,7 @@ export interface IProduct {
   stockStatus: boolean;
   category: ICategory;
   manufacturer: IManufacturer;
-  rating: number;
+  rating: IRating;
   isWishList: boolean;
 }
 

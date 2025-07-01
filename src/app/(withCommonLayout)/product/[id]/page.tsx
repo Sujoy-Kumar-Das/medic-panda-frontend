@@ -16,7 +16,7 @@ export default async function ProductDetailsPage({
 
   const {
     images,
-    product: { _id, name, price, discount, category, manufacturer },
+    product: { _id, name, price, discount, category, manufacturer, rating },
     description,
   } = data;
 
@@ -51,7 +51,10 @@ export default async function ProductDetailsPage({
                 >
                   {name}
                 </Typography>
-                <Rating readOnly value={4} />
+                <Rating
+                  readOnly
+                  value={rating.average || Math.floor(Math.random() * 5) + 1}
+                />
                 <Stack direction={"row"} gap={1} alignItems={"center"}>
                   <Typography
                     variant="body1"

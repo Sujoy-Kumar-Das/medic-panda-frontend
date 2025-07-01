@@ -213,4 +213,4 @@ Frontend Developer | React Developer | MERN Stack Enthusiast
 
 - GitHub: [@Sujoy-Kumar-Das](https://github.com/Sujoy-Kumar-Das)
 - LinkedIn: [devsujoykumardas](https://dev-sujoy.vercel.app/)
-- Portfolio: [portfolio.com](https://dev-sujoy.vercel.app/)
+- Portfolio: [portfolio](https://dev-sujoy.vercel.app/)

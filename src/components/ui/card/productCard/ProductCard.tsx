@@ -112,7 +112,10 @@ const ProductCard = ({ product }: IProductCardProps) => {
           )}
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
-          <Rating value={4} readOnly />
+          <Rating
+            readOnly
+            value={product.rating.average || Math.floor(Math.random() * 5) + 1}
+          />
         </Box>
       </Box>
 

@@ -125,7 +125,7 @@ export default function SimpleAnimatedCard({ product }: { product: IProduct }) {
             >
               <StarIcon sx={{ fontSize: 18, color: "warning.main" }} />
               <Typography variant="body2" color="text.secondary">
-                4.5
+                {product.rating.average || Math.floor(Math.random() * 5) + 1}
               </Typography>
             </Stack>
           </CardContent>

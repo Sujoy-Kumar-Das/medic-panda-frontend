@@ -36,6 +36,7 @@ const cartSlice = createSlice({
 
       if (existingProduct) {
         toast.error("This product is already in your cart.");
+        return;
       }
 
       state.carts.push({

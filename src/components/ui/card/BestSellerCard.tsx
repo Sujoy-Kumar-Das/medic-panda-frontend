@@ -78,7 +78,10 @@ export default function BestSellerCard({ product }: { product: IProduct }) {
             {product?.discount?.discountPrice}
           </Typography>
         </Box>
-        <Rating readOnly value={4} />
+        <Rating
+          readOnly
+          value={product.rating.average || Math.floor(Math.random() * 5) + 1}
+        />
       </Stack>
       <Box sx={{ position: "relative", width: 180, height: 180 }}>
         <Image
