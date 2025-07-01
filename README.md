@@ -17,7 +17,7 @@
 
 ![Landing Page](https://github.com/user-attachments/assets/6d95e197-083f-45b9-9470-bd3aeeafffcb)
 
-> 👉 <a href="more-screenshots">Click Here For More Screnshots</a>
+> 👉 <a href="#more-screenshots">Click Here For More Screnshots</a>
 
 ---
 
