@@ -1,63 +1,30 @@
 "use client";
 import useAddToCart from "@/hooks/useAddToCart";
 import { IProduct } from "@/types";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Button, IconButton, SxProps, Tooltip } from "@mui/material";
-import { ReactNode } from "react";
-import AnimateLoadingButton from "./AnimateLoadingButton";
+import { Button, SxProps, Tooltip } from "@mui/material";
 
 interface IAddToCartButtonProps {
   product: IProduct;
-  basic?: boolean;
   sx?: SxProps;
-  children?: ReactNode;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  iconBtn?: boolean;
 }
 
 export default function AddToCartButton({
   product,
-  children,
   sx,
-  startIcon,
-  endIcon,
-  iconBtn = false,
 }: IAddToCartButtonProps) {
   const { handlerFunc, isLoading } = useAddToCart();
 
   return (
     <Tooltip title="Add To Cart">
-      {iconBtn ? (
-        <IconButton
-          sx={{
-            ...sx,
-          }}
-          onClick={() => handlerFunc({ ...product })}
-          disabled={isLoading}
-        >
-          <AnimateLoadingButton isLoading={isLoading}>
-            <ShoppingCartIcon />
-          </AnimateLoadingButton>
-        </IconButton>
-      ) : (
-        <AnimateLoadingButton
-          isLoading={isLoading}
-          loadingScalePattern={[1, 1.1, 1]}
-        >
-          <Button
-            sx={{
-              ...sx,
-            }}
-            onClick={() => handlerFunc({ ...product })}
-            disabled={isLoading}
-            endIcon={endIcon}
-            startIcon={startIcon}
-          >
-            {children ? children : <ShoppingCartIcon />}
-          </Button>
-        </AnimateLoadingButton>
-      )}
+      <Button
+        onClick={() => handlerFunc(product)}
+        fullWidth
+        variant="contained"
+        color="primary"
+        sx={sx}
+      >
+        {isLoading ? "Adding To Cart..." : "Add to Cart"}
+      </Button>
     </Tooltip>
   );
 }

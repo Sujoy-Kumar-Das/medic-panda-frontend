@@ -1,33 +1,27 @@
-import AboutSection from "@/components/home/AboutSection";
-import BabyCareSection from "@/components/home/BabyCareSection";
-import BannerSection from "@/components/home/BannerSection";
-import BrandSection from "@/components/home/BrandSection";
-import CategorySection from "@/components/home/CategorySection";
-import ContactSection from "@/components/home/ContactSection";
-import DownloadAppSection from "@/components/home/DownloadAppSection";
-import FeaturedProductSection from "@/components/home/FeaturedProductSection";
-import HealthBasicsSection from "@/components/home/HealthBasicsSection";
-import PersonalCareSection from "@/components/home/PersonalCareSection";
-import SkinCareProductSection from "@/components/home/SkinCareProductSection";
-import TestimonialSection from "@/components/home/TestimonialSection";
-import WhyChoseUs from "@/components/home/WhyChoseUs";
+import AppDownloadSection from "@/components/home/AppDownloadSection/AppDownloadSection";
+import BlogSection from "@/components/home/blog-section/BlogSection";
+import CategorySection from "@/components/home/category-section/CategorySection";
+import HeroSection from "@/components/home/hero-section/HeroSection";
+import HowItsWorkSection from "@/components/home/how-it-works-section/HowItsWorkSection";
+import NeedHelpSection from "@/components/home/need-help/NeedHelpSection";
+import OurBestSellerProductsSection from "@/components/home/our-best-seller-products/OurBestSellerProductsSection";
+import SubscribeSection from "@/components/home/subscribe-section/SubscribeSection";
+import TestimonialsSection from "@/components/home/testimonial-section/TestimonialSection";
+import WhyChooseSection from "@/components/home/why-chose-us-section/WhyChoseUsSection";
 
 export default async function HomePage() {
   return (
     <>
-      <BannerSection />
-      <WhyChoseUs />
+      <HeroSection />
       <CategorySection />
-      <FeaturedProductSection />
-      <SkinCareProductSection />
-      <BabyCareSection />
-      <AboutSection />
-      <HealthBasicsSection />
-      <PersonalCareSection />
-      <TestimonialSection />
-      <BrandSection />
-      <ContactSection />
-      <DownloadAppSection />
+      <OurBestSellerProductsSection />
+      <HowItsWorkSection />
+      <WhyChooseSection />
+      <NeedHelpSection />
+      <TestimonialsSection />
+      <SubscribeSection />
+      <AppDownloadSection />
+      <BlogSection />
     </>
   );
 }

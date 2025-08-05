@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 
-// Extend MUI Palette interface to include gradients
+// Extend MUI types to include accent color and gradients
 declare module "@mui/material/styles" {
   interface Palette {
     gradients: {
@@ -12,6 +12,12 @@ declare module "@mui/material/styles" {
       shippedOrders: string;
       deliveredOrders: string;
       canceledOrders: string;
+    };
+    accent: {
+      main: string;
+      light: string;
+      dark: string;
+      contrastText: string;
     };
   }
 
@@ -26,6 +32,18 @@ declare module "@mui/material/styles" {
       deliveredOrders: string;
       canceledOrders: string;
     };
+    accent?: {
+      main: string;
+      light: string;
+      dark: string;
+      contrastText: string;
+    };
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    accent: true;
   }
 }
 
@@ -33,23 +51,31 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#007bff",
-      light: "#339aff",
-      dark: "#0056b3",
+      main: "#0891b2", // sky-600
+      dark: "#0e7490", // sky-700
+      light: "#06b6d4", // sky-500
+      contrastText: "#ffffff",
     },
     secondary: {
-      main: "#6c757d",
-      light: "#a2a9b1",
-      dark: "#4b5259",
+      main: "#10b981", // emerald-500
+      dark: "#059669", // emerald-600
+      light: "#34d399", // emerald-400
+      contrastText: "#ffffff",
+    },
+    accent: {
+      main: "#6366f1", // indigo-500
+      dark: "#4f46e5", // indigo-600
+      light: "#818cf8", // indigo-400
+      contrastText: "#ffffff",
     },
     text: {
-      primary: "#2D3748",
-      secondary: "#4A5568",
-      disabled: "#FFFFFF",
+      primary: "#1e293b", // slate-800
+      secondary: "#475569", // slate-600
+      disabled: "#94a3b8", // slate-400
     },
     background: {
-      default: "#F4F6F8",
-      paper: "#FFFFFF",
+      default: "#f8fafc", // slate-50
+      paper: "#ffffff",
     },
     gradients: {
       totalPrice: "linear-gradient(45deg, #ff7e5f 30%, #feb47b 90%)",
@@ -62,6 +88,97 @@ const theme = createTheme({
       canceledOrders: "linear-gradient(45deg, #ee0979 30%, #ff6a00 90%)",
     },
   },
+  typography: {
+    fontFamily: [
+      '"Inter"',
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    h1: {
+      fontSize: "2.5rem", // 40px
+      fontWeight: 700,
+      lineHeight: 1.2,
+      "@media (min-width:600px)": {
+        fontSize: "3rem", // 48px
+      },
+      "@media (min-width:900px)": {
+        fontSize: "3.5rem", // 56px
+      },
+    },
+    h2: {
+      fontSize: "2rem", // 32px
+      fontWeight: 700,
+      lineHeight: 1.3,
+      "@media (min-width:600px)": {
+        fontSize: "2.25rem", // 36px
+      },
+      "@media (min-width:900px)": {
+        fontSize: "2.5rem", // 40px
+      },
+    },
+    h3: {
+      fontSize: "1.75rem", // 28px
+      fontWeight: 600,
+      lineHeight: 1.3,
+      "@media (min-width:600px)": {
+        fontSize: "2rem", // 32px
+      },
+    },
+    h4: {
+      fontSize: "1.5rem", // 24px
+      fontWeight: 600,
+      lineHeight: 1.4,
+    },
+    h5: {
+      fontSize: "1.25rem", // 20px
+      fontWeight: 600,
+      lineHeight: 1.4,
+    },
+    h6: {
+      fontSize: "1rem", // 16px
+      fontWeight: 600,
+      lineHeight: 1.5,
+    },
+    subtitle1: {
+      fontSize: "1rem",
+      lineHeight: 1.5,
+    },
+    subtitle2: {
+      fontSize: "0.875rem",
+      lineHeight: 1.5,
+    },
+    body1: {
+      fontSize: "1rem",
+      lineHeight: 1.5,
+    },
+    body2: {
+      fontSize: "0.875rem",
+      lineHeight: 1.5,
+    },
+    button: {
+      fontSize: "0.875rem",
+      fontWeight: 600,
+      textTransform: "none",
+    },
+    caption: {
+      fontSize: "0.75rem",
+      lineHeight: 1.5,
+    },
+    overline: {
+      fontSize: "0.75rem",
+      fontWeight: 600,
+      lineHeight: 1.5,
+      textTransform: "uppercase",
+    },
+  },
   components: {
     MuiButton: {
       defaultProps: {
@@ -70,14 +187,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           padding: "10px 28px",
-          backgroundColor: "#007bff",
-          color: "#FFFFFF",
           borderRadius: "8px",
-          boxShadow: "0px 4px 10px rgba(0, 123, 255, 0.2)",
+          boxShadow: "0px 4px 10px rgba(8, 145, 178, 0.2)",
           transition: "all 0.3s ease-in-out",
           "&:hover": {
-            backgroundColor: "#0056b3",
-            boxShadow: "0px 6px 14px rgba(0, 86, 179, 0.3)",
+            boxShadow: "0px 6px 14px rgba(14, 116, 144, 0.3)",
           },
         },
       },
@@ -93,7 +207,22 @@ const theme = createTheme({
           borderRadius: "12px",
           boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
           padding: "20px",
-          color: "#FFFFFF",
+        },
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        variantMapping: {
+          h1: "h1",
+          h2: "h2",
+          h3: "h3",
+          h4: "h4",
+          h5: "h5",
+          h6: "h6",
+          subtitle1: "p",
+          subtitle2: "p",
+          body1: "p",
+          body2: "p",
         },
       },
     },

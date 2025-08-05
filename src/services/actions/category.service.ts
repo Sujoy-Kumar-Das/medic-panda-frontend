@@ -13,9 +13,16 @@ export const getAllCategoriesService = async (
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_base_url_local}/category?${queryString}`
+      `${process.env.NEXT_PUBLIC_base_url_local}/category?${queryString}`,
+      {
+        next: {
+          revalidate: 300000,
+        },
+      }
     );
+
     const data = await res.json();
+
     return data;
   } catch (error) {
     return undefined;
