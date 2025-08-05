@@ -1,56 +1,43 @@
-import Loader from "@/components/shared/loader/Loader";
-import { getAllCategoriesService } from "@/services/actions/category.service";
+import CommonContainer from "@/components/shared/common-container/CommonContainer";
 import { getAllProductService } from "@/services/actions/product.service";
-import { Box, Container } from "@mui/material";
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
-
-// Dynamic import with SSR disabled
-const ProductDrawer = dynamic(() => import("./Components/ProductDrawer"), {
-  ssr: false,
-});
+import { Grid } from "@mui/material";
+import CategorySidebar from "./Components/CategorySidebar";
+import ProductCompo from "./Components/ProductCompo";
 
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { page: number | string; searchTerm: string; category: string };
+  searchParams: {
+    page: number | string;
+    searchTerm: string;
+    category: string;
+    layout: string;
+  };
 }) {
-  const { page, searchTerm, category } = searchParams;
+  const { page, searchTerm, category, layout } = searchParams;
 
-  const [productsResponse, categoriesResponse] = await Promise.all([
-    getAllProductService({
-      limit: 9,
-      page: Number(page) || 1,
-      searchTerm,
-      category,
-    }),
-    getAllCategoriesService(9),
-  ]);
-
-  // Destructure the responses
-  const { data: productsData } = productsResponse;
-  const { data: categoriesData } = categoriesResponse;
+  const { data } = await getAllProductService({
+    limit: 9,
+    page: Number(page) || 1,
+    searchTerm,
+    category,
+  });
 
   return (
-    <Suspense
-      fallback={
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="100vh"
-        >
-          <Loader />
-        </Box>
-      }
-    >
-      <Container sx={{ py: 4 }}>
-        <ProductDrawer
-          products={productsData?.result}
-          meta={productsData?.meta}
-          categories={categoriesData?.result}
-        />
-      </Container>
-    </Suspense>
+    <CommonContainer sx={{ py: 4, backgroundColor: "background.paper" }}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={3}>
+          <CategorySidebar />
+        </Grid>
+
+        <Grid item xs={12} md={9}>
+          <ProductCompo
+            products={data?.result}
+            meta={data?.meta}
+            layout={layout}
+          />
+        </Grid>
+      </Grid>
+    </CommonContainer>
   );
 }

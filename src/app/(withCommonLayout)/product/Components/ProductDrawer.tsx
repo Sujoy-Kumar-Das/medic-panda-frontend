@@ -1,11 +1,10 @@
-"use client";
-import useToggleState from "@/hooks/useToggleState";
 import { ICategory, IProduct } from "@/types";
 import { Box, Grid } from "@mui/material";
-import CategoryModal from "./CategoryModal";
 import ProductCategory from "./ProductCategory";
-import Products from "./Products";
+import Products from "./ProductsList";
 import ProductSearchWithCategoryModalButton from "./ProductSearchWithCategoryModalButton";
+import ProductsList from "./ProductsList";
+import ProductsCompo from "./ProductsCompo";
 
 interface IProductProps {
   products: IProduct[];
@@ -18,51 +17,37 @@ export default function ProductDrawer({
   categories,
   meta,
 }: IProductProps) {
-  const categoryModal = useToggleState();
-
   return (
-    <>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={3}>
+    <Grid container spacing={4}>
+      <Grid item xs={12} md={3}>
+        <Box
+          sx={{
+            height: { xs: "auto", md: "100vh" },
+            backgroundColor: { xs: "transparent", md: "background.default" },
+            padding: { xs: 2, md: 3 },
+            borderRadius: 2,
+            position: { md: "sticky" },
+            top: 0,
+            width: "100%",
+          }}
+        >
+          {/* product search and category modal */}
+          <ProductSearchWithCategoryModalButton categories={categories} />
+
+          {/* product category for medium devices */}
           <Box
             sx={{
-              height: { xs: "auto", md: "100vh" },
-              backgroundColor: { xs: "transparent", md: "background.default" },
-              padding: { xs: 2, md: 3 },
-              borderRadius: 2,
-              position: { md: "sticky" },
-              top: 0,
-              width: "100%",
+              display: { xs: "none", md: "block" },
             }}
           >
-            {/* product search and category modal */}
-            <ProductSearchWithCategoryModalButton
-              onOpenModal={categoryModal.onOpen}
-            />
-
-            {/* product category for medium devices */}
-            <Box
-              sx={{
-                display: { xs: "none", md: "block" },
-              }}
-            >
-              <ProductCategory categories={categories} />
-            </Box>
+            <ProductCategory categories={categories} />
           </Box>
-        </Grid>
-
-        <Grid item xs={12} md={9}>
-          <Products products={products} meta={meta} />
-        </Grid>
+        </Box>
       </Grid>
 
-      {/* category modal for mobile */}
-      {categoryModal.state && (
-        <CategoryModal
-          categories={categories}
-          onClose={categoryModal.onClose}
-        />
-      )}
-    </>
+      <Grid item xs={12} md={9}>
+        <ProductsCompo />
+      </Grid>
+    </Grid>
   );
 }
