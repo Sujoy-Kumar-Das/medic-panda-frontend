@@ -1,4 +1,5 @@
 "use client";
+import useSearch from "@/hooks/useSearch";
 import { ICategory } from "@/types";
 import { Divider, Stack, Typography } from "@mui/material";
 import ProductCategoryList from "./ProductCategoryList";
@@ -9,6 +10,8 @@ interface ProductCategoryProps {
 }
 
 const ProductCategory = ({ onClose, categories }: ProductCategoryProps) => {
+  const { clearSearch } = useSearch();
+
   return (
     <>
       <Stack
@@ -28,13 +31,14 @@ const ProductCategory = ({ onClose, categories }: ProductCategoryProps) => {
           border={"none"}
           bgcolor={"transparent"}
           boxShadow={0}
+          onClick={clearSearch}
         >
           Reset
         </Typography>
       </Stack>
       <Divider sx={{ my: 2 }} />
       <Stack direction={"column"} spacing={1}>
-        <ProductCategoryList categories={categories} />
+        <ProductCategoryList categories={categories} onClose={onClose} />
       </Stack>
     </>
   );

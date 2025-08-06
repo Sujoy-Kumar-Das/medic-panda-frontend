@@ -1,26 +1,33 @@
+"use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-/**
- * Custom hook to update search query parameters in the URL.
- * @returns {Object} search - Function to update or remove query parameters.
- */
 export default function useSearch() {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathName = usePathname();
 
-  const search = ({ query, value }: { query: string; value?: string }) => {
+  const getParam = (key: string) => {
+    const value = searchParams.get(key);
+    return value ?? "";
+  };
+  const search = (queries: Record<string, string | undefined>) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (value) {
-      params.set(query, value);
-    } else {
-      params.delete(query);
-    }
+    Object.entries(queries).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    });
 
     const newQueryString = params.toString();
     replace(newQueryString ? `${pathName}?${newQueryString}` : pathName);
   };
 
-  return { search };
+  const clearSearch = () => {
+    replace(pathName);
+  };
+
+  return { search, getParam, clearSearch };
 }

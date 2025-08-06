@@ -1,11 +1,24 @@
 "use client";
+import useSearch from "@/hooks/useSearch";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { useState } from "react";
 
 export default function StockAvailabilityFilter() {
-  const [inStock, setInStock] = useState(false);
+  const { search, getParam } = useSearch();
+
+  const initialValue = Boolean(getParam("stockStatus"));
+
+  const [inStock, setInStock] = useState(initialValue);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.checked;
+
+    if (value) {
+      search({ stockStatus: "true" });
+    } else {
+      search({ stockStatus: undefined });
+    }
+
     setInStock(event.target.checked);
   };
 

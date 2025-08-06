@@ -7,7 +7,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FormEvent } from "react";
 import CategoryModal from "./CategoryModal";
 
@@ -18,26 +17,23 @@ export default function ProductSearchWithCategoryModalButton({
 }) {
   const categoryModal = useToggleState();
 
-  const { search } = useSearch();
-
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-  const pathName = usePathname();
+  const { search, getParam } = useSearch();
 
   // search query handler
   const handleQueryParams = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const searchTerm = formData.get("searchTerm");
+    const searchTerm = (formData.get("searchTerm") ?? "") as string;
 
     if (!searchTerm) {
-      replace(pathName);
       return;
     }
 
     // Create a mutable copy of the searchParams
-    search({ query: "searchTerm", value: searchTerm as string });
+    search({ searchTerm });
   };
+
+  const defaultValue = getParam("searchTerm");
 
   return (
     <>
@@ -85,7 +81,7 @@ export default function ProductSearchWithCategoryModalButton({
             placeholder="Search products"
             inputProps={{ "aria-label": "search products" }}
             name="searchTerm"
-            defaultValue={searchParams.get("searchTerm")?.toString()}
+            defaultValue={defaultValue}
           />
           <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
             <SearchIcon />

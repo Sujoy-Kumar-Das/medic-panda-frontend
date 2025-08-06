@@ -1,5 +1,6 @@
 "use client";
 
+import useSearch from "@/hooks/useSearch";
 import {
   Box,
   FormControl,
@@ -11,15 +12,28 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
+const sortOptions = [
+  { id: "sort-default", title: "Default", value: "" },
+  { id: "sort-price-low", title: "Price: Low to High", value: "price_low" },
+  { id: "sort-price-high", title: "Price: High to Low", value: "price_high" },
+  { id: "sort-rating", title: "Customer Rating", value: "rating" },
+  { id: "sort-new", title: "Newest Arrivals", value: "new" },
+];
+
 export default function SortProduct() {
-  const [sortBy, setSortBy] = useState("featured");
+  const { search, getParam } = useSearch();
+
+  const initialValue = getParam("sort");
+  const [sortBy, setSortBy] = useState(initialValue);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSortBy(event.target.value);
+    const value = event.target.value;
+    setSortBy(value);
+    search({ sort: value });
   };
 
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box mt={4}>
       <Typography variant="h6" fontWeight={600} mb={2} color="text.primary">
         Sort By
       </Typography>
@@ -31,11 +45,11 @@ export default function SortProduct() {
           label="Sort By"
           onChange={handleChange}
         >
-          <MenuItem value="featured">Featured</MenuItem>
-          <MenuItem value="price-low">Price: Low to High</MenuItem>
-          <MenuItem value="price-high">Price: High to Low</MenuItem>
-          <MenuItem value="rating">Customer Rating</MenuItem>
-          <MenuItem value="newest">Newest Arrivals</MenuItem>
+          {sortOptions.map((item) => (
+            <MenuItem key={item.id} value={item.value}>
+              {item.title}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>

@@ -1,9 +1,10 @@
 "use client";
 
+import useSearch from "@/hooks/useSearch";
 import { ICategory } from "@/types";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface ProductCategoryCardProps {
   onClose?: () => void;
@@ -14,10 +15,21 @@ export default function ProductCategoryCard({
   category,
   onClose,
 }: ProductCategoryCardProps) {
-  const router = useRouter();
+  const { search, getParam } = useSearch();
+
+  const initialParam = getParam("category");
+
+  const [currentParam, setCurrentParam] = useState(initialParam);
 
   const handleNavigate = () => {
-    router.push(`/product/${category._id}`);
+    if (currentParam === category._id) {
+      setCurrentParam("");
+      search({ category: "" });
+    } else {
+      setCurrentParam(category._id);
+      search({ category: category._id });
+    }
+
     onClose?.();
   };
 
@@ -26,7 +38,9 @@ export default function ProductCategoryCard({
       onClick={handleNavigate}
       sx={{
         cursor: "pointer",
-        bgcolor: "background.paper",
+        bgcolor: `${
+          currentParam === category._id ? "primary.main" : "background.paper"
+        }`,
         p: 0.8,
         display: "flex",
         alignItems: "center",

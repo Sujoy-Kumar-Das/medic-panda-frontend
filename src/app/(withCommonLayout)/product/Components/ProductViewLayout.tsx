@@ -4,17 +4,15 @@ import useSearch from "@/hooks/useSearch";
 import ViewComfyAltIcon from "@mui/icons-material/ViewComfyAlt";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
 import { IconButton, Stack } from "@mui/material";
-import { useSearchParams } from "next/navigation";
 
 export default function ProductViewLayout() {
-  const { search } = useSearch();
-  const params = useSearchParams();
+  const { search, getParam } = useSearch();
 
-  const layoutParam = params.get("layout");
+  const layoutParam = getParam("layout");
   const layoutValue = layoutParam === "column" ? "column" : "grid";
 
   const handleChangeLayout = (value: "grid" | "column") => {
-    search({ query: "layout", value });
+    search({ layout: value });
   };
 
   return (

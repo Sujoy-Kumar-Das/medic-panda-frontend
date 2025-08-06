@@ -1,8 +1,8 @@
 "use client";
+import useSearch from "@/hooks/useSearch";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, InputBase, Stack, SxProps } from "@mui/material";
 import { FormEvent } from "react";
-import useSearch from "../../../hooks/useSearch";
 
 export default function SearchBar({
   query,
