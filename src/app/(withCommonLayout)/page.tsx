@@ -12,7 +12,7 @@ import WhyChooseSection from "@/components/home/why-chose-us-section/WhyChoseUsS
 export default async function HomePage() {
   return (
     <>
-      <HeroSection />
+      {/* <HeroSection />
       <CategorySection />
       <OurBestSellerProductsSection />
       <HowItsWorkSection />
@@ -20,8 +20,7 @@ export default async function HomePage() {
       <NeedHelpSection />
       <TestimonialsSection />
       <SubscribeSection />
-      <AppDownloadSection />
-      <BlogSection />
+      <AppDownloadSection /> */}
     </>
   );
 }

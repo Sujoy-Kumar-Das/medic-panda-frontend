@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import CategoryCard from "./CategoryCard";
 
 export default async function CategoryList() {
-  const { data } = await getAllCategoriesService(6, false);
+  const { data } = await getAllCategoriesService(6, true);
 
   return (
     <Grid container spacing={3}>

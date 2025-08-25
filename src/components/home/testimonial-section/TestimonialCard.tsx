@@ -1,8 +1,8 @@
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { Avatar, Box, Grid, Paper, Stack, Typography } from "@mui/material";
+import { IReview } from "@/types";
+import { Box, Grid, Paper, Rating, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 
-export default function TestimonialCard({ testimonial }) {
+export default function TestimonialCard({ testimonial }: { testimonial: any }) {
   return (
     <Grid item xs={12} md={4}>
       <Paper
@@ -16,24 +16,24 @@ export default function TestimonialCard({ testimonial }) {
         }}
       >
         <Stack direction="row" spacing={2} mb={2} alignItems="center">
-          <Avatar src={testimonial.image} alt={testimonial.name} />
+          <Image
+            src={testimonial?.user?.customer?.photo}
+            alt={testimonial?.user?.customer?.name}
+            width={30}
+            height={30}
+            style={{ borderRadius: "50%", objectFit: "cover" }}
+          />
           <Box>
             <Typography fontWeight={600} color="text.primary">
-              {testimonial.name}
+              {testimonial?.user?.customer?.name}
             </Typography>
             <Box display="flex" color="warning.main">
-              {[...Array(5)].map((_, i) =>
-                i < testimonial.rating ? (
-                  <StarIcon fontSize="small" key={i} />
-                ) : (
-                  <StarBorderIcon fontSize="small" key={i} />
-                )
-              )}
+              <Rating value={testimonial.rating} readOnly />
             </Box>
           </Box>
         </Stack>
         <Typography variant="body2" color="text.secondary">
-          {`"${testimonial.feedback}"`}
+          {`"${testimonial.comment}"`}
         </Typography>
       </Paper>
     </Grid>

@@ -8,7 +8,6 @@ export default function AllProductsPage() {
   const queryParams = useQueryParams();
 
   const query = useGetAllProductsQuery(queryParams);
-
   return (
     <AllProductsHOC
       query={query}

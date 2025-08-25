@@ -1,7 +1,8 @@
 import { getAllCategoriesService } from "@/services/actions/category.service";
-import { ICategory } from "@/types";
-import { Box, Container, Grid, Typography } from "@mui/material";
-import CategoryCard from "./Components/CategoryCard";
+import { Box, Container } from "@mui/material";
+import CategoryHeader from "./Components/CategoryHeader";
+import CategoryList from "./Components/CategoryList";
+import FeaturedProducts from "./Components/FeaturedProducts";
 
 export default async function CategoriesPage() {
   const { data } = await getAllCategoriesService();
@@ -9,24 +10,11 @@ export default async function CategoriesPage() {
   const categories = data?.result;
 
   return (
-    <Box sx={{ py: 4 }}>
-      <Container>
-        <Typography
-          variant="h4"
-          component="h1"
-          textAlign="center"
-          mb={6}
-          fontWeight="bold"
-        >
-          Browse by Category
-        </Typography>
-        <Grid container spacing={4}>
-          {categories?.map((category: ICategory) => (
-            <Grid key={category._id} item xs={12} sm={6} md={4} lg={3}>
-              <CategoryCard category={category} />
-            </Grid>
-          ))}
-        </Grid>
+    <Box>
+      <CategoryHeader />
+      <Container sx={{ mt: 10 }}>
+        <CategoryList categories={categories} />
+        <FeaturedProducts />
       </Container>
     </Box>
   );

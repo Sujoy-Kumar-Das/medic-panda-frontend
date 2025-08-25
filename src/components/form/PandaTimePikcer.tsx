@@ -30,7 +30,7 @@ const PandaTimePicker = ({
     <Controller
       control={control}
       name={name}
-      defaultValue={null}
+      defaultValue={""}
       render={({ field: { onChange, value, ...field } }) => {
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>

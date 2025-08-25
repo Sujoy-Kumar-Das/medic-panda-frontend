@@ -1,6 +1,7 @@
 "use client";
 
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 
 export const logoutUserFunc = async (
   router?: AppRouterInstance,
@@ -12,8 +13,6 @@ export const logoutUserFunc = async (
   });
 
   if (!res.ok) {
-    const error = await res.json();
-    console.error("Logout failed:", error);
     return;
   }
 

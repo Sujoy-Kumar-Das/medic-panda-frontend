@@ -20,8 +20,7 @@ export default function SearchBar({
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get(query);
 
-    search({ query, value: searchTerm as string });
-    event.currentTarget.reset();
+    search({ [query]: searchTerm as string });
   };
 
   return (

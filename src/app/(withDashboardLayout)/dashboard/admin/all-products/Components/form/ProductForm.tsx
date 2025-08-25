@@ -2,12 +2,13 @@
 import PandaFileUploader from "@/components/form/PandaFileUpload";
 import PandaForm from "@/components/form/PandaForm";
 import PandaInputField from "@/components/form/PandaInputField";
-import PandaSelect from "@/components/form/PandaSelect";
 import LoaderButton from "@/components/ui/buttons/LoaderButton";
 import { IProductFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Grid } from "@mui/material";
 import DiscountForm from "./DiscountForm";
+import SelectProductCategory from "./SelectCategory";
+import SelectProductManufacturer from "./SelectManufacturer";
 
 export default function ProductForm({
   onSubmit,
@@ -16,8 +17,6 @@ export default function ProductForm({
   isLoading,
   type,
   defaultValues,
-  manufacturer,
-  categories,
   isDiscountAvailable,
 }: IProductFormProps) {
   return (
@@ -52,18 +51,10 @@ export default function ProductForm({
           />
         </Grid>
         <Grid item xs={12}>
-          <PandaSelect
-            name="product.category"
-            items={categories}
-            label="Category"
-          />
+          <SelectProductCategory />
         </Grid>
         <Grid item xs={12}>
-          <PandaSelect
-            items={manufacturer}
-            label="Manufacturer"
-            name="product.manufacturer"
-          />
+          <SelectProductManufacturer />
         </Grid>
 
         {type === "create" && (
@@ -80,8 +71,18 @@ export default function ProductForm({
 
         <Grid item xs={12}>
           <PandaInputField
-            name="productDetail.description"
-            label="Product Description"
+            name="productDetail.shortDescription"
+            label="Product Short Description"
+            multiline
+            rows={4}
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <PandaInputField
+            name="productDetail.detailedDescription"
+            label="Product Detailed Description"
             multiline
             rows={4}
             fullWidth

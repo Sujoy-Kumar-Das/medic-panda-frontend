@@ -6,7 +6,7 @@ export default async function CategorySection() {
   return (
     <CommonContainer sx={{ backgroundColor: "background.paper" }}>
       <CommonHeader
-        title="Shop by Categories"
+        title="Our Popular Categories"
         subtitle="Browse through our wide range of healthcare products and medicines"
       />
 

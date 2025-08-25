@@ -2,8 +2,6 @@
 import FormModal from "@/components/modal/FormModal/FormModal";
 import useEditProduct from "@/hooks/useEditProduct.hook";
 import useProductDefaultValue from "@/hooks/useProductDefaultValue.hook";
-import useSelectCategory from "@/hooks/useSelectCategory";
-import useSelectManufacture from "@/hooks/useSelectManufacture";
 import { updateProductValidationSchema } from "@/schemas/product-schema";
 import { FieldValues } from "react-hook-form";
 import ProductForm from "../form/ProductForm";
@@ -19,9 +17,6 @@ export default function EditProductModal({
 }: EditProductModalProps) {
   const { handlerFunc, isLoading } = useEditProduct(onModalClose);
 
-  const { items: categories } = useSelectCategory();
-  const { items: manufacturer } = useSelectManufacture();
-
   const { defaultValues, isLoading: defaultValueLoading } =
     useProductDefaultValue({
       id: productId,
@@ -29,6 +24,8 @@ export default function EditProductModal({
 
   // check is the discount is available or not;
   const isDiscountAvailable = defaultValues.product.discount ? true : false;
+
+  console.log({ defaultValues });
 
   return (
     <FormModal
@@ -45,8 +42,6 @@ export default function EditProductModal({
           onClose={onModalClose}
           type="edit"
           validationSchema={updateProductValidationSchema}
-          categories={categories}
-          manufacturer={manufacturer}
           isDiscountAvailable={isDiscountAvailable}
         />
       )}

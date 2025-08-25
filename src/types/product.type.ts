@@ -53,7 +53,5 @@ export interface ISelectItem {
 }
 
 export interface IProductFormProps extends IAddAndEditFormProps {
-  manufacturer: ISelectItem[];
-  categories: ISelectItem[];
   isDiscountAvailable: boolean;
 }

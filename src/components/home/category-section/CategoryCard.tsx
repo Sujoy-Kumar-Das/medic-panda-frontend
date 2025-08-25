@@ -43,12 +43,14 @@ export default function CategoryCard({ category }: { category: ICategory }) {
           }}
         >
           <Image
-            src={category.thumbnail}
+            src={category.icon}
             alt={category.name}
             width={40}
             height={40}
             style={{
               objectFit: "cover",
+              filter:
+                "invert(48%) sepia(49%) saturate(1926%) hue-rotate(166deg) brightness(96%) contrast(87%)",
             }}
           />
         </Box>

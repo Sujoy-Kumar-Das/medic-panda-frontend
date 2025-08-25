@@ -1,8 +1,6 @@
+import ProductPageCompo from "@/components/product-page-compo/ProductPageCompo";
 import CommonContainer from "@/components/shared/common-container/CommonContainer";
 import { getAllProductService } from "@/services/actions/product.service";
-import { Grid } from "@mui/material";
-import CategorySidebar from "./Components/CategorySidebar";
-import ProductCompo from "./Components/ProductCompo";
 
 export default async function ProductsPage({
   searchParams,
@@ -25,19 +23,11 @@ export default async function ProductsPage({
 
   return (
     <CommonContainer sx={{ py: 4, backgroundColor: "background.paper" }}>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={3}>
-          <CategorySidebar />
-        </Grid>
-
-        <Grid item xs={12} md={9}>
-          <ProductCompo
-            products={data?.result}
-            meta={data?.meta}
-            layout={layout}
-          />
-        </Grid>
-      </Grid>
+      <ProductPageCompo
+        products={data.result}
+        meta={data.result}
+        layout={layout}
+      />
     </CommonContainer>
   );
 }

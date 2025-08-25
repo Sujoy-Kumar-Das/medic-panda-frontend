@@ -20,6 +20,8 @@ export default function AllProductsCompo({
   isLoading,
   isError,
 }: AllProductsCompoProps) {
+  console.log({ data });
+
   return (
     <Container sx={{ pb: 5 }}>
       {/* Header Section */}

@@ -2,13 +2,16 @@
 import useAddToCart from "@/hooks/useAddToCart";
 import { IProduct } from "@/types";
 import { Button, SxProps, Tooltip } from "@mui/material";
+import { ReactNode } from "react";
 
 interface IAddToCartButtonProps {
+  children: ReactNode;
   product: IProduct;
   sx?: SxProps;
 }
 
 export default function AddToCartButton({
+  children,
   product,
   sx,
 }: IAddToCartButtonProps) {
@@ -23,7 +26,7 @@ export default function AddToCartButton({
         color="primary"
         sx={sx}
       >
-        {isLoading ? "Adding To Cart..." : "Add to Cart"}
+        {isLoading ? "Adding To Cart..." : children ? children : "Add To Cart"}
       </Button>
     </Tooltip>
   );

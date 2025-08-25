@@ -9,7 +9,7 @@ export const getUserInfo = async () => {
     const decodedData: any = decodedToken(authToken);
     return {
       role: decodedData?.role?.toLowerCase(),
-      userId: decodedData.userId,
+      userId: decodedData?.userId,
       ...decodedData,
     };
   } else {

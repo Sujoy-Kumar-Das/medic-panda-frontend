@@ -34,15 +34,15 @@ export default function MoreDetails({
           </Box>
           <Box display="flex" alignItems="center" sx={{ gap: 2 }}>
             <Avatar
-              src={category.thumbnail}
-              alt={category.name}
+              src={category?.thumbnail}
+              alt={category?.name}
               sx={{
                 width: 80,
                 height: 80,
                 borderRadius: "50%",
               }}
             />
-            <Typography variant="body1">{category.name}</Typography>
+            <Typography variant="body1">{category?.name}</Typography>
           </Box>
         </Grid>
 

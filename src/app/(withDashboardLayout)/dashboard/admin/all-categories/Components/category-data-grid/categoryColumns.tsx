@@ -25,7 +25,7 @@ export const CategoryColumns: GridColDef[] = [
     align: "center",
     renderCell: ({ row }) => (
       <Typography fontWeight={500} color="text.primary" py={1}>
-        {row.name}
+        {row?.name}
       </Typography>
     ),
   },
@@ -37,8 +37,8 @@ export const CategoryColumns: GridColDef[] = [
     align: "center",
     renderCell: ({ row }) => (
       <Chip
-        label={row.popularity ? "Popular" : "Unpopular"}
-        color={row.popularity ? "success" : "default"}
+        label={row?.popularity ? "Popular" : "Unpopular"}
+        color={row?.popularity ? "success" : "default"}
         variant="outlined"
         sx={{ fontWeight: 600, px: 1.5, py: 1 }}
       />
@@ -52,16 +52,16 @@ export const CategoryColumns: GridColDef[] = [
     align: "center",
     renderCell: ({ row }) => (
       <Typography fontSize={14} color="text.secondary" py={1}>
-        {row.createdAt ? formatOrderDate(row.createdAt) : "N/A"}
+        {row?.createdAt ? formatOrderDate(row.createdAt) : "N/A"}
       </Typography>
     ),
   },
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    headerAlign: "center",
-    align: "center",
-    renderCell: ({ row }) => <CategoryActionMenu category={row} />,
-  },
+  // {
+  //   field: "action",
+  //   headerName: "Action",
+  //   width: 180,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   renderCell: ({ row }) => <CategoryActionMenu category={row} />,
+  // },
 ];

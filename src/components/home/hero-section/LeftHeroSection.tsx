@@ -49,7 +49,7 @@ export default function LeftHeroSection() {
           size="large"
           sx={{
             borderRadius: "9999px",
-            backgroundColor: "primary.50",
+            backgroundColor: "transparent",
           }}
         >
           View Categories

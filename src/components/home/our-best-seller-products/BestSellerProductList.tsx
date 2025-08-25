@@ -8,7 +8,7 @@ export default async function BestSellerProductList() {
   const products = data?.result;
   return (
     <Grid container spacing={4}>
-      {products.map((product: IProduct) => (
+      {products?.map((product: IProduct) => (
         <Grid key={product._id} item xs={12} sm={6} lg={3}>
           <BestSellerProductCard product={product} />
         </Grid>

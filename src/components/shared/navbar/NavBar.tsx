@@ -4,9 +4,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import Logo from "../logo/Logo";
 import NavBarCart from "./NavBarCart";
 import NavItems from "./NavItems";
 import NavUserMenu from "./NavUserMenu";
+import NavSearchCompo from "./NavSearchCompo";
 
 export default function NavBar() {
   // state for handle mobile responsiveness
@@ -14,34 +16,13 @@ export default function NavBar() {
 
   return (
     <Box position={"sticky"} top={0} zIndex={1000} bgcolor="background.default">
-      <Container sx={{ py: 4 }}>
+      <Container sx={{ py: 2 }}>
         <Stack
           direction={"row"}
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          {/* logo for large and medium device */}
-          <Box
-            sx={{
-              display: "flex",
-              textDecoration: "none",
-              color: "text.primary",
-            }}
-            component={Link}
-            href={"/"}
-          >
-            <Typography component={"h1"} variant="h4" fontWeight={"bold"}>
-              Medic
-            </Typography>
-            <Typography
-              component={"h1"}
-              variant="h4"
-              fontWeight={"bold"}
-              color={"primary"}
-            >
-              Panda
-            </Typography>
-          </Box>
+          <Logo />
 
           {/* navigation items for large and medium devices */}
           <Stack
@@ -58,8 +39,9 @@ export default function NavBar() {
             spacing={2}
             display={{ xs: "none", md: "flex" }}
           >
+            <NavSearchCompo />
             <NavBarCart />
-            <NavUserMenu />{" "}
+            <NavUserMenu />
           </Stack>
 
           <IconButton
@@ -96,23 +78,7 @@ export default function NavBar() {
             alignItems="center"
             p={2}
           >
-            <Box
-              sx={{
-                display: "flex",
-              }}
-            >
-              <Typography component={"h1"} variant="h4" fontWeight={"bold"}>
-                Medic
-              </Typography>
-              <Typography
-                component={"h1"}
-                variant="h4"
-                fontWeight={"bold"}
-                color={"primary"}
-              >
-                Panda
-              </Typography>
-            </Box>
+            <Logo />
             <IconButton onClick={toggle} sx={{ color: "primary.main" }}>
               <CloseIcon />
             </IconButton>

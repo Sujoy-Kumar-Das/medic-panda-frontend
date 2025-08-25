@@ -15,6 +15,7 @@ interface ITextField {
   required?: boolean;
   fullWidth?: boolean;
   sx?: SxProps;
+  disabled?: boolean;
   items: IItem[];
 }
 
@@ -25,6 +26,7 @@ const PandaSelect = ({
   size = "small",
   required,
   fullWidth = true,
+  disabled = false,
   sx,
 }: ITextField) => {
   const { control, formState } = useFormContext();
@@ -41,6 +43,7 @@ const PandaSelect = ({
             ...sx,
           }}
           size={size}
+          disabled={disabled}
           select
           label={label}
           required={required}
