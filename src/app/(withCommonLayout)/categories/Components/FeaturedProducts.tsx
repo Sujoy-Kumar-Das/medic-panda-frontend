@@ -1,4 +1,3 @@
-import BestSellerCard from "@/components/home/best-seller-section/BestSellerCard";
 import CommonHeader from "@/components/shared/header/CommonHeader";
 import CardSkeleton from "@/components/skeleton/CardSkeleton";
 import ProductCardVertical from "@/components/ui/card/productCard/ProductCardVertical";
@@ -14,7 +13,7 @@ export default async function FeaturedProducts() {
     limit: 4,
   });
   return (
-    <Box>
+    <Box sx={{ my: 10 }}>
       <CommonHeader
         title="Featured Products"
         subtitle="Popular products across our categories"

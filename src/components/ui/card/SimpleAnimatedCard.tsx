@@ -150,7 +150,6 @@ export default function SimpleAnimatedCard({ product }: { product: IProduct }) {
           <motion.div variants={skinCareProductButtonVariants}>
             <AddToCartButton
               product={product}
-              iconBtn
               sx={{
                 color: "primary.main",
               }}

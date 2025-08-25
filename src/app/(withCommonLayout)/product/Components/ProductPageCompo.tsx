@@ -6,13 +6,11 @@ import { Grid } from "@mui/material";
 interface ProductPageCompoProps {
   products: IProduct[];
   meta: any;
-  layout: string;
 }
 
 export default function ProductPageCompo({
   products,
   meta,
-  layout,
 }: ProductPageCompoProps) {
   return (
     <Grid container spacing={4}>
@@ -20,7 +18,7 @@ export default function ProductPageCompo({
         <CategorySidebar />
       </Grid>
       <Grid item xs={12} md={9}>
-        <ProductCompo products={products} meta={meta} layout={layout} />
+        <ProductCompo products={products} meta={meta} />
       </Grid>
     </Grid>
   );

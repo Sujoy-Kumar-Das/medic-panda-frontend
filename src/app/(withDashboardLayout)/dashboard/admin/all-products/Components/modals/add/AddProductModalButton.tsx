@@ -7,7 +7,13 @@ export default function AddProductModalButton() {
 
   return (
     <>
-      <Button onClick={addProductModal.onOpen}>Add Product</Button>
+      <Button
+        variant="contained"
+        color={"primary"}
+        onClick={addProductModal.onOpen}
+      >
+        Add Product
+      </Button>
 
       {addProductModal.state && (
         <AddProductModal onClose={addProductModal.onClose} />

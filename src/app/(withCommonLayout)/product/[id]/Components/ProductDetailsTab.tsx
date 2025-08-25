@@ -12,6 +12,7 @@ interface IProductDetailsTab {
   productId: string;
   category: ICategory;
   manufacture: IManufacturer;
+  detailedDescription: string;
 }
 
 const reviewTabItems = {
@@ -32,6 +33,7 @@ export default function ProductDetailsTab({
   productId,
   category,
   manufacture,
+  detailedDescription,
 }: IProductDetailsTab) {
   const [value, setValue] = useState("1");
 
@@ -57,6 +59,7 @@ export default function ProductDetailsTab({
             productId={productId}
             category={category}
             manufacture={manufacture}
+            detailedDescription={detailedDescription}
           />
         </TabPanel>
       ))}

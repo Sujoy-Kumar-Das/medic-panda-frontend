@@ -17,7 +17,7 @@ const Header = ({
       sx={{
         px: { xs: 2, sm: 3, md: 4 },
         py: { xs: 2, sm: 3 },
-        background: "linear-gradient(135deg, #007bff, #00c8ff)",
+        backgroundColor: "primary.light",
         borderRadius: 2,
         color: "common.white",
         boxShadow: 4,

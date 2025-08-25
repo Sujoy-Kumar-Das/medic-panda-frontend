@@ -6,7 +6,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-export default function BlogCard({ blog }) {
+export default function BlogCard({ blog }: { blog: any }) {
   return (
     <Card
       sx={{

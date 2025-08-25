@@ -50,7 +50,7 @@ export const DashboardDrawer = () => {
         <Typography
           variant="h4"
           fontWeight="bold"
-          color="text.secondary"
+          color="primary.contrastText"
           sx={{ letterSpacing: 1 }}
         >
           medic
@@ -58,7 +58,7 @@ export const DashboardDrawer = () => {
         <Typography
           variant="h4"
           fontWeight="bold"
-          color="text.disabled"
+          color="primary.contrastText"
           sx={{ letterSpacing: 1 }}
         >
           Panda

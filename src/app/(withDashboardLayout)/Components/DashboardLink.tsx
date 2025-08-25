@@ -20,21 +20,26 @@ export default function DashboardLink({
   icon,
   text,
 }: DashboardLinkProps) {
+  const isActive = pathname === href;
+
   return (
     <ListItem
       component={Link}
       href={href}
       disablePadding
       sx={{
-        justifyContent: "center",
         borderRadius: "12px",
-        color: pathname === href ? "text.disabled" : "text.secondary",
-        backgroundColor: pathname === href ? "primary.light" : "transparent",
         my: 0.5,
-        transition: "background-color 0.3s ease",
+        transition: "all 0.3s ease",
+        backgroundColor: isActive ? "primary.light" : "transparent",
         "&:hover": {
           backgroundColor: "primary.light",
-          color: "text.disabled",
+          "& .MuiListItemText-primary": {
+            color: "primary.contrastText",
+          },
+          "& .MuiListItemIcon-root": {
+            color: "primary.contrastText",
+          },
         },
       }}
     >
@@ -43,12 +48,14 @@ export default function DashboardLink({
           justifyContent: "flex-start",
           textAlign: "left",
           width: "100%",
+          px: 2,
         }}
       >
         <ListItemIcon
           sx={{
-            color: pathname === href ? "text.disabled" : "inherit",
             minWidth: 40,
+            color: isActive ? "primary.contrastText" : "text.primary",
+            transition: "color 0.3s ease",
           }}
         >
           {icon}
@@ -56,7 +63,8 @@ export default function DashboardLink({
         <ListItemText
           primary={text}
           primaryTypographyProps={{
-            fontWeight: pathname === href ? "bold" : "normal",
+            fontWeight: isActive ? "bold" : "normal",
+            color: isActive ? "primary.contrastText" : "text.primary",
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",

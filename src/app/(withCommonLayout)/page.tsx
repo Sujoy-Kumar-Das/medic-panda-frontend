@@ -1,5 +1,4 @@
 import AppDownloadSection from "@/components/home/AppDownloadSection/AppDownloadSection";
-import BlogSection from "@/components/home/blog-section/BlogSection";
 import CategorySection from "@/components/home/category-section/CategorySection";
 import HeroSection from "@/components/home/hero-section/HeroSection";
 import HowItsWorkSection from "@/components/home/how-it-works-section/HowItsWorkSection";
@@ -12,7 +11,7 @@ import WhyChooseSection from "@/components/home/why-chose-us-section/WhyChoseUsS
 export default async function HomePage() {
   return (
     <>
-      {/* <HeroSection />
+      <HeroSection />
       <CategorySection />
       <OurBestSellerProductsSection />
       <HowItsWorkSection />
@@ -20,7 +19,7 @@ export default async function HomePage() {
       <NeedHelpSection />
       <TestimonialsSection />
       <SubscribeSection />
-      <AppDownloadSection /> */}
+      <AppDownloadSection />
     </>
   );
 }

@@ -29,14 +29,14 @@ function DashboardSearchFilter({
         placeholder={searchbarOptions.placeholder || ""}
         sxProps={{
           width: { xs: "100%", sm: "100%", md: 300 },
-          minHeight: 50,
+          minHeight: 10,
         }}
       />
       <FilterCompo
         items={allFilterOptions.items}
         sx={{
           width: { xs: "100%", sm: 180 },
-          minHeight: 50,
+          minHeight: 20,
           border: "none",
           bgcolor: "background.default",
         }}

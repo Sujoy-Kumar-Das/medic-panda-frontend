@@ -41,7 +41,7 @@ export default function ContactInfoCompo() {
           >
             <PhoneIcon
               sx={{
-                color: "text.secondary",
+                color: "primary.contrastText",
                 fontSize: "1.25rem",
               }}
             />
@@ -49,7 +49,7 @@ export default function ContactInfoCompo() {
           <Box>
             <Typography
               variant="subtitle2"
-              sx={{ fontWeight: 600, color: "text.secondary" }}
+              sx={{ fontWeight: 600, color: "text.primary" }}
             >
               Phone
             </Typography>
@@ -73,7 +73,7 @@ export default function ContactInfoCompo() {
           >
             <EmailIcon
               sx={{
-                color: "text.secondary",
+                color: "primary.contrastText",
                 fontSize: "1.25rem",
               }}
             />
@@ -81,7 +81,7 @@ export default function ContactInfoCompo() {
           <Box>
             <Typography
               variant="subtitle2"
-              sx={{ fontWeight: 600, color: "text.secondary" }}
+              sx={{ fontWeight: 600, color: "text.primary" }}
             >
               Email
             </Typography>
@@ -105,7 +105,7 @@ export default function ContactInfoCompo() {
           >
             <LocationOnIcon
               sx={{
-                color: "text.secondary",
+                color: "primary.contrastText",
                 fontSize: "1.25rem",
               }}
             />
@@ -113,7 +113,7 @@ export default function ContactInfoCompo() {
           <Box>
             <Typography
               variant="subtitle2"
-              sx={{ fontWeight: 600, color: "text.secondary" }}
+              sx={{ fontWeight: 600, color: "text.primary" }}
             >
               Address
             </Typography>

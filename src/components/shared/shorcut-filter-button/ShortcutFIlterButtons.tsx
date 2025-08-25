@@ -3,13 +3,13 @@ import { IFilterItem } from "@/types/filter-item";
 import isActivePath from "@/utils/isActivePath";
 import { Button, Stack } from "@mui/material";
 
-interface ShortcutFIlterButtonsProps {
+interface ShortcutFilterButtonsProps {
   filterItems: IFilterItem[];
 }
 
-export default function ShortcutFIlterButtons({
+export default function ShortcutFilterButtons({
   filterItems,
-}: ShortcutFIlterButtonsProps) {
+}: ShortcutFilterButtonsProps) {
   const { applyFilter, searchParams } = useFilter({
     filterItems,
   });
@@ -23,33 +23,21 @@ export default function ShortcutFIlterButtons({
       columnGap={1}
       sx={{ width: "100%", flex: 1 }}
     >
-      {filterItems.map((item) => (
-        <Button
-          size="small"
-          key={item.id}
-          sx={{
-            bgcolor: isActivePath({ item, searchParams })
-              ? "primary.main"
-              : "background.default",
-            color: isActivePath({ item, searchParams })
-              ? "white"
-              : "text.primary",
-            borderRadius: 2,
-            textTransform: "none",
-            transition: "all 0.3s ease",
-            whiteSpace: "nowrap",
-            px: 2,
-            "&:hover": {
-              bgcolor: isActivePath({ item, searchParams })
-                ? "primary.dark"
-                : "background.paper",
-            },
-          }}
-          onClick={() => applyFilter(item)}
-        >
-          {item.title}
-        </Button>
-      ))}
+      {filterItems.map((item) => {
+        const active = isActivePath({ item, searchParams });
+
+        return (
+          <Button
+            size="small"
+            key={item.id}
+            variant={active ? "contained" : "outlined"}
+            color={active ? "primary" : "inherit"}
+            onClick={() => applyFilter(item)}
+          >
+            {item.title}
+          </Button>
+        );
+      })}
     </Stack>
   );
 }

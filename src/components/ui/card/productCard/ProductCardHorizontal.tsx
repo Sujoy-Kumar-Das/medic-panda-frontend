@@ -1,17 +1,9 @@
 import { IProduct } from "@/types";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import {
-  Box,
-  Button,
-  CardContent,
-  Chip,
-  IconButton,
-  Rating,
-  Typography,
-} from "@mui/material";
+import { Box, CardContent, Chip, Rating, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "../../buttons/AddToCartButton";
+import WishListButton from "../../buttons/WishListButton";
 
 export default function ProductCardHorizontal({
   product,
@@ -68,18 +60,7 @@ export default function ProductCardHorizontal({
         </Link>
 
         {/* Wishlist Button */}
-        <IconButton
-          sx={{
-            position: "absolute",
-            top: 8,
-            right: 8,
-            backgroundColor: "#fff",
-            boxShadow: 1,
-            "&:hover": { color: "red" },
-          }}
-        >
-          <FavoriteIcon />
-        </IconButton>
+        <WishListButton id={product._id} isWishList={product.isWishList} />
 
         {/* Discount Badge */}
         {hasDiscount && (
@@ -157,21 +138,7 @@ export default function ProductCardHorizontal({
               ({product.rating.count})
             </Typography>
           </Box>
-
-          <Button
-            size="small"
-            startIcon={<ShoppingCartIcon fontSize="small" />}
-            sx={{
-              backgroundColor: "primary.main",
-              color: "primary.contrastText",
-              px: 2,
-              py: 0.5,
-              textTransform: "none",
-              "&:hover": { backgroundColor: "primary.dark" },
-            }}
-          >
-            Add to Cart
-          </Button>
+          <AddToCartButton product={product} />
         </Box>
       </CardContent>
     </Box>

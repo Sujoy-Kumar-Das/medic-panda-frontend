@@ -7,7 +7,7 @@ export default function UserInfoHeader({ user }: { user: any }) {
     <Paper
       sx={{
         padding: 4,
-        background: "linear-gradient(135deg, #007bff, #00c8ff)",
+        backgroundColor: "primary.light",
         borderRadius: 3,
         color: "#ffffff",
         boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.2)",

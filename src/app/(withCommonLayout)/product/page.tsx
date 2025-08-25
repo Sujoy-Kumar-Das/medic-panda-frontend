@@ -1,4 +1,4 @@
-import ProductPageCompo from "@/components/product-page-compo/ProductPageCompo";
+import ProductPageCompo from "@/app/(withCommonLayout)/product/Components/ProductPageCompo";
 import CommonContainer from "@/components/shared/common-container/CommonContainer";
 import { getAllProductService } from "@/services/actions/product.service";
 
@@ -9,10 +9,9 @@ export default async function ProductsPage({
     page: number | string;
     searchTerm: string;
     category: string;
-    layout: string;
   };
 }) {
-  const { page, searchTerm, category, layout } = searchParams;
+  const { page, searchTerm, category } = searchParams;
 
   const { data } = await getAllProductService({
     limit: 9,
@@ -23,11 +22,7 @@ export default async function ProductsPage({
 
   return (
     <CommonContainer sx={{ py: 4, backgroundColor: "background.paper" }}>
-      <ProductPageCompo
-        products={data.result}
-        meta={data.result}
-        layout={layout}
-      />
+      <ProductPageCompo products={data?.result} meta={data?.result} />
     </CommonContainer>
   );
 }

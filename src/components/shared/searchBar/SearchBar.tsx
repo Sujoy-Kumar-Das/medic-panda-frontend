@@ -36,6 +36,7 @@ export default function SearchBar({
         borderColor: "divider",
         backgroundColor: "background.default",
         px: 1,
+        py: 0,
         ...sxProps,
       }}
     >

@@ -30,6 +30,7 @@ const articles = [
       "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
   },
 ];
+
 export default function BlogList() {
   // todo fetch the blogs and show here
   return (

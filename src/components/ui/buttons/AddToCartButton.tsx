@@ -1,33 +1,48 @@
 "use client";
 import useAddToCart from "@/hooks/useAddToCart";
 import { IProduct } from "@/types";
-import { Button, SxProps, Tooltip } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Button, CircularProgress, SxProps } from "@mui/material";
 import { ReactNode } from "react";
 
 interface IAddToCartButtonProps {
-  children: ReactNode;
+  children?: ReactNode;
   product: IProduct;
   sx?: SxProps;
+  icon?: boolean;
 }
 
 export default function AddToCartButton({
   children,
   product,
+  icon = true,
   sx,
 }: IAddToCartButtonProps) {
   const { handlerFunc, isLoading } = useAddToCart();
 
   return (
-    <Tooltip title="Add To Cart">
-      <Button
-        onClick={() => handlerFunc(product)}
-        fullWidth
-        variant="contained"
-        color="primary"
-        sx={sx}
-      >
-        {isLoading ? "Adding To Cart..." : children ? children : "Add To Cart"}
-      </Button>
-    </Tooltip>
+    <Button
+      size="small"
+      onClick={() => handlerFunc(product)}
+      startIcon={
+        isLoading ? (
+          <CircularProgress size={16} color="inherit" />
+        ) : icon ? (
+          <ShoppingCartIcon fontSize="small" />
+        ) : null
+      }
+      disabled={isLoading}
+      sx={{
+        backgroundColor: "primary.main",
+        color: "primary.contrastText",
+        textTransform: "none",
+        px: 2,
+        py: 0.5,
+        "&:hover": { backgroundColor: "primary.dark" },
+        ...sx,
+      }}
+    >
+      {isLoading ? "Adding..." : children || "Add to Cart"}
+    </Button>
   );
 }

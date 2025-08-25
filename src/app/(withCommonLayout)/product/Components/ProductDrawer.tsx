@@ -1,10 +1,8 @@
 import { ICategory, IProduct } from "@/types";
 import { Box, Grid } from "@mui/material";
 import ProductCategory from "./ProductCategory";
-import Products from "./ProductsList";
+import ProductCompo from "./ProductCompo";
 import ProductSearchWithCategoryModalButton from "./ProductSearchWithCategoryModalButton";
-import ProductsList from "./ProductsList";
-import ProductsCompo from "./ProductsCompo";
 
 interface IProductProps {
   products: IProduct[];
@@ -46,7 +44,7 @@ export default function ProductDrawer({
       </Grid>
 
       <Grid item xs={12} md={9}>
-        <ProductsCompo />
+        <ProductCompo products={products} meta={meta} />
       </Grid>
     </Grid>
   );

@@ -183,18 +183,88 @@ const theme = createTheme({
     MuiButton: {
       defaultProps: {
         variant: "contained",
+        disableElevation: true,
       },
       styleOverrides: {
         root: {
-          padding: "10px 28px",
+          padding: "12px 28px",
           borderRadius: "8px",
-          boxShadow: "0px 4px 10px rgba(8, 145, 178, 0.2)",
-          transition: "all 0.3s ease-in-out",
+          fontSize: "0.9rem",
+          fontWeight: 600,
+          textTransform: "none",
+          transition: "all 0.2s ease-in-out",
           "&:hover": {
-            boxShadow: "0px 6px 14px rgba(14, 116, 144, 0.3)",
+            transform: "translateY(-2px)",
           },
         },
       },
+      variants: [
+        {
+          props: { variant: "contained", color: "primary" },
+          style: {
+            background: "linear-gradient(45deg, #0891b2 0%, #06b6d4 100%)",
+            "&:hover": {
+              background: "linear-gradient(45deg, #0e7490 0%, #0891b2 100%)",
+              boxShadow: "0 4px 12px rgba(8, 145, 178, 0.3)",
+            },
+          },
+        },
+        {
+          props: { variant: "contained", color: "secondary" },
+          style: {
+            background: "linear-gradient(45deg, #10b981 0%, #34d399 100%)",
+            "&:hover": {
+              background: "linear-gradient(45deg, #059669 0%, #10b981 100%)",
+              boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)",
+            },
+          },
+        },
+        {
+          props: { variant: "contained", color: "accent" },
+          style: {
+            background: "linear-gradient(45deg, #6366f1 0%, #818cf8 100%)",
+            "&:hover": {
+              background: "linear-gradient(45deg, #4f46e5 0%, #6366f1 100%)",
+              boxShadow: "0 4px 12px rgba(99, 102, 241, 0.3)",
+            },
+          },
+        },
+        {
+          props: { variant: "outlined" },
+          style: {
+            borderWidth: "1px",
+            backgroundColor: "transparent",
+            "&:hover": {
+              borderWidth: "1px",
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+            },
+          },
+        },
+        {
+          props: { variant: "text" },
+          style: {
+            padding: "8px 16px",
+            "&:hover": {
+              backgroundColor: "rgba(8, 145, 178, 0.08)",
+              transform: "none",
+            },
+          },
+        },
+        {
+          props: { size: "small" },
+          style: {
+            padding: "8px 16px",
+            fontSize: "0.8rem",
+          },
+        },
+        {
+          props: { size: "large" },
+          style: {
+            padding: "16px 32px",
+            fontSize: "1rem",
+          },
+        },
+      ],
     },
     MuiContainer: {
       defaultProps: {

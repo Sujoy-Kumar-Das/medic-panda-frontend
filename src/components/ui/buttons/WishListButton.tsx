@@ -1,13 +1,14 @@
 "use client";
+
 import useAddToWishlist from "@/hooks/useAddToWishlist";
 import useRemoveFromWishList from "@/hooks/useRemoveFromWishList";
 import { TTagTypes } from "@/redux/tag-types";
 import { revalidateTagFunc } from "@/services/actions/revalidateTagFunc";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { IconButton, SxProps, Tooltip } from "@mui/material";
+import { CircularProgress, IconButton, SxProps } from "@mui/material";
 import { ReactNode } from "react";
-import AnimateLoadingButton from "./AnimateLoadingButton";
+
 interface IWishListButtonProps {
   id: string;
   sx?: SxProps;
@@ -21,55 +22,53 @@ export default function WishListButton({
   children,
   isWishList,
 }: IWishListButtonProps) {
-  const { handlerFunc, isLoading } = useAddToWishlist();
+  const { handlerFunc: addToWishlist, isLoading: addLoading } =
+    useAddToWishlist();
+  const { handlerFunc: removeFromWishlist, isLoading: removeLoading } =
+    useRemoveFromWishList();
 
-  const {
-    handlerFunc: handleRemoveWishList,
-    isLoading: removeWishlistLoading,
-  } = useRemoveFromWishList();
+  const loading = addLoading || removeLoading;
 
-  const icon =
-    children || isWishList ? <FavoriteIcon /> : <FavoriteBorderIcon />;
+  const icon = children ? (
+    children
+  ) : isWishList ? (
+    <FavoriteIcon color="error" />
+  ) : (
+    <FavoriteBorderIcon />
+  );
 
-  const title = isWishList ? "Remove From Wish List." : "Add To Wishlist";
+  const title = isWishList ? "Remove From Wishlist" : "Add To Wishlist";
 
-  const handleAddToWishList = async () => {
-    await handlerFunc(id);
-    await revalidateTagFunc(TTagTypes.product);
-  };
+  const handleClick = async () => {
+    if (loading) return;
 
-  const handleRemoveFromWishList = async () => {
-    await handleRemoveWishList(id);
+    if (isWishList) {
+      await removeFromWishlist(id);
+    } else {
+      await addToWishlist(id);
+    }
+
+    // revalidate cache after action
     await revalidateTagFunc(TTagTypes.product);
   };
 
   return (
-    <Tooltip title={title}>
-      {isWishList ? (
-        <IconButton
-          color="error"
-          aria-label="remove from favorites"
-          onClick={handleRemoveFromWishList}
-          disabled={removeWishlistLoading}
-          sx={{ ...sx }}
-        >
-          <AnimateLoadingButton isLoading={isLoading}>
-            {icon}
-          </AnimateLoadingButton>
-        </IconButton>
-      ) : (
-        <IconButton
-          color="primary"
-          aria-label="add to favorites"
-          onClick={handleAddToWishList}
-          disabled={isLoading}
-          sx={{ ...sx }}
-        >
-          <AnimateLoadingButton isLoading={isLoading}>
-            {icon}
-          </AnimateLoadingButton>
-        </IconButton>
-      )}
-    </Tooltip>
+    <IconButton
+      onClick={handleClick}
+      disabled={loading}
+      title={title}
+      sx={{
+        position: "absolute",
+        top: 8,
+        right: 8,
+        backgroundColor: "#fff",
+        boxShadow: 1,
+        zIndex: 1,
+        "&:hover": { color: "red" },
+        ...sx,
+      }}
+    >
+      {loading ? <CircularProgress size={20} /> : icon}
+    </IconButton>
   );
 }

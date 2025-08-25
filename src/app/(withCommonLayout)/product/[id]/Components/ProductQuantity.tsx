@@ -7,7 +7,7 @@ import { Stack } from "@mui/material";
 export default function ProductQuantity({ product }: { product: IProduct }) {
   return (
     <Stack direction="row" alignItems="center" spacing={2} mt={1}>
-      <AddToCartButton product={product} iconBtn={false}>
+      <AddToCartButton product={product} icon={false}>
         Checkout <ShoppingCartCheckoutIcon />
       </AddToCartButton>
     </Stack>

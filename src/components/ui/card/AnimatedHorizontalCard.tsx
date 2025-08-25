@@ -132,7 +132,6 @@ export default function AnimatedHorizontalCard({
             <motion.div variants={skinCareProductButtonVariants}>
               <AddToCartButton
                 product={product}
-                iconBtn
                 sx={{
                   color: "primary.main",
                   border: "1px solid #cccccc",

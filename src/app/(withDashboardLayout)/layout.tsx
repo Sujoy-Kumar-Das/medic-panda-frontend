@@ -76,7 +76,7 @@ export default function ResponsiveDrawer({
                 component={"h1"}
                 variant="h4"
                 fontWeight={"bold"}
-                color={"text.primary"}
+                color={"primary.contrastText"}
               >
                 medic
               </Typography>
@@ -84,7 +84,7 @@ export default function ResponsiveDrawer({
                 component={"h1"}
                 variant="h4"
                 fontWeight={"bold"}
-                color={"primary"}
+                color={"primary.contrastText"}
               >
                 Panda
               </Typography>

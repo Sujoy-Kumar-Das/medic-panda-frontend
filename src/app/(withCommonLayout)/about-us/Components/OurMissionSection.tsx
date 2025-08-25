@@ -80,7 +80,7 @@ export default function OurMissionSection() {
             <Box textAlign="center">
               <Avatar
                 sx={{
-                  bgcolor: "primary.100",
+                  bgcolor: "primary.contrastText",
                   width: 64,
                   height: 64,
                   mx: "auto",

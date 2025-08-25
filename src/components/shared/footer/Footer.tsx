@@ -35,17 +35,17 @@ const Footer = () => {
               PharmaCare
             </Typography>
           </Stack>
-          <Typography mb={2} color={"text.primary"}>
+          <Typography mb={2} sx={{color:"text.primary"}}>
             Your trusted online pharmacy for all your healthcare needs.
           </Typography>
           <Stack direction="row" spacing={2}>
-            <IconButton color={"text.primary"}>
+            <IconButton sx={{color:"text.primary"}}>
               <Twitter />
             </IconButton>
-            <IconButton color={"text.primary"}>
+            <IconButton sx={{color:"text.primary"}}>
               <Instagram />
             </IconButton>
-            <IconButton color={"text.primary"}>
+            <IconButton sx={{color:"text.primary"}}>
               <Facebook />
             </IconButton>
           </Stack>
